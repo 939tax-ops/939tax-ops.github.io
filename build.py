@@ -447,7 +447,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
     ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
     btn = "무료 확인 신청하기 →" if chk else "상담 신청하기 →"
-    foot = "가능 여부 확인까지 무료입니다. 실제 신고·청구를 맡기시면 <a href=\"/fees/\">보수 안내</a> 기준으로 진행합니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다."
+    foot = "가능 여부 확인까지 무료입니다.<br>실제 신고·청구는 <a href=\"/fees/\">보수 안내</a> 기준으로 진행합니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료입니다."
     return f'''<form class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
 <h2>{title}</h2>
 <p class="lf-sub">{sub}</p>
