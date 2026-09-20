@@ -194,28 +194,29 @@ def build_qa_index(posts):
 
 # ---------- 고정 페이지 ----------
 SERVICES = [
-    ("기장·신고 대행", "개인사업자와 법인의 장부 작성, 부가가치세·원천세·종합소득세·법인세 신고"),
-    ("종합소득세", "사업소득·근로소득·기타소득이 섞인 경우의 신고와 공제 검토"),
-    ("양도소득세", "주택·토지·상가 양도 전 세액 검토와 신고"),
+    ("사업자 세무기장", "개인사업자·법인의 장부 작성과 매달 세무 관리"),
+    ("사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세 신고"),
+    ("양도소득세", "주택·토지·상가를 팔기 전 세액 검토와 신고"),
     ("상속세·증여세", "증여 전 세액 비교, 상속 재산 평가와 신고"),
-    ("경정청구", "이미 신고한 세금 중 빠뜨린 공제·감면을 찾아 돌려받는 절차"),
-    ("온라인 판매 사업자", "스마트스토어·오픈마켓 등 온라인 셀러의 부가가치세와 종합소득세"),
+    ("경정청구", "이미 낸 세금 중 빠뜨린 공제·감면을 찾아 돌려받는 절차"),
+    ("세무조사 대응", "세무조사·소명 요청에 대한 자료 준비와 대응"),
 ]
 
 def build_home(posts):
-    svc = "".join(f'<div class="card"><b>{t}</b><span>{d}</span></div>' for t, d in SERVICES)
+    svc = "".join(f'<div class="card svc"><i>{i:02d}</i><b>{t}</b><span>{d}</span></div>' for i, (t, d) in enumerate(SERVICES, 1))
     latest = "".join(qa_item(p) for p in posts[:6]) or '<li><p class="lead">준비 중입니다.</p></li>'
     body = f'''<div class="hero"><div class="wrap">
 <div class="copy">
-<p class="eyebrow">서울 동대문구 청량리 · {NAME} {PERSON}</p>
+<p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인 기장부터 종합소득세, 양도소득세, 상속세·증여세 신고와 경정청구까지 맡고 있습니다.</p>
 <div class="btns"><a class="btn kakao" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
 </div>
-<div class="photo"><img src="/assets/profile.jpg" alt="{PERSON}" width="360" height="540"></div>
+<div class="photo"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="380" height="582"></div>
 </div></div>
 <div class="wrap">
-<section class="block"><h2 class="sec">업무 분야</h2><div class="grid">{svc}</div></section>
+<section class="block"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="{KAKAO}" target="_blank" rel="noopener">상담 문의</a></div></section>
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">연락처</h2>
@@ -223,7 +224,7 @@ def build_home(posts):
 <tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 <tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a></td></tr>
-<tr><th>주소</th><td>{ADDR1}<br>{ADDR2} · <a href="/about/#location">오시는 길</a></td></tr>
+<tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
 </table>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
 </section></div>'''
@@ -253,7 +254,7 @@ def build_about():
 <section class="block"><h2 class="sec">업무 분야</h2><ul>{svc}</ul></section>
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <table class="info">
-<tr><th>주소</th><td>{ADDR1}<br>{ADDR2}</td></tr>
+<tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 </table>

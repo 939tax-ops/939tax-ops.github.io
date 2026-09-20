@@ -152,3 +152,31 @@ footer .small{opacity:.75;margin-top:12px}
 }
 .card.soon{position:relative;background:var(--tint-2)}
 .card.soon em{position:absolute;top:14px;right:14px;font-style:normal;font-family:var(--sans);font-size:12px;color:var(--sub);border:1px solid var(--line);border-radius:10px;padding:1px 8px;background:#fff}
+
+/* v2: hero·업무 카드 */
+.hero{background:radial-gradient(ellipse at 78% 70%,#2C5C3A 0%,#17432A 38%,#13391E 62%,#0D2715 100%);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--yellow);opacity:.9}
+.hero .eyebrow{display:flex;align-items:center;gap:10px}
+.hero .eyebrow .rule{display:inline-block;width:28px;height:2px;background:var(--yellow)}
+.hero .photo img{border-radius:0;max-width:380px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))}
+.svc-grid{grid-template-columns:repeat(3,1fr)}
+.card.svc{position:relative;padding:22px 22px 20px;border-top:3px solid var(--green);transition:transform .15s,box-shadow .15s}
+.card.svc:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(19,57,30,.10)}
+.card.svc i{font-style:normal;font-family:var(--sans);font-weight:800;font-size:13px;color:var(--green);opacity:.55;letter-spacing:.05em;display:block;margin-bottom:6px}
+.band{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--tint);border-radius:8px;padding:18px 22px}
+.band b{color:var(--green);font-size:18px;margin-right:12px}
+.band span{color:var(--text);font-size:15.5px}
+a.more{font-family:var(--sans);font-size:14.5px;font-weight:700;text-decoration:none}
+a.more:hover{text-decoration:underline}
+@media (max-width:760px){
+  .svc-grid{grid-template-columns:1fr}
+  .band{flex-direction:column;align-items:flex-start}
+  .band b{display:block;margin:0 0 4px}
+  .hero .photo img{max-width:260px}
+}
+@media (max-width:760px){
+  .svc-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .card.svc{padding:14px 14px 12px}
+  .card.svc b{font-size:16px}
+  .card.svc span{font-size:14px;line-height:1.6}
+}
