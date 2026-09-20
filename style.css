@@ -302,3 +302,12 @@ section.block.alt .card.soon{background:#FBFAF7}
 section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
 .p-home .search{background:#fff}
 .p-home section.search-block{border-top:0}
+
+/* v7: 아이보리 → 흰색으로 되돌림 */
+:root{--ivory:#FFFFFF;--ivory-line:#D9D9D9}
+.hero{border-bottom:1px solid var(--line)}
+section.block.alt{border-top:1px solid var(--line)}
+section.block.alt + section.block{border-top:1px solid var(--line)}
+section.block.alt .card.soon{background:var(--tint-2)}
+section.block.alt .band{background:var(--tint);border:0}
+.p-home .search{background:var(--tint-2)}
