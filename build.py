@@ -233,10 +233,10 @@ def build_home(posts):
 </div></div>
 <div class="wrap">
 <section class="block search-block">{SEARCH_BOX}</section>
-<section class="block"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
+<section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div></section>
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
-<section class="block"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
+<section class="block alt"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">연락처</h2>
 <table class="info">
 <tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
@@ -269,7 +269,7 @@ def build_about():
 <dt>경력</dt><dd>現 서울시 마을세무사(중랑구)<br>前 윤택스<br>前 포스코건설</dd>
 </dl>
 </div></div></section>
-<section class="block"><h2 class="sec">업무 분야</h2><ul>{svc}</ul></section>
+<section class="block alt"><h2 class="sec">업무 분야</h2><ul>{svc}</ul></section>
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <table class="info">
 <tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>

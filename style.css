@@ -291,3 +291,14 @@ details.fold[open] summary{margin-bottom:8px}
 body.p-home .top{background:var(--ivory);border-bottom-color:var(--ivory-line)}
 @media (max-width:760px){.hero .photo::before{width:70%;right:15%}}
 .top .brand img{mix-blend-mode:multiply}
+
+/* v6: 아이보리를 페이지 전체 리듬으로, 반원 제거 */
+.hero .photo::before{display:none}
+.hero::after{display:none}
+section.block.alt{background:var(--ivory);box-shadow:0 0 0 100vmax var(--ivory);clip-path:inset(0 -100vmax);border-top:0}
+section.block.alt + section.block{border-top:0}
+section.block.alt .card{background:#fff}
+section.block.alt .card.soon{background:#FBFAF7}
+section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
+.p-home .search{background:#fff}
+.p-home section.search-block{border-top:0}
