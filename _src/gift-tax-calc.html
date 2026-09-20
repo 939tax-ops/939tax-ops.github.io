@@ -1,47 +1,60 @@
-<div class="narrow" style="padding-top:28px">
+<div class="wrap" style="padding-top:28px;max-width:980px">
 <p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 증여세 계산기</p>
 <h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">증여세 계산기</h1>
-<p class="lead" style="margin:0 0 22px">받은 금액과 관계를 넣으면 공제·세율·신고세액공제를 반영한 예상 증여세를 계산합니다. 2026년 9월 20일 시행 법령 기준 · 참고용이며 <a href="#disclaimer">면책 고지</a>를 확인해 주세요.</p>
+<p class="lead" style="margin:0 0 18px">2026년 9월 20일 시행 법령 기준 · 참고용 계산입니다(<a href="#disclaimer">면책 고지</a>).</p>
 
-<form class="calc" id="gc" onsubmit="return false">
-<label for="rel">누구에게 받았나요?</label>
-<select id="rel">
-<option value="adult">부모·조부모에게 받음 (받는 사람이 성인)</option>
-<option value="minor">부모·조부모에게 받음 (받는 사람이 미성년자)</option>
-<option value="spouse">배우자에게 받음</option>
-<option value="child">자녀·손자녀에게 받음</option>
-<option value="kin">그 밖의 친족에게 받음 (4촌 이내 혈족, 3촌 이내 인척)</option>
-<option value="none">친족이 아닌 사람에게 받음</option>
-</select>
+<ol class="steps">
+<li><b>누구에게</b> 받았는지 고르고</li>
+<li><b>받은 금액</b>을 넣으면</li>
+<li><b>예상 증여세</b>가 바로 산출됩니다</li>
+</ol>
 
-<label for="cur">이번에 받은 금액 <span class="hint">(원)</span></label>
-<input type="text" id="cur" inputmode="numeric" placeholder="예: 100,000,000">
-<div class="won" data-for="cur"></div>
-
-<label for="prev">최근 10년 안에 같은 분께 받은 금액 <span class="hint">(없으면 비워 두세요. 부모님은 두 분을 합쳐서)</span></label>
-<input type="text" id="prev" inputmode="numeric" placeholder="예: 30,000,000">
-<div class="won" data-for="prev"></div>
-
-<div id="prevTaxWrap">
-<label for="prevTax">그때 신고한 증여세 산출세액 <span class="hint">(모르면 비워 두세요. 자동으로 추정합니다)</span></label>
-<input type="text" id="prevTax" inputmode="numeric" placeholder="예: 0">
-<div class="won" data-for="prevTax"></div>
+<form class="calc2" id="gc" onsubmit="return false">
+<div class="c-in">
+<p class="c-q"><span>1</span>누구에게 받았나요?</p>
+<div class="chips" id="rel">
+<label><input type="radio" name="rel" value="adult" checked><span>부모·조부모<small>받는 사람 성인</small></span></label>
+<label><input type="radio" name="rel" value="minor"><span>부모·조부모<small>받는 사람 미성년</small></span></label>
+<label><input type="radio" name="rel" value="spouse"><span>배우자</span></label>
+<label><input type="radio" name="rel" value="child"><span>자녀·손자녀</span></label>
+<label><input type="radio" name="rel" value="kin"><span>그 밖의 친족<small>며느리·사위·형제 등</small></span></label>
+<label><input type="radio" name="rel" value="none"><span>친족 아님</span></label>
 </div>
 
-<label class="chk" id="marryWrap"><input type="checkbox" id="marry"> 혼인신고일 전후 2년 또는 자녀 출생일부터 2년 안에 받은 돈이에요 <span class="hint">(혼인·출산 공제 1억원, 처음 쓰는 경우)</span></label>
-<label class="chk" id="genWrap"><input type="checkbox" id="gen"> 조부모에게 받았고, 부모님(중간 세대)이 살아 계세요 <span class="hint">(세대생략 할증)</span></label>
-<label class="chk"><input type="checkbox" id="ontime" checked> 증여받은 달의 말일부터 3개월 안에 신고할 예정이에요 <span class="hint">(신고세액공제 3%)</span></label>
+<p class="c-q"><span>2</span>얼마를 받았나요?</p>
+<div class="amt"><input type="text" id="cur" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="won" data-for="cur"></div>
+<div class="quick"><button type="button" data-add="10000000">+1천만</button><button type="button" data-add="50000000">+5천만</button><button type="button" data-add="100000000">+1억</button><button type="button" data-add="1000000000">+10억</button><button type="button" data-clear>지우기</button></div>
+<p class="mini" id="mini" hidden>예상 증여세 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
 
-<div class="result" id="out" hidden>
-<p style="margin:0;font-weight:700">예상 납부세액</p>
-<p class="big" id="pay"></p>
-<table id="tbl"></table>
+<details class="more-opt" id="moreOpt">
+<summary>해당되면 펼치기 <small>10년 안 이전 증여 · 결혼·출산 · 조부모 증여 · 신고 여부</small></summary>
+<label for="prev">최근 10년 안에 같은 분께 받은 금액 <span class="hint">부모님은 두 분 합쳐서</span></label>
+<div class="amt sm"><input type="text" id="prev" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="won" data-for="prev"></div>
+<div id="prevTaxWrap">
+<label for="prevTax">그때 신고한 증여세 산출세액 <span class="hint">모르면 비워 두세요(자동 추정)</span></label>
+<div class="amt sm"><input type="text" id="prevTax" inputmode="numeric" placeholder="모르면 비워 두기"><em>원</em></div>
+<div class="won" data-for="prevTax"></div>
+</div>
+<label class="chk" id="marryWrap"><input type="checkbox" id="marry"> 결혼(혼인신고 전후 2년)·출산(출생 후 2년) 때 받은 돈 <span class="hint">1억원 추가 공제</span></label>
+<label class="chk" id="genWrap"><input type="checkbox" id="gen"> 조부모에게 받았고 부모님이 살아 계심 <span class="hint">세금 30% 할증</span></label>
+<label class="chk"><input type="checkbox" id="ontime" checked> 3개월 안에 신고할 예정 <span class="hint">세금 3% 공제</span></label>
+</details>
+</div>
+
+<div class="c-out">
+<div class="result2" id="out">
+<p class="r-label">예상 증여세</p>
+<p class="big" id="pay">0원</p>
+<p class="r-sub" id="sub">금액을 넣으면 바로 계산됩니다.</p>
+<details class="how"><summary>계산 과정 보기</summary><table id="tbl"></table></details>
 <p class="note" id="msg"></p>
+</div>
 </div>
 </form>
 
-<div class="box" style="margin-top:24px">
-<p class="label">이 계산기가 반영하지 않는 것</p>
+<details class="box fold" style="margin-top:28px"><summary class="label">이 계산기가 반영하지 않는 것</summary>
 <ul>
 <li>부동산·주식 등 현금이 아닌 재산의 평가 (시가·기준시가 판단)</li>
 <li>부담부증여(대출·전세를 함께 넘기는 증여), 창업자금·가업승계 특례, 비거주자</li>
@@ -49,9 +62,9 @@
 <li>조부모 증여(세대생략 할증)와 10년 안의 이전 증여가 함께 있는 경우 — 계산하지 않고 상담으로 안내합니다</li>
 <li>기한 후 신고·가산세, 분납·연부연납</li>
 </ul>
-</div>
+</details>
 
-<div class="box"><p class="label">계산 근거</p><ul>
+<details class="box fold"><summary class="label">계산 근거 (조문)</summary><ul>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제53조" target="_blank" rel="noopener">상속세 및 증여세법 제53조</a> 증여재산 공제(배우자 6억, 직계존속 5천만·미성년 2천만, 직계비속 5천만, 기타 친족 1천만)</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제53조의2" target="_blank" rel="noopener">제53조의2</a> 혼인·출산 증여재산 공제(합쳐서 1억원)</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제47조" target="_blank" rel="noopener">제47조 제2항</a> 10년 이내 동일인 증여 합산(직계존속은 그 배우자 포함)</li>
@@ -61,18 +74,16 @@
 <li>시행령 제46조 제1항 증여재산공제는 먼저 받은 증여부터 차례로 적용</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제58조" target="_blank" rel="noopener">제58조</a> 합산된 이전 증여의 산출세액 공제(한도 있음)</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제69조" target="_blank" rel="noopener">제69조 제2항</a> 기한 내 신고 시 3% 신고세액공제</li>
-</ul></div>
+</ul></details>
 
 <div class="box disclaim" id="disclaimer">
 <p class="label">면책 고지</p>
 <ol>
-<li>이 계산기는 입력하신 값과 <b>2026년 9월 20일 현재 시행 중인 상속세 및 증여세법·같은 법 시행령</b>을 바탕으로 한 일반적인 계산 결과를 보여 주는 참고 자료이며, 세무 자문이나 세무대리가 아닙니다.</li>
-<li>재산의 평가, 증여 시기, 이전 증여 이력, 가족 관계 등 개별 사정에 따라 실제 세액은 달라질 수 있습니다. 계산 결과는 신고 세액이나 과세관청의 결정을 보장하지 않습니다.</li>
-<li>법령이 개정된 뒤 이 페이지에 반영되기까지 시차가 있을 수 있습니다. 위 기준일을 확인해 주세요.</li>
-<li>입력하신 금액은 이용자의 브라우저 안에서만 계산되며, 서버로 전송되거나 저장되지 않습니다.</li>
-<li>이 계산 결과만을 근거로 한 판단이나 신고로 생긴 손해에 대하여 세무회계택은 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. 실제 증여·신고 전에는 반드시 세무 전문가와 상담하시기 바랍니다.</li>
+<li>이 계산기는 2026년 9월 20일 시행 법령을 기준으로 한 <b>참고용 산출 결과</b>이며, 세무 자문이나 실제 신고 세액이 아닙니다.</li>
+<li>재산 평가·이전 증여 등 개별 사정, 입력 오류, 계산기 자체의 오류로 실제 세액과 다를 수 있습니다.</li>
+<li>이 결과만을 근거로 한 판단·신고로 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. 실제 신고 전에는 세무 전문가와 상담하시기 바랍니다.</li>
 </ol>
-<p style="margin:8px 0 0;font-size:14px"><a href="/disclaimer/">사이트 이용 안내 및 면책 전문 보기 →</a></p>
+<p style="margin:8px 0 0;font-size:14px"><a href="/disclaimer/">이용 안내 및 면책 전문 →</a></p>
 </div>
 
 <div class="cta-box"><p>계산 결과는 참고용입니다. 재산 종류, 증여 시기, 이전 증여 이력에 따라 실제 세액은 달라질 수 있습니다. 내 경우를 정확히 따져 보고 싶으시면 문의를 남겨 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="/qa/gift-tax-limit/">증여세 한도 설명 보기</a></div></div>

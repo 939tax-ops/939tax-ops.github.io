@@ -33,6 +33,7 @@
   window.__giftCalc=calc;
   var $=function(id){return document.getElementById(id)};
   if(!$('gc')) return;
+  function relv(){var r=document.querySelector('input[name=rel]:checked');return r?r.value:'adult';}
   function num(id){var v=$(id).value.replace(/[^0-9]/g,'');return v===''?null:Number(v);}
   function comma(n){return Math.round(n).toLocaleString('ko-KR');}
   function kor(n){ if(!n) return ''; var eok=Math.floor(n/1e8), man=Math.floor((n%1e8)/1e4), won=Math.round(n%1e4), s=[];
@@ -40,14 +41,14 @@
   function fmt(el){ var v=el.value.replace(/[^0-9]/g,''); el.value=v?Number(v).toLocaleString('ko-KR'):''; var w=document.querySelector('.won[data-for="'+el.id+'"]'); if(w) w.textContent=v?kor(Number(v)):''; }
   function row(a,b,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td>'+b+'</td></tr>';}
   function run(){
-    var rel=$('rel').value, direct=(rel==='adult'||rel==='minor');
+    var rel=relv(), direct=(rel==='adult'||rel==='minor');
     $('marryWrap').style.display=direct?'':'none'; $('genWrap').style.display=direct?'':'none';
     var prev=num('prev')||0; $('prevTaxWrap').style.display=prev>0?'':'none';
-    var cur=num('cur'); if(!cur){ $('out').hidden=true; return; }
+    var cur=num('cur'); $('mini').hidden=!cur; if(!cur){ $('pay').textContent='0원'; $('sub').textContent='금액을 넣으면 바로 계산됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; return; }
     var r=calc({rel:rel,cur:cur,prev:prev,prevTax:prev>0?num('prevTax'):null,marry:$('marry').checked,gen:$('gen').checked,ontime:$('ontime').checked});
-    $('out').hidden=false;
-    if(r.blocked){ $('pay').textContent='계산하지 않음'; $('tbl').innerHTML=''; $('msg').textContent='조부모 증여(세대생략 할증)와 10년 안의 이전 증여가 함께 있으면, 조부모에게 받은 비율과 이전에 낸 할증액을 따로 따져야 해서 이 계산기로는 정확히 계산할 수 없습니다. 문의를 남겨 주시면 확인해 드리겠습니다.'; return; }
-    $('pay').textContent=comma(r.pay)+'원';
+    if(r.blocked){ $('miniPay').textContent='상담 필요'; $('pay').textContent='상담 필요'; $('sub').textContent=''; $('tbl').innerHTML=''; $('msg').textContent='조부모 증여(세대생략 할증)와 10년 안의 이전 증여가 함께 있으면, 조부모에게 받은 비율과 이전에 낸 할증액을 따로 따져야 해서 이 계산기로는 정확히 계산할 수 없습니다. 문의를 남겨 주시면 확인해 드리겠습니다.'; return; }
+    $('pay').textContent=comma(r.pay)+'원'; $('miniPay').textContent=comma(r.pay)+'원';
+    $('sub').textContent=r.pay===0?'낼 세금이 없습니다':(kor(r.pay)+(r.filing?' · 3개월 안에 신고할 때':' · 신고세액공제 없이'));
     var t='';
     t+=row('증여받은 금액'+(prev>0?' (10년 합산)':''),comma(r.V)+'원');
     t+=row('증여재산공제 (한도 '+comma(r.lim)+'원)','− '+comma(r.ded)+'원');
@@ -68,6 +69,8 @@
     $('msg').textContent=m.join(' ');
   }
   ['cur','prev','prevTax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
-  ['rel','marry','gen','ontime'].forEach(function(id){ $(id).addEventListener('change',run); });
+  ['marry','gen','ontime'].forEach(function(id){ $(id).addEventListener('change',run); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=rel]'),function(el){el.addEventListener('change',run);});
+  Array.prototype.forEach.call(document.querySelectorAll('.quick button'),function(b){b.addEventListener('click',function(){var el=$('cur');if(b.hasAttribute('data-clear')){el.value='';}else{el.value=String((num('cur')||0)+Number(b.getAttribute('data-add')));}fmt(el);run();});});
   run();
 })();
