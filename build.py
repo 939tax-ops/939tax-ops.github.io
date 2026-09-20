@@ -43,10 +43,15 @@ def person_ld():
 def page(title, desc, path, body, active="", ld=None, extra_head=""):
     canon = SITE + path
     graph = [org_ld()] + (ld or [])
-    nav = [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc"),
-           ("/about/", "사무소 소개", "about"), ("/about/#location", "오시는 길", "loc")]
     on = ' class="on"'
-    navh = "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in nav)
+    def dd(label, key, head, items):
+        sub = "".join(f'<a href="{h}">{t}</a>' for h, t in items)
+        cls = ' on' if key == active else ''
+        return (f'<div class="dd{cls}"><a class="dd-t" href="{head}" aria-haspopup="true">{label}<span class="car" aria-hidden="true"></span></a>'
+                f'<div class="dd-m">{sub}</div></div>')
+    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/about/#location", "오시는 길")])
+            + dd("주요 서비스", "svc", "/services/", [(f"/services/{k}/", t) for k, t, _ in ALL_SERVICES])
+            + "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc")]))
     return f'''<!doctype html>
 <html lang="ko">
 <head>
@@ -194,13 +199,56 @@ def build_qa_index(posts):
 
 # ---------- 고정 페이지 ----------
 SERVICES = [
-    ("사업자 세무기장", "개인사업자·법인의 장부 작성과 매달 세무 관리"),
-    ("사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세 신고"),
-    ("양도소득세", "주택·토지·상가를 팔기 전 세액 검토와 신고"),
-    ("상속세·증여세", "증여 전 세액 비교, 상속 재산 평가와 신고"),
-    ("경정청구", "이미 낸 세금 중 빠뜨린 공제·감면을 찾아 돌려받는 절차"),
-    ("세무조사 대응", "세무조사·소명 요청에 대한 자료 준비와 대응"),
+    ("bookkeeping", "사업자 세무기장", "개인사업자·법인의 장부 작성과 매달 세무 관리"),
+    ("tax-filing", "사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세 신고"),
+    ("capital-gains", "양도소득세", "주택·토지·상가를 팔기 전 세액 검토와 신고"),
+    ("inheritance-gift", "상속세·증여세", "증여 전 세액 비교, 상속 재산 평가와 신고"),
+    ("refund-claim", "경정청구", "이미 낸 세금 중 빠뜨린 공제·감면을 찾아 돌려받는 절차"),
+    ("tax-audit", "세무조사 대응", "세무조사·소명 요청에 대한 자료 준비와 대응"),
 ]
+PLANNING = ("tax-planning", "절세상담", "신고·거래 전에 선택지별 세금을 먼저 비교해 보는 상담")
+ALL_SERVICES = SERVICES + [PLANNING]
+
+# 서비스별 상세 — 사실 확인이 필요한 수치·기한·조문은 넣지 않음(개별 Q&A 글에서 조문과 함께 다룸)
+SERVICE_DETAIL = {
+    "bookkeeping": {
+        "intro": "개인사업자·법인의 장부를 대신 작성하고, 매달 들어오는 매출·매입 자료를 정리해 신고까지 이어지도록 관리합니다.",
+        "do": ["매출·매입 증빙 정리와 장부 작성", "부가가치세, 종합소득세 또는 법인세 신고", "직원·프리랜서 인건비에 대한 원천세 신고", "신고 전 예상 세액 안내"],
+        "for": ["사업을 시작해 장부를 처음 맡기시는 분", "매출이 늘어 장부 작성이 부담되시는 분", "직접 신고하다가 누락이 걱정되시는 분"],
+    },
+    "tax-filing": {
+        "intro": "기장은 직접 하시거나 따로 맡기지 않고, 신고 시기에만 도움이 필요한 사업자의 세금 신고를 대행합니다.",
+        "do": ["부가가치세 신고", "종합소득세 신고", "법인세 신고", "원천세 신고"],
+        "for": ["신고 시기에만 도움이 필요하신 분", "지난 신고 내용을 한 번 점검받고 싶으신 분"],
+    },
+    "capital-gains": {
+        "intro": "주택·토지·상가를 팔기 전에 세액을 먼저 따져 보고, 판 뒤에는 양도소득세 신고를 맡습니다.",
+        "do": ["팔기 전 예상 양도소득세 계산", "비과세·감면 적용 여부 검토", "취득가액·필요경비 자료 확인", "양도소득세 신고"],
+        "for": ["매도 시기나 방법을 정하기 전이신 분", "비과세가 되는지 확신이 없으신 분", "이미 계약을 마치고 신고를 앞두신 분"],
+    },
+    "inheritance-gift": {
+        "intro": "증여는 하기 전에 방법별 세액을 비교하고, 상속은 재산 평가부터 신고까지 함께 진행합니다.",
+        "do": ["증여 전 방법·시기별 세액 비교", "증여세 신고", "상속 재산 파악과 평가", "상속세 신고"],
+        "for": ["자녀에게 자금·부동산 증여를 계획하시는 분", "가족이 돌아가신 뒤 상속 절차를 앞두신 분"],
+        "calc": ("/calculators/gift-tax/", "증여세 계산기로 먼저 확인해 보기"),
+    },
+    "refund-claim": {
+        "intro": "이미 신고·납부한 세금 가운데 받지 못한 공제·감면이 있는지 찾아보고, 있으면 돌려받는 절차(경정청구)를 진행합니다.",
+        "do": ["지난 신고서 검토", "놓친 세액공제·감면 확인", "경정청구서 작성과 제출", "환급 진행 상황 확인"],
+        "for": ["직원을 새로 뽑거나 창업 관련 공제를 받은 적이 없는 사업자", "지난 신고가 맞게 됐는지 한 번 점검받고 싶으신 분"],
+        "note": "경정청구는 청구할 수 있는 기간이 정해져 있어, 해당 연도가 기간 안에 있는지부터 확인합니다.",
+    },
+    "tax-audit": {
+        "intro": "세무조사 통지나 소명 요청을 받았을 때 필요한 자료를 준비하고 과정 전반에 대응합니다.",
+        "do": ["조사·소명 요청 내용 검토", "제출 자료 준비", "소명서 작성", "조사 진행 과정 대응"],
+        "for": ["세무서에서 소명 요청이나 해명 안내를 받으신 분", "세무조사 사전통지를 받으신 분"],
+    },
+    "tax-planning": {
+        "intro": "사업 시작, 부동산 매매, 증여·상속처럼 세금이 크게 갈리는 결정을 하기 전에 선택지별 세금을 비교해 드립니다.",
+        "do": ["상황별 선택지 정리", "선택지별 예상 세액 비교", "필요한 서류와 일정 안내"],
+        "for": ["개인사업자와 법인 중 고민하시는 분", "부동산 매매·증여 방법을 정하기 전이신 분"],
+    },
+}
 
 SEARCH_BOX = """<div class="search" data-search>
 <label for="q" class="search-label">세금 궁금한 점, 먼저 검색해 보세요</label>
@@ -220,7 +268,7 @@ def build_search_index(posts):
     write("search-index.json", json.dumps(items, ensure_ascii=False))
 
 def build_home(posts):
-    svc = "".join(f'<div class="card svc"><i>{i:02d}</i><b>{t}</b><span>{d}</span></div>' for i, (t, d) in enumerate(SERVICES, 1))
+    svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(SERVICES, 1))
     latest = "".join(qa_item(p) for p in posts[:6]) or '<li><p class="lead">준비 중입니다.</p></li>'
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
@@ -231,12 +279,12 @@ def build_home(posts):
 <div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
 </div>
 <div class="hero-img m" aria-hidden="true"></div>
-<a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에<br>계산해 보기 →</b></a>
+<a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에 계산해 보기 →</b></a>
 </div></div>
 <div class="wrap">
 <section class="block search-block">{SEARCH_BOX}</section>
 <section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
-<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div></section>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></section>
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 <section class="block alt"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">연락처</h2>
@@ -257,7 +305,7 @@ def build_about():
     import urllib.parse as up
     nmap = "https://map.naver.com/p/search/" + up.quote(q)
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
-    svc = "".join(f"<li><b>{t}</b> — {d}</li>" for t, d in SERVICES)
+    svc = "".join(f'<li><a href="/services/{k}/"><b>{t}</b></a> — {d}</li>' for k, t, d in ALL_SERVICES)
     body = f'''<div class="wrap" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 24px">사무소 소개</h1>
 <section class="block" style="padding-top:0"><div class="profile">
@@ -371,9 +419,41 @@ def build_404():
     body = '<div class="narrow" style="padding:60px 20px"><h1 style="color:var(--green)">페이지를 찾을 수 없습니다</h1><p>주소가 바뀌었거나 삭제된 페이지입니다.</p><div class="btns"><a class="btn primary" href="/">첫 화면으로</a><a class="btn ghost" href="/qa/">세무 Q&amp;A</a></div></div>'
     write("404.html", page("페이지를 찾을 수 없습니다 | " + NAME, "", "/404.html", body).replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1))
 
+def build_services(posts):
+    cards = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(ALL_SERVICES, 1))
+    body = f'''<div class="wrap" style="padding-top:36px">
+<h1 style="color:var(--green);margin:0 0 10px">주요 서비스</h1>
+<p class="lead">개인·법인 사업자 세무부터 부동산·가족 간 세금까지, 맡고 있는 업무입니다.</p>
+<section class="block" style="padding-top:12px"><div class="grid svc-grid">{cards}</div></section></div>'''
+    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사가 맡는 업무 — 세무기장, 세금신고 대행, 양도소득세, 상속세·증여세, 경정청구, 세무조사 대응, 절세상담.", "/services/", body, "svc"))
+    for k, t, d in ALL_SERVICES:
+        x = SERVICE_DETAIL[k]
+        do = "".join(f"<li>{esc(v)}</li>" for v in x["do"])
+        fr = "".join(f"<li>{esc(v)}</li>" for v in x["for"])
+        note = f'<p class="note">{esc(x["note"])}</p>' if x.get("note") else ""
+        calc = f'<p style="font-family:var(--sans);margin-top:14px"><a class="more" href="{x["calc"][0]}">{x["calc"][1]} →</a></p>' if x.get("calc") else ""
+        others = "".join(f'<a href="/services/{k2}/">{t2}</a>' for k2, t2, _ in ALL_SERVICES if k2 != k)
+        body = f'''<div class="wrap svc-page" style="padding-top:28px">
+<p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
+<h1>{t}</h1>
+<p class="lead">{esc(x["intro"])}</p>
+<div class="svc-cols">
+<section><h2>맡는 일</h2><ul class="ticks">{do}</ul></section>
+<section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
+</div>{note}{calc}
+<div class="band" style="margin-top:28px"><div><b>본인의 상황을 고려해 따져 보고 싶으시면</b><span>문의를 남겨 주시면 확인 후 연락드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
+<nav class="svc-others"><span>다른 서비스</span>{others}</nav>
+</div>'''
+        ld = [{"@type": "Service", "name": t, "description": x["intro"], "provider": {"@id": SITE + "/#org"}, "areaServed": "대한민국", "url": f"{SITE}/services/{k}/"},
+              {"@type": "BreadcrumbList", "itemListElement": [
+                  {"@type": "ListItem", "position": 1, "name": "홈", "item": SITE + "/"},
+                  {"@type": "ListItem", "position": 2, "name": "주요 서비스", "item": SITE + "/services/"},
+                  {"@type": "ListItem", "position": 3, "name": t, "item": f"{SITE}/services/{k}/"}]}]
+        write(f"services/{k}/index.html", page(f"{t} | {NAME} {PERSON}", f"{x['intro']} 서울 동대문구 청량리 세무회계택 김태형 세무사.", f"/services/{k}/", body, "svc", ld))
+
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today)]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today)] + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -393,6 +473,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts)
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts)
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")

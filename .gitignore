@@ -1,3 +1,4 @@
 .secret/
 __pycache__/
 Claude outputs/
+_backup/
