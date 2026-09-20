@@ -49,7 +49,7 @@
     t+=row('1년 기장료 <small>(월 기장료 × 12개월)</small>',comma(r.year)+'원','total');
     t+=row('부가가치세 포함 시',comma(r.yearVat)+'원');
     $('tbl').innerHTML=t;
-    $('msg').textContent='기장료 외에 종합소득세·법인세 신고 때 세무조정료가 연 1회 별도로 있습니다. 보수 기준표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했으며, 1인 사업자는 기장료가 20% 낮게 적용됩니다. 원가계산·외부감사·지점 등 업무 특성에 따라 보수가 가감될 수 있습니다.';
+    $('msg').innerHTML='· 세무조정료(종합소득세·법인세, 연 1회)는 별도<br>· 보수표는 직원 있는 사업자 기준, 1인 사업자는 20% 낮게 적용<br>· 업무 특성에 따라 보수가 달라질 수 있음';
   }
   ['sales','asset','grant'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   Array.prototype.forEach.call(document.querySelectorAll('input[name=ftype],input[name=solo]'),function(el){el.addEventListener('change',run);});
