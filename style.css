@@ -388,3 +388,8 @@ section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
 @media (min-width:761px){
   .hero-c1 .hero-img.d{right:0 !important;left:calc(50% - 470px + 260px);width:auto;background-position:30% center}
 }
+
+/* v14: 사진 오른쪽 끝을 본문 폭(메뉴·검색창 오른쪽 선)에 맞춤 — v13 대체 */
+@media (min-width:761px){
+  .hero-c1 .hero-img.d{left:max(0px,calc(50% - 470px + 240px)) !important;right:max(0px,calc(50% - 470px)) !important;width:auto !important;background-position:62% center}
+}
