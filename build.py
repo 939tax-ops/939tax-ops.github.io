@@ -75,7 +75,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
-<nav class="nav">{navh}<a class="cta" href="{KAKAO}" target="_blank" rel="noopener">상담 문의</a></nav>
+<nav class="nav">{navh}<a class="cta" href="/contact/">문의하기</a></nav>
 </div></header>
 <main>
 {body}
@@ -155,7 +155,7 @@ def build_post(p):
 {calc}
 <div class="box"><p class="label">근거 법령</p><ul>{laws}</ul></div>
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구를 맡고 있습니다.</p></div></div>
-<div class="cta-box"><p>같은 질문이라도 가족 관계, 받은 시기, 재산 종류에 따라 결과가 달라집니다. 내 경우가 궁금하시면 편하게 물어보세요.</p><div class="btns"><a class="btn kakao" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div></div>
+<div class="cta-box"><p>같은 질문이라도 가족 관계, 받은 시기, 재산 종류에 따라 결과가 달라집니다. 내 경우가 궁금하시면 편하게 물어보세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
 <p class="disclaimer">이 글은 {p.get("updated", p["date"])} 기준 법령을 바탕으로 작성했습니다. 예시 금액은 따로 적지 않은 한 신고세액공제 반영 전 산출세액입니다. 개별 사안에 따라 결론이 달라질 수 있습니다.</p>
 </article></div>'''
     ld = [{"@type": "Article", "headline": p["title"], "description": p["description"],
@@ -187,7 +187,8 @@ def build_qa_index(posts):
     body = f'''<div class="wrap" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 6px">세무 Q&amp;A</h1>
 <p class="lead" style="margin:0 0 20px">자주 받는 세금 질문에 세무사가 조문을 근거로 답합니다.</p>
-<div class="tabs">{"".join(f'<a href="#{k}">{v}</a>' for k, v in CATS.items())}</div>
+{SEARCH_BOX}
+<div class="tabs" style="margin-top:24px">{"".join(f'<a href="#{k}">{v}</a>' for k, v in CATS.items())}</div>
 {"".join(parts)}
 </div>'''
     write("qa/index.html", page("세무 Q&A | " + NAME, "사업자 세금과 생활 세금에 대한 자주 묻는 질문을 세무사가 조문 근거와 함께 정리했습니다.", "/qa/", body, "qa"))
@@ -202,6 +203,23 @@ SERVICES = [
     ("세무조사 대응", "세무조사·소명 요청에 대한 자료 준비와 대응"),
 ]
 
+SEARCH_BOX = """<div class="search" data-search>
+<label for="q" class="search-label">세금 궁금한 점, 먼저 검색해 보세요</label>
+<div class="search-row"><input id="q" type="search" placeholder="예: 증여세 한도, 결혼자금, 경정청구 기한" autocomplete="off"><button type="button">검색</button></div>
+<div class="search-out" aria-live="polite"></div>
+</div>
+<script src="/search.js" defer></script>"""
+
+def build_search_index(posts):
+    items = []
+    for p in posts:
+        faq_md = p["body"].split("## 자주 묻는 질문", 1)[1] if "## 자주 묻는 질문" in p["body"] else ""
+        qs = re.findall(r"^### (.+)$", faq_md, re.M)
+        heads = re.findall(r"^## (.+)$", p["body"].split("## 자주 묻는 질문", 1)[0], re.M)
+        items.append({"t": p["title"], "u": f"/qa/{p['slug']}/", "c": CATS.get(p["category"], ""),
+                      "s": strip_tags(md(p["summary"])).strip(), "h": heads + qs, "k": p.get("keywords", "")})
+    write("search-index.json", json.dumps(items, ensure_ascii=False))
+
 def build_home(posts):
     svc = "".join(f'<div class="card svc"><i>{i:02d}</i><b>{t}</b><span>{d}</span></div>' for i, (t, d) in enumerate(SERVICES, 1))
     latest = "".join(qa_item(p) for p in posts[:6]) or '<li><p class="lead">준비 중입니다.</p></li>'
@@ -210,13 +228,14 @@ def build_home(posts):
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인 기장부터 종합소득세, 양도소득세, 상속세·증여세 신고와 경정청구까지 맡고 있습니다.</p>
-<div class="btns"><a class="btn kakao" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
+<div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
 </div>
 <div class="photo"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="380" height="582"></div>
 </div></div>
 <div class="wrap">
+<section class="block search-block">{SEARCH_BOX}</section>
 <section class="block"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
-<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="{KAKAO}" target="_blank" rel="noopener">상담 문의</a></div></section>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div></section>
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">연락처</h2>
@@ -290,13 +309,44 @@ def build_gift_calc():
                "부모·배우자·자녀에게 받은 금액을 넣으면 증여재산공제, 10년 합산, 혼인·출산 공제, 세대생략 할증, 신고세액공제를 반영한 예상 증여세를 계산합니다.",
                "/calculators/gift-tax/", tpl, "calc", ld))
 
+FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다
+
+def build_contact():
+    if FORM_URL:
+        form = f'<div class="form-wrap"><iframe src="{FORM_URL}?embedded=true" title="문의 남기기" loading="lazy"></iframe></div>'
+    else:
+        form = '<div class="placeholder">온라인 문의 접수 양식을 준비 중입니다. 그동안은 카카오톡 채널이나 이메일로 남겨 주세요.</div>'
+    body = f'''<div class="narrow" style="padding-top:36px">
+<h1 style="color:var(--green);margin:0 0 6px">문의하기</h1>
+<p class="lead" style="margin:0 0 22px">문의를 남겨 주시면 내용을 확인한 뒤 연락드리겠습니다.</p>
+<section class="block search-block" style="padding-top:0">{SEARCH_BOX}</section>
+<h2 class="sec">문의 남기기</h2>
+<div class="notice">
+<p><b>남기시기 전에 확인해 주세요</b></p>
+<ul>
+<li>주민등록번호, 계좌번호, 홈택스 비밀번호 같은 정보는 적지 마세요.</li>
+<li>문의 접수만으로 세무대리 계약이 이루어지지 않으며, 접수 내용은 확인 후 순서대로 연락드립니다.</li>
+<li>이 사이트의 글과 검색 답변은 일반적인 기준이며, 개별 사안에 대한 세무 자문이 아닙니다.</li>
+</ul>
+</div>
+{form}
+<h2 class="sec" style="margin-top:40px">다른 연락 방법</h2>
+<table class="info">
+<tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a></td></tr>
+<tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
+<tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
+<tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
+</table>
+</div>'''
+    write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사에게 세무 상담·기장 문의를 남기는 페이지입니다.", "/contact/", body, "contact"))
+
 def build_404():
     body = '<div class="narrow" style="padding:60px 20px"><h1 style="color:var(--green)">페이지를 찾을 수 없습니다</h1><p>주소가 바뀌었거나 삭제된 페이지입니다.</p><div class="btns"><a class="btn primary" href="/">첫 화면으로</a><a class="btn ghost" href="/qa/">세무 Q&amp;A</a></div></div>'
     write("404.html", page("페이지를 찾을 수 없습니다 | " + NAME, "", "/404.html", body).replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1))
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today)]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/contact/", today)]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -316,6 +366,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_404()
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_contact(); build_404(); build_search_index(posts)
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
