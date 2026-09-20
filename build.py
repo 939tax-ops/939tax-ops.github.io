@@ -87,7 +87,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX} · 이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세친구</a></p>
 <p class="small">이 사이트의 글과 계산기는 일반적인 정보 제공을 위한 것으로, 개별 사안에 대한 세무 자문이 아닙니다. 실제 신고 전에는 전문가와 상담하시기 바랍니다.</p>
-<p class="small">© {datetime.date.today().year} {NAME}</p>
+<p class="small"><a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
 </div></footer>
 </body>
 </html>
@@ -283,14 +283,21 @@ def build_about():
     write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
 
 CALCS = [
-    ("증여세", "증여세 계산기", "관계별 공제·10년 합산을 반영한 예상 증여세"),
+    ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
     ("양도소득세", "양도소득세 계산기", "보유기간·공제를 반영한 예상 양도세"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
     ("기장료", "기장료 안내", "업종·매출 규모별 월 기장료"),
 ]
 
 def calc_cards():
-    return "".join(f'<div class="card soon"><span class="tag">{t}</span><b>{n}</b><span>{d}</span><em>준비 중</em></div>' for t, n, d in CALCS)
+    out = []
+    for c in CALCS:
+        t, n, d = c[0], c[1], c[2]
+        if len(c) > 3:
+            out.append(f'<a class="card" href="{c[3]}"><span class="tag">{t}</span><b>{n}</b><span>{d}</span></a>')
+        else:
+            out.append(f'<div class="card soon"><span class="tag">{t}</span><b>{n}</b><span>{d}</span><em>준비 중</em></div>')
+    return "".join(out)
 
 def build_calc_index():
     body = f'''<div class="wrap" style="padding-top:36px">
@@ -340,13 +347,33 @@ def build_contact():
 </div>'''
     write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사에게 세무 상담·기장 문의를 남기는 페이지입니다.", "/contact/", body, "contact"))
 
+def build_disclaimer():
+    body = f'''<div class="narrow" style="padding-top:36px">
+<h1 style="color:var(--green);margin:0 0 20px">이용 안내 및 면책</h1>
+<article>
+<h2>1. 제공하는 정보의 성격</h2>
+<p>이 사이트의 세무 Q&amp;A, 검색 답변, 세금 계산기는 세법에 대한 일반적인 정보를 제공하기 위한 것입니다. 특정인의 개별 사안에 대한 세무 자문이나 세무대리가 아니며, 이 사이트를 이용하는 것만으로 세무대리 계약이 이루어지지 않습니다.</p>
+<h2>2. 정보의 기준 시점</h2>
+<p>각 글과 계산기에는 작성·수정 기준일이 적혀 있습니다. 세법은 자주 개정되므로 기준일 이후 바뀐 내용이 반영되지 않았을 수 있습니다.</p>
+<h2>3. 계산기</h2>
+<p>계산기는 이용자가 입력한 값과 기준일 현재 법령을 바탕으로 한 참고용 계산 결과를 보여 줍니다. 재산 평가, 거래 시기, 이전 거래 이력, 가족 관계 등에 따라 실제 세액은 달라질 수 있으며, 계산 결과가 신고 세액이나 과세관청의 결정을 보장하지 않습니다. 계산기에 입력한 금액은 이용자의 브라우저 안에서만 계산되고 서버로 전송되거나 저장되지 않습니다.</p>
+<h2>4. 검색 답변</h2>
+<p>검색 답변은 {PERSON}가 작성·검수한 Q&amp;A 글 가운데 입력한 질문과 맞는 글의 요약을 보여 주는 것이며, 질문 내용에 맞춘 새로운 답변을 만들어 내는 기능이 아닙니다.</p>
+<h2>5. 책임의 한계</h2>
+<p>이 사이트의 정보만을 근거로 한 판단이나 신고로 생긴 손해에 대하여 {NAME}은 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. 실제 신고·거래 전에는 반드시 세무 전문가와 상담하시기 바랍니다.</p>
+<h2>6. 문의 접수</h2>
+<p>문의를 남기실 때 주민등록번호, 계좌번호, 홈택스 비밀번호 같은 정보는 적지 마세요. 접수된 문의는 확인한 뒤 순서대로 연락드리며, 접수만으로 상담이나 세무대리 계약이 성립하지 않습니다.</p>
+<p class="disclaimer">시행일: 2026년 9월 20일</p>
+</article></div>'''
+    write("disclaimer/index.html", page(f"이용 안내 및 면책 | {NAME}", "세무회계택 홈페이지의 글·검색·계산기 이용 안내와 면책 사항입니다.", "/disclaimer/", body))
+
 def build_404():
     body = '<div class="narrow" style="padding:60px 20px"><h1 style="color:var(--green)">페이지를 찾을 수 없습니다</h1><p>주소가 바뀌었거나 삭제된 페이지입니다.</p><div class="btns"><a class="btn primary" href="/">첫 화면으로</a><a class="btn ghost" href="/qa/">세무 Q&amp;A</a></div></div>'
     write("404.html", page("페이지를 찾을 수 없습니다 | " + NAME, "", "/404.html", body).replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1))
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/contact/", today)]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today)]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -366,6 +393,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_contact(); build_404(); build_search_index(posts)
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts)
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
