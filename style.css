@@ -602,3 +602,11 @@ a.card.svc b{color:var(--green)}
 .hero-ch{margin-top:24px}
 @media (max-width:760px){.hero-ch span{display:none}.hero-ch{margin-top:16px}}
 .svc-page .rel-svc{margin-top:18px}
+/* v25: 카카오톡 버튼(브랜드 노랑) · 채널 아이콘 SVG */
+.btn.kk,.hero .btn.kk,.cta-box .btn.kk{display:inline-flex;align-items:center;gap:7px;background:#FEE500;color:#191600;border:1px solid #FEE500}
+.btn.kk:hover{background:#FADA0A}
+.btn.kk .ic{width:19px;height:19px}
+.hero-ch a{padding:5px 12px 5px 6px;background:#fff;font-size:14.5px;line-height:1.2;-webkit-font-smoothing:antialiased}
+.hero-ch .ic{width:20px;height:20px;flex:none;display:block}
+.cta-box .btn.kakao{background:#fff;color:var(--green)}
+.hero-c1 .hero-ch{margin-top:28px}
