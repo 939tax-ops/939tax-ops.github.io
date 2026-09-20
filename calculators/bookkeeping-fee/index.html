@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기장료 계산기 | 세무회계택</title>
-<meta name="description" content="개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료와 세무조정료가 산출됩니다. 1인 사업자 20% 할인 반영.">
+<meta name="description" content="개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료가 산출됩니다. 1인 사업자 기준 금액 반영.">
 <link rel="canonical" href="https://tax939.com/calculators/bookkeeping-fee/">
 <meta name="naver-site-verification" content="e074d43c1aa971b277361693bbff22e6a1cf9253" />
 <meta name="google-site-verification" content="H_CwM250NOvT-HL7Ky2uBmvKYMq18bXleFuTAcapo3k" />
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세무회계택">
 <meta property="og:title" content="기장료 계산기 | 세무회계택">
-<meta property="og:description" content="개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료와 세무조정료가 산출됩니다. 1인 사업자 20% 할인 반영.">
+<meta property="og:description" content="개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료가 산출됩니다. 1인 사업자 기준 금액 반영.">
 <meta property="og:url" content="https://tax939.com/calculators/bookkeeping-fee/">
 <meta property="og:image" content="https://tax939.com/assets/logo-v.png">
 <meta property="og:locale" content="ko_KR">
@@ -63,14 +63,13 @@
 <p class="mini" id="mini" hidden>예상 기장료 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
 
 <details class="more-opt">
-<summary>해당되면 펼치기 <small>자산총액 · 국고보조금 · 성실신고확인</small></summary>
+<summary>해당되면 펼치기 <small>자산총액 · 국고보조금</small></summary>
 <label for="asset">자산총액 <span class="hint">매출액보다 크면 이 금액이 기준</span></label>
 <div class="amt sm"><input type="text" id="asset" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="asset"></div>
 <label for="grant">받은 국고보조금 <span class="hint">매출액에 더해 계산</span></label>
 <div class="amt sm"><input type="text" id="grant" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="grant"></div>
-<label class="chk" id="sinWrap"><input type="checkbox" id="sincere"> 성실신고확인 대상 <span class="hint">확인 보수 연 1회 추가</span></label>
 </details>
 </div>
 
@@ -90,7 +89,7 @@
 <li>매출·매입 증빙 정리와 회계 장부 작성</li>
 <li>부가가치세·원천세 신고</li>
 <li>기장 사업과 관련된 일반적인 수준의 세무 자문</li>
-<li>세무조정(종합소득세·법인세 신고)은 연 1회 별도 보수입니다</li>
+<li>종합소득세·법인세 신고 때의 세무조정료는 기장료와 별도입니다</li>
 </ul>
 </details>
 

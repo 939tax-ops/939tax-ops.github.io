@@ -427,7 +427,7 @@ def build_fee_calc():
            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
     write("calculators/bookkeeping-fee/index.html",
           page(f"기장료 계산기 | {NAME}",
-               "개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료와 세무조정료가 산출됩니다. 1인 사업자 20% 할인 반영.",
+               "개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료가 산출됩니다. 1인 사업자 기준 금액 반영.",
                "/calculators/bookkeeping-fee/", tpl, "calc", ld))
 
 FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다

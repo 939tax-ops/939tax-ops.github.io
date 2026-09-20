@@ -20,7 +20,7 @@
     var mPay=monthly-disc;
     var adj=row[2]+Math.floor(Math.max(0,base-row[4])*row[3]/10000);
     var sin=(o.type==='ind'&&o.sincere)?sincere(o.sales||0):0;
-    var year=mPay*12+adj+sin;
+    var year=mPay*12; // 세무조정료는 화면 합계에서 제외(별도 안내)
     return {base:base,nego:false,monthly:monthly,disc:disc,mPay:mPay,mVat:Math.round(mPay*1.1),adj:adj,sin:sin,year:year,yearVat:Math.round(year*1.1)};
   }
   window.__feeCalc=calc;
@@ -33,10 +33,10 @@
   function val(n){var r=document.querySelector('input[name='+n+']:checked');return r?r.value:'';}
   function row(a,b,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td>'+b+'</td></tr>';}
   function run(){
-    var type=val('ftype'); $('sinWrap').style.display=type==='ind'?'':'none';
+    var type=val('ftype');
     var sales=num('sales'), asset=num('asset'), grant=num('grant');
     if(!sales&&!asset){ $('pay').textContent='0원'; $('sub').textContent='매출액을 넣으면 바로 산출됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; $('mini').hidden=true; return; }
-    var r=calc({type:type,sales:sales,asset:asset,grant:grant,solo:val('solo')==='y',sincere:$('sincere').checked});
+    var r=calc({type:type,sales:sales,asset:asset,grant:grant,solo:val('solo')==='y',sincere:false});
     $('mini').hidden=false;
     if(r.nego){ $('pay').textContent='별도 협의'; $('miniPay').textContent='별도 협의'; $('sub').textContent='규모가 커서 업무 범위를 확인한 뒤 정합니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').textContent=''; return; }
     $('pay').textContent='월 '+comma(r.mPay)+'원'; $('miniPay').textContent='월 '+comma(r.mPay)+'원';
@@ -46,15 +46,12 @@
     var soloFee=r.monthly-Math.round(r.monthly*0.2);
     if(r.disc){ t+=row('월 기장료 (1인 사업자)',comma(r.mPay)+'원','sub'); }
     else { t+=row('월 기장료 (1인 사업자 기준)',comma(soloFee)+'원'); t+=row('4대보험 가입 직원 있음','+ '+comma(r.monthly-soloFee)+'원'); t+=row('월 기장료',comma(r.mPay)+'원','sub'); }
-    t+=row('세무조정료 <small>(연 1회)</small>',comma(r.adj)+'원');
-    if(r.sin) t+=row('성실신고확인 추가보수 <small>(연 1회)</small>',comma(r.sin)+'원');
-    t+=row('1년 예상 합계',comma(r.year)+'원','total');
+    t+=row('1년 기장료 <small>(월 기장료 × 12개월)</small>',comma(r.year)+'원','total');
     t+=row('부가가치세 포함 시',comma(r.yearVat)+'원');
     $('tbl').innerHTML=t;
-    $('msg').textContent='보수 기준표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했으며, 1인 사업자는 기장료가 20% 낮게 적용됩니다. 원가계산·외부감사·지점 등 업무 특성에 따라 보수가 가감될 수 있습니다.';
+    $('msg').textContent='기장료 외에 종합소득세·법인세 신고 때 세무조정료가 연 1회 별도로 있습니다. 보수 기준표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했으며, 1인 사업자는 기장료가 20% 낮게 적용됩니다. 원가계산·외부감사·지점 등 업무 특성에 따라 보수가 가감될 수 있습니다.';
   }
   ['sales','asset','grant'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
-  $('sincere').addEventListener('change',run);
   Array.prototype.forEach.call(document.querySelectorAll('input[name=ftype],input[name=solo]'),function(el){el.addEventListener('change',run);});
   Array.prototype.forEach.call(document.querySelectorAll('.quick button'),function(b){b.addEventListener('click',function(){var el=$('sales');if(b.hasAttribute('data-clear')){el.value='';}else{el.value=String(num('sales')+Number(b.getAttribute('data-add')));}fmt(el);run();});});
   run();
