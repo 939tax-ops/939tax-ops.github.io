@@ -626,7 +626,7 @@ def build_fees():
 <section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
 <div class="pair"><div class="it"><p>1인 사업자 <small>(4대보험 가입 직원 없음)</small></p><b>기장료 20% 할인</b></div>
 <div class="it"><p>기장 거래처</p><b>양도·상속·증여 등 20% 할인</b></div></div>
-<p class="note c">보수표 기준 금액에서 할인합니다. 기장료 기본 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
+<p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. 기장료 기준 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 {lead_form(None, "lfe")}
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>

@@ -51,7 +51,7 @@
     t+=row('1년 예상 합계',comma(r.year)+'원','total');
     t+=row('부가가치세 포함 시',comma(r.yearVat)+'원');
     $('tbl').innerHTML=t;
-    $('msg').textContent='원가계산·외부감사·지점 등 업무 특성에 따라 보수가 가감될 수 있습니다.';
+    $('msg').textContent='보수 기준표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했으며, 1인 사업자는 기장료가 20% 낮게 적용됩니다. 원가계산·외부감사·지점 등 업무 특성에 따라 보수가 가감될 수 있습니다.';
   }
   ['sales','asset','grant'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   $('sincere').addEventListener('change',run);
