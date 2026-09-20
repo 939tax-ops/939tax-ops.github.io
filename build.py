@@ -83,6 +83,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <link rel="alternate" type="application/rss+xml" title="{NAME} 세무 Q&amp;A" href="/feed.xml">
 {FONT}
 <link rel="stylesheet" href="/style.css">
+{'<script src="/lead.js" defer></script>' if LEAD_ENABLED else ''}
 {extra_head}
 <script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)}</script>
 </head>
@@ -101,7 +102,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <p>{ADDR1} {ADDR2}</p>
 <p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX} · 이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세친구</a></p>
-<p class="small"><a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
+<p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
 </div></footer>
 </body>
 </html>
@@ -320,6 +321,7 @@ def build_home(posts):
 <section class="block search-block">{SEARCH_BOX}</section>
 <section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></section>
+{('<section class="block lead-block">' + lead_form(None, "lh") + '</section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 <section class="block alt"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">연락처</h2>
@@ -402,8 +404,77 @@ def build_gift_calc():
 
 FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다
 
+# ---------- 1:1 상담 신청 폼 ----------
+# 구글폼 연결값: action = https://docs.google.com/forms/d/e/<ID>/formResponse, 나머지는 entry.숫자
+LEAD = {"action": "", "service": "", "name": "", "phone": "", "time": "", "memo": "", "agree": ""}
+LEAD_ENABLED = bool(LEAD["action"]) or bool(os.environ.get("LEAD_PREVIEW"))
+LEAD_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 검토)"), ("property", "양도세 · 증여세 · 상속세"),
+                 ("tax-planning", "절세상담"), ("bookkeeping", "세무기장"), ("tax-audit", "세무조사 · 조세불복"), ("etc", "기타 세무상담")]
+SVC_TO_LEAD = {"bookkeeping": "bookkeeping", "tax-filing": "bookkeeping", "capital-gains": "property", "inheritance-gift": "property",
+               "refund-claim": "refund-claim", "tax-audit": "tax-audit", "tax-planning": "tax-planning"}
+PRIVACY_KEEP = "상담 종료 후 1년"
+
+def lead_form(pre=None, uid="lf"):
+    if not LEAD_ENABLED:
+        return ""
+    opts = "".join(f'<label class="lf-opt"><input type="radio" name="{uid}-svc" value="{t}"{" checked" if k == pre else ""}><span>{t}</span><i></i></label>' for k, t in LEAD_SERVICES)
+    data = esc(json.dumps(LEAD, ensure_ascii=False))
+    return f'''<form class="lead" data-cfg="{data}" novalidate>
+<h2>1:1 상담 신청</h2>
+<p class="lf-sub">상담받고 싶은 분야를 선택해 주세요.</p>
+<div class="lf-opts">{opts}</div>
+<div class="lf-fields">
+<label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
+<label>연락처 <input name="phone" type="tel" autocomplete="tel" maxlength="20" placeholder="예: 010-1234-5678"></label>
+<label>연락 가능한 시간 <select name="time"><option value="">상관없음</option><option>오전 (9~12시)</option><option>오후 (13~18시)</option><option>저녁 (18시 이후)</option></select></label>
+<label class="wide">간단한 내용 <span class="opt">(선택)</span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"></textarea></label>
+</div>
+<div class="lf-agree">
+<label><input type="checkbox" name="a1"> <b>[필수]</b> 개인정보 수집·이용에 동의합니다</label>
+<details><summary>내용 보기</summary><table>
+<tr><th>수집 항목</th><td>성함, 연락처, 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
+<tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
+<tr><th>보유 기간</th><td>{PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
+<tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
+</table></details>
+<label><input type="checkbox" name="a2"> <b>[필수]</b> 개인정보 국외 이전(보관)에 동의합니다</label>
+<details><summary>내용 보기</summary><table>
+<tr><th>이전 항목</th><td>위 수집 항목 전부</td></tr>
+<tr><th>이전 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 인터넷 전송(암호화 통신)</td></tr>
+<tr><th>이전받는 자</th><td>Google LLC (Google 설문지·스프레드시트 저장)</td></tr>
+<tr><th>이용 목적·보유 기간</th><td>신청 내용 보관 / {PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
+<tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
+</table></details>
+<p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
+</div>
+<button type="submit" class="lf-btn">상담 신청하기 →</button>
+<p class="lf-msg" aria-live="polite"></p>
+<p class="lf-foot">대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다.</p>
+</form>'''
+
+def build_privacy():
+    if not LEAD_ENABLED:
+        return
+    body = f'''<div class="narrow privacy" style="padding-top:36px">
+<h1 style="color:var(--green);margin:0 0 6px">개인정보 처리방침</h1>
+<p class="lead">{NAME}(이하 "사무소")은 상담 신청 과정에서 받는 개인정보를 아래와 같이 처리합니다.</p>
+<h2>1. 처리 목적</h2><p>상담 신청 확인 및 연락. 이 목적 외의 용도로 쓰지 않습니다.</p>
+<h2>2. 처리 항목</h2><p>성함, 연락처, 상담 분야, 연락 가능한 시간, 문의 내용(선택). 주민등록번호 등 고유식별정보는 받지 않습니다.</p>
+<h2>3. 보유 기간과 파기</h2><p>{PRIVACY_KEEP} 보관한 뒤 파기합니다. 상담으로 이어지지 않은 신청은 신청일부터 1년이 지나면 파기합니다. 세무대리 계약을 맺은 경우 그 계약에 따른 자료는 계약과 관련 법령에서 정한 기간 동안 따로 보관합니다. 전자 파일은 복구할 수 없는 방법으로 삭제합니다.</p>
+<h2>4. 제3자 제공</h2><p>정보주체의 동의나 법령에 따른 경우가 아니면 제3자에게 제공하지 않습니다.</p>
+<h2>5. 국외 이전(보관)</h2>
+<table class="info"><tr><th>이전받는 자</th><td>Google LLC</td></tr><tr><th>국가</th><td>미국 등 Google 데이터센터 소재 국가</td></tr><tr><th>시기·방법</th><td>신청 시 인터넷 전송(암호화 통신)</td></tr><tr><th>항목</th><td>위 2번 항목 전부</td></tr><tr><th>목적·기간</th><td>신청 내용 보관 / 위 3번과 같음</td></tr><tr><th>거부</th><td>국외 이전에 동의하지 않으시면 양식 신청은 할 수 없고, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr></table>
+<h2>6. 정보주체의 권리</h2><p>언제든지 본인 정보의 열람, 정정, 삭제, 처리 정지를 요청할 수 있습니다. 아래 연락처로 요청하시면 지체 없이 처리합니다.</p>
+<h2>7. 안전성 확보 조치</h2><p>신청 내용은 접근 권한을 대표 세무사로 한정한 계정에 보관하고, 2단계 인증을 사용합니다.</p>
+<h2>8. 개인정보 보호책임자</h2><table class="info"><tr><th>책임자</th><td>{PERSON} (대표 세무사)</td></tr><tr><th>연락처</th><td><a href="tel:{TEL}">{TEL}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></td></tr></table>
+<p class="note" style="margin-top:24px">시행일: 2026년 9월 20일</p>
+</div>'''
+    write("privacy/index.html", page(f"개인정보 처리방침 | {NAME}", "세무회계택 상담 신청 개인정보 처리방침입니다.", "/privacy/", body, "privacy"))
+
 def build_contact():
-    if FORM_URL:
+    if LEAD_ENABLED:
+        form = lead_form(None, "lc")
+    elif FORM_URL:
         form = f'<div class="form-wrap"><iframe src="{FORM_URL}?embedded=true" title="문의 남기기" loading="lazy"></iframe></div>'
     else:
         form = '<div class="placeholder">온라인 문의 접수 양식을 준비 중입니다. 그동안은 카카오톡 채널이나 이메일로 남겨 주세요.</div>'
@@ -478,6 +549,7 @@ def build_services(posts):
 </div>{note}{calc}
 <p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
 <div class="band" style="margin-top:28px"><div><b>본인의 상황을 고려해 따져 보고 싶으시면</b><span>문의를 남겨 주시면 확인 후 연락드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
+{lead_form(SVC_TO_LEAD.get(k), "ls")}
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
 </div>'''
         ld = [{"@type": "Service", "name": t, "description": x["intro"], "provider": {"@id": SITE + "/#org"}, "areaServed": "대한민국", "url": f"{SITE}/services/{k}/"},
@@ -496,9 +568,9 @@ FEES = [
                          ("증여세", "", "증여가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("상속세", "", "500,000원 + 상속재산의 0.4%"), ("신고 전 세액 계산", "", "100,000원 ~")],
      ["계산 후 신고까지 맡기시면 계산 보수는 신고 보수에서 전액 차감합니다."]),
-    ("세무상담 · 기타", [("대면 상담", "사전 검토 없음", "30분 100,000원 ~"), ("대면 상담", "사전 서류 검토", "200,000원 ~"),
-                      ("서면 상담", "서면 작성", "300,000원 ~"), ("세무조사 대응", "", "1,500,000원 ~"),
-                      ("불복", "이의신청·심사·심판", "감액세액의 20% ~")], []),
+    ("세무상담 · 기타", [("세무 상담", "사전 검토 없음", "30분 100,000원 ~"), ("세무 상담", "사전 서류 검토", "200,000원 ~"), ("세무조사 대응", "", "1,500,000원 ~"),
+                     
+                      ("불복", "이의신청·심사·심판", "감액세액의 20% ~")], ["상담은 전화·대면·이메일·메신저 채팅 모두 가능합니다."]),
 ]
 
 def build_fees():
@@ -518,6 +590,7 @@ def build_fees():
 <p class="note c">보수표 기준 금액에서 할인합니다. 기장료 기본 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 <div class="band" style="margin-top:26px"><div><b>본인의 상황에 맞는 보수가 궁금하시면</b><span>업종·매출 규모를 남겨 주시면 확인 후 안내드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
+{lead_form(None, "lfe")}
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
 </div>'''
     ld = [{"@type": "WebPage", "name": "세무 보수 안내", "url": SITE + "/fees/", "about": {"@id": SITE + "/#org"}},
@@ -528,7 +601,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -548,6 +621,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees()
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
