@@ -34,11 +34,11 @@
   var $=function(id){return document.getElementById(id)};
   if(!$('gc')) return;
   function relv(){var r=document.querySelector('input[name=rel]:checked');return r?r.value:'adult';}
-  function num(id){var v=$(id).value.replace(/[^0-9]/g,'');return v===''?null:Number(v);}
+  function num(id){var v=$(id).value.replace(/[^0-9]/g,'').slice(0,13);return v===''?null:Number(v);}
   function comma(n){return Math.round(n).toLocaleString('ko-KR');}
   function kor(n){ if(!n) return ''; var eok=Math.floor(n/1e8), man=Math.floor((n%1e8)/1e4), won=Math.round(n%1e4), s=[];
     if(eok) s.push(eok.toLocaleString('ko-KR')+'억'); if(man) s.push(man.toLocaleString('ko-KR')+'만'); if(won&&!eok) s.push(won+''); return s.join(' ')+'원'; }
-  function fmt(el){ var v=el.value.replace(/[^0-9]/g,''); el.value=v?Number(v).toLocaleString('ko-KR'):''; var w=document.querySelector('.won[data-for="'+el.id+'"]'); if(w) w.textContent=v?kor(Number(v)):''; }
+  function fmt(el){ var v=el.value.replace(/[^0-9]/g,'').replace(/^0+(?=\d)/,'').slice(0,13); /* 최대 13자리까지만 받음 */ el.value=v?Number(v).toLocaleString('ko-KR'):''; var w=document.querySelector('.won[data-for="'+el.id+'"]'); if(w) w.textContent=v?kor(Number(v)):''; }
   function row(a,b,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td>'+b+'</td></tr>';}
   function run(){
     var rel=relv(), direct=(rel==='adult'||rel==='minor');
