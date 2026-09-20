@@ -49,7 +49,7 @@
     t+=row('1년 기장료 <small>(월 기장료 × 12개월)</small>',comma(r.year)+'원','total');
     t+=row('부가가치세 포함 시',comma(r.yearVat)+'원');
     $('tbl').innerHTML=t;
-    $('msg').innerHTML='· 세무조정료(종합소득세·법인세, 연 1회)는 별도<br>· 보수표는 직원 있는 사업자 기준, 1인 사업자는 20% 낮게 적용<br>· 업무 특성에 따라 보수가 달라질 수 있음';
+    $('msg').innerHTML='· 세무조정료(종합소득세·법인세, 연 1회)는 별도 발생<br>· 보수표는 직원 있는 사업자 기준, 1인 사업자는 20% 낮게 적용<br>· 업무 특성에 따라 보수 변동 가능';
   }
   ['sales','asset','grant'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   Array.prototype.forEach.call(document.querySelectorAll('input[name=ftype],input[name=solo]'),function(el){el.addEventListener('change',run);});
