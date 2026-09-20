@@ -436,3 +436,7 @@ section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
 .svc-others a:hover{border-color:var(--green);color:var(--green)}
 a.card.svc b{color:var(--green)}
 @media (max-width:760px){.svc-cols{grid-template-columns:1fr}}
+
+/* v17: 첫 화면 업무 칩 → 서비스 페이지 링크 */
+.chips-h a{font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--green);background:rgba(255,255,255,.92);border:1px solid #C9D6CC;border-radius:20px;padding:5px 12px;text-decoration:none}
+.chips-h a:hover{border-color:var(--green);background:#fff}
