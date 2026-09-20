@@ -157,7 +157,7 @@ def build_post(p, posts=()):
     if faqs:
         faq_html = '<section class="faq"><h2>자주 묻는 질문</h2>' + "".join(
             f"<h3>{esc(q)}</h3>{md(a)}" for q, a in faqs) + "</section>"
-    calc = f'<div class="box"><p class="label">바로 계산해 보기</p><p><a href="{p["calc"]}">증여세 계산기로 내 경우를 계산해 보세요 →</a></p></div>' if p.get("calc") else ""
+    calc = f'<div class="box"><p class="label">바로 계산해 보기</p><p><a href="{p["calc"]}">증여세 계산기로 본인의 상황에 맞추어 계산해 보세요 →</a></p></div>' if p.get("calc") else ""
     blog = f' · <a href="{esc(p["blog"])}" target="_blank" rel="noopener">블로그에서 보기</a>' if p.get("blog") else ""
     upd = f' · 수정 {p["updated"]}' if p.get("updated") and p["updated"] != p["date"] else ""
     tp = topic_of(p)
@@ -181,7 +181,7 @@ def build_post(p, posts=()):
 {calc}
 <div class="box"><p class="label">근거 법령</p><ul>{laws}</ul></div>
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구를 맡고 있습니다.</p></div></div>
-<div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황을 고려한 답이 필요하시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
+<div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
 {more_html}
 <p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성했습니다. 예시 금액은 따로 적지 않은 한 신고세액공제 반영 전 산출세액입니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>'''
@@ -320,7 +320,7 @@ def build_home(posts):
 <div class="wrap">
 <section class="block search-block">{SEARCH_BOX}</section>
 <section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
-<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 따져 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></section>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></section>
 {('<section class="block lead-block">' + lead_form(None, "lh") + '</section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 <section class="block alt"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
@@ -342,21 +342,37 @@ def build_about():
     import urllib.parse as up
     nmap = "https://map.naver.com/p/search/" + up.quote(q)
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
-    svc = "".join(f'<li><a href="/services/{k}/"><b>{t}</b></a> — {d}</li>' for k, t, d in ALL_SERVICES)
-    body = f'''<div class="wrap" style="padding-top:36px">
-<h1 style="color:var(--green);margin:0 0 24px">사무소 소개</h1>
-<section class="block" style="padding-top:0"><div class="profile">
-<img src="/assets/profile.jpg" alt="{PERSON}" width="260" height="390">
-<div>
-<img src="/assets/logo-v.png" alt="{NAME}" width="160" height="143" style="margin:0 0 12px">
-<h2 style="margin:0 0 6px;color:var(--green)">{PERSON}</h2>
-<p style="margin:0 0 18px;color:var(--yellow);background:var(--green);display:inline-block;padding:2px 10px;border-radius:4px;font-weight:700">근거는 정확하게, 마음은 편안하게</p>
-<dl>
+    svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(SERVICES, 1))
+    body = f'''<div class="wrap about-page" style="padding-top:36px">
+<p class="crumb"><a href="/">홈</a> › 사무소 소개</p>
+<section class="ab-hero">
+<div class="ab-photo"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="560" height="857"></div>
+<div class="ab-text">
+<p class="ab-eyebrow">{NAME} 대표 세무사</p>
+<h1>김태형 <span>세무사</span></h1>
+<p class="ab-motto">근거는 정확하게, 마음은 편안하게</p>
+<div class="ab-greet">
+<p>세무회계택은 동대문구 청량리에서 개인·법인 사업자의 기장과 신고, 양도·상속·증여 같은 재산 세금을 맡고 있습니다.</p>
+<p>같은 질문이라도 사람마다 답이 달라지는 것이 세금입니다. 조문과 자료로 근거를 먼저 확인하고, 그 결과를 알기 쉬운 말로 설명드리겠습니다.</p>
+</div>
+<dl class="ab-cv">
 <dt>학력</dt><dd>고려대학교 공과대학 졸업</dd>
-<dt>경력</dt><dd>現 서울시 마을세무사(중랑구)<br>前 윤택스<br>前 포스코건설</dd>
+<dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스<br>前 포스코건설</dd>
 </dl>
+</div>
+</section>
+</div>
+<section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2>
+<div class="grid svc-grid">{svc}</div>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div>
+<p class="ab-more"><a href="/services/">업무별 자세히 보기 →</a> · <a href="/fees/">보수 안내 →</a></p>
+</div></section>
+<section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
+<div class="ch-grid">
+<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb">네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법, 신고 일정, 실제 상담에서 자주 받는 질문을 먼저 올립니다.</span><span class="go">블로그 보기 →</span></a>
+<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt">유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">글로 읽기 어려운 세금 제도를 영상으로 풀어 설명합니다.</span><span class="go">채널 보기 →</span></a>
 </div></div></section>
-<section class="block alt"><h2 class="sec">업무 분야</h2><ul>{svc}</ul></section>
+<div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <table class="info">
 <tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
@@ -422,7 +438,7 @@ def lead_form(pre=None, uid="lf"):
     data = esc(json.dumps(LEAD, ensure_ascii=False))
     return f'''<form class="lead" data-cfg="{data}" novalidate>
 <h2>1:1 상담 신청</h2>
-<p class="lf-sub">상담받고 싶은 분야를 선택해 주세요.</p>
+<p class="lf-sub">본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요.</p>
 <div class="lf-opts">{opts}</div>
 <div class="lf-fields">
 <label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
@@ -549,7 +565,6 @@ def build_services(posts):
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
 </div>{note}{calc}
 <p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
-<div class="band" style="margin-top:28px"><div><b>본인의 상황을 고려해 따져 보고 싶으시면</b><span>문의를 남겨 주시면 확인 후 연락드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
 {lead_form(SVC_TO_LEAD.get(k), "ls")}
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
 </div>'''
@@ -590,7 +605,6 @@ def build_fees():
 <div class="it"><p>기장 거래처</p><b>양도·상속·증여 등 20% 할인</b></div></div>
 <p class="note c">보수표 기준 금액에서 할인합니다. 기장료 기본 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
-<div class="band" style="margin-top:26px"><div><b>본인의 상황에 맞는 보수가 궁금하시면</b><span>업종·매출 규모를 남겨 주시면 확인 후 안내드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
 {lead_form(None, "lfe")}
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
 </div>'''

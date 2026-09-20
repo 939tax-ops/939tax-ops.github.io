@@ -541,3 +541,35 @@ a.card.svc b{color:var(--green)}
 .lead-block{padding-top:10px}
 .privacy h2{font-size:19px;color:var(--green);margin:26px 0 6px}
 @media (max-width:600px){.lead{padding:24px 18px 18px;border-radius:14px}.lf-fields{grid-template-columns:1fr}}
+
+/* v21: 사무소 소개 */
+.about-page .crumb{margin-bottom:18px}
+.ab-hero{display:grid;grid-template-columns:320px 1fr;gap:48px;align-items:end;padding-bottom:48px}
+.ab-photo{background:linear-gradient(180deg,#F2F6F3 0%,#E6EEE8 100%);border-radius:18px;display:flex;align-items:flex-end;justify-content:center;height:400px;overflow:hidden}
+.ab-photo img{width:auto;height:96%;display:block}
+.ab-text{padding-bottom:4px}
+.ab-eyebrow{font-family:var(--sans);font-size:14px;font-weight:700;color:#6b736d;letter-spacing:.02em;margin:0}
+.ab-text h1{font-size:40px;color:#1d2a20;margin:6px 0 0;line-height:1.25}
+.ab-text h1 span{font-size:26px;color:var(--green)}
+.ab-motto{font-family:var(--serif);font-weight:700;font-size:19px;color:var(--green);margin:14px 0 0;padding-left:14px;border-left:3px solid var(--green)}
+.ab-greet{margin-top:22px;color:#383839}
+.ab-greet p{margin:0 0 8px}
+.ab-cv{display:grid;grid-template-columns:64px 1fr;margin:22px 0 0;border-top:1px solid var(--line);font-family:var(--sans);font-size:15.5px}
+.ab-cv dt,.ab-cv dd{padding:12px 0;border-bottom:1px solid var(--line);margin:0}
+.ab-cv dt{color:#6b736d;font-weight:700}
+.ab-cv dd{line-height:1.8}
+.ab-more{font-family:var(--sans);margin:18px 0 0}
+@media (max-width:760px){
+  .ab-hero{grid-template-columns:1fr;gap:24px}
+  .ab-photo{height:320px;max-width:300px}
+  .ab-text h1{font-size:32px}
+}
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ch{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:12px;padding:22px 24px;text-decoration:none;color:var(--text);background:#fff;transition:border-color .15s,box-shadow .15s}
+.ch:hover{border-color:var(--green);box-shadow:0 8px 20px rgba(19,57,30,.08)}
+.ch .k{font-family:var(--sans);font-size:13px;font-weight:800}
+.ch .k.nb{color:#03A94D}.ch .k.yt{color:#C00000}
+.ch b{font-size:19px;color:#1d2a20}
+.ch .s{color:var(--sub);font-size:15px;line-height:1.7}
+.ch .go{font-family:var(--sans);font-size:14px;color:var(--green);margin-top:4px}
+@media (max-width:640px){.ch-grid{grid-template-columns:1fr}}
