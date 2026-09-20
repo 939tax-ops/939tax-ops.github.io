@@ -311,3 +311,14 @@ section.block.alt + section.block{border-top:1px solid var(--line)}
 section.block.alt .card.soon{background:var(--tint-2)}
 section.block.alt .band{background:var(--tint);border:0}
 .p-home .search{background:var(--tint-2)}
+
+/* v8: 구간 배경을 옅은 초록으로 */
+:root{--ivory:#F2F6F3;--ivory-line:#E1E9E3}
+.hero{background:#fff}
+body.p-home .top{background:#fff;border-bottom-color:var(--line)}
+section.block.alt{border-top:0}
+section.block.alt + section.block{border-top:0}
+section.block.alt .card{background:#fff}
+section.block.alt .card.soon{background:#FAFCFA}
+section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
+.p-home .search{background:var(--tint-2)}
