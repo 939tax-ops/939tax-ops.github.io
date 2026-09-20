@@ -482,3 +482,25 @@ a.card.svc b{color:var(--green)}
 .rel-svc,.rel-back{font-family:var(--sans);font-size:14.5px;margin:10px 0}
 .post-more:has(.rel-col:only-child),.post-more:has(.blog-card:only-child){grid-template-columns:1fr}
 @media (max-width:640px){.post-more{grid-template-columns:1fr}}
+
+/* v19: 보수 안내 페이지 */
+.fee-page h1{font-family:var(--serif,inherit);color:var(--green);margin:6px 0 6px;text-align:center}
+.fee-sub{text-align:center;color:#3e4541;font-size:17px;margin:0 0 30px}
+.fee-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px 44px;align-items:start}
+.fh{display:flex;align-items:center;gap:14px;margin:0 0 8px;font-size:inherit}
+.fh:before,.fh:after{content:"";flex:1;height:1px;background:#cfd8d1}
+.fh b{font-family:var(--sans);font-size:19px;font-weight:800;color:var(--green);white-space:nowrap}
+.fee-sec .row,.fee-disc .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--sans);font-size:16.5px;padding:10px 6px;border-bottom:1px dashed #e0e6e1}
+.fee-sec .row:last-of-type{border-bottom:0}
+.fee-sec .row span:first-child{white-space:nowrap}
+.fee-sec .row span:last-child{font-weight:700;color:#1d2a20;text-align:right}
+.fee-sec small,.fee-disc small{font-size:13.5px;color:#555c57;font-weight:400}
+.fee-page .note{font-family:var(--sans);font-size:14.5px;color:#454b47;margin:8px 6px 0;line-height:1.6}
+.fee-page .note.c{text-align:center}
+.fee-disc{margin-top:40px}
+.fee-disc .pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+.fee-disc .it{background:#F2F6F3;border-radius:12px;padding:20px 16px;text-align:center;font-family:var(--sans)}
+.fee-disc .it p{margin:0;font-size:16px}
+.fee-disc .it b{display:block;font-size:21px;color:var(--green);margin-top:6px}
+.fee-foot{text-align:center;font-family:var(--sans);font-size:15px;color:#3e4541;line-height:1.8;margin:26px 0 0}
+@media (max-width:760px){.fee-grid,.fee-disc .pair{grid-template-columns:1fr;gap:26px}.fee-sec .row{font-size:15.5px}.fee-sec .row span:first-child{white-space:normal}}

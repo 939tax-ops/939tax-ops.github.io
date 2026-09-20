@@ -59,7 +59,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
         cls = ' on' if key == active else ''
         return (f'<div class="dd{cls}"><a class="dd-t" href="{head}" aria-haspopup="true">{label}<span class="car" aria-hidden="true"></span></a>'
                 f'<div class="dd-m">{sub}</div></div>')
-    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/about/#location", "오시는 길")])
+    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "보수 안내"), ("/about/#location", "오시는 길")])
             + dd("주요 서비스", "svc", "/services/", [(f"/services/{k}/", t) for k, t, _ in ALL_SERVICES])
             + "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc")]))
     return f'''<!doctype html>
@@ -476,6 +476,7 @@ def build_services(posts):
 <section><h2>맡는 일</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
 </div>{note}{calc}
+<p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
 <div class="band" style="margin-top:28px"><div><b>본인의 상황을 고려해 따져 보고 싶으시면</b><span>문의를 남겨 주시면 확인 후 연락드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
 </div>'''
@@ -486,9 +487,48 @@ def build_services(posts):
                   {"@type": "ListItem", "position": 3, "name": t, "item": f"{SITE}/services/{k}/"}]}]
         write(f"services/{k}/index.html", page(f"{t} | {NAME} {PERSON}", f"{x['intro']} 서울 동대문구 청량리 세무회계택 김태형 세무사.", f"/services/{k}/", body, "svc", ld))
 
+# 보수 안내 — 기준: 09. 서식\00. 업무 필수자료(자체제작)\01. 세무대리보수료(세무회계택,2026.09.20,V3).xlsx
+FEES = [
+    ("기장 대리", [("개인사업자", "", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
+     ["1인 사업자 특별 할인을 적용한 최저 금액입니다.", "매출·자산 규모에 따라 달라지며, 세무조정료는 별도입니다."]),
+    ("신고 대리", [("부가가치세", "", "150,000원 ~"), ("종합소득세", "", "200,000원 ~"), ("사업장현황신고", "면세사업자", "200,000원 ~")], []),
+    ("양도 · 상속 · 증여", [("양도소득세", "", "양도가액의 0.1% <small>(최저 200,000원)</small>"),
+                         ("증여세", "", "증여가액의 0.1% <small>(최저 200,000원)</small>"),
+                         ("상속세", "", "500,000원 + 상속재산의 0.4%"), ("신고 전 세액 계산", "", "100,000원 ~")],
+     ["계산 후 신고까지 맡기시면 계산 보수는 신고 보수에서 전액 차감합니다."]),
+    ("세무상담 · 기타", [("대면 상담", "사전 검토 없음", "30분 100,000원 ~"), ("대면 상담", "사전 서류 검토", "200,000원 ~"),
+                      ("서면 상담", "서면 작성", "300,000원 ~"), ("세무조사 대응", "", "1,500,000원 ~"),
+                      ("불복", "이의신청·심사·심판", "감액세액의 20% ~")], []),
+]
+
+def build_fees():
+    def sec(t, rows, notes):
+        r = "".join(f'<div class="row"><span>{a}{f" <small>({b})</small>" if b else ""}</span><span>{c}</span></div>' for a, b, c in rows)
+        n = "".join(f"<p class=\"note\">* {x}</p>" for x in notes)
+        return f'<section class="fee-sec"><h2 class="fh"><b>{t}</b></h2>{r}{n}</section>'
+    grid = "".join(sec(*f) for f in FEES)
+    body = f'''<div class="wrap fee-page" style="padding-top:36px">
+<p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 보수 안내</p>
+<h1>세무 보수 안내</h1>
+<p class="fee-sub">기본 보수 기준 · 부가가치세 별도</p>
+<div class="fee-grid">{grid}</div>
+<section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
+<div class="pair"><div class="it"><p>1인 사업자 <small>(4대보험 가입 직원 없음)</small></p><b>기장료 20% 할인</b></div>
+<div class="it"><p>기장 거래처</p><b>양도·상속·증여 등 20% 할인</b></div></div>
+<p class="note c">보수표 기준 금액에서 할인합니다. 기장료 기본 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
+<p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
+<div class="band" style="margin-top:26px"><div><b>본인의 상황에 맞는 보수가 궁금하시면</b><span>업종·매출 규모를 남겨 주시면 확인 후 안내드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
+<p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
+</div>'''
+    ld = [{"@type": "WebPage", "name": "세무 보수 안내", "url": SITE + "/fees/", "about": {"@id": SITE + "/#org"}},
+          {"@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "홈", "item": SITE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "보수 안내", "item": SITE + "/fees/"}]}]
+    write("fees/index.html", page(f"세무 보수 안내 | {NAME} {PERSON}", "세무회계택 기장료·신고대리·양도세·상속세·증여세·상담 보수 안내. 개인사업자 월 80,000원부터(1인 사업자 할인 적용, 부가세 별도).", "/fees/", body, "about", ld))
+
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today)] + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -508,6 +548,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts)
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
