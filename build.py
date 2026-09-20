@@ -313,6 +313,7 @@ def build_home(posts):
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인 기장부터 종합소득세, 양도소득세, 상속세·증여세 신고와 경정청구까지 맡고 있습니다.</p>
 <div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
+<p class="hero-ch"><span>세금 소식은 여기에서도</span><a class="nb" href="{BLOG}" target="_blank" rel="noopener"><i>N</i>네이버 블로그</a><a class="yt" href="{YOUTUBE}" target="_blank" rel="noopener"><i>▶</i>유튜브 세친구</a></p>
 </div>
 <div class="hero-img m" aria-hidden="true"></div>
 <a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에 계산해 보기 →</b></a>
@@ -348,7 +349,7 @@ def build_about():
 <section class="ab-hero">
 <div class="ab-photo"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="640" height="960"></div>
 <div class="ab-text">
-<p class="ab-eyebrow">{NAME} 대표 세무사</p>
+<p class="ab-eyebrow">{NAME}</p>
 <h1>김태형 <span>세무사</span></h1>
 <p class="ab-motto">근거는 정확하게, 마음은 편안하게</p>
 <div class="ab-greet">

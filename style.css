@@ -591,3 +591,13 @@ a.card.svc b{color:var(--green)}
 .ab-photo{background:#fff;border-radius:0;height:420px;padding-top:16px;border-bottom:1px solid var(--line)}
 .ab-photo img{height:100%}
 @media (max-width:760px){.ab-photo{height:340px;max-width:none}}
+/* v24: 첫 화면 채널 링크 */
+.hero-ch{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:18px 0 0;font-family:var(--sans);font-size:14.5px}
+.hero-ch span{color:#555c57}
+.hero-ch a{display:inline-flex;align-items:center;gap:6px;color:#2b2f2c;text-decoration:none;font-weight:700;padding:4px 10px 4px 4px;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid #d5ded7}
+.hero-ch a:hover{border-color:var(--green)}
+.hero-ch i{font-style:normal;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;color:#fff;font-size:11px;font-weight:900}
+.hero-ch .nb i{background:#03C75A}
+.hero-ch .yt i{background:#E62117;font-size:9px}
+.hero-ch{margin-top:24px}
+@media (max-width:760px){.hero-ch span{display:none}.hero-ch{margin-top:16px}}
