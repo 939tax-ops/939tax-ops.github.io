@@ -573,3 +573,21 @@ a.card.svc b{color:var(--green)}
 .ch .s{color:var(--sub);font-size:15px;line-height:1.7}
 .ch .go{font-family:var(--sans);font-size:14px;color:var(--green);margin-top:4px}
 @media (max-width:640px){.ch-grid{grid-template-columns:1fr}}
+
+/* v22: 작은 회색 글씨 가독성 — 사이트 전체 */
+.crumb,.about-page .crumb{font-size:15px;color:#555c57}
+.crumb a{color:#555c57}
+.meta{font-size:15px;color:#555c57}
+.qcard .qm{font-size:14px}
+.qcard .d{color:#6b736d}
+.lf-foot,.lf-pp,.lf-agree details{font-size:14.5px}
+.fee-sec small,.fee-disc small{font-size:14.5px}
+.ab-eyebrow{font-size:15px}
+.ch .k{font-size:14px}
+.blog-band .k,.blog-card .k{font-size:13.5px}
+.svc-others{font-size:15px}
+.note{font-size:15px}
+/* v23: 소개 프로필 흰 배경 */
+.ab-photo{background:#fff;border-radius:0;height:420px;padding-top:16px;border-bottom:1px solid var(--line)}
+.ab-photo img{height:100%}
+@media (max-width:760px){.ab-photo{height:340px;max-width:none}}
