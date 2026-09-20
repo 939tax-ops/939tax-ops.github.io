@@ -610,3 +610,15 @@ a.card.svc b{color:var(--green)}
 .hero-ch .ic{width:20px;height:20px;flex:none;display:block}
 .cta-box .btn.kakao{background:#fff;color:var(--green)}
 .hero-c1 .hero-ch{margin-top:28px}
+/* v26: 상담 신청 + 무료 확인 두 칸 */
+.lead-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;max-width:1000px;margin:0 auto}
+.lead-duo .lead{max-width:none;margin:0}
+.lead.check{background:#fff;border:2px solid var(--green)}
+.lead.check h2{color:var(--green)}
+.lead .lf-foot a{color:inherit}
+@media (max-width:860px){.lead-duo{grid-template-columns:1fr}}
+.lead-duo>.lead{min-width:0}
+.lead-fields-fix{}
+.lead .lf-fields input,.lead .lf-fields select,.lead .lf-fields textarea{width:100%;box-sizing:border-box;min-width:0}
+.narrow .lead-duo{grid-template-columns:1fr}
+.lead-duo .lead{padding:28px 26px 20px}

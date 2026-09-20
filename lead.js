@@ -15,7 +15,7 @@
       if (!f.a1.checked || !f.a2.checked) return say('필수 동의 두 가지에 체크해 주세요.');
       if (!cfg.action) return say('신청 접수 연결을 준비 중입니다. 전화나 카카오톡으로 연락해 주세요.');
       var d = new FormData();
-      d.append(cfg.service, svc.value); d.append(cfg.name, name); d.append(cfg.phone, phone);
+      d.append(cfg.service, (cfg.tag||'') + svc.value); d.append(cfg.name, name); d.append(cfg.phone, phone);
       if (cfg.time) d.append(cfg.time, f.time.value || '상관없음');
       if (cfg.memo) d.append(cfg.memo, f.memo.value.trim());
       if (cfg.agree) d.append(cfg.agree, '동의');

@@ -322,7 +322,7 @@ def build_home(posts):
 <section class="block search-block">{SEARCH_BOX}</section>
 <section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></section>
-{('<section class="block lead-block">' + lead_form(None, "lh") + '</section>') if LEAD_ENABLED else ""}
+{('<section class="block lead-block"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 <section class="block alt"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
 <section class="block"><h2 class="sec">연락처</h2>
@@ -432,20 +432,31 @@ SVC_TO_LEAD = {"bookkeeping": "bookkeeping", "tax-filing": "bookkeeping", "capit
                "refund-claim": "refund-claim", "tax-audit": "tax-audit", "tax-planning": "tax-planning"}
 PRIVACY_KEEP = "상담 종료 후 1년"
 
-def lead_form(pre=None, uid="lf"):
+CHECK_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 가능 여부)"), ("property", "양도세 · 증여세 · 상속세 절세 가능 여부"),
+                  ("bookkeeping", "사업자 세금 (기장·신고) 절세 점검"), ("etc", "기타 세금")]
+
+def lead_form(pre=None, uid="lf", kind="consult"):
     if not LEAD_ENABLED:
         return ""
-    opts = "".join(f'<label class="lf-opt"><input type="radio" name="{uid}-svc" value="{t}"{" checked" if k == pre else ""}><span>{t}</span><i></i></label>' for k, t in LEAD_SERVICES)
-    data = esc(json.dumps(LEAD, ensure_ascii=False))
-    return f'''<form class="lead" data-cfg="{data}" novalidate>
-<h2>1:1 상담 신청</h2>
-<p class="lf-sub">본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요.</p>
+    chk = kind == "check"
+    lst = CHECK_SERVICES if chk else LEAD_SERVICES
+    opts = "".join(f'<label class="lf-opt"><input type="radio" name="{uid}-svc" value="{t}"{" checked" if k == pre else ""}><span>{t}</span><i></i></label>' for k, t in lst)
+    cfg = dict(LEAD, tag="[무료 확인] " if chk else "")
+    data = esc(json.dumps(cfg, ensure_ascii=False))
+    title = "환급·절세 가능 여부 무료 확인" if chk else "1:1 상담 신청"
+    sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
+    ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
+    btn = "무료 확인 신청하기 →" if chk else "상담 신청하기 →"
+    foot = "가능 여부 확인까지 무료입니다. 실제 신고·청구를 맡기시면 <a href=\"/fees/\">보수 안내</a> 기준으로 진행합니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다."
+    return f'''<form class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
+<h2>{title}</h2>
+<p class="lf-sub">{sub}</p>
 <div class="lf-opts">{opts}</div>
 <div class="lf-fields">
 <label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
-<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="예: 010-1234-5678 또는 이메일"></label>
+<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="전화번호 또는 이메일"></label>
 <label>연락 가능한 시간 <select name="time"><option value="">상관없음</option><option>오전 (9~12시)</option><option>오후 (13~18시)</option><option>저녁 (18시 이후)</option></select></label>
-<label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"></textarea></label>
+<label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="{ph}"></textarea></label>
 </div>
 <div class="lf-agree">
 <label><input type="checkbox" name="a1"> <b>[필수]</b> 개인정보 수집·이용에 동의합니다</label>
@@ -465,9 +476,9 @@ def lead_form(pre=None, uid="lf"):
 </table></details>
 <p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
 </div>
-<button type="submit" class="lf-btn">상담 신청하기 →</button>
+<button type="submit" class="lf-btn">{btn}</button>
 <p class="lf-msg" aria-live="polite"></p>
-<p class="lf-foot">대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다.</p>
+<p class="lf-foot">{foot}</p>
 </form>'''
 
 def build_privacy():
@@ -491,7 +502,7 @@ def build_privacy():
 
 def build_contact():
     if LEAD_ENABLED:
-        form = lead_form(None, "lc")
+        form = '<div class="lead-duo">' + lead_form(None, "lc") + lead_form(None, "lk", "check") + '</div>'
     elif FORM_URL:
         form = f'<div class="form-wrap"><iframe src="{FORM_URL}?embedded=true" title="문의 남기기" loading="lazy"></iframe></div>'
     else:

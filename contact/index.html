@@ -48,13 +48,13 @@
 <li>문의 접수만으로 세무대리 계약이 이루어지지 않으며, 접수 내용은 확인 후 순서대로 연락드립니다.</li>
 </ul>
 </div>
-<form class="lead" data-cfg="{&quot;action&quot;: &quot;https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4LV3rXaB6eaTJceSpR2-JH-PTYe1VA/formResponse&quot;, &quot;service&quot;: &quot;entry.1235054183&quot;, &quot;name&quot;: &quot;entry.1767689992&quot;, &quot;phone&quot;: &quot;entry.1909499942&quot;, &quot;time&quot;: &quot;entry.404254547&quot;, &quot;memo&quot;: &quot;entry.21609242&quot;, &quot;agree&quot;: &quot;entry.31240237&quot;}" novalidate>
+<div class="lead-duo"><form class="lead" data-cfg="{&quot;action&quot;: &quot;https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4LV3rXaB6eaTJceSpR2-JH-PTYe1VA/formResponse&quot;, &quot;service&quot;: &quot;entry.1235054183&quot;, &quot;name&quot;: &quot;entry.1767689992&quot;, &quot;phone&quot;: &quot;entry.1909499942&quot;, &quot;time&quot;: &quot;entry.404254547&quot;, &quot;memo&quot;: &quot;entry.21609242&quot;, &quot;agree&quot;: &quot;entry.31240237&quot;, &quot;tag&quot;: &quot;&quot;}" novalidate>
 <h2>1:1 상담 신청</h2>
 <p class="lf-sub">본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요.</p>
 <div class="lf-opts"><label class="lf-opt"><input type="radio" name="lc-svc" value="경정청구 (낸 세금 환급 검토)"><span>경정청구 (낸 세금 환급 검토)</span><i></i></label><label class="lf-opt"><input type="radio" name="lc-svc" value="양도세 · 증여세 · 상속세"><span>양도세 · 증여세 · 상속세</span><i></i></label><label class="lf-opt"><input type="radio" name="lc-svc" value="절세상담"><span>절세상담</span><i></i></label><label class="lf-opt"><input type="radio" name="lc-svc" value="세무기장"><span>세무기장</span><i></i></label><label class="lf-opt"><input type="radio" name="lc-svc" value="세무조사 · 조세불복"><span>세무조사 · 조세불복</span><i></i></label><label class="lf-opt"><input type="radio" name="lc-svc" value="기타 세무상담"><span>기타 세무상담</span><i></i></label></div>
 <div class="lf-fields">
 <label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
-<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="예: 010-1234-5678 또는 이메일"></label>
+<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="전화번호 또는 이메일"></label>
 <label>연락 가능한 시간 <select name="time"><option value="">상관없음</option><option>오전 (9~12시)</option><option>오후 (13~18시)</option><option>저녁 (18시 이후)</option></select></label>
 <label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"></textarea></label>
 </div>
@@ -79,7 +79,38 @@
 <button type="submit" class="lf-btn">상담 신청하기 →</button>
 <p class="lf-msg" aria-live="polite"></p>
 <p class="lf-foot">대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다.</p>
-</form>
+</form><form class="lead check" data-cfg="{&quot;action&quot;: &quot;https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4LV3rXaB6eaTJceSpR2-JH-PTYe1VA/formResponse&quot;, &quot;service&quot;: &quot;entry.1235054183&quot;, &quot;name&quot;: &quot;entry.1767689992&quot;, &quot;phone&quot;: &quot;entry.1909499942&quot;, &quot;time&quot;: &quot;entry.404254547&quot;, &quot;memo&quot;: &quot;entry.21609242&quot;, &quot;agree&quot;: &quot;entry.31240237&quot;, &quot;tag&quot;: &quot;[무료 확인] &quot;}" novalidate>
+<h2>환급·절세 가능 여부 무료 확인</h2>
+<p class="lf-sub">돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다.</p>
+<div class="lf-opts"><label class="lf-opt"><input type="radio" name="lk-svc" value="경정청구 (낸 세금 환급 가능 여부)"><span>경정청구 (낸 세금 환급 가능 여부)</span><i></i></label><label class="lf-opt"><input type="radio" name="lk-svc" value="양도세 · 증여세 · 상속세 절세 가능 여부"><span>양도세 · 증여세 · 상속세 절세 가능 여부</span><i></i></label><label class="lf-opt"><input type="radio" name="lk-svc" value="사업자 세금 (기장·신고) 절세 점검"><span>사업자 세금 (기장·신고) 절세 점검</span><i></i></label><label class="lf-opt"><input type="radio" name="lk-svc" value="기타 세금"><span>기타 세금</span><i></i></label></div>
+<div class="lf-fields">
+<label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
+<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="전화번호 또는 이메일"></label>
+<label>연락 가능한 시간 <select name="time"><option value="">상관없음</option><option>오전 (9~12시)</option><option>오후 (13~18시)</option><option>저녁 (18시 이후)</option></select></label>
+<label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 2023년에 직원을 새로 뽑았습니다"></textarea></label>
+</div>
+<div class="lf-agree">
+<label><input type="checkbox" name="a1"> <b>[필수]</b> 개인정보 수집·이용에 동의합니다</label>
+<details><summary>내용 보기</summary><table>
+<tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
+<tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
+<tr><th>보유 기간</th><td>상담 종료 후 1년 (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
+<tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
+</table></details>
+<label><input type="checkbox" name="a2"> <b>[필수]</b> 개인정보 국외 이전(보관)에 동의합니다</label>
+<details><summary>내용 보기</summary><table>
+<tr><th>이전 항목</th><td>위 수집 항목 전부</td></tr>
+<tr><th>이전 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 인터넷 전송(암호화 통신)</td></tr>
+<tr><th>이전받는 자</th><td>Google LLC (Google 설문지·스프레드시트 저장)</td></tr>
+<tr><th>이용 목적·보유 기간</th><td>신청 내용 보관 / 상담 종료 후 1년 (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
+<tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
+</table></details>
+<p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
+</div>
+<button type="submit" class="lf-btn">무료 확인 신청하기 →</button>
+<p class="lf-msg" aria-live="polite"></p>
+<p class="lf-foot">가능 여부 확인까지 무료입니다. 실제 신고·청구를 맡기시면 <a href="/fees/">보수 안내</a> 기준으로 진행합니다.</p>
+</form></div>
 <h2 class="sec" style="margin-top:40px">다른 연락 방법</h2>
 <table class="info">
 <tr><th>카카오톡</th><td><a href="https://pf.kakao.com/_TVxdkn/chat" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a></td></tr>
