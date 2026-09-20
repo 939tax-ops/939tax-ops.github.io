@@ -71,7 +71,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 {extra_head}
 <script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)}</script>
 </head>
-<body>
+<body class="p-{active}">
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
