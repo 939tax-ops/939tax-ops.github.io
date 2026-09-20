@@ -180,7 +180,7 @@ def build_post(p, posts=()):
 {faq_html}
 {calc}
 <div class="box"><p class="label">근거 법령</p><ul>{laws}</ul></div>
-<div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구를 맡고 있습니다.</p></div></div>
+<div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구 업무를 수행하고 있습니다.</p></div></div>
 <div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
 {more_html}
 <p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성했습니다. 예시 금액은 따로 적지 않은 한 신고세액공제 반영 전 산출세액입니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
@@ -258,7 +258,7 @@ SERVICE_DETAIL = {
         "for": ["신고 시기에만 도움이 필요하신 분", "지난 신고 내용을 한 번 점검받고 싶으신 분"],
     },
     "capital-gains": {
-        "intro": "주택·토지·상가를 팔기 전에 세액을 먼저 따져 보고, 판 뒤에는 양도소득세 신고를 맡습니다.",
+        "intro": "주택·토지·상가를 팔기 전에 세액을 먼저 따져 보고, 판 뒤에는 양도소득세 신고를 수행합니다.",
         "do": ["팔기 전 예상 양도소득세 계산", "비과세·감면 적용 여부 검토", "취득가액·필요경비 자료 확인", "양도소득세 신고"],
         "for": ["매도 시기나 방법을 정하기 전이신 분", "비과세가 되는지 확신이 없으신 분", "이미 계약을 마치고 신고를 앞두신 분"],
     },
@@ -311,7 +311,7 @@ def build_home(posts):
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
 <div class="chips-h"><a href="/services/bookkeeping/">세무기장</a><a href="/services/">양도·상속·증여</a><a href="/services/refund-claim/">경정청구</a><a href="/services/tax-audit/">세무조사</a><a href="/services/tax-planning/">절세상담</a></div>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
-<p>개인·법인 기장부터 종합소득세, 양도소득세, 상속세·증여세 신고와 경정청구까지 맡고 있습니다.</p>
+<p>개인·법인 기장부터 종합소득세, 양도소득세, 상속세·증여세 신고와 경정청구까지 수행하고 있습니다.</p>
 <div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
 <p class="hero-ch"><span>세금 소식은 여기에서도</span><a class="nb" href="{BLOG}" target="_blank" rel="noopener"><i>N</i>네이버 블로그</a><a class="yt" href="{YOUTUBE}" target="_blank" rel="noopener"><i>▶</i>유튜브 세친구</a></p>
 </div>
@@ -335,7 +335,7 @@ def build_home(posts):
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
 </section></div>'''
     write("index.html", page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
-                             "서울 동대문구 왕산로 200 롯데캐슬SKY-L65에 있는 세무회계택 김태형 세무사 사무실입니다. 개인·법인 기장, 종합소득세, 양도소득세, 상속세·증여세, 경정청구를 맡고 있습니다.",
+                             "서울 동대문구 왕산로 200 롯데캐슬SKY-L65에 있는 세무회계택 김태형 세무사 사무실입니다. 개인·법인 기장, 종합소득세, 양도소득세, 상속세·증여세, 경정청구 업무를 수행합니다.",
                              "/", body, "home", [person_ld()]))
 
 def build_about():
@@ -547,9 +547,9 @@ def build_services(posts):
     cards = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(ALL_SERVICES, 1))
     body = f'''<div class="wrap" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 10px">주요 서비스</h1>
-<p class="lead">개인·법인 사업자 세무부터 부동산·가족 간 세금까지, 맡고 있는 업무입니다.</p>
+<p class="lead">개인·법인 사업자 세무부터 부동산·가족 간 세금까지, 세무회계택이 수행하는 업무입니다.</p>
 <section class="block" style="padding-top:12px"><div class="grid svc-grid">{cards}</div></section></div>'''
-    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사가 맡는 업무 — 세무기장, 세금신고 대행, 양도소득세, 상속세·증여세, 경정청구, 세무조사 대응, 절세상담.", "/services/", body, "svc"))
+    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 수행 업무 — 세무기장, 세금신고 대행, 양도소득세, 상속세·증여세, 경정청구, 세무조사 대응, 절세상담.", "/services/", body, "svc"))
     for k, t, d in ALL_SERVICES:
         x = SERVICE_DETAIL[k]
         do = "".join(f"<li>{esc(v)}</li>" for v in x["do"])
@@ -562,7 +562,7 @@ def build_services(posts):
 <h1>{t}</h1>
 <p class="lead">{esc(x["intro"])}</p>
 <div class="svc-cols">
-<section><h2>맡는 일</h2><ul class="ticks">{do}</ul></section>
+<section><h2>수행 업무</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
 </div>{note}{calc}
 <p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
