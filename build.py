@@ -258,7 +258,7 @@ def build_about():
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 </table>
 <div class="placeholder" style="margin-top:16px">찾아오시는 방법 상세 안내(대중교통·출입구·엘리베이터·주차)를 준비 중입니다.</div>
-<p class="note">방문 상담은 미리 연락 주시면 기다리지 않고 바로 상담하실 수 있습니다.</p>
+
 </section></div>'''
     write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
 
