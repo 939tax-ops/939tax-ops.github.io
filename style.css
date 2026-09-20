@@ -440,3 +440,45 @@ a.card.svc b{color:var(--green)}
 /* v17: 첫 화면 업무 칩 → 서비스 페이지 링크 */
 .chips-h a{font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--green);background:rgba(255,255,255,.92);border:1px solid #C9D6CC;border-radius:20px;padding:5px 12px;text-decoration:none}
 .chips-h a:hover{border-color:var(--green);background:#fff}
+
+/* v18: 세무 Q&A 목록 — 종류별 칩, 최신 글, 카드, 블로그 연결 */
+.qchips{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 22px}
+.qchips button{font-family:var(--sans);font-size:14.5px;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:7px 14px;cursor:pointer}
+.qchips button em{font-style:normal;color:#8a948c;margin-left:2px}
+.qchips button:hover{border-color:var(--green)}
+.qchips button.on{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
+.qchips button.on em{color:#cfe0d3}
+.qcard{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:20px 22px;text-decoration:none;color:var(--text);transition:border-color .15s,box-shadow .15s}
+.qcard:hover{border-color:var(--green);box-shadow:0 8px 20px rgba(19,57,30,.08)}
+.qcard[hidden]{display:none}
+.qcard .qm{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:13px}
+.qcard .b-t{border:1px solid #C9D6CC;color:var(--green);border-radius:999px;padding:2px 10px;font-weight:700}
+.qcard .b-new{background:var(--green);color:#fff;border-radius:999px;padding:2px 10px;font-weight:700}
+.qcard .d{color:#8a948c}
+.qcard b{font-size:18px;line-height:1.45;color:#1d2a20}
+.qcard .qs{color:var(--sub);font-size:15px;line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.qcard .go{margin-top:auto;font-family:var(--sans);font-size:14px;color:var(--green)}
+.qcard.big{padding:28px 30px;border-top:3px solid var(--green);margin-bottom:18px}
+.qcard.big b{font-size:24px}
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.qa-none{color:var(--sub);margin:10px 0}
+.qa-more-wrap{text-align:center;margin:26px 0 8px}
+.qa-more{font-family:var(--sans);font-size:15px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 22px;cursor:pointer}
+.qa-more:hover{border-color:var(--green);color:var(--green)}
+.blog-band{display:flex;align-items:center;justify-content:space-between;gap:16px;background:#F2F6F3;border-radius:10px;padding:22px 26px;margin:34px 0 56px}
+.blog-band .k,.blog-card .k{display:block;font-family:var(--sans);font-size:12.5px;font-weight:800;color:#03A94D;letter-spacing:.02em;margin-bottom:4px}
+.blog-band b{font-size:18px;color:var(--green)}
+@media (max-width:900px){.qgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.qgrid{grid-template-columns:1fr}.qcard.big b{font-size:20px}.blog-band{flex-direction:column;align-items:flex-start}}
+/* 글 하단: 블로그 원문 + 함께 보면 좋은 글 */
+.post-more{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 10px}
+.blog-card{display:block;border:1px solid var(--line);border-left:4px solid #03A94D;border-radius:8px;padding:18px 20px;text-decoration:none;color:var(--text);background:#fff}
+.blog-card:hover{box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.blog-card b{display:block;color:#1d2a20;font-size:17px;margin-bottom:4px}
+.blog-card .s{color:var(--sub);font-size:14.5px;line-height:1.6}
+.rel-col{border:1px solid var(--line);border-radius:8px;padding:16px 20px;background:#fff}
+.rel-col ul{margin:6px 0 0;padding-left:18px}
+.rel-col li{margin:4px 0;line-height:1.55}
+.rel-svc,.rel-back{font-family:var(--sans);font-size:14.5px;margin:10px 0}
+.post-more:has(.rel-col:only-child),.post-more:has(.blog-card:only-child){grid-template-columns:1fr}
+@media (max-width:640px){.post-more{grid-template-columns:1fr}}

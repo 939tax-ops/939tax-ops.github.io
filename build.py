@@ -19,6 +19,16 @@ ADDR2 = "롯데캐슬SKY-L65 섹션오피스 1313호"
 BLOG = "https://blog.naver.com/tax939"
 YOUTUBE = "https://www.youtube.com/@taxfriends3"
 CATS = {"business": "사업자 세금", "life": "생활 세금"}
+# 세무 Q&A 분류(종류별 칩). 글 머리의 topic: 값으로 지정. 없으면 기타.
+TOPICS = [("income", "종합소득세"), ("vat", "부가가치세"), ("corp", "법인세"), ("payroll", "원천세·인건비"),
+          ("capital-gains", "양도소득세"), ("gift", "상속·증여세"), ("refund", "경정청구·환급"),
+          ("audit", "세무조사"), ("local", "지방세·재산세"), ("etc", "기타")]
+TOPIC_NAME = dict(TOPICS)
+TOPIC_SERVICE = {"income": "tax-filing", "vat": "tax-filing", "corp": "tax-filing", "payroll": "bookkeeping",
+                 "capital-gains": "capital-gains", "gift": "inheritance-gift", "refund": "refund-claim", "audit": "tax-audit"}
+def topic_of(p):
+    t = p.get("topic", "etc")
+    return t if t in TOPIC_NAME else "etc"
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FONT = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">'
 VERIFY = ('<meta name="naver-site-verification" content="e074d43c1aa971b277361693bbff22e6a1cf9253" />\n'
@@ -131,7 +141,7 @@ def inline(text):
 
 def strip_tags(s): return re.sub(r"<[^>]+>", "", s)
 
-def build_post(p):
+def build_post(p, posts=()):
     body = p["body"]
     faq_md = ""
     if "## 자주 묻는 질문" in body:
@@ -149,8 +159,19 @@ def build_post(p):
     calc = f'<div class="box"><p class="label">바로 계산해 보기</p><p><a href="{p["calc"]}">증여세 계산기로 내 경우를 계산해 보세요 →</a></p></div>' if p.get("calc") else ""
     blog = f' · <a href="{esc(p["blog"])}" target="_blank" rel="noopener">블로그에서 보기</a>' if p.get("blog") else ""
     upd = f' · 수정 {p["updated"]}' if p.get("updated") and p["updated"] != p["date"] else ""
+    tp = topic_of(p)
+    same = [q for q in posts if q["slug"] != p["slug"] and topic_of(q) == tp][:3]
+    if len(same) < 3:
+        same += [q for q in posts if q["slug"] != p["slug"] and q not in same][:3 - len(same)]
+    rel = "".join(f'<li><a href="/qa/{q["slug"]}/">{esc(q["title"])}</a></li>' for q in same)
+    rel_html = f'<div class="rel-col"><p class="label">함께 보면 좋은 글</p><ul>{rel}</ul></div>' if rel else ""
+    blog_card = (f'<a class="blog-card" href="{esc(p["blog"])}" target="_blank" rel="noopener"><span class="k">네이버 블로그</span>'
+                 f'<b>이 글의 블로그 원문 보기 →</b><span class="s">처음 올린 네이버 블로그 글로 이동합니다.</span></a>') if p.get("blog") else ""
+    svc = TOPIC_SERVICE.get(tp)
+    svc_link = f'<p class="rel-svc"><a href="/services/{svc}/">관련 업무 안내 · {dict((k, t) for k, t, _ in ALL_SERVICES)[svc]} →</a></p>' if svc else ""
+    more_html = f'<div class="post-more">{blog_card}{rel_html}</div>{svc_link}<p class="rel-back"><a href="/qa/">← 세무 Q&amp;A 목록</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그 전체 글</a></p>' 
     art = f'''<div class="narrow"><article>
-<p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/qa/#{p["category"]}">{cat}</a></p>
+<p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/qa/#{topic_of(p)}">{TOPIC_NAME[topic_of(p)]}</a></p>
 <h1>{esc(p["title"])}</h1>
 <p class="meta">{PERSON} 작성 · {p["date"]}{upd}{blog}</p>
 <div class="summary"><p class="label">요약 답변</p>{md(p["summary"])}</div>
@@ -160,6 +181,7 @@ def build_post(p):
 <div class="box"><p class="label">근거 법령</p><ul>{laws}</ul></div>
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구를 맡고 있습니다.</p></div></div>
 <div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황을 고려한 답이 필요하시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
+{more_html}
 <p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성했습니다. 예시 금액은 따로 적지 않은 한 신고세액공제 반영 전 산출세액입니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>'''
     ld = [{"@type": "Article", "headline": p["title"], "description": p["description"],
@@ -180,22 +202,35 @@ def build_post(p):
 def qa_item(p):
     return (f'<li><a href="/qa/{p["slug"]}/"><span class="t">{esc(p["title"])}</span>'
             f'<span class="s">{esc(p["description"])}</span>'
-            f'<span class="m">{CATS.get(p["category"], "")} · {p["date"]}</span></a></li>')
+            f'<span class="m">{TOPIC_NAME[topic_of(p)]} · {p["date"]}</span></a></li>')
+
+def qa_card(p, big=False):
+    tp = topic_of(p)
+    badge = '<span class="b-new">최신 글</span>' if big else ""
+    return (f'<a class="qcard{" big" if big else ""}" href="/qa/{p["slug"]}/" data-t="{tp}">'
+            f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span><span class="d">{p["date"].replace("-", ".")}</span></span>'
+            f'<b>{esc(p["title"])}</b><span class="qs">{esc(p["description"])}</span><span class="go">자세히 보기 →</span></a>')
 
 def build_qa_index(posts):
-    parts = []
-    for key, label in CATS.items():
-        items = [p for p in posts if p["category"] == key]
-        lis = "".join(qa_item(p) for p in items) or '<li><p class="lead" style="margin:16px 0">준비 중입니다.</p></li>'
-        parts.append(f'<h2 class="sec" id="{key}" style="margin-top:28px">{label}</h2><ul class="qa-list">{lis}</ul>')
-    body = f'''<div class="wrap" style="padding-top:36px">
+    counts = {}
+    for p in posts:
+        counts[topic_of(p)] = counts.get(topic_of(p), 0) + 1
+    chips = f'<button class="on" data-f="all">전체 <em>{len(posts)}</em></button>' + "".join(
+        f'<button data-f="{k}">{t} <em>{counts[k]}</em></button>' for k, t in TOPICS if counts.get(k))
+    big = qa_card(posts[0], True) if posts else '<p class="lead">준비 중입니다.</p>'
+    cards = "".join(qa_card(p) for p in posts[1:])
+    body = f'''<div class="wrap qa-page" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 6px">세무 Q&amp;A</h1>
-<p class="lead" style="margin:0 0 20px">자주 받는 세금 질문에 세무사가 조문을 근거로 답합니다.</p>
+<p class="lead" style="margin:0 0 20px">블로그에 쓴 글을 질문과 답으로 다시 정리하고, 근거 조문을 함께 적었습니다.</p>
 {SEARCH_BOX}
-<div class="tabs" style="margin-top:24px">{"".join(f'<a href="#{k}">{v}</a>' for k, v in CATS.items())}</div>
-{"".join(parts)}
-</div>'''
-    write("qa/index.html", page("세무 Q&A | " + NAME, "사업자 세금과 생활 세금에 대한 자주 묻는 질문을 세무사가 조문 근거와 함께 정리했습니다.", "/qa/", body, "qa"))
+<div class="qchips" role="group" aria-label="종류별 보기">{chips}</div>
+<div class="qa-feed">{big}<div class="qgrid">{cards}</div></div>
+<p class="qa-none" hidden>이 분류의 글은 준비 중입니다.</p>
+<div class="qa-more-wrap"><button class="qa-more" hidden></button></div>
+<div class="blog-band"><div><span class="k">네이버 블로그</span><b>블로그에는 세금 소식을 먼저 올리고 있습니다</b></div><a class="btn ghost" href="{BLOG}" target="_blank" rel="noopener">블로그 전체 글 보기 →</a></div>
+</div>
+<script src="/qa.js" defer></script>'''
+    write("qa/index.html", page("세무 Q&A | " + NAME, "종합소득세·양도소득세·상속세·증여세 등 자주 묻는 세금 질문을 세무사가 조문 근거와 함께 종류별로 정리했습니다.", "/qa/", body, "qa"))
 
 # ---------- 고정 페이지 ----------
 SERVICES = [
@@ -263,7 +298,7 @@ def build_search_index(posts):
         faq_md = p["body"].split("## 자주 묻는 질문", 1)[1] if "## 자주 묻는 질문" in p["body"] else ""
         qs = re.findall(r"^### (.+)$", faq_md, re.M)
         heads = re.findall(r"^## (.+)$", p["body"].split("## 자주 묻는 질문", 1)[0], re.M)
-        items.append({"t": p["title"], "u": f"/qa/{p['slug']}/", "c": CATS.get(p["category"], ""),
+        items.append({"t": p["title"], "u": f"/qa/{p['slug']}/", "c": TOPIC_NAME[topic_of(p)],
                       "s": strip_tags(md(p["summary"])).strip(), "h": heads + qs, "k": p.get("keywords", "")})
     write("search-index.json", json.dumps(items, ensure_ascii=False))
 
@@ -472,7 +507,7 @@ def build_feed(posts):
 if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
-    for p in posts: build_post(p)
+    for p in posts: build_post(p, posts)
     build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts)
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
