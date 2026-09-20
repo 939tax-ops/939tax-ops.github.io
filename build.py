@@ -222,7 +222,7 @@ def build_search_index(posts):
 def build_home(posts):
     svc = "".join(f'<div class="card svc"><i>{i:02d}</i><b>{t}</b><span>{d}</span></div>' for i, (t, d) in enumerate(SERVICES, 1))
     latest = "".join(qa_item(p) for p in posts[:6]) or '<li><p class="lead">준비 중입니다.</p></li>'
-    body = f'''<div class="hero hero-c1"><div class="wrap">
+    body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
 <div class="chips-h"><span>세무기장</span><span>세금신고</span><span>양도·상속·증여</span><span>경정청구</span><span>세무조사</span></div>
@@ -230,15 +230,9 @@ def build_home(posts):
 <p>개인·법인 기장부터 종합소득세, 양도소득세, 상속세·증여세 신고와 경정청구까지 맡고 있습니다.</p>
 <div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
 </div>
-<div class="hero-img" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div>
+<div class="hero-img m" aria-hidden="true"></div>
 <a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에<br>계산해 보기 →</b></a>
 </div></div>
-<section class="story"><div class="wrap">
-<div class="st-me"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="220" height="337"></div>
-<div class="st-txt"><p class="k">澤 · 택</p><h2>연못처럼 잔잔하게</h2>
-<p>세무회계택의 '택(澤)'은 연못을 뜻합니다. 복잡한 세금 앞에서도 마음은 잔잔한 연못처럼 편안하시도록, 근거를 하나하나 짚어 드립니다.</p>
-<p class="sig"><b>{PERSON}</b> · {NAME} 대표 · 서울시 마을세무사</p></div>
-</div></section>
 <div class="wrap">
 <section class="block search-block">{SEARCH_BOX}</section>
 <section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>

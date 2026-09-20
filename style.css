@@ -364,3 +364,17 @@ section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
   .st-me{order:2;text-align:center}
   .st-me img{width:170px;margin:0 auto}
 }
+
+/* v11: 넓은 화면에서도 사진이 오른쪽으로 과하게 확대되지 않도록 — 사진을 오른쪽 블록으로 */
+.hero-c1{background:#fff;overflow:hidden}
+.hero-c1 .wrap{position:relative;z-index:1}
+.hero-c1 .hero-img{display:block;position:absolute;z-index:0;top:0;bottom:0;right:0;width:min(66%,1180px);background:url(/assets/hero-law.webp) 60% center/cover no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 28%);mask-image:linear-gradient(90deg,transparent 0%,#000 28%)}
+.hero-c1 > .hero-img{pointer-events:none}
+@media (min-width:1500px){.hero-c1 .hero-img{right:calc(50% - 760px)}}
+@media (max-width:760px){
+  .hero-c1 .hero-img{position:static;width:auto;height:300px;margin:0 -20px;-webkit-mask-image:none;mask-image:none;background:url(/assets/hero-law-m.webp) center/cover no-repeat}
+}
+.hero-c1 .hero-img.m{display:none}
+.hero-c1 .ccard{right:20px;top:56px}
+@media (max-width:760px){.hero-c1 .hero-img.d{display:none}.hero-c1 .hero-img.m{display:block}}
