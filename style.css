@@ -378,3 +378,8 @@ section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
 .hero-c1 .hero-img.m{display:none}
 .hero-c1 .ccard{right:20px;top:56px}
 @media (max-width:760px){.hero-c1 .hero-img.d{display:none}.hero-c1 .hero-img.m{display:block}}
+
+/* v12: 책장 배경 위 본문 가독성 — 왼쪽 페이드 구간 확대 */
+@media (min-width:761px){
+  .hero-c1 .hero-img.d{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 14%,rgba(0,0,0,.55) 30%,#000 44%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 14%,rgba(0,0,0,.55) 30%,#000 44%)}
+}
