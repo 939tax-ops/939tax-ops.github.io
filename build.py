@@ -86,7 +86,6 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <p>{ADDR1} {ADDR2}</p>
 <p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX} · 이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세친구</a></p>
-<p class="small">이 사이트의 글과 계산기는 일반적인 정보 제공을 위한 것으로, 개별 사안에 대한 세무 자문이 아닙니다. 실제 신고 전에는 전문가와 상담하시기 바랍니다.</p>
 <p class="small"><a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
 </div></footer>
 </body>
@@ -155,8 +154,8 @@ def build_post(p):
 {calc}
 <div class="box"><p class="label">근거 법령</p><ul>{laws}</ul></div>
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구를 맡고 있습니다.</p></div></div>
-<div class="cta-box"><p>같은 질문이라도 가족 관계, 받은 시기, 재산 종류에 따라 결과가 달라집니다. 내 경우가 궁금하시면 편하게 물어보세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
-<p class="disclaimer">이 글은 {p.get("updated", p["date"])} 기준 법령을 바탕으로 작성했습니다. 예시 금액은 따로 적지 않은 한 신고세액공제 반영 전 산출세액입니다. 개별 사안에 따라 결론이 달라질 수 있습니다.</p>
+<div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황을 고려한 답이 필요하시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div></div>
+<p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성했습니다. 예시 금액은 따로 적지 않은 한 신고세액공제 반영 전 산출세액입니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>'''
     ld = [{"@type": "Article", "headline": p["title"], "description": p["description"],
            "datePublished": p["date"], "dateModified": p.get("updated", p["date"]),
@@ -333,7 +332,6 @@ def build_contact():
 <ul>
 <li>주민등록번호, 계좌번호, 홈택스 비밀번호 같은 정보는 적지 마세요.</li>
 <li>문의 접수만으로 세무대리 계약이 이루어지지 않으며, 접수 내용은 확인 후 순서대로 연락드립니다.</li>
-<li>이 사이트의 글과 검색 답변은 일반적인 기준이며, 개별 사안에 대한 세무 자문이 아닙니다.</li>
 </ul>
 </div>
 {form}

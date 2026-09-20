@@ -65,7 +65,6 @@
     if(r.small) m.push('과세표준이 50만원 미만이라 증여세를 부과하지 않습니다.');
     if(r.prevTaxAuto&&prev>0) m.push('이전 증여 세액은 입력하지 않아 같은 조건으로 추정했습니다. 실제 신고서의 산출세액을 넣으면 더 정확합니다.');
     if(rel==='none') m.push('친족이 아닌 사람에게 받은 재산은 증여재산공제가 없습니다.');
-    m.push('일반적인 현금 증여를 가정한 참고용 계산입니다.');
     $('msg').textContent=m.join(' ');
   }
   ['cur','prev','prevTax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });

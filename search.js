@@ -20,7 +20,7 @@
         return;
       }
       out.innerHTML=res.map(function(x){var d=x.d;return '<a class="s-item" href="'+d.u+'"><span class="s-cat">'+esc(d.c)+'</span><b>'+esc(d.t)+'</b><span class="s-sum">'+esc(d.s)+'</span><span class="s-go">자세히 보기 →</span></a>'}).join('')+
-        '<p class="s-note">일반적인 기준에 따른 답변입니다. 가족 관계·시기·재산 종류에 따라 결과가 달라질 수 있으니, 내 경우가 궁금하시면 <a href="/contact/">문의를 남겨 주세요</a>.</p>';
+        '<p class="s-note">본인의 상황을 고려한 판단이 필요하시면 <a href="/contact/">문의를 남겨 주세요</a>.</p>';
     });
   }
   btn.addEventListener('click',run);
