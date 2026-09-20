@@ -40,13 +40,13 @@
     $('mini').hidden=false;
     if(r.nego){ $('pay').textContent='별도 협의'; $('miniPay').textContent='별도 협의'; $('sub').textContent='규모가 커서 업무 범위를 확인한 뒤 정합니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').textContent=''; return; }
     $('pay').textContent='월 '+comma(r.mPay)+'원'; $('miniPay').textContent='월 '+comma(r.mPay)+'원';
-    $('sub').textContent='부가가치세 포함 월 '+comma(r.mVat)+'원'+(r.disc?' · 1인 사업자 20% 할인 적용':'');
+    $('sub').textContent='부가가치세 포함 월 '+comma(r.mVat)+'원'+(r.disc?' · 1인 사업자 기준':' · 4대보험 직원 반영');
     var t='';
     t+=row('기준금액 <small>(매출액+보조금과 자산총액 중 큰 금액)</small>',comma(r.base)+'원');
-    t+=row('월 기장료 (보수표 기준)',comma(r.monthly)+'원');
-    if(r.disc) t+=row('1인 사업자 할인 (20%)','− '+comma(r.disc)+'원');
-    t+=row('월 기장료',comma(r.mPay)+'원','sub');
-    t+=row('세무조정료 <small>(연 1회, 할인 제외)</small>',comma(r.adj)+'원');
+    var soloFee=r.monthly-Math.round(r.monthly*0.2);
+    if(r.disc){ t+=row('월 기장료 (1인 사업자)',comma(r.mPay)+'원','sub'); }
+    else { t+=row('월 기장료 (1인 사업자 기준)',comma(soloFee)+'원'); t+=row('4대보험 가입 직원 있음','+ '+comma(r.monthly-soloFee)+'원'); t+=row('월 기장료',comma(r.mPay)+'원','sub'); }
+    t+=row('세무조정료 <small>(연 1회)</small>',comma(r.adj)+'원');
     if(r.sin) t+=row('성실신고확인 추가보수 <small>(연 1회)</small>',comma(r.sin)+'원');
     t+=row('1년 예상 합계',comma(r.year)+'원','total');
     t+=row('부가가치세 포함 시',comma(r.yearVat)+'원');
