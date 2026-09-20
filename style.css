@@ -322,3 +322,45 @@ section.block.alt .card{background:#fff}
 section.block.alt .card.soon{background:#FAFCFA}
 section.block.alt .band{background:#fff;border:1px solid var(--ivory-line)}
 .p-home .search{background:var(--tint-2)}
+
+/* v10: 첫 화면 C1 (조세법전 사진) + 택 소개 */
+.hero-c1{position:relative;background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.95) 30%,rgba(255,255,255,0) 55%),url(/assets/hero-law.webp) right center/cover no-repeat;border-bottom:0}
+.hero-c1 .wrap{display:block;min-height:560px;padding-top:0;position:relative}
+.hero-c1 .copy{max-width:470px;padding:110px 0 90px}
+.hero-c1 .hero-img{display:none}
+.chips-h{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+.chips-h span{font-family:var(--sans);font-size:13.5px;font-weight:700;color:var(--green);background:rgba(255,255,255,.92);border:1px solid #C9D6CC;border-radius:20px;padding:5px 12px}
+.ccard{display:block;background:#fff;border-radius:12px;box-shadow:0 14px 30px rgba(0,0,0,.14);padding:16px 20px;font-family:var(--sans);text-decoration:none;color:var(--green)}
+.ccard:hover{transform:translateY(-2px)}
+.ccard .t{display:block;font-size:12px;font-weight:800;opacity:.7}
+.ccard b{font-size:18px;line-height:1.4}
+.hero-c1 .ccard{position:absolute;right:20px;top:56px}
+.story{background:#F2F6F3;padding:40px 0 0}
+.story .wrap{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:end}
+.st-me img{display:block;width:220px;height:auto}
+.st-txt{padding-bottom:40px}
+.story .k{font-family:var(--sans);color:var(--green);font-weight:800;letter-spacing:.12em;margin:0 0 4px}
+.story h2{color:var(--green);font-size:28px;margin:0 0 12px}
+.story p{margin:0 0 12px}
+.story .sig{font-family:var(--sans);font-size:14px;color:var(--sub)}
+.story .sig b{color:var(--green)}
+@media (max-width:760px){
+  .hero-c1{background:#fff}
+  .hero-c1 .copy{padding:36px 0 22px;max-width:none}
+  .hero-c1 .hero-img{display:block;height:300px;margin:0 -20px;background:url(/assets/hero-law-m.webp) center/cover no-repeat}
+  .hero-c1 .ccard{position:relative;right:auto;top:auto;margin:-40px 0 24px auto;width:max-content}
+  .story .wrap{grid-template-columns:120px 1fr;gap:16px}
+  .st-me img{width:120px}
+  .st-txt{padding-bottom:24px}
+  .story h2{font-size:22px}
+}
+.hero-c1{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.96) 34%,rgba(255,255,255,.6) 48%,rgba(255,255,255,0) 60%),url(/assets/hero-law.webp) right center/cover no-repeat}
+.hero-c1 .copy{max-width:440px}
+@media (max-width:760px){
+  .hero-c1{background:#fff}
+  .story{padding:32px 0 0}
+  .story .wrap{grid-template-columns:1fr;gap:8px}
+  .st-txt{order:1;padding-bottom:8px}
+  .st-me{order:2;text-align:center}
+  .st-me img{width:170px;margin:0 auto}
+}
