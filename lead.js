@@ -10,7 +10,8 @@
       var name = f.name.value.trim(), phone = f.phone.value.trim();
       if (!svc) return say('상담 분야를 선택해 주세요.');
       if (!name) return say('성함을 적어 주세요.');
-      if (!/^[0-9\-+ ()]{9,20}$/.test(phone)) return say('연락처를 확인해 주세요.');
+      var isTel = /^[0-9\-+ ()]{9,20}$/.test(phone), isMail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(phone);
+      if (!isTel && !isMail) return say('전화번호나 이메일 주소를 확인해 주세요.');
       if (!f.a1.checked || !f.a2.checked) return say('필수 동의 두 가지에 체크해 주세요.');
       if (!cfg.action) return say('신청 접수 연결을 준비 중입니다. 전화나 카카오톡으로 연락해 주세요.');
       var d = new FormData();

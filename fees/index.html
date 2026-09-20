@@ -20,7 +20,7 @@
 <link rel="alternate" type="application/rss+xml" title="세무회계택 세무 Q&amp;A" href="/feed.xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
 <link rel="stylesheet" href="/style.css">
-
+<script src="/lead.js" defer></script>
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AccountingService", "@id": "https://tax939.com/#org", "name": "세무회계택", "url": "https://tax939.com/", "logo": "https://tax939.com/assets/icon-512.png", "image": "https://tax939.com/assets/profile.jpg", "telephone": "+82-2-6952-6357", "faxNumber": "+82-2-6952-6359", "email": "tax939@naver.com", "address": {"@type": "PostalAddress", "streetAddress": "왕산로 200, 롯데캐슬SKY-L65 섹션오피스 1313호", "addressLocality": "동대문구", "addressRegion": "서울특별시", "addressCountry": "KR"}, "sameAs": ["https://blog.naver.com/tax939", "https://www.youtube.com/@taxfriends3", "https://pf.kakao.com/_TVxdkn"], "founder": {"@id": "https://tax939.com/about/#person"}}, {"@type": "WebPage", "name": "세무 보수 안내", "url": "https://tax939.com/fees/", "about": {"@id": "https://tax939.com/#org"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://tax939.com/"}, {"@type": "ListItem", "position": 2, "name": "보수 안내", "item": "https://tax939.com/fees/"}]}]}</script>
 </head>
@@ -42,7 +42,38 @@
 <p class="note c">보수표 기준 금액에서 할인합니다. 기장료 기본 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 <div class="band" style="margin-top:26px"><div><b>본인의 상황에 맞는 보수가 궁금하시면</b><span>업종·매출 규모를 남겨 주시면 확인 후 안내드리겠습니다.</span></div><a class="btn primary" href="/contact/">문의 남기기</a></div>
-
+<form class="lead" data-cfg="{&quot;action&quot;: &quot;https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4LV3rXaB6eaTJceSpR2-JH-PTYe1VA/formResponse&quot;, &quot;service&quot;: &quot;entry.1235054183&quot;, &quot;name&quot;: &quot;entry.1767689992&quot;, &quot;phone&quot;: &quot;entry.1909499942&quot;, &quot;time&quot;: &quot;entry.404254547&quot;, &quot;memo&quot;: &quot;entry.21609242&quot;, &quot;agree&quot;: &quot;entry.31240237&quot;}" novalidate>
+<h2>1:1 상담 신청</h2>
+<p class="lf-sub">상담받고 싶은 분야를 선택해 주세요.</p>
+<div class="lf-opts"><label class="lf-opt"><input type="radio" name="lfe-svc" value="경정청구 (낸 세금 환급 검토)"><span>경정청구 (낸 세금 환급 검토)</span><i></i></label><label class="lf-opt"><input type="radio" name="lfe-svc" value="양도세 · 증여세 · 상속세"><span>양도세 · 증여세 · 상속세</span><i></i></label><label class="lf-opt"><input type="radio" name="lfe-svc" value="절세상담"><span>절세상담</span><i></i></label><label class="lf-opt"><input type="radio" name="lfe-svc" value="세무기장"><span>세무기장</span><i></i></label><label class="lf-opt"><input type="radio" name="lfe-svc" value="세무조사 · 조세불복"><span>세무조사 · 조세불복</span><i></i></label><label class="lf-opt"><input type="radio" name="lfe-svc" value="기타 세무상담"><span>기타 세무상담</span><i></i></label></div>
+<div class="lf-fields">
+<label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
+<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="예: 010-1234-5678 또는 이메일"></label>
+<label>연락 가능한 시간 <select name="time"><option value="">상관없음</option><option>오전 (9~12시)</option><option>오후 (13~18시)</option><option>저녁 (18시 이후)</option></select></label>
+<label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"></textarea></label>
+</div>
+<div class="lf-agree">
+<label><input type="checkbox" name="a1"> <b>[필수]</b> 개인정보 수집·이용에 동의합니다</label>
+<details><summary>내용 보기</summary><table>
+<tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
+<tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
+<tr><th>보유 기간</th><td>상담 종료 후 1년 (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
+<tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
+</table></details>
+<label><input type="checkbox" name="a2"> <b>[필수]</b> 개인정보 국외 이전(보관)에 동의합니다</label>
+<details><summary>내용 보기</summary><table>
+<tr><th>이전 항목</th><td>위 수집 항목 전부</td></tr>
+<tr><th>이전 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 인터넷 전송(암호화 통신)</td></tr>
+<tr><th>이전받는 자</th><td>Google LLC (Google 설문지·스프레드시트 저장)</td></tr>
+<tr><th>이용 목적·보유 기간</th><td>신청 내용 보관 / 상담 종료 후 1년 (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
+<tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
+</table></details>
+<p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
+</div>
+<button type="submit" class="lf-btn">상담 신청하기 →</button>
+<p class="lf-msg" aria-live="polite"></p>
+<p class="lf-foot">대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다.</p>
+</form>
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
 </div>
 </main>
@@ -52,7 +83,7 @@
 <p>서울특별시 동대문구 왕산로 200 롯데캐슬SKY-L65 섹션오피스 1313호</p>
 <p>전화 <a href="tel:02-6952-6357">02-6952-6357</a> · 팩스 02-6952-6359 · 이메일 <a href="mailto:tax939@naver.com">tax939@naver.com</a></p>
 <p><a href="https://pf.kakao.com/_TVxdkn/chat" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a> · <a href="https://blog.naver.com/tax939" target="_blank" rel="noopener">네이버 블로그</a> · <a href="https://www.youtube.com/@taxfriends3" target="_blank" rel="noopener">유튜브 세친구</a></p>
-<p class="small"><a href="/disclaimer/">이용 안내 및 면책</a> · © 2026 세무회계택</p>
+<p class="small"><a href="/privacy/"><b>개인정보 처리방침</b></a> · <a href="/disclaimer/">이용 안내 및 면책</a> · © 2026 세무회계택</p>
 </div></footer>
 </body>
 </html>

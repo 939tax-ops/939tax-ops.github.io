@@ -406,7 +406,8 @@ FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다
 
 # ---------- 1:1 상담 신청 폼 ----------
 # 구글폼 연결값: action = https://docs.google.com/forms/d/e/<ID>/formResponse, 나머지는 entry.숫자
-LEAD = {"action": "", "service": "", "name": "", "phone": "", "time": "", "memo": "", "agree": ""}
+LEAD = {"action": "https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4LV3rXaB6eaTJceSpR2-JH-PTYe1VA/formResponse",
+        "service": "entry.1235054183", "name": "entry.1767689992", "phone": "entry.1909499942", "time": "entry.404254547", "memo": "entry.21609242", "agree": "entry.31240237"}
 LEAD_ENABLED = bool(LEAD["action"]) or bool(os.environ.get("LEAD_PREVIEW"))
 LEAD_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 검토)"), ("property", "양도세 · 증여세 · 상속세"),
                  ("tax-planning", "절세상담"), ("bookkeeping", "세무기장"), ("tax-audit", "세무조사 · 조세불복"), ("etc", "기타 세무상담")]
@@ -425,14 +426,14 @@ def lead_form(pre=None, uid="lf"):
 <div class="lf-opts">{opts}</div>
 <div class="lf-fields">
 <label>성함 <input name="name" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
-<label>연락처 <input name="phone" type="tel" autocomplete="tel" maxlength="20" placeholder="예: 010-1234-5678"></label>
+<label><span>연락처 <span class="opt">(전화 또는 이메일)</span></span><input name="phone" autocomplete="tel" maxlength="60" placeholder="예: 010-1234-5678 또는 이메일"></label>
 <label>연락 가능한 시간 <select name="time"><option value="">상관없음</option><option>오전 (9~12시)</option><option>오후 (13~18시)</option><option>저녁 (18시 이후)</option></select></label>
-<label class="wide">간단한 내용 <span class="opt">(선택)</span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"></textarea></label>
+<label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"></textarea></label>
 </div>
 <div class="lf-agree">
 <label><input type="checkbox" name="a1"> <b>[필수]</b> 개인정보 수집·이용에 동의합니다</label>
 <details><summary>내용 보기</summary><table>
-<tr><th>수집 항목</th><td>성함, 연락처, 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
+<tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
 <tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
 <tr><th>보유 기간</th><td>{PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
 <tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
@@ -459,7 +460,7 @@ def build_privacy():
 <h1 style="color:var(--green);margin:0 0 6px">개인정보 처리방침</h1>
 <p class="lead">{NAME}(이하 "사무소")은 상담 신청 과정에서 받는 개인정보를 아래와 같이 처리합니다.</p>
 <h2>1. 처리 목적</h2><p>상담 신청 확인 및 연락. 이 목적 외의 용도로 쓰지 않습니다.</p>
-<h2>2. 처리 항목</h2><p>성함, 연락처, 상담 분야, 연락 가능한 시간, 문의 내용(선택). 주민등록번호 등 고유식별정보는 받지 않습니다.</p>
+<h2>2. 처리 항목</h2><p>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택). 주민등록번호 등 고유식별정보는 받지 않습니다.</p>
 <h2>3. 보유 기간과 파기</h2><p>{PRIVACY_KEEP} 보관한 뒤 파기합니다. 상담으로 이어지지 않은 신청은 신청일부터 1년이 지나면 파기합니다. 세무대리 계약을 맺은 경우 그 계약에 따른 자료는 계약과 관련 법령에서 정한 기간 동안 따로 보관합니다. 전자 파일은 복구할 수 없는 방법으로 삭제합니다.</p>
 <h2>4. 제3자 제공</h2><p>정보주체의 동의나 법령에 따른 경우가 아니면 제3자에게 제공하지 않습니다.</p>
 <h2>5. 국외 이전(보관)</h2>
