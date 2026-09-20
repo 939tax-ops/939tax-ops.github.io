@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://939tax-ops.github.io/sitemap.xml
