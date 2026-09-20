@@ -452,7 +452,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     chk = kind == "check"
     lst = CHECK_SERVICES if chk else LEAD_SERVICES
     opts = "".join(f'<label class="lf-opt"><input type="radio" name="{uid}-svc" value="{t}"{" checked" if k == pre else ""}><span>{t}</span><i></i></label>' for k, t in lst)
-    cfg = dict(LEAD, tag="[무료 확인] " if chk else "")
+    cfg = dict(LEAD, tag="[무료 확인] " if chk else "[상담 신청] ")
     data = esc(json.dumps(cfg, ensure_ascii=False))
     title = "환급·절세 가능 여부 무료 확인" if chk else "1:1 상담 신청"
     sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
