@@ -1,0 +1,67 @@
+<div class="wrap" style="padding-top:28px;max-width:980px">
+<p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 기장료 계산기</p>
+<h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">기장료 계산기</h1>
+<p class="lead" style="margin:0 0 18px">세무회계택 보수 기준표(2026년 9월 20일) 기준</p>
+
+<ol class="steps">
+<li><b>개인·법인</b>을 고르고</li>
+<li><b>1년 매출액</b>을 넣으면</li>
+<li><b>월 기장료</b>가 바로 산출됩니다</li>
+</ol>
+
+<form class="calc2" id="fc" onsubmit="return false">
+<div class="c-in">
+<p class="c-q"><span>1</span>사업자 유형</p>
+<div class="chips">
+<label><input type="radio" name="ftype" value="ind" checked><span>개인사업자</span></label>
+<label><input type="radio" name="ftype" value="corp"><span>법인사업자</span></label>
+</div>
+
+<p class="c-q"><span>2</span>1년 매출액</p>
+<div class="amt"><input type="text" id="sales" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="won" data-for="sales"></div>
+<div class="quick"><button type="button" data-add="10000000">+1천만</button><button type="button" data-add="50000000">+5천만</button><button type="button" data-add="100000000">+1억</button><button type="button" data-add="1000000000">+10억</button><button type="button" data-clear>지우기</button></div>
+
+<p class="c-q"><span>3</span>4대보험 가입 직원이 있나요?</p>
+<div class="chips">
+<label><input type="radio" name="solo" value="y" checked><span>없음<small>1인 사업자 · 20% 할인</small></span></label>
+<label><input type="radio" name="solo" value="n"><span>있음</span></label>
+</div>
+<p class="mini" id="mini" hidden>예상 기장료 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
+
+<details class="more-opt">
+<summary>해당되면 펼치기 <small>자산총액 · 국고보조금 · 성실신고확인</small></summary>
+<label for="asset">자산총액 <span class="hint">매출액보다 크면 이 금액이 기준</span></label>
+<div class="amt sm"><input type="text" id="asset" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="won" data-for="asset"></div>
+<label for="grant">받은 국고보조금 <span class="hint">매출액에 더해 계산</span></label>
+<div class="amt sm"><input type="text" id="grant" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="won" data-for="grant"></div>
+<label class="chk" id="sinWrap"><input type="checkbox" id="sincere"> 성실신고확인 대상 <span class="hint">확인 보수 연 1회 추가</span></label>
+</details>
+</div>
+
+<div class="c-out">
+<div class="result2" id="out">
+<p class="r-label">예상 월 기장료 <small>(부가가치세 별도)</small></p>
+<p class="big" id="pay">0원</p>
+<p class="r-sub" id="sub">매출액을 넣으면 바로 산출됩니다.</p>
+<details class="how" open><summary>계산 과정 보기</summary><table id="tbl"></table></details>
+<p class="note" id="msg"></p>
+</div>
+</div>
+</form>
+
+<details class="box fold" style="margin-top:28px"><summary class="label">기장료에 포함되는 업무</summary>
+<ul>
+<li>매출·매입 증빙 정리와 회계 장부 작성</li>
+<li>부가가치세·원천세 신고</li>
+<li>일반적인 세무 자문</li>
+<li>세무조정(종합소득세·법인세 신고)은 연 1회 별도 보수입니다</li>
+</ul>
+</details>
+
+<div class="cta-box"><p>본인의 상황에 맞추어 정확히 확인해 보고 싶으시면 문의를 남겨 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="/fees/">보수 안내 전체 보기</a></div></div>
+<p class="fine" id="disclaimer">이 계산기는 세무회계택 보수 기준표를 바탕으로 한 참고용 산출 결과이며, 실제 보수는 업무 범위와 난이도를 확인한 뒤 협의해 정합니다. 입력 오류나 계산기 자체의 오류로 실제 보수와 다를 수 있습니다. <a href="/disclaimer/">전문 보기</a></p>
+</div>
+<script src="/calc-fee.js" defer></script>

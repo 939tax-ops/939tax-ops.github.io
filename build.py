@@ -251,6 +251,7 @@ SERVICE_DETAIL = {
         "intro": "개인사업자·법인의 장부를 대신 작성하고, 매달 들어오는 매출·매입 자료를 정리해 신고까지 이어지도록 관리합니다.",
         "do": ["매출·매입 증빙 정리와 장부 작성", "부가가치세, 종합소득세 또는 법인세 신고", "직원·프리랜서 인건비에 대한 원천세 신고", "신고 전 예상 세액 안내"],
         "for": ["사업을 시작해 장부를 처음 맡기시는 분", "매출이 늘어 장부 작성이 부담되시는 분", "직접 신고하다가 누락이 걱정되시는 분"],
+        "calc": ("/calculators/bookkeeping-fee/", "기장료 계산기로 월 기장료 확인해 보기"),
     },
     "tax-filing": {
         "intro": "기장은 직접 하시거나 따로 맡기지 않고, 신고 시기에만 도움이 필요한 사업자의 세금 신고를 대행합니다.",
@@ -389,7 +390,7 @@ CALCS = [
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
     ("양도소득세", "양도소득세 계산기", "보유기간·공제를 반영한 예상 양도세"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
-    ("기장료", "기장료 안내", "개인 월 80,000원부터 · 매출·자산 규모별 보수와 할인 안내", "/fees/"),
+    ("기장료", "기장료 계산기", "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다", "/calculators/bookkeeping-fee/"),
 ]
 
 def calc_cards():
@@ -418,6 +419,16 @@ def build_gift_calc():
           page(f"증여세 계산기 2026 | {NAME}",
                "부모·배우자·자녀에게 받은 금액을 넣으면 증여재산공제, 10년 합산, 혼인·출산 공제, 세대생략 할증, 신고세액공제를 반영한 예상 증여세를 계산합니다.",
                "/calculators/gift-tax/", tpl, "calc", ld))
+
+def build_fee_calc():
+    tpl = open(os.path.join(ROOT, "_src", "bookkeeping-fee-calc.html"), encoding="utf-8").read()
+    ld = [{"@type": "WebApplication", "name": "기장료 계산기", "url": SITE + "/calculators/bookkeeping-fee/",
+           "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko",
+           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
+    write("calculators/bookkeeping-fee/index.html",
+          page(f"기장료 계산기 | {NAME}",
+               "개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료와 세무조정료가 산출됩니다. 1인 사업자 20% 할인 반영.",
+               "/calculators/bookkeeping-fee/", tpl, "calc", ld))
 
 FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다
 
@@ -618,7 +629,7 @@ def build_fees():
 <p class="note c">보수표 기준 금액에서 할인합니다. 기장료 기본 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 {lead_form(None, "lfe")}
-<p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
+<p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
 </div>'''
     ld = [{"@type": "WebPage", "name": "세무 보수 안내", "url": SITE + "/fees/", "about": {"@id": SITE + "/#org"}},
           {"@type": "BreadcrumbList", "itemListElement": [
@@ -628,7 +639,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -648,6 +659,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
