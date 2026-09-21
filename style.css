@@ -762,3 +762,5 @@ table.info th{white-space:nowrap}
 .ch .k .ic{width:22px;height:22px;flex:none}
 .ab-head{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap}
 .ab-head h1{margin-bottom:0}
+.ch .k{font-size:16.5px}
+.ch .k .ic{width:24px;height:24px}
