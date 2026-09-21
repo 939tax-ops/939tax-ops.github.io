@@ -758,3 +758,5 @@ table.info th{white-space:nowrap}
 #steps .ytbl{min-width:560px}
 .box.laws a{text-decoration:none}
 .box.laws a:hover{text-decoration:underline}
+.ch .k{display:inline-flex;align-items:center;gap:8px}
+.ch .k .ic{width:22px;height:22px;flex:none}
