@@ -411,9 +411,12 @@ def build_about():
 </section></div>'''
     write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
 
+# 1주택 양도세 연도별 비교 계산기: 원본은 _draft/(git 제외). 공개하려면 True 로 바꾸고 build 후 push
+YANGDO_ENABLED = False
+
 CALCS = [
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
-    ("양도소득세", "1주택 양도세 연도별 비교", "2026~2029년 중 언제 파느냐에 따라 달라지는 1주택 양도세를 나란히 비교합니다", "/calculators/one-house-capital-gains/"),
+    (("양도소득세", "1주택 양도세 연도별 비교", "2026~2029년 중 언제 파느냐에 따라 달라지는 1주택 양도세를 나란히 비교합니다", "/calculators/one-house-capital-gains/") if YANGDO_ENABLED else ("양도소득세", "양도소득세 계산기", "보유기간·공제를 반영한 예상 양도세")),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
     ("기장료", "기장료 계산기", "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다", "/calculators/bookkeeping-fee/"),
 ]
@@ -456,7 +459,11 @@ def build_fee_calc():
                "/calculators/bookkeeping-fee/", tpl, "calc", ld))
 
 def build_yangdo_calc():
-    tpl = open(os.path.join(ROOT, "_src", "yangdo-1house-calc.html"), encoding="utf-8").read()
+    if not YANGDO_ENABLED:
+        return
+    import shutil
+    shutil.copyfile(os.path.join(ROOT, "_draft", "calc-yangdo.js"), os.path.join(ROOT, "calc-yangdo.js"))
+    tpl = open(os.path.join(ROOT, "_draft", "yangdo-1house-calc.html"), encoding="utf-8").read()
     ld = [{"@type": "WebApplication", "name": "1주택 양도세 연도별 비교 계산기", "url": SITE + "/calculators/one-house-capital-gains/",
            "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko",
            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
@@ -676,7 +683,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/one-house-capital-gains/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
