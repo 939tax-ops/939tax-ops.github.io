@@ -66,6 +66,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
@@ -76,7 +77,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{canon}">
-<meta property="og:image" content="{SITE}/assets/logo-v.png">
+<meta property="og:image" content="{SITE}/assets/og-logo.png">
 <meta property="og:locale" content="ko_KR">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
