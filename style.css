@@ -686,3 +686,8 @@ section.block.alt > .wrap{padding-left:20px;padding-right:20px}
   .nav .dd-m{box-shadow:0 14px 28px rgba(0,0,0,.5)}
   .btn.kakao{background:#FEE500;color:#191600}
 }
+
+/* v33: 동의 체크박스 라벨 한 줄 유지 */
+.lf-agree>label{align-items:flex-start}
+.lf-agree>label>b{flex:none}
+@media (max-width:420px){.lf-agree{font-size:13.5px}.lf-agree>label{gap:6px}.lf-agree input{width:17px;height:17px}.lf-agree>label>b{font-size:13px}}
