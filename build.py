@@ -184,7 +184,7 @@ def build_post(p, posts=()):
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인 기장, 양도·상속·증여세, 경정청구 업무를 수행하고 있습니다.</p></div></div>
 <div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div></div>
 {more_html}
-<p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성한 일반적인 세법 정보이며, 개별 사안에 따라 결론이 달라질 수 있습니다. 예시 금액은 따로 적지 않은 한 {esc(p["assume"]) + "을 가정한 " if p.get("assume") else ""}신고세액공제 반영 전 산출세액입니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
+<p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성한 일반적인 세법 정보이며, 개별 사안에 따라 결론이 달라질 수 있습니다. {"예시 금액은 따로 적지 않은 한 " + esc(p["assume"]) + "을 가정한 금액입니다. " if p.get("assume") else ""}<a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>'''
     ld = [{"@type": "Article", "headline": p["title"], "description": p["description"],
            "datePublished": p["date"], "dateModified": p.get("updated", p["date"]),
