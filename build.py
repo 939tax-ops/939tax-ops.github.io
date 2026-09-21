@@ -258,14 +258,14 @@ def why_cards(items=None):
     return "".join(out)
 
 SERVICES = [
-    ("bookkeeping", "사업자 세무기장", "개인사업자·법인의 장부 작성과 매달 세무 관리"),
-    ("tax-filing", "사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세 신고"),
-    ("capital-gains", "양도소득세", "주택·토지·상가를 팔기 전 세액 검토와 신고"),
-    ("inheritance-gift", "상속세·증여세", "증여 전 세액 비교, 상속 재산 평가와 신고"),
-    ("refund-claim", "경정청구", "이미 낸 세금 중 빠뜨린 공제·감면을 찾아 돌려받는 절차"),
-    ("tax-audit", "세무조사 대응", "세무조사·소명 요청에 대한 자료 준비와 대응"),
+    ("bookkeeping", "사업자 세무기장", "개인·법인사업자의 장부를 작성하고 매달 세무 이슈를 관리해 드립니다."),
+    ("tax-filing", "사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세를 기한에 맞춰 신고해 드립니다."),
+    ("capital-gains", "양도소득세", "주택·토지·상가를 팔기 전 세액을 검토하고, 매도 후 신고까지 해 드립니다."),
+    ("inheritance-gift", "상속세·증여세", "증여 전 세액을 비교해 드리고, 상속 재산 평가와 신고를 해 드립니다."),
+    ("refund-claim", "경정청구", "이미 낸 세금에서 빠뜨린 공제·감면을 찾아 돌려받아 드립니다."),
+    ("tax-audit", "세무조사 대응", "세무조사·소명 요청에 필요한 자료를 준비하고 대응해 드립니다."),
 ]
-PLANNING = ("tax-planning", "절세상담", "신고·거래 전에 선택지별 세금을 먼저 비교해 보는 상담")
+PLANNING = ("tax-planning", "절세상담", "신고·거래 전에 선택지별 세금을 미리 비교해 드립니다.")
 ALL_SERVICES = SERVICES + [PLANNING]
 
 # 서비스별 상세 — 사실 확인이 필요한 수치·기한·조문은 넣지 않음(개별 Q&A 글에서 조문과 함께 다룸)
@@ -390,8 +390,8 @@ def build_about():
 </div>
 <section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
 <div class="ch-grid">
-<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb">네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법 · 신고 일정 · 업무 사례</span><span class="go">블로그 보기 →</span></a>
-<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt">유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">세금 제도 해설 · 사례 영상</span><span class="go">채널 보기 →</span></a>
+<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb">네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법 · 신고 일정 · 실무 판단</span><span class="go">블로그 보기 →</span></a>
+<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt">유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설 · 사례 풀이</span><span class="go">채널 보기 →</span></a>
 </div></div></section>
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2>
 <div class="grid svc-grid">{svc}</div>
