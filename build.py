@@ -240,7 +240,7 @@ WHY = [
     ("세무사 직접 응대",
      "상담부터 신고서 최종 검토까지 세무사가 직접 수행합니다. 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다."),
     ("보수 공개",
-     "기장료와 신고 보수를 매출 구간별로 공개하고 있습니다. 4대보험 근로자가 없는 1인 사업자는 월 기장료 20% 할인이 적용되어 간이과세 70,000원, 일반과세 80,000원부터 산출됩니다(부가세 별도)."),
+     "기장료와 신고 보수를 매출 구간별로 공개하고 있습니다. 월 기장료는 간이과세 87,500원, 일반과세 100,000원부터이며, 4대보험 근로자가 없는 1인 사업자는 20% 할인이 적용되어 각각 70,000원, 80,000원부터 산출됩니다(부가세 별도)."),
     ("기장 거래처 보수 할인",
      "기장 거래처는 양도소득세·상속세·증여세 등 기장 외 업무 보수에 20% 할인이 적용됩니다."),
     ("기장 거래처 보조금 정보 제공",
@@ -346,7 +346,7 @@ def build_home(posts):
 <section class="block search-block">{SEARCH_BOX}</section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section><div class="wrap">
-<section class="block"><h2 class="sec">세무회계택의 기준</h2><div class="grid why-grid">{why_cards()}</div></section>
+<section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section>
 {('<section class="block lead-block"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
