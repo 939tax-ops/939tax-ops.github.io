@@ -480,6 +480,8 @@ a.card.svc b{color:var(--green)}
 .rel-col ul{margin:6px 0 0;padding-left:18px}
 .rel-col li{margin:4px 0;line-height:1.55}
 .rel-svc,.rel-back{font-family:var(--sans);font-size:14.5px;margin:10px 0}
+.rel-col a,.rel-svc a,.rel-back a{text-decoration:none}
+.rel-col a:hover,.rel-svc a:hover,.rel-back a:hover{text-decoration:underline}
 .post-more:has(.rel-col:only-child),.post-more:has(.blog-card:only-child){grid-template-columns:1fr}
 @media (max-width:640px){.post-more{grid-template-columns:1fr}}
 
