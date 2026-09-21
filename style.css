@@ -760,3 +760,5 @@ table.info th{white-space:nowrap}
 .box.laws a:hover{text-decoration:underline}
 .ch .k{display:inline-flex;align-items:center;gap:8px}
 .ch .k .ic{width:22px;height:22px;flex:none}
+.ab-head{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap}
+.ab-head h1{margin-bottom:0}

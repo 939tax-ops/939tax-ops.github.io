@@ -374,8 +374,10 @@ def build_about():
 <section class="ab-hero">
 <div class="ab-photo"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="640" height="960"></div>
 <div class="ab-text">
+<div class="ab-head"><div>
 <p class="ab-eyebrow">{NAME}</p>
 <h1>김태형 <span>세무사</span></h1>
+</div><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
 <p class="ab-motto">근거는 정확하게, 마음은 편안하게</p>
 <div class="ab-greet">
 <p>세무회계택은 동대문구 청량리에서 개인·법인 사업자의 기장과 세금 신고, 양도·상속·증여 등 재산 관련 세무 업무를 수행하고 있습니다.</p>
