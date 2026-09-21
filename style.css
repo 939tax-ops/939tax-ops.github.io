@@ -715,3 +715,6 @@ table.info th{white-space:nowrap}
 .why-grid .card.svc b{color:var(--green)}
 .why-svc{margin-top:26px}
 @media(max-width:700px){.why-grid{grid-template-columns:1fr}}
+
+/* 사무소 소개 — 프로필과 다음 섹션 사이 여백 축소 */
+.ab-hero{padding-bottom:20px}
