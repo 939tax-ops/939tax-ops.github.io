@@ -718,3 +718,39 @@ table.info th{white-space:nowrap}
 
 /* 사무소 소개 — 프로필과 다음 섹션 사이 여백 축소 */
 .ab-hero{padding-bottom:20px}
+
+/* 1주택 양도세 연도별 비교 계산기 */
+.only1{border:1.5px solid var(--green);background:var(--tint-2);border-radius:8px;padding:12px 16px;margin:0 0 18px;font-family:var(--sans);font-size:15px;line-height:1.7}
+.only1 b{color:var(--green)}
+.chips.chips-2{grid-template-columns:repeat(2,1fr)}
+.stop{margin:12px 0 0;padding:12px 14px;border-radius:8px;background:var(--tint-2);border:1px solid var(--line);font-size:14.5px;line-height:1.7}
+.c-q small.hint{font-weight:400;margin-left:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14.5px}
+.two select{padding:11px 12px;border:1.5px solid var(--field);border-radius:8px;font-size:17px;font-weight:700;font-family:var(--sans);background:var(--surface);color:var(--text)}
+.r-label small{opacity:.8;font-size:12.5px}
+.ylist{list-style:none;margin:10px 0 14px;padding:0}
+.ylist li{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+.ylist li:last-child{border-bottom:0}
+.ylist .y{font-weight:700;font-size:15px;white-space:nowrap}
+.ylist .y small{display:block;font-weight:400;font-size:12px;opacity:.75}
+.ylist .v{text-align:right;font-weight:800;font-size:19px;color:var(--yellow);line-height:1.35;word-break:keep-all}
+.ylist .v.und{font-size:14px;font-weight:700;color:#E4ECE6}
+.ylist .v em{display:block;font-style:normal;font-size:12.5px;font-weight:700;color:#fff;opacity:.9}
+.ylist .y-empty{display:block;font-size:14.5px;opacity:.95;line-height:1.7}
+.ylist .y-empty b{color:var(--yellow)}
+.tscroll{overflow-x:auto}
+.ytbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.ytbl th,.ytbl td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:right;white-space:nowrap;vertical-align:top}
+.ytbl th{text-align:left;font-weight:700;color:var(--text)}
+.ytbl thead td{font-weight:800;color:var(--green);border-bottom:2px solid var(--green)}
+.ytbl small{display:block;font-size:11.5px;color:var(--sub);font-weight:400}
+.ytbl tr.total th,.ytbl tr.total td{font-weight:800;border-top:2px solid var(--text);border-bottom:0}
+.ytbl.rt td,.ytbl.rt th{text-align:center;white-space:normal;font-size:14.5px}
+.ytbl.rt th{text-align:left;background:var(--tint)}
+.ytbl.rt thead td{background:var(--tint)}
+@media (max-width:760px){ .ylist .v{font-size:17px} .ytbl{font-size:12.5px} }
+#ycBody>.c-q:first-child{margin-top:24px}
+.ytbl{font-family:var(--sans)}
+.ytbl thead td{text-align:right}
+#steps .ytbl{min-width:560px}

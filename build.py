@@ -413,7 +413,7 @@ def build_about():
 
 CALCS = [
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
-    ("양도소득세", "양도소득세 계산기", "보유기간·공제를 반영한 예상 양도세"),
+    ("양도소득세", "1주택 양도세 연도별 비교", "2026~2029년 중 언제 파느냐에 따라 달라지는 1주택 양도세를 나란히 비교합니다", "/calculators/one-house-capital-gains/"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
     ("기장료", "기장료 계산기", "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다", "/calculators/bookkeeping-fee/"),
 ]
@@ -454,6 +454,16 @@ def build_fee_calc():
           page(f"기장료 계산기 | {NAME}",
                "개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료가 산출됩니다. 1인 사업자 기준 금액 반영.",
                "/calculators/bookkeeping-fee/", tpl, "calc", ld))
+
+def build_yangdo_calc():
+    tpl = open(os.path.join(ROOT, "_src", "yangdo-1house-calc.html"), encoding="utf-8").read()
+    ld = [{"@type": "WebApplication", "name": "1주택 양도세 연도별 비교 계산기", "url": SITE + "/calculators/one-house-capital-gains/",
+           "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko",
+           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
+    write("calculators/one-house-capital-gains/index.html",
+          page(f"1주택 양도세 계산기 2026~2029 연도별 비교 | {NAME}",
+               "1세대 1주택을 2026년, 2027년, 2028년, 2029년 이후에 팔 때 장기보유특별공제 개편(장기거주 소득공제, 정부안)에 따라 달라지는 양도소득세를 나란히 계산합니다.",
+               "/calculators/one-house-capital-gains/", tpl, "calc", ld))
 
 FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다
 
@@ -666,7 +676,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/one-house-capital-gains/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES]
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -686,6 +696,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_yangdo_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
