@@ -388,16 +388,17 @@ def build_about():
 </div>
 </section>
 </div>
+<section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
+<div class="ch-grid">
+<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb">네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법 · 신고 일정 · 업무 사례</span><span class="go">블로그 보기 →</span></a>
+<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt">유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">세금 제도 해설 · 사례 영상</span><span class="go">채널 보기 →</span></a>
+</div></div></section>
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2>
 <div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div>
 <p class="ab-more"><a href="/services/">업무별 자세히 보기 →</a> · <a href="/fees/">보수 안내 →</a></p>
 </div></section>
-<section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
-<div class="ch-grid">
-<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb">네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법, 신고 일정, 실제 상담에서 자주 받는 질문을 먼저 올립니다.</span><span class="go">블로그 보기 →</span></a>
-<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt">유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">글로 읽기 어려운 세금 제도를 영상으로 풀어 설명합니다.</span><span class="go">채널 보기 →</span></a>
-</div></div></section>
+<div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <table class="info">
