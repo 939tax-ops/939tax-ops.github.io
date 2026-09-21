@@ -329,7 +329,7 @@ def build_search_index(posts):
 
 def build_home(posts):
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(SERVICES, 1))
-    latest = "".join(qa_item(p) for p in posts[:6]) or '<li><p class="lead">준비 중입니다.</p></li>'
+    latest = "".join(qa_item(p) for p in posts[:5]) or '<li><p class="lead">준비 중입니다.</p></li>'
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
