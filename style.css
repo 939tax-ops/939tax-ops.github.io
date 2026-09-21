@@ -709,3 +709,9 @@ table.info th{white-space:nowrap}
   table.info th{white-space:normal}
   .card.svc b{font-size:15.5px;letter-spacing:-.02em}
 }
+
+/* 세무회계택의 기준(특장점) 카드 */
+.why-grid{grid-template-columns:repeat(2,1fr)}
+.why-grid .card.svc b{color:var(--green)}
+.why-svc{margin-top:26px}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr}}

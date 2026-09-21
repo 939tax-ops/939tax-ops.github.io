@@ -235,6 +235,28 @@ def build_qa_index(posts):
     write("qa/index.html", page("세무 Q&A | " + NAME, "종합소득세·양도소득세·상속세·증여세 등 자주 묻는 세금 질문을 세무사가 조문 근거와 함께 종류별로 정리했습니다.", "/qa/", body, "qa"))
 
 # ---------- 고정 페이지 ----------
+# 홈·기장 서비스 페이지 공통 — 세무회계택의 기준(특장점)
+WHY = [
+    ("세무사 직접 응대",
+     "상담부터 신고서 최종 검토까지 세무사가 직접 수행합니다. 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다."),
+    ("보수 공개",
+     "기장료와 신고 보수를 매출 구간별로 공개하고 있습니다. 4대보험 근로자가 없는 1인 사업자는 월 기장료 20% 할인이 적용되어 간이과세 70,000원, 일반과세 80,000원부터 산출됩니다(부가세 별도)."),
+    ("기장 거래처 보수 할인",
+     "기장 거래처는 양도소득세·상속세·증여세 등 기장 외 업무 보수에 20% 할인이 적용됩니다."),
+    ("기장 거래처 보조금 정보 제공",
+     "해당 가능성이 있는 정부 지원사업·보조금 정보를 정리해 전달합니다. 개별 요건 충족 여부는 신청 전 별도로 확인이 필요합니다.", "준비 중"),
+]
+
+def why_cards(items=None):
+    src = WHY if items is None else items
+    out = []
+    for i, it in enumerate(src, 1):
+        soon = it[2] if len(it) > 2 else ""
+        cls = "card svc soon" if soon else "card svc"
+        em = f"<em>{esc(soon)}</em>" if soon else ""
+        out.append(f'<div class="{cls}"><i>{i:02d}</i><b>{esc(it[0])}</b><span>{esc(it[1])}</span>{em}</div>')
+    return "".join(out)
+
 SERVICES = [
     ("bookkeeping", "사업자 세무기장", "개인사업자·법인의 장부 작성과 매달 세무 관리"),
     ("tax-filing", "사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세 신고"),
@@ -324,6 +346,7 @@ def build_home(posts):
 <section class="block search-block">{SEARCH_BOX}</section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section><div class="wrap">
+<section class="block"><h2 class="sec">세무회계택의 기준</h2><div class="grid why-grid">{why_cards()}</div></section>
 {('<section class="block lead-block"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
@@ -580,6 +603,8 @@ def build_services(posts):
         note = f'<p class="note">{esc(x["note"])}</p>' if x.get("note") else ""
         calc = f'<p style="font-family:var(--sans);margin-top:14px"><a class="more" href="{x["calc"][0]}">{x["calc"][1]} →</a></p>' if x.get("calc") else ""
         others = "".join(f'<a href="/services/{k2}/">{t2}</a>' for k2, t2, _ in ALL_SERVICES if k2 != k)
+        wb = [("보수 할인", WHY[2][1]), ("보조금 정보 제공", WHY[3][1], WHY[3][2])]
+        why_b = (f'<section class="why-svc"><h2>기장 거래처 혜택</h2><div class="grid why-grid">{why_cards(wb)}</div></section>' if k == "bookkeeping" else "")
         body = f'''<div class="wrap svc-page" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
 <h1>{t}</h1>
@@ -587,7 +612,7 @@ def build_services(posts):
 <div class="svc-cols">
 <section><h2>수행 업무</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
-</div>{note}{calc}
+</div>{note}{calc}{why_b}
 <p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
 {lead_form(SVC_TO_LEAD.get(k), "ls")}
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
