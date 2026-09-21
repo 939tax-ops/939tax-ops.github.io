@@ -756,3 +756,5 @@ table.info th{white-space:nowrap}
 .ytbl{font-family:var(--sans)}
 .ytbl thead td{text-align:right}
 #steps .ytbl{min-width:560px}
+.box.laws a{text-decoration:none}
+.box.laws a:hover{text-decoration:underline}
