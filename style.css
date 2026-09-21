@@ -691,3 +691,21 @@ section.block.alt > .wrap{padding-left:20px;padding-right:20px}
 .lf-agree>label{align-items:flex-start}
 .lf-agree>label>b{flex:none}
 @media (max-width:420px){.lf-agree{font-size:13.5px}.lf-agree>label{gap:6px}.lf-agree input{width:17px;height:17px}.lf-agree>label>b{font-size:13px}}
+
+/* v34: 어색한 두 줄·외톨이 단어 방지 (모바일 우선) */
+body{text-wrap:pretty}
+h1,h2,h3,h4,
+.card b,.card span,.qcard b,.qcard span,.band b,.band span,
+.lead h2,.lf-sub,.lf-opt span,.lf-foot,.lf-fields label,
+.chips span,.c-q,.steps li,.r-label,.r-sub,
+.fee-sec .row span,.fee-disc .it p,.fee-disc .it b,.fee-sub,
+.ccard b,.ch .t,.ch .s,.crumb,.mini,
+p.lead,p.note,p.fine,.box.fold li,.box.fold p,
+table.info th,table.info td,.lf-agree th,.lf-agree td{text-wrap:balance}
+.lf-agree th{width:33%}
+.ticks li,.qa-list a,.post-more a,article li{text-wrap:balance}
+table.info th{white-space:nowrap}
+@media (max-width:760px){
+  table.info th{white-space:normal}
+  .card.svc b{font-size:15.5px;letter-spacing:-.02em}
+}

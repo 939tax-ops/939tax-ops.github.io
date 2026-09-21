@@ -480,10 +480,10 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 </table></details>
 <label><input type="checkbox" name="a2"> <b>[필수]</b> 개인정보 국외 이전에 동의합니다</label>
 <details><summary>내용 보기</summary><table>
-<tr><th>이전 항목</th><td>위 수집 항목 전부</td></tr>
-<tr><th>이전 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 인터넷 전송(암호화 통신)</td></tr>
-<tr><th>이전받는 자</th><td>Google LLC (Google 설문지·스프레드시트 저장)</td></tr>
-<tr><th>이용 목적·보유 기간</th><td>신청 내용 보관 / {PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
+<tr><th>항목</th><td>위 수집 항목 전부</td></tr>
+<tr><th>국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 인터넷 전송(암호화 통신)</td></tr>
+<tr><th>받는 자</th><td>Google LLC (Google 설문지·스프레드시트 저장)</td></tr>
+<tr><th>목적·기간</th><td>신청 내용 보관 / {PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
 <tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
 </table></details>
 <p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
@@ -504,7 +504,7 @@ def build_privacy():
 <h2>3. 보유 기간과 파기</h2><p>{PRIVACY_KEEP} 보관한 뒤 파기합니다. 상담으로 이어지지 않은 신청은 신청일부터 1년이 지나면 파기합니다. 세무대리 계약을 맺은 경우 그 계약에 따른 자료는 계약과 관련 법령에서 정한 기간 동안 따로 보관합니다. 전자 파일은 복구할 수 없는 방법으로 삭제합니다.</p>
 <h2>4. 제3자 제공</h2><p>정보주체의 동의나 법령에 따른 경우가 아니면 제3자에게 제공하지 않습니다.</p>
 <h2>5. 국외 이전(보관)</h2>
-<table class="info"><tr><th>이전받는 자</th><td>Google LLC</td></tr><tr><th>국가</th><td>미국 등 Google 데이터센터 소재 국가</td></tr><tr><th>시기·방법</th><td>신청 시 인터넷 전송(암호화 통신)</td></tr><tr><th>항목</th><td>위 2번 항목 전부</td></tr><tr><th>목적·기간</th><td>신청 내용 보관 / 위 3번과 같음</td></tr><tr><th>거부</th><td>국외 이전에 동의하지 않으시면 양식 신청은 할 수 없고, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr></table>
+<table class="info"><tr><th>받는 자</th><td>Google LLC</td></tr><tr><th>국가</th><td>미국 등 Google 데이터센터 소재 국가</td></tr><tr><th>시기·방법</th><td>신청 시 인터넷 전송(암호화 통신)</td></tr><tr><th>항목</th><td>위 2번 항목 전부</td></tr><tr><th>목적·기간</th><td>신청 내용 보관 / 위 3번과 같음</td></tr><tr><th>거부</th><td>국외 이전에 동의하지 않으시면 양식 신청은 할 수 없고, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr></table>
 <h2>6. 정보주체의 권리</h2><p>언제든지 본인 정보의 열람, 정정, 삭제, 처리 정지를 요청할 수 있습니다. 아래 연락처로 요청하시면 지체 없이 처리합니다.</p>
 <h2>7. 안전성 확보 조치</h2><p>신청 내용은 접근 권한을 대표 세무사로 한정한 계정에 보관하고, 2단계 인증을 사용합니다.</p>
 <h2>8. 개인정보 보호책임자</h2><table class="info"><tr><th>책임자</th><td>{PERSON} (대표 세무사)</td></tr><tr><th>연락처</th><td><a href="tel:{TEL}">{TEL}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></td></tr></table>
