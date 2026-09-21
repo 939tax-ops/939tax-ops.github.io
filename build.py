@@ -66,7 +66,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
@@ -90,7 +90,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 </head>
 <body class="p-{active}">
 <header class="top"><div class="wrap">
-<a class="brand" href="/"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></a>
+<a class="brand" href="/"><picture><source srcset="/assets/logo-h-dark.png" media="(prefers-color-scheme: dark)"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></picture></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
 <nav class="nav">{navh}<a class="cta" href="/contact/">문의하기</a></nav>
 </div></header>
@@ -601,7 +601,7 @@ def build_services(posts):
 
 # 보수 안내 — 기준: 09. 서식\00. 업무 필수자료(자체제작)\01. 세무대리보수료(세무회계택,2026.09.20,V3).xlsx
 FEES = [
-    ("기장 대리", [("개인사업자", "", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
+    ("기장 대리", [("개인사업자", "간이과세", "월 70,000원 ~"), ("개인사업자", "일반과세", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
      ["1인 사업자 특별 할인을 적용한 최저 금액입니다.", "매출·자산 규모에 따라 달라지며, 세무조정료는 별도입니다."]),
     ("신고 대리", [("부가가치세", "", "150,000원 ~"), ("종합소득세", "", "200,000원 ~"), ("사업장현황신고", "면세사업자", "200,000원 ~")], []),
     ("양도 · 상속 · 증여", [("양도소득세", "", "양도가액의 0.1% <small>(최저 200,000원)</small>"),
@@ -627,7 +627,7 @@ def build_fees():
 <section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
 <div class="pair"><div class="it"><p>1인 사업자 <small>(4대보험 가입 직원 없음)</small></p><b>기장료 20% 할인</b></div>
 <div class="it"><p>기장 거래처</p><b>양도·상속·증여 등 20% 할인</b></div></div>
-<p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. 기장료 기준 금액: 개인 월 100,000원 · 법인 월 150,000원</p></section>
+<p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. 기장료 기준 금액: 개인 간이과세 월 87,500원 · 개인 일반과세 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 {lead_form(None, "lfe")}
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
@@ -636,7 +636,7 @@ def build_fees():
           {"@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "홈", "item": SITE + "/"},
               {"@type": "ListItem", "position": 2, "name": "보수 안내", "item": SITE + "/fees/"}]}]
-    write("fees/index.html", page(f"세무 보수 안내 | {NAME} {PERSON}", "세무회계택 기장료·신고대리·양도세·상속세·증여세·상담 보수 안내. 개인사업자 월 80,000원부터(1인 사업자 할인 적용, 부가세 별도).", "/fees/", body, "about", ld))
+    write("fees/index.html", page(f"세무 보수 안내 | {NAME} {PERSON}", "세무회계택 기장료·신고대리·양도세·상속세·증여세·상담 보수 안내. 간이과세 개인사업자 월 70,000원부터(1인 사업자 할인 적용, 부가세 별도).", "/fees/", body, "about", ld))
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()

@@ -1,7 +1,9 @@
 // 기장료 계산기 — 세무회계택 세무대리 보수 기준표 V3(2026.09.20) 기준
 (function(){
   // [상한, 월 기장료, 조정료 기본, 조정료 비율(1만분의), 비율 기준 하한]
+  var SIMPLE_MAX=104000000; // 부가가치세법 시행령 제109조 제1항 — 간이과세 기준 1억 400만원
   var T={
+    simple:[[SIMPLE_MAX,87500,300000,0,0]],
     ind:[[1e8,100000,300000,0,0],[3e8,120000,300000,25,1e8],[5e8,150000,800000,18,3e8],[1e9,200000,1160000,12,5e8],[2e9,250000,1760000,9,1e9],[3e9,300000,2660000,6,2e9]],
     corp:[[1e8,150000,400000,0,0],[3e8,180000,400000,25,1e8],[5e8,200000,900000,18,3e8],[1e9,250000,1260000,12,5e8],[3e9,300000,1860000,9,1e9],[5e9,400000,3660000,6,3e9]]
   };
@@ -34,11 +36,14 @@
   function row(a,b,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td>'+b+'</td></tr>';}
   function run(){
     var type=val('ftype');
+    var why=$('whysimple'); if(why) why.hidden=(type!=='simple');
     var sales=num('sales'), asset=num('asset'), grant=num('grant');
     if(!sales&&!asset){ $('pay').textContent='0원'; $('sub').textContent='매출액을 넣으면 바로 산출됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; $('mini').hidden=true; return; }
     var r=calc({type:type,sales:sales,asset:asset,grant:grant,solo:val('solo')==='y',sincere:false});
     $('mini').hidden=false;
-    if(r.nego){ $('pay').textContent='별도 협의'; $('miniPay').textContent='별도 협의'; $('sub').textContent='규모가 커서 업무 범위를 확인한 뒤 정합니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').textContent=''; return; }
+    if(r.nego){
+      if(type==='simple'){ $('pay').textContent='간이과세 기준 초과'; $('miniPay').textContent='기준 초과'; $('sub').textContent='연 매출 1억 400만원 이상이면 일반과세자입니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').innerHTML='· 간이과세는 직전 연도 공급대가 1억 400만원 미만까지 적용<br>· 위에서 개인(일반과세)을 선택해 확인 필요'; return; }
+      $('pay').textContent='별도 협의'; $('miniPay').textContent='별도 협의'; $('sub').textContent='규모가 커서 업무 범위를 확인한 뒤 정합니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').textContent=''; return; }
     $('pay').textContent='월 '+comma(r.mPay)+'원'; $('miniPay').textContent='월 '+comma(r.mPay)+'원';
     $('sub').textContent='부가가치세 포함 월 '+comma(r.mVat)+'원'+(r.disc?' · 1인 사업자 기준':' · 4대보험 직원 반영');
     var t='';
