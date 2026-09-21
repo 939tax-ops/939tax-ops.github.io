@@ -90,7 +90,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 </head>
 <body class="p-{active}">
 <header class="top"><div class="wrap">
-<a class="brand" href="/"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></a>
+<a class="brand" href="/"><picture><source srcset="/assets/logo-h-dark.png" media="(prefers-color-scheme: dark) and (max-width: 760px)"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></picture></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
 <nav class="nav">{navh}<a class="cta" href="/contact/">문의하기</a></nav>
 </div></header>
@@ -322,11 +322,11 @@ def build_home(posts):
 </div></div>
 <div class="wrap">
 <section class="block search-block">{SEARCH_BOX}</section>
-<section class="block alt"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
-<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></section>
+</div><section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section><div class="wrap">
 {('<section class="block lead-block"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
-<section class="block alt"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></section>
+</div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">연락처</h2>
 <table class="info">
 <tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
