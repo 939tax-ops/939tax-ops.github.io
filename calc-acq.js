@@ -47,7 +47,7 @@
     t+=row('합계',comma(r.total)+'원','total');
     $('tbl').innerHTML=t;
     var m=[];
-    if(r.over12) m.push('<b style="color:#c62828">취득가액 12억원 초과는 생애최초 감면 대상이 아니어서 감면 없이 계산</b>');
+    if(r.over12) m.push('<b style="color:#c62828">12억원 초과는 생애최초 감면 제외</b>');
     m.push('원 단위 끝전 처리에 따라 실제 고지세액과 소액 차이 가능');
     m.push('등기 비용(국민주택채권 매입, 법무사 보수 등)은 제외');
     $('msg').innerHTML='· '+m.join('<br>· ');
