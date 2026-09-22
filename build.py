@@ -499,7 +499,7 @@ LEAD = {"action": "https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4
         "service": "entry.1235054183", "name": "entry.1767689992", "phone": "entry.1909499942", "time": "entry.404254547", "memo": "entry.21609242", "agree": "entry.31240237"}
 LEAD_ENABLED = bool(LEAD["action"]) or bool(os.environ.get("LEAD_PREVIEW"))
 LEAD_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 검토)"), ("property", "양도세 · 증여세 · 상속세"),
-                 ("tax-planning", "절세상담"), ("bookkeeping", "세무기장"), ("tax-audit", "세무조사 · 조세불복"), ("etc", "기타 세무상담")]
+                 ("tax-planning", "절세상담"), ("bookkeeping", "세무기장 · 신고대리"), ("tax-audit", "세무조사 · 조세불복"), ("etc", "기타 세무상담")]
 SVC_TO_LEAD = {"bookkeeping": "bookkeeping", "tax-filing": "bookkeeping", "capital-gains": "property", "inheritance-gift": "property",
                "refund-claim": "refund-claim", "tax-audit": "tax-audit", "tax-planning": "tax-planning"}
 PRIVACY_KEEP = "상담 종료 후 1년"
