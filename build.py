@@ -108,7 +108,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <nav class="f-sns" aria-label="세무회계택 채널">
 <a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계택</span></a>
 <a href="{BLOG}" target="_blank" rel="noopener"><span class="m"><img class="nv" src="/assets/sns-naver-white.svg" alt="" width="78" height="15"></span><span class="t">네이버 블로그 - 세무회계택</span></a>
-<a href="{YOUTUBE}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 세친구</span></a>
+<a href="{YOUTUBE}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 - 세무사 세친구</span></a>
 </nav>
 </div></footer>
 </body>
