@@ -28,6 +28,7 @@
   function pct(r){return (Math.round(r*1000000)/10000).toString()+'%';}
   function run(){
     var multi=val('cnt')==='2';
+    var how=document.querySelector('#ac .how'); if(how) how.hidden=multi;
     $('oneWrap').hidden=multi;
     $('fhWrap').hidden=val('fh')!=='y';
     if(multi){ $('pay').textContent='개별 상담 필요'; $('sub').textContent='이미 주택이 있는 세대는 중과세율이 적용될 수 있습니다.'; $('tbl').innerHTML=''; $('msg').innerHTML='· 주택 수, 조정대상지역 여부, 일시적 2주택 해당 여부에 따라 세율이 크게 달라짐<br>· 이 계산기는 1주택 취득만 계산'; $('mini').hidden=true; return; }
