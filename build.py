@@ -97,13 +97,19 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <main>
 {body}
 </main>
-<footer><div class="wrap">
+<footer><div class="wrap f-grid">
+<div class="f-info">
 <img src="/assets/logo-h-dark.png" alt="{NAME}" width="170" height="44">
 <p>{NAME} · {PERSON}</p>
 <p>{ADDR1} {ADDR2}</p>
 <p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX} · 이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-<p><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세친구</a></p>
 <p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
+</div>
+<nav class="f-sns" aria-label="세무회계택 채널">
+<a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계 택</span></a>
+<a href="{BLOG}" target="_blank" rel="noopener"><span class="m"><img class="nv" src="/assets/sns-naver-white.svg" alt="" width="78" height="15"></span><span class="t">네이버 블로그</span></a>
+<a href="{YOUTUBE}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 세친구</span></a>
+</nav>
 </div></footer>
 </body>
 </html>
