@@ -263,6 +263,8 @@ a.more:hover{text-decoration:underline}
 .result2 .note{color:#E4ECE6;font-size:13px;margin-top:12px}
 details.fold summary{cursor:pointer;list-style:revert}
 details.fold[open] summary{margin-bottom:8px}
+.box.fold>summary.label{margin:0}
+.box.fold[open]>summary.label{margin-bottom:8px}
 @media (max-width:760px){
   .calc2{grid-template-columns:1fr}
   .c-out{position:static}
