@@ -20,7 +20,7 @@ BLOG = "https://blog.naver.com/tax939"
 YOUTUBE = "https://www.youtube.com/@taxfriends3"
 CATS = {"business": "사업자 세금", "life": "생활 세금"}
 # 세무 Q&A 분류(종류별 칩). 글 머리의 topic: 값으로 지정. 없으면 기타.
-TOPICS = [("income", "종합소득세"), ("vat", "부가가치세"), ("corp", "법인세"), ("payroll", "원천세·인건비"),
+TOPICS = [("income", "종합소득세"), ("vat", "부가가치세"), ("corp", "법인세"), ("payroll", "인건비·4대보험"),
           ("capital-gains", "양도소득세"), ("gift", "상속·증여세"), ("refund", "경정청구·환급"),
           ("audit", "세무조사"), ("local", "지방세·재산세"), ("etc", "기타")]
 TOPIC_NAME = dict(TOPICS)
