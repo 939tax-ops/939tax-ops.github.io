@@ -79,7 +79,8 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <meta property="og:url" content="{canon}">
 <meta property="og:image" content="{SITE}/assets/og-logo.png">
 <meta property="og:locale" content="ko_KR">
-<link rel="icon" href="/favicon.png">
+<link rel="icon" href="/favicon.png" sizes="64x64" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="{NAME} 세무 Q&amp;A" href="/feed.xml">
 {FONT}
