@@ -37,7 +37,7 @@ VERIFY = ('<meta name="naver-site-verification" content="e074d43c1aa971b27736169
 def esc(s): return html.escape(s, quote=True)
 
 def org_ld():
-    return {"@type": "AccountingService", "@id": SITE + "/#org", "name": NAME, "url": SITE + "/",
+    return {"@type": "AccountingService", "@id": SITE + "/#org", "name": NAME, "alternateName": ["세무회계 택", "세무회계택 김태형 세무사"], "url": SITE + "/",
             "logo": SITE + "/assets/icon-512.png", "image": SITE + "/assets/profile.jpg",
             "telephone": "+82-2-6952-6357", "faxNumber": "+82-2-6952-6359", "email": EMAIL,
             "address": {"@type": "PostalAddress", "streetAddress": "왕산로 200, " + ADDR2,
@@ -91,7 +91,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 </head>
 <body class="p-{active}">
 <header class="top"><div class="wrap">
-<a class="brand" href="/"><picture><source srcset="/assets/logo-h-dark.png" media="(prefers-color-scheme: dark) and (max-width: 760px)"><img src="/assets/logo-h.png" alt="{NAME} 로고" width="154" height="40"></picture></a>
+<a class="brand" href="/"><picture><source srcset="/assets/logo-h-dark.png" media="(prefers-color-scheme: dark) and (max-width: 760px)"><img src="/assets/logo-h.png" alt="세무회계 택 로고" width="154" height="40"></picture></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
 <nav class="nav">{navh}<a class="cta" href="/contact/">문의하기</a></nav>
 </div></header>
@@ -100,14 +100,14 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 </main>
 <footer><div class="wrap f-grid">
 <div class="f-info">
-<img src="/assets/logo-h-dark.png" alt="{NAME}" width="170" height="44">
-<p>{NAME} · {PERSON}</p>
+<img src="/assets/logo-h-dark.png" alt="세무회계 택" width="170" height="44">
+<p>세무회계 택 · {PERSON}</p>
 <p>{ADDR1} {ADDR2}</p>
 <p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX} · 이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
 </div>
 <nav class="f-sns" aria-label="세무회계택 채널">
-<a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계택</span></a>
+<a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계 택</span></a>
 <a href="{BLOG}" target="_blank" rel="noopener"><span class="m"><img class="nv" src="/assets/sns-naver-white.svg" alt="" width="78" height="15"></span><span class="t">네이버 블로그 - 세무회계택</span></a>
 <a href="{YOUTUBE}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 - 세무사 세친구</span></a>
 </nav>
