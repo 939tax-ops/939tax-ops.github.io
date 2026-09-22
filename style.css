@@ -777,3 +777,18 @@ table.info th{white-space:nowrap}
 .ab-head h1{margin-bottom:0}
 .ch .k{font-size:16.5px}
 .ch .k .ic{width:24px;height:24px}
+/* 정보 표: 2글자 머리칸 자간, 링크 밑줄 없음 */
+table.info th .jt{display:inline-flex;justify-content:space-between;width:4.2em;vertical-align:middle}
+table.info th .jt i{font-style:normal}
+table.info td a{text-decoration:none}
+table.info td a:hover{text-decoration:underline}
+/* 오시는 길 주소 카드 */
+.addr-card{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:10px;background:#fafbfa;padding:16px 18px;margin:0 0 16px}
+.addr-card .pin{flex:none;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--green)}
+.addr-card .ac-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;font-family:var(--sans)}
+.addr-card .ac-t b{font-size:17px;color:var(--ink,#1a1a1a)}
+.addr-card .ac-t span{font-size:15px;color:var(--sub)}
+.addr-card .ac-copy{flex:none;font-family:var(--sans);font-size:14px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;color:var(--ink,#1a1a1a)}
+.addr-card .ac-copy:hover{border-color:var(--green);color:var(--green)}
+@media (max-width:560px){.addr-card{flex-wrap:wrap;align-items:flex-start}.addr-card .ac-t{flex:1 1 calc(100% - 60px)}.addr-card .ac-copy{margin-left:54px}}
+.loc-map{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);margin:0 0 14px}

@@ -116,6 +116,13 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 '''
 
 def write(rel, text):
+    if rel.endswith(".html"):
+        def _jt(mm):
+            lab = mm.group(1).replace(" ", "")
+            if len(lab) > 4:
+                return mm.group(0)
+            return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
+        text = re.sub(r'<table class="info">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
     p = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, "w", encoding="utf-8", newline="\n") as f:
@@ -353,12 +360,13 @@ def build_home(posts):
 </div><section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section><div class="wrap">
 <section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section>
-{('<section class="block lead-block"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
+{('<section class="block lead-block" id="lead"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">문의 안내</h2>
 <table class="info">
-<tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
+<tr><th>상담 신청</th><td><a href="#lead">1:1 상담 신청하기 →</a> · <a href="/contact/">문의하기 페이지</a></td></tr>
+<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 <tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계택</a></td></tr>
 <tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
@@ -399,7 +407,7 @@ def build_about():
 <section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
 <div class="ch-grid">
 <a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법과 신고 일정, 실무 판단을 글로 정리해 드립니다.</span><span class="go">블로그 보기 →</span></a>
-<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 보기 쉽게 풀어 드립니다.</span><span class="go">채널 보기 →</span></a>
+<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 쉽게 풀어서 설명해 드립니다.</span><span class="go">채널 보기 →</span></a>
 </div></div></section>
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2>
 <div class="grid svc-grid">{svc}</div>
@@ -409,8 +417,9 @@ def build_about():
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
+<div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><span>{ADDR1} {ADDR2} (02559)</span></div><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button></div>
+<script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
 <table class="info">
-<tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 </table>
@@ -596,7 +605,7 @@ def build_contact():
 <table class="info">
 <tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계택</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
-<tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
+<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
 </table>
 </div>'''
