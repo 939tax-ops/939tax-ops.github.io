@@ -1,6 +1,6 @@
 // 1:1 상담 신청 폼 — 구글폼(formResponse)으로 전송
 (function(){
-  var PAGES={'/':'첫 화면','/contact/':'문의하기','/fees/':'보수 안내','/services/bookkeeping/':'세무기장','/services/tax-filing/':'세금신고 대행','/services/capital-gains/':'양도소득세','/services/inheritance-gift/':'상속세·증여세','/services/refund-claim/':'경정청구','/services/tax-audit/':'세무조사 대응','/services/tax-planning/':'절세상담'};
+  var PAGES={'/':'첫 화면','/contact/':'문의하기','/fees/':'보수 안내','/services/bookkeeping/':'세무기장','/services/tax-filing/':'세금 신고대리','/services/capital-gains/':'양도소득세','/services/inheritance-gift/':'상속세·증여세','/services/refund-claim/':'경정청구','/services/tax-audit/':'세무조사 대응','/services/tax-planning/':'절세상담'};
   function where(){ return (PAGES[location.pathname]||location.pathname)+' 페이지에서'; }
   document.querySelectorAll('form.lead').forEach(function(f){
     var cfg = {}; try { cfg = JSON.parse(f.getAttribute('data-cfg')) || {}; } catch(e) {}

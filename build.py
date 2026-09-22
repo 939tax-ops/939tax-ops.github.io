@@ -188,7 +188,7 @@ def build_post(p, posts=()):
 {calc}
 <details class="box fold laws"><summary class="label">근거 법령</summary><ul>{laws}</ul></details>
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p></div></div>
-<div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다. 본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div></div>
+<div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다.<br>본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div></div>
 {more_html}
 <p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성한 일반적인 세법 정보이며, 개별 사안에 따라 결론이 달라질 수 있습니다. {"예시 금액은 따로 적지 않은 한 " + esc(p["assume"]) + "을 가정한 금액입니다. " if p.get("assume") else ""}<a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>'''
@@ -265,7 +265,7 @@ def why_cards(items=None):
 
 SERVICES = [
     ("bookkeeping", "사업자 세무기장", "개인·법인사업자의 장부를 작성하고 매달 세무 이슈를 관리해 드립니다."),
-    ("tax-filing", "사업자 세금신고 대행", "부가가치세·종합소득세·법인세·원천세 등을 신고해 드립니다."),
+    ("tax-filing", "사업자 세금 신고대리", "부가가치세·종합소득세·법인세·원천세 등을 신고해 드립니다."),
     ("capital-gains", "양도소득세", "주택·토지 등을 팔기 전 세액 검토와 매도 후 신고를 해 드립니다."),
     ("inheritance-gift", "상속세·증여세", "증여 전 세액 비교와 상속 재산 평가·신고를 해 드립니다."),
     ("refund-claim", "경정청구", "이미 낸 세금에서 빠뜨린 공제·감면을 찾아 돌려받아 드립니다."),
@@ -283,7 +283,7 @@ SERVICE_DETAIL = {
         "calc": ("/calculators/bookkeeping-fee/", "기장료 계산기로 월 기장료 확인해 보기"),
     },
     "tax-filing": {
-        "intro": "기장은 직접 하시거나 따로 맡기지 않고, 신고 시기에만 도움이 필요한 사업자의 세금 신고를 대행합니다.",
+        "intro": "기장은 직접 하시거나 따로 맡기지 않고, 신고 시기에만 도움이 필요한 사업자의 세금 신고를 대리합니다.",
         "do": ["부가가치세 신고", "종합소득세 신고", "법인세 신고", "원천세 신고"],
         "for": ["신고 시기에만 도움이 필요하신 분", "지난 신고 내용을 한 번 점검받고 싶으신 분"],
     },
@@ -632,7 +632,7 @@ def build_services(posts):
 <h1 style="color:var(--green);margin:0 0 10px">주요 서비스</h1>
 <p class="lead">개인·법인 사업자 세무부터 부동산·가족 간 세금까지, 세무회계택이 수행하는 업무입니다.</p>
 <section class="block" style="padding-top:12px"><div class="grid svc-grid">{cards}</div></section></div>'''
-    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 수행 업무 — 세무기장, 세금신고 대행, 양도소득세, 상속세·증여세, 경정청구, 세무조사 대응, 절세상담.", "/services/", body, "svc"))
+    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 수행 업무 — 세무기장, 세금 신고대리, 양도소득세, 상속세·증여세, 경정청구, 세무조사 대응, 절세상담.", "/services/", body, "svc"))
     for k, t, d in ALL_SERVICES:
         x = SERVICE_DETAIL[k]
         do = "".join(f"<li>{esc(v)}</li>" for v in x["do"])
