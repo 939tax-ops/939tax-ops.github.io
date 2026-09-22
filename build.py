@@ -106,8 +106,8 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
 </div>
 <nav class="f-sns" aria-label="세무회계택 채널">
-<a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계 택</span></a>
-<a href="{BLOG}" target="_blank" rel="noopener"><span class="m"><img class="nv" src="/assets/sns-naver-white.svg" alt="" width="78" height="15"></span><span class="t">네이버 블로그</span></a>
+<a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계택</span></a>
+<a href="{BLOG}" target="_blank" rel="noopener"><span class="m"><img class="nv" src="/assets/sns-naver-white.svg" alt="" width="78" height="15"></span><span class="t">네이버 블로그 - 세무회계택</span></a>
 <a href="{YOUTUBE}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 세친구</span></a>
 </nav>
 </div></footer>
@@ -360,7 +360,7 @@ def build_home(posts):
 <table class="info">
 <tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
-<tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a></td></tr>
+<tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계택</a></td></tr>
 <tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
 </table>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
@@ -583,7 +583,7 @@ def build_contact():
 {form}
 <h2 class="sec" style="margin-top:40px">다른 연락 방법</h2>
 <table class="info">
-<tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계 택</a></td></tr>
+<tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계택</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 <tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>

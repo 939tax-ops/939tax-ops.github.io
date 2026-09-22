@@ -132,14 +132,15 @@ footer img{height:44px;width:auto;margin-bottom:14px}
 footer a{color:#fff}
 footer p{margin:0 0 4px}
 footer .small{opacity:.75;margin-top:12px}
-footer .f-grid{display:flex;justify-content:space-between;align-items:center;gap:32px}
-footer .f-sns{display:flex;flex-direction:column;gap:14px;flex-shrink:0}
-footer .f-sns a{display:flex;align-items:center;gap:16px;text-decoration:none;font-size:17px;font-weight:600;color:#fff}
-footer .f-sns a:hover .t{text-decoration:underline;text-underline-offset:4px}
-footer .f-sns .m{width:100px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-footer .f-sns img{margin:0;height:auto;width:44px}
-footer .f-sns img.nv{width:90px}
-@media (max-width:760px){footer .f-grid{flex-direction:column;align-items:flex-start;gap:24px}footer .f-sns{gap:12px}footer .f-sns a{font-size:16px}}
+footer .f-grid{display:flex;justify-content:space-between;align-items:flex-start;gap:40px}
+footer .f-sns{display:flex;flex-direction:column;gap:6px;flex-shrink:0;padding-top:58px}
+footer .f-sns a{display:flex;align-items:center;gap:14px;text-decoration:none;font-size:14px;font-weight:500;color:#DDE5DF;line-height:1.8;min-height:34px}
+footer .f-sns a:hover{color:#fff}
+footer .f-sns a:hover .t{text-decoration:underline;text-underline-offset:3px}
+footer .f-sns .m{width:62px;display:flex;align-items:center;justify-content:flex-start;flex-shrink:0}
+footer .f-sns img{margin:0;height:auto;width:30px}
+footer .f-sns img.nv{width:62px}
+@media (max-width:760px){footer .f-grid{flex-direction:column;gap:18px}footer .f-sns{padding-top:0}}
 
 @media (max-width:760px){
   body{font-size:16px}
