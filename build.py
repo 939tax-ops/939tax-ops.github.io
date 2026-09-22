@@ -417,7 +417,6 @@ def build_about():
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
-<img class="loc-map" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><span>{ADDR1} {ADDR2} (02559)</span></div><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button></div>
 <script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
 <table class="info">
@@ -425,6 +424,7 @@ def build_about():
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 </table>
 <div class="placeholder" style="margin-top:16px">찾아오시는 방법 상세 안내(대중교통·출입구·엘리베이터·주차)를 준비 중입니다.</div>
+<img class="loc-map" style="margin:16px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 
 </section></div>'''
     write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
