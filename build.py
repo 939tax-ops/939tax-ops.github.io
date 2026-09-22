@@ -386,7 +386,7 @@ def build_about():
 </div><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
 <p class="ab-motto">근거는 정확하게, 마음은 편안하게</p>
 <div class="ab-greet">
-<p>세무회계택은 동대문구 청량리에서 개인·법인 사업자의 기장과 세금 신고, 양도·상속·증여 등 재산 관련 세무 업무를 수행하고 있습니다.</p>
+<p>세무회계택은 동대문구 청량리에서 개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
 <p>세금은 같은 사안이라도 사실관계에 따라 결론이 달라집니다. 관련 법령과 자료를 근거로 먼저 검토하고, 그 결과를 명확하게 설명드리겠습니다.</p>
 </div>
 <dl class="ab-cv">
