@@ -356,7 +356,7 @@ def build_home(posts):
 {('<section class="block lead-block"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
-<section class="block"><h2 class="sec">연락처</h2>
+<section class="block"><h2 class="sec">문의 안내</h2>
 <table class="info">
 <tr><th>사무실 전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>

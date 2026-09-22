@@ -124,6 +124,8 @@ article strong{font-weight:700}
 table.info{border-collapse:collapse;width:100%;font-size:16px}
 table.info th,table.info td{border:1px solid var(--line);padding:11px 14px;text-align:left;vertical-align:top}
 table.info th{background:var(--tint);color:var(--green);width:26%;white-space:nowrap}
+table.info th{text-align:center;vertical-align:middle;padding:14px 18px}
+table.info td{vertical-align:middle;padding:14px 18px}
 .placeholder{border:2px dashed var(--field);color:var(--sub);background:var(--tint-2);padding:22px;text-align:center;font-family:var(--sans);font-size:15px;border-radius:8px}
 
 /* footer */
