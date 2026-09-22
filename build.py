@@ -354,7 +354,7 @@ def build_home(posts):
 </div>
 <div class="hero-img m" aria-hidden="true"></div>
 <a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에 계산해 보기 →</b></a>
-<a class="pcard" href="/about/"><img src="/assets/profile-avatar.webp" alt="" width="56" height="56"><span><b>{PERSON}</b><span class="d">상담부터 신고까지 직접 봅니다</span><span class="g">소개 보기 →</span></span></a>
+<a class="pcard" href="/about/"><img src="/assets/profile-avatar.webp" alt="" width="56" height="56"><span><b>{PERSON}</b><span class="g">소개 보기 →</span></span></a>
 </div></div>
 <div class="wrap">
 <section class="block search-block">{SEARCH_BOX}</section>
@@ -549,7 +549,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <tr><th>보유 기간</th><td>{PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
 <tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
 </table></details>
-<label><input type="checkbox" name="a2"> <b>[필수]</b> 신청 내용을 Google 설문지(해외 서버)에 저장하는 데 동의합니다.</label>
+<label><input type="checkbox" name="a2"> <b>[필수]</b> Google 설문지(해외 서버) 저장에 동의합니다</label>
 <p class="lf-note">상담 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다.</p>
 <details><summary>내용 보기</summary><table>
 <tr><th>저장 항목</th><td>위 수집 항목 전부</td></tr>
