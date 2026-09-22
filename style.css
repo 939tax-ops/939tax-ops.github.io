@@ -588,7 +588,7 @@ form.lead{max-width:560px;margin:36px auto;background:var(--soft-bg);border-radi
 @media (max-width:640px){.ch-grid{grid-template-columns:1fr}}
 
 /* v22: 작은 회색 글씨 가독성 — 사이트 전체 */
-.crumb,.about-page .crumb{font-size:15px;color:var(--ink-5)}
+.crumb,.about-page .crumb{font-size:16.5px;color:var(--ink-5)}
 .crumb a{color:var(--ink-5)}
 .meta{font-size:15px;color:var(--ink-5)}
 .qcard .qm{font-size:14px}
