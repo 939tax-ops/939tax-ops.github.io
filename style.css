@@ -803,3 +803,8 @@ table.info td a:hover{text-decoration:underline}
 @media (max-width:760px){.hero-c1 .pcard{position:relative;right:auto;top:auto;bottom:auto;margin:12px 0 24px;width:auto}}
 
 .lf-note{margin:2px 0 4px 26px;font-size:12.5px;color:var(--sub,#777)}
+
+.fee-page{position:relative}
+.fee-calc{position:absolute;right:20px;top:34px}
+.fee-calc b{font-size:17px;white-space:nowrap}
+@media (max-width:980px){.fee-calc{position:static;width:max-content;max-width:100%;margin:-12px auto 28px}}

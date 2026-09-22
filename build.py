@@ -699,6 +699,7 @@ def build_fees():
 <p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 보수 안내</p>
 <h1>세무 보수 안내</h1>
 <p class="fee-sub">기본 보수 기준 · 부가가치세 별도</p>
+<a class="ccard fee-calc" href="/calculators/bookkeeping-fee/"><span class="t">기장료 계산기</span><b>매출액 넣고 월 기장료 계산하기 →</b></a>
 <div class="fee-grid">{grid}</div>
 <section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
 <div class="pair"><div class="it"><p>1인 사업자 <small>(4대보험 가입 직원 없음)</small></p><b>기장료 20% 할인</b></div>
