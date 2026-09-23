@@ -840,3 +840,5 @@ table.info td a:hover{text-decoration:underline}
 #fi .result2 .big{font-size:46px;margin:14px 0 6px}
 #fi .r-sub{font-size:14.5px;opacity:.92;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.18)}
 @media (max-width:760px){#fi .result2 .big{font-size:36px}}
+/* v28: 한국어 줄바꿈을 단어 단위로 */
+.cta-box p,.warn,.hint,.r-sub,.result2 .note,.steps li,.c-q,.box.fold p,.box.fold li,.lead{word-break:keep-all;overflow-wrap:break-word}
