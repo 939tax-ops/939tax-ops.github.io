@@ -50,11 +50,11 @@
     if(!emp) t+=row('4대보험 공제 후 <small>(소득세 차감 전)</small>',comma(g-r.worker)+'원','sub');
     $('tbl').innerHTML=t;
     var m=[];
-    if(r.capped==='max') m.push('<b>기준소득월액 상한 659만원 적용</b> — 국민연금은 이보다 소득이 높아도 더 오르지 않음');
-    if(r.capped==='min') m.push('<b>기준소득월액 하한 41만원 적용</b>');
-    m.push('소득세·지방소득세는 부양가족 수에 따라 달라 이 계산기에서 계산하지 않음');
-    m.push('입사·퇴사한 달은 1일 재직 여부에 따라 국민연금·건강보험이 달라짐');
-    m.push('10원 미만 절사 처리로 실제 고지액과 소액 차이 가능');
+    if(r.capped==='max') m.push('<b>국민연금 상한 659만원 적용</b>');
+    if(r.capped==='min') m.push('<b>국민연금 하한 41만원 적용</b>');
+    m.push('소득세·지방소득세는 계산하지 않음');
+    m.push('입·퇴사한 달은 1일 재직 여부로 달라짐');
+    m.push('10원 미만 절사로 고지액과 소액 차이 가능');
     $('msg').innerHTML='· '+m.join('<br>· ');
   }
   ['pay0','nontax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
