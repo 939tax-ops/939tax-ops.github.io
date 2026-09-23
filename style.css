@@ -262,6 +262,9 @@ a.more:hover{text-decoration:underline}
 .how td{border-bottom:1px solid var(--line);padding:7px 2px}
 .how td:last-child{text-align:right;white-space:nowrap}
 .how tr.total td{font-weight:800;border-top:2px solid var(--text);border-bottom:0}
+.how tr.key td{font-weight:700;background:var(--soft-bg);border-bottom:1px solid var(--soft)}
+.how tr.minus td:last-child{color:var(--red)}
+.how tr.total td{color:var(--green);font-size:16px}
 .result2 .note{color:#E4ECE6;font-size:13px;margin-top:12px}
 details.fold summary{cursor:pointer;list-style:revert}
 details.fold[open] summary{margin-bottom:8px}

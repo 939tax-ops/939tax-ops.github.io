@@ -63,7 +63,7 @@
     var r=calc(g,nt), tax=simpleTax(r.base,fam,kid);
     var taxSum=tax?tax.income+tax.local:0, cut=r.worker+taxSum, net=g-cut;
     $('mini').hidden=false; $('sum').textContent=comma(net)+'원'; $('miniPay').textContent=comma(net)+'원';
-    $('sub').textContent='공제 합계 '+comma(cut)+'원 (4대보험 '+comma(r.worker)+'원 + 세금 '+comma(taxSum)+'원)';
+    $('sub').textContent='4대보험 '+comma(r.worker)+'원 · 세금 '+comma(taxSum)+'원 공제';
     var t='';
     t+=row('월 급여',comma(g)+'원');
     if(nt) t+=row('비과세 금액','− '+comma(nt)+'원');
@@ -72,12 +72,12 @@
     t+=row('건강보험 <small>(3.595%)</small>',comma(r.hi)+'원');
     t+=row('장기요양 <small>(건강보험료의 13.14%)</small>',comma(r.ltc)+'원');
     t+=row('고용보험 <small>(0.9%)</small>',comma(r.ei)+'원');
-    t+=row('4대보험 소계',comma(r.worker)+'원','sub');
+    t+=row('4대보험 소계',comma(r.worker)+'원','key');
     if(tax){
       t+=row('소득세 <small>(간이세액표 100%)</small>',comma(tax.income)+'원');
       t+=row('지방소득세 <small>(소득세의 10%)</small>',comma(tax.local)+'원');
     }
-    t+=row('공제 합계','− '+comma(cut)+'원','sub');
+    t+=row('공제 합계','− '+comma(cut)+'원','key minus');
     t+=row('실수령액',comma(net)+'원','total');
     $('tbl').innerHTML=t;
     var m=[];
@@ -85,7 +85,7 @@
     if(r.capped==='min') m.push('<b>국민연금 하한 41만원 적용</b>');
     if(tax&&tax.cut) m.push('8세~20세 자녀 '+tax.kid+'명 공제 '+comma(tax.cut)+'원 반영');
     m.push('소득세는 간이세액표 100% 기준 · 1년 세금은 연말정산으로 정해짐');
-    m.push('사업주는 같은 금액 + 고용안정·직업능력개발·산재보험 부담');
+    m.push('사업주는 같은 금액 + 고용안정·직업능력개발·산재보험 추가 부담');
     m.push('입·퇴사한 달은 1일 재직 여부로 달라짐');
     m.push('10원 미만 절사로 고지액과 소액 차이 가능');
     $('msg').innerHTML='· '+m.join('<br>· ');
