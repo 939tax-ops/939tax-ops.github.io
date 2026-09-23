@@ -41,28 +41,29 @@
 <ol class="steps">
 <li><b>계산 방향</b>을 고르고</li>
 <li><b>금액</b>과 <b>비과세</b>를 넣고</li>
-<li><b>가족 수</b>를 고르면</li>
+<li><b>부양가족 수</b>를 고르면</li>
 <li><b>결과</b>가 나옵니다</li>
 </ol>
 
 <form class="calc2" id="fi" onsubmit="return false">
 <div class="c-in">
+<p class="c-q"><span>1</span>계산 방향</p>
 <div class="tabs" id="mode">
 <label><input type="radio" name="mode" value="g" checked><span>세전 급여로 계산</span></label>
 <label><input type="radio" name="mode" value="n"><span>세후 급여로 계산</span></label>
 </div>
 
-<p class="c-q"><span>1</span><b id="q1">월 급여</b> <small style="font-weight:400;color:var(--sub)" id="q1s">(세전, 비과세 포함한 총액)</small></p>
+<p class="c-q"><span class="w">2-1</span><b id="q1">월 급여</b> <small style="font-weight:400;color:var(--sub)" id="q1s">(세전, 비과세 포함한 총액)</small></p>
 <div class="amt"><input type="text" id="pay0" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="pay0"></div>
 <div class="quick"><button type="button" data-add="100000">+10만</button><button type="button" data-add="1000000">+100만</button><button type="button" data-add="3000000">+300만</button><button type="button" data-clear>지우기</button></div>
 
-<p class="c-q"><span>2</span>비과세 금액 <small style="font-weight:400;color:var(--sub)">(식대·자가운전보조금 등, 없으면 0)</small></p>
+<p class="c-q"><span class="w">2-2</span>비과세 금액 <small style="font-weight:400;color:var(--sub)">(식대·자가운전보조금 등, 없으면 0)</small></p>
 <div class="amt sm"><input type="text" id="nontax" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="nontax"></div>
 <div class="quick"><button type="button" data-add2="100000">+10만</button><button type="button" data-add2="200000">+20만</button><button type="button" data-clear2>지우기</button></div>
 
-<p class="c-q"><span>3</span>부양가족 <small style="font-weight:400;color:var(--sub)">(기본: 본인 1명)</small></p>
+<p class="c-q"><span>3</span>부양가족 수 <small style="font-weight:400;color:var(--sub)">(기본: 본인 1명)</small></p>
 <details class="famfold" id="famfold">
 <summary>부양가족이 있으면 눌러서 입력해 주세요</summary>
 <div class="selrow">
@@ -77,7 +78,7 @@
 
 <div class="c-out">
 <div class="result2" id="out">
-<p class="r-label" id="rlabel">예상 실수령액 <small>(4대보험·소득세 공제 후)</small></p>
+<p class="r-label" id="rlabel"><span class="n">4</span>예상 실수령액 <small>(4대보험·소득세 공제 후)</small></p>
 <p class="big" id="sum">0원</p>
 <p class="r-sub" id="sub">월 급여를 넣으면 바로 산출됩니다.</p>
 <details class="how" open><summary>계산 과정 보기</summary><table id="tbl"></table></details>

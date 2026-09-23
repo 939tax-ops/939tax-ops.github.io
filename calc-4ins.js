@@ -67,7 +67,7 @@
     var mode=val('mode')||'g', back=mode==='n';
     $('q1').textContent=back?'맞추려는 실수령액':'월 급여';
     $('q1s').textContent=back?'(세후, 직원이 받는 금액)':'(세전, 비과세 포함한 총액)';
-    $('rlabel').innerHTML=back?'필요한 세전 급여 <small>(비과세 포함)</small>':'예상 실수령액 <small>(4대보험·소득세 공제 후)</small>';
+    $('rlabel').innerHTML='<span class="n">4</span>'+(back?'필요한 세전 급여 <small>(비과세 포함)</small>':'예상 실수령액 <small>(4대보험·소득세 공제 후)</small>');
     var input=num('pay0'), nt=num('nontax'), g=input;
     var fam=Number($('fam').value)||1, kidSel=$('kid');
     Array.prototype.forEach.call(kidSel.options,function(o){ o.hidden=Number(o.value)>fam-1; });
