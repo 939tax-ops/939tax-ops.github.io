@@ -229,6 +229,7 @@ a.more:hover{text-decoration:underline}
 .c-q span{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green-bg);color:#fff;font-size:13px}
 .c-q:not(:first-child){margin-top:24px}
 .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chips.two{grid-template-columns:repeat(2,1fr)}
 .chips label{cursor:pointer}
 .chips input{position:absolute;opacity:0;pointer-events:none}
 .chips span{display:flex;flex-direction:column;justify-content:center;min-height:58px;border:1.5px solid var(--soft);border-radius:8px;padding:8px 10px;text-align:center;font-weight:700;font-size:15px;background:var(--surface);line-height:1.35}
