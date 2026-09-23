@@ -819,6 +819,12 @@ table.info td a:hover{text-decoration:underline}
 .selrow label{flex:1 1 190px;display:flex;flex-direction:column;gap:6px;font-family:var(--sans);font-size:14px;color:var(--ink-5)}
 .selrow select{font:inherit;font-size:17px;font-weight:700;color:var(--ink-2);padding:11px 12px;border:1.5px solid var(--field);border-radius:8px;background:var(--surface)}
 .selrow select:focus{outline:0;border-color:var(--green);box-shadow:0 0 0 2px var(--tint)}
+.tabs{display:flex;gap:8px;margin:0 0 20px}
+.tabs label{flex:1}
+.tabs input{position:absolute;opacity:0;width:0;height:0}
+.tabs span{display:block;text-align:center;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink-5);padding:11px 8px;border:1.5px solid var(--soft);border-radius:8px;background:var(--surface);cursor:pointer}
+.tabs input:checked+span{background:var(--green-bg);border-color:var(--green-bg);color:#fff}
+.tabs input:focus-visible+span{box-shadow:0 0 0 2px var(--tint)}
 .famfold{margin:2px 0 0}
 .famfold>summary{cursor:pointer;list-style:revert;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--green);padding:10px 12px;border:1px dashed var(--soft);border-radius:8px;background:var(--soft-bg)}
 .famfold[open]>summary{margin-bottom:10px}

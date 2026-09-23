@@ -439,7 +439,7 @@ CALCS = [
     (("양도소득세", "1주택 양도세 연도별 비교", "2026~2029년 중 언제 파느냐에 따라 달라지는 1주택 양도세를 나란히 비교합니다", "/calculators/one-house-capital-gains/") if YANGDO_ENABLED else ("양도소득세", "양도소득세 계산기", "보유기간·공제를 반영한 예상 양도세")),
     ("취득세", "1주택 취득세 계산기", "주택 1채를 살 때 취득세·지방교육세·농어촌특별세를 생애최초 감면 적용 여부별로 계산합니다", "/calculators/acquisition-tax/"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
-    ("4대보험", "4대보험·실수령액 계산기", "월 급여와 부양가족 수를 넣으면 4대보험과 소득세를 뺀 월 실수령액이 바로 산출됩니다", "/calculators/four-insurance/"),
+    ("4대보험", "4대보험·실수령액 계산기", "월 급여를 넣으면 4대보험과 소득세를 뺀 실수령액이, 세후 금액을 넣으면 필요한 세전 급여가 산출됩니다", "/calculators/four-insurance/"),
     ("기장료", "기장료 계산기", "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다", "/calculators/bookkeeping-fee/"),
 ]
 
@@ -497,7 +497,7 @@ def build_4ins_calc():
            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
     write("calculators/four-insurance/index.html",
           page(f"4대보험·실수령액 계산기 2026 | {NAME}",
-               "월 급여와 부양가족 수를 넣으면 국민연금·건강보험·장기요양·고용보험과 근로소득 간이세액표에 따른 소득세·지방소득세를 빼고 월 실수령액을 계산합니다.",
+               "월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액에 맞는 세전 급여 역산도 됩니다.",
                "/calculators/four-insurance/", tpl, "calc", ld))
 
 def build_yangdo_calc():
