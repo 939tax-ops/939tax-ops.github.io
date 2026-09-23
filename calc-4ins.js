@@ -38,7 +38,10 @@
     var lo=0, hi=200000000;
     if(netOf(hi,nt,fam,kid)<target) return -1;
     while(lo<hi){ var m=Math.floor((lo+hi)/2/10)*10; if(m<lo) m=lo; if(netOf(m,nt,fam,kid)<target) lo=m+10; else hi=m; }
-    return lo;
+    // 간이세액표가 구간별 계단이라 더 낮은 세전 급여로도 같은 실수령액이 되는 구간이 있어, 아래쪽을 한 번 더 훑어 가장 낮은 금액을 찾는다
+    var best=lo, floorLimit=Math.max(0, lo-300000);
+    for(var x=lo-10; x>=floorLimit; x-=10){ if(netOf(x,nt,fam,kid)>=target) best=x; }
+    return best;
   }
   window.__grossFor=grossFor;
   function calc(gross, nontax){
