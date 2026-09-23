@@ -22,12 +22,15 @@
 <div class="won" data-for="nontax"></div>
 <div class="quick"><button type="button" data-add2="100000">+10만</button><button type="button" data-add2="200000">+20만</button><button type="button" data-clear2>지우기</button></div>
 
-<p class="c-q"><span>3</span>공제대상 가족 수 <small style="font-weight:400;color:var(--sub)">(본인 포함)</small></p>
+<p class="c-q"><span>3</span>부양가족 <small style="font-weight:400;color:var(--sub)">(기본: 본인 1명)</small></p>
+<details class="famfold" id="famfold">
+<summary>부양가족이 있으면 눌러서 입력</summary>
 <div class="selrow">
-<label>가족 수<select id="fam"><option value="1" selected>1명</option><option value="2">2명</option><option value="3">3명</option><option value="4">4명</option><option value="5">5명</option><option value="6">6명</option><option value="7">7명</option><option value="8">8명</option><option value="9">9명</option><option value="10">10명</option><option value="11">11명</option></select></label>
+<label>공제대상 가족 수 <small>(본인 포함)</small><select id="fam"><option value="1" selected>1명</option><option value="2">2명</option><option value="3">3명</option><option value="4">4명</option><option value="5">5명</option><option value="6">6명</option><option value="7">7명</option><option value="8">8명</option><option value="9">9명</option><option value="10">10명</option><option value="11">11명</option></select></label>
 <label>그중 8세~20세 자녀<select id="kid"><option value="0" selected>0명</option><option value="1">1명</option><option value="2">2명</option><option value="3">3명</option><option value="4">4명</option><option value="5">5명</option><option value="6">6명</option><option value="7">7명</option><option value="8">8명</option><option value="9">9명</option><option value="10">10명</option></select></label>
 </div>
 <p class="hint" style="margin:8px 0 0">배우자와 부양가족은 연간 소득금액 100만원 이하일 때만 넣습니다. 요건은 계산기가 판단하지 않습니다.</p>
+</details>
 
 <p class="mini" id="mini" hidden>실수령액 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
 </div>
