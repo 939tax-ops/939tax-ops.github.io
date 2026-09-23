@@ -823,7 +823,9 @@ table.info td a:hover{text-decoration:underline}
 .tabs{display:flex;gap:8px;margin:0 0 20px}
 .tabs label{flex:1}
 .tabs input{position:absolute;opacity:0;width:0;height:0}
-.tabs span{display:block;text-align:center;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink-5);padding:11px 8px;border:1.5px solid var(--soft);border-radius:8px;background:var(--surface);cursor:pointer}
+.tabs span{display:block;text-align:center;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink-5);padding:10px 8px;border:1.5px solid var(--soft);border-radius:8px;background:var(--surface);cursor:pointer;line-height:1.35}
+.tabs span small{display:block;font-size:12px;font-weight:500;color:var(--sub);margin-top:2px}
+.tabs input:checked+span small{color:rgba(255,255,255,.82)}
 .tabs input:checked+span{background:var(--green-bg);border-color:var(--green-bg);color:#fff}
 .tabs input:focus-visible+span{box-shadow:0 0 0 2px var(--tint)}
 .famfold{margin:2px 0 0}
