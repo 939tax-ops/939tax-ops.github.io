@@ -1,12 +1,13 @@
 <div class="wrap" style="padding-top:28px;max-width:980px">
 <p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 4대보험 계산기</p>
-<h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">4대보험 계산기</h1>
-<p class="lead" style="margin:0 0 18px">2026년 요율 기준 · <b>월 급여에서 떼는 4대보험 근로자 부담분</b>을 계산합니다</p>
+<h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">4대보험·실수령액 계산기</h1>
+<p class="lead" style="margin:0 0 18px">2026년 요율·간이세액표 기준 · <b>월 급여에서 떼는 근로자 부담분</b>을 계산합니다</p>
 
 <ol class="steps">
 <li><b>월 급여(세전)</b>를 넣고</li>
-<li>식대 같은 <b>비과세 금액</b>이 있으면 넣으면</li>
-<li><b>국민연금·건강보험·장기요양·고용보험</b> 공제액이 바로 산출됩니다</li>
+<li>식대 같은 <b>비과세 금액</b>을 넣고</li>
+<li><b>부양가족 수</b>를 고르면</li>
+<li><b>4대보험과 소득세를 뺀 실수령액</b>이 산출됩니다</li>
 </ol>
 
 <form class="calc2" id="fi" onsubmit="return false">
@@ -21,17 +22,19 @@
 <div class="won" data-for="nontax"></div>
 <div class="quick"><button type="button" data-add2="200000">+20만(식대)</button><button type="button" data-clear2>지우기</button></div>
 
-<p class="c-q"><span>3</span>어느 쪽 부담을 볼까요?</p>
-<div class="chips">
-<label><input type="radio" name="side" value="w" checked><span>근로자<small>급여에서 공제되는 금액</small></span></label>
-<label><input type="radio" name="side" value="e"><span>사업주<small>회사가 함께 내는 금액</small></span></label>
+<p class="c-q"><span>3</span>공제대상 가족 수 <small style="font-weight:400;color:var(--sub)">(본인 포함)</small></p>
+<div class="selrow">
+<label>가족 수<select id="fam"><option value="1" selected>1명</option><option value="2">2명</option><option value="3">3명</option><option value="4">4명</option><option value="5">5명</option><option value="6">6명</option><option value="7">7명</option><option value="8">8명</option><option value="9">9명</option><option value="10">10명</option><option value="11">11명</option></select></label>
+<label>그중 8세~20세 자녀<select id="kid"><option value="0" selected>0명</option><option value="1">1명</option><option value="2">2명</option><option value="3">3명</option><option value="4">4명</option><option value="5">5명</option><option value="6">6명</option><option value="7">7명</option><option value="8">8명</option><option value="9">9명</option><option value="10">10명</option></select></label>
 </div>
-<p class="mini" id="mini" hidden>공제액 합계 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
+<p class="hint" style="margin:8px 0 0">배우자와 부양가족은 연간 소득금액 100만원 이하일 때만 넣습니다. 요건은 계산기가 판단하지 않습니다.</p>
+
+<p class="mini" id="mini" hidden>실수령액 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
 </div>
 
 <div class="c-out">
 <div class="result2" id="out">
-<p class="r-label" id="rlabel">4대보험 공제액 합계 <small>(근로자 부담분)</small></p>
+<p class="r-label">예상 실수령액 <small>(4대보험·소득세 공제 후)</small></p>
 <p class="big" id="sum">0원</p>
 <p class="r-sub" id="sub">월 급여를 넣으면 바로 산출됩니다.</p>
 <details class="how" open><summary>계산 과정 보기</summary><table id="tbl"></table></details>
@@ -40,10 +43,11 @@
 </div>
 </form>
 
-<details class="box fold" style="margin-top:28px"><summary class="label">소득세는 왜 계산하지 않나요?</summary>
-<p>매달 떼는 소득세는 근로소득 간이세액표에 따라 정해지는데, 같은 급여라도 <b>공제대상 부양가족 수와 8세 이상 20세 이하 자녀 수</b>에 따라 금액이 달라집니다. 그래서 이 계산기는 금액이 정해져 있는 4대보험만 계산합니다.</p>
-<p>매달 떼는 소득세·지방소득세 금액은 <a href="https://hometax.go.kr/websquare/websquare.html?w2xPath=/ui/pp/index_pp.xml&amp;tmIdx=41&amp;tm2lIdx=4106000000&amp;tm3lIdx=4106030000" target="_blank" rel="noopener">홈택스 근로소득 간이세액표</a>에서 급여와 가족 수를 넣어 확인하실 수 있습니다. 실수령액은 <b>월 급여 − 4대보험 − 소득세·지방소득세</b>이며, 1년 세금은 다음 해 연말정산으로 다시 정해집니다.</p>
-<p class="src">소득세법 시행령 제194조 제1항 및 같은 영 [별표 2] 근로소득 간이세액표</p>
+<details class="box fold" style="margin-top:28px"><summary class="label">매달 떼는 소득세는 어떻게 정해지나요?</summary>
+<p>매달 급여에서 떼는 소득세는 <b>근로소득 간이세액표</b>로 정해집니다. 월 급여(비과세·학자금 제외)와 <b>공제대상 가족 수</b>, 그중 <b>8세 이상 20세 이하 자녀 수</b>에 따라 금액이 달라집니다. 이 계산기는 2026년 3월 1일 시행 간이세액표를 그대로 넣어 계산합니다.</p>
+<p>간이세액표 세액의 80%·120%를 선택해 원천징수할 수도 있지만(원천징수의무자에게 신청), 이 계산기는 <b>100% 기준</b>으로만 계산합니다.</p>
+<p>매달 떼는 금액은 1년 세금의 선납금일 뿐입니다. 실제 1년 세금은 다음 해 <b>연말정산</b>에서 의료비·보험료·기부금 등 개인별 공제를 반영해 다시 정해지고, 그 차액을 돌려받거나 더 냅니다.</p>
+<p class="src">소득세법 제134조 제1항, 같은 법 시행령 제194조 제1항 및 [별표 2] 근로소득 간이세액표(2026.3.1. 시행)</p>
 </details>
 
 <details class="box fold" style="margin-top:16px"><summary class="label">계산 기준</summary>
@@ -53,9 +57,11 @@
 <li>건강보험: 보수월액 × 3.595%(근로자·사업주 각각, 보험료율 7.19%의 절반)</li>
 <li>장기요양: 건강보험료 × 13.14%(장기요양보험료율 0.9448%를 건강보험료율로 나눈 비율)</li>
 <li>고용보험(실업급여): 보수월액 × 0.9%(근로자·사업주 각각, 실업급여 보험료율 1.8%의 절반)</li>
-<li>사업주는 위 금액 외에 고용안정·직업능력개발 보험료(상시근로자 150명 미만 0.25%)와 업종별 산재보험료를 더 부담합니다. 이 계산기에는 넣지 않았습니다</li>
+<li>이 계산기는 근로자 부담분만 계산합니다. 사업주는 위와 같은 금액(국민연금·건강보험·장기요양·고용보험)에 더해 <b>고용안정·직업능력개발 보험료</b>(상시근로자 150명 미만 0.25%)와 <b>업종별 산재보험료</b>를 추가로 부담합니다</li>
 <li>국민연금 기준소득월액은 2026년 7월~2027년 6월 적용 하한 41만원·상한 659만원을 반영했습니다. 건강보험료의 상·하한은 반영하지 않았습니다</li>
-<li>보험료는 10원 미만을 버려 표시하므로 실제 고지액과 몇십 원 차이가 날 수 있습니다</li>
+<li>소득세: 2026년 3월 1일 시행 근로소득 간이세액표의 100% 기준 세액. 8세 이상 20세 이하 자녀가 있으면 1명 20,830원, 2명 45,830원, 3명부터는 45,830원 + 2명 초과 1명당 33,330원을 빼며, 음수이면 0원</li>
+<li>지방소득세: 소득세의 10%</li>
+<li>보험료·세액은 10원 미만을 버려 표시하므로 실제 고지액·공제액과 몇십 원 차이가 날 수 있습니다</li>
 </ul>
 <p class="src">국민연금법 제88조 제3항·부칙(제20903호) 제4조·같은 법 시행령 제5조, 국민건강보험법 제69조 제2항·제76조 제1항·같은 법 시행령 제44조 제1항, 노인장기요양보험법 제9조·같은 법 시행령 제4조, 고용보험 및 산업재해보상보험의 보험료징수 등에 관한 법률 제13조·같은 법 시행령 제12조 제1항</p>
 </details>
@@ -70,6 +76,7 @@
 </details>
 
 <div class="cta-box"><p>급여 설계, 4대보험 신고, 중도 입·퇴사자 정산이 번거로우시면<br>기장과 함께 맡겨 두고 확인만 하셔도 됩니다.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a></div></div>
-<p class="fine" id="disclaimer">면책 고지 · 이 계산기는 2026년 요율을 기준으로 한 참고용 산출 결과이며, 공단이 고지하는 실제 보험료가 아닙니다. 소득세·지방소득세는 계산하지 않으므로 이 결과는 실수령액이 아닙니다. 기준소득월액·보수월액의 상·하한, 원 단위 처리, 중도 입·퇴사·정산·감면·요율 개정 등에 따라 실제 금액과 다를 수 있으며, 이 결과만을 근거로 한 판단이나 급여 지급으로 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. <a href="/disclaimer/">전문 보기</a></p>
+<p class="fine" id="disclaimer">면책 고지 · 이 계산기는 2026년 요율과 2026년 3월 1일 시행 근로소득 간이세액표(100% 기준)로 계산한 참고용 결과이며, 공단이 고지하는 보험료나 실제 원천징수세액이 아닙니다. 부양가족 요건 해당 여부는 판단하지 않고 입력한 대로 계산하며, 소득세는 매달 떼는 금액일 뿐 1년 세금은 연말정산으로 다시 정해집니다. 기준소득월액·보수월액의 상·하한, 원 단위 처리, 중도 입·퇴사, 비과세 항목 판단, 요율·세액표 개정 등에 따라 실제 금액과 다를 수 있으며, 이 결과만을 근거로 한 판단이나 급여 지급으로 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. <a href="/disclaimer/">전문 보기</a></p>
 </div>
+<script src="/simple-tax-2026.js" defer></script>
 <script src="/calc-4ins.js" defer></script>

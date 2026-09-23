@@ -811,3 +811,8 @@ table.info td a:hover{text-decoration:underline}
 .fee-calc{background:#eef6f1;border:1.5px solid rgba(31,77,58,.35);box-shadow:0 10px 24px rgba(31,77,58,.16)}
 .fee-calc .t{opacity:1;color:#2f6b52}
 @media (prefers-color-scheme: dark) and (max-width:760px){.fee-calc{background:rgba(111,178,140,.14);border-color:rgba(160,210,180,.45)}.fee-calc .t{color:#a9d5bb}}
+/* v26: 4대보험·실수령액 계산기 가족 수 선택 */
+.selrow{display:flex;flex-wrap:wrap;gap:10px;margin:2px 0 0}
+.selrow label{flex:1 1 190px;display:flex;flex-direction:column;gap:6px;font-family:var(--sans);font-size:14px;color:var(--ink-5)}
+.selrow select{font:inherit;font-size:17px;font-weight:700;color:var(--ink-2);padding:11px 12px;border:1.5px solid var(--field);border-radius:8px;background:var(--surface)}
+.selrow select:focus{outline:0;border-color:var(--green);box-shadow:0 0 0 2px var(--tint)}
