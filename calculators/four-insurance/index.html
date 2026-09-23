@@ -5,14 +5,14 @@
 <meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>4대보험·실수령액 계산기 2026 | 세무회계택</title>
-<meta name="description" content="월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액에 맞는 세전 급여 역산도 됩니다.">
+<meta name="description" content="월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액을 넣으면 필요한 세전 급여도 계산합니다.">
 <link rel="canonical" href="https://tax939.com/calculators/four-insurance/">
 <meta name="naver-site-verification" content="e074d43c1aa971b277361693bbff22e6a1cf9253" />
 <meta name="google-site-verification" content="H_CwM250NOvT-HL7Ky2uBmvKYMq18bXleFuTAcapo3k" />
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세무회계택">
 <meta property="og:title" content="4대보험·실수령액 계산기 2026 | 세무회계택">
-<meta property="og:description" content="월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액에 맞는 세전 급여 역산도 됩니다.">
+<meta property="og:description" content="월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액을 넣으면 필요한 세전 급여도 계산합니다.">
 <meta property="og:url" content="https://tax939.com/calculators/four-insurance/">
 <meta property="og:image" content="https://tax939.com/assets/og-logo.png">
 <meta property="og:locale" content="ko_KR">
@@ -36,7 +36,7 @@
 <div class="wrap" style="padding-top:28px;max-width:980px">
 <p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 4대보험 계산기</p>
 <h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">4대보험·실수령액 계산기</h1>
-<p class="lead" style="margin:0 0 18px">2026년 요율·간이세액표 기준 · <b>세전 급여로 실수령액</b>을 계산하고, <b>세후 금액에 맞는 세전 급여</b>도 역산합니다</p>
+<p class="lead" style="margin:0 0 18px">2026년 요율·간이세액표 기준 · <b>세전 급여로 실수령액</b>을 계산하고, <b>세후 금액에 맞는 세전 급여</b>도 계산합니다</p>
 
 <ol class="steps">
 <li><b>계산 방향</b>을 고르고</li>
@@ -49,10 +49,10 @@
 <div class="c-in">
 <div class="tabs" id="mode">
 <label><input type="radio" name="mode" value="g" checked><span>세전 급여로 계산</span></label>
-<label><input type="radio" name="mode" value="n"><span>세후 급여로 역산</span></label>
+<label><input type="radio" name="mode" value="n"><span>세후 급여로 계산</span></label>
 </div>
 
-<p class="c-q"><span>1</span><span id="q1">월 급여</span> <small style="font-weight:400;color:var(--sub)" id="q1s">(세전, 비과세 포함한 총액)</small></p>
+<p class="c-q"><span>1</span><b id="q1">월 급여</b> <small style="font-weight:400;color:var(--sub)" id="q1s">(세전, 비과세 포함한 총액)</small></p>
 <div class="amt"><input type="text" id="pay0" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="pay0"></div>
 <div class="quick"><button type="button" data-add="100000">+10만</button><button type="button" data-add="1000000">+100만</button><button type="button" data-add="3000000">+300만</button><button type="button" data-clear>지우기</button></div>
@@ -95,9 +95,9 @@
 
 <details class="box fold" style="margin-top:16px"><summary class="label">세후 금액으로 급여를 맞출 때 주의할 점</summary>
 <ul>
-<li>역산 결과는 그 달 기준입니다. 부양가족이 바뀌거나 요율·간이세액표가 개정되면 같은 세전 급여라도 실수령액이 달라집니다</li>
+<li>계산 결과는 그 달 기준입니다. 부양가족이 바뀌거나 요율·간이세액표가 개정되면 같은 세전 급여라도 실수령액이 달라집니다</li>
 <li>세후 금액을 약속하면 그 차액은 회사가 부담하게 됩니다. 연말정산에서 추가 납부가 나오는 경우까지 회사가 부담하는지는 근로계약에서 따로 정해야 합니다</li>
-<li>사업주는 역산된 세전 급여를 기준으로 4대보험 사업주 부담분과 고용안정·직업능력개발·산재보험료를 추가로 부담합니다</li>
+<li>사업주는 계산된 세전 급여를 기준으로 4대보험 사업주 부담분과 고용안정·직업능력개발·산재보험료를 추가로 부담합니다</li>
 <li>입사·퇴사한 달은 1일 재직 여부에 따라 국민연금·건강보험 한 달치가 붙거나 빠지므로, 같은 세전 급여라도 그 달 실수령액이 달라집니다</li>
 <li>10원 단위로 맞추므로 목표 세후 금액과 몇 원 차이가 날 수 있습니다</li>
 </ul>

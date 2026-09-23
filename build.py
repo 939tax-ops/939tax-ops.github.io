@@ -497,7 +497,7 @@ def build_4ins_calc():
            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
     write("calculators/four-insurance/index.html",
           page(f"4대보험·실수령액 계산기 2026 | {NAME}",
-               "월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액에 맞는 세전 급여 역산도 됩니다.",
+               "월 급여와 부양가족 수를 넣으면 4대보험과 근로소득 간이세액표에 따른 소득세를 빼고 월 실수령액을 계산합니다. 세후 금액을 넣으면 필요한 세전 급여도 계산합니다.",
                "/calculators/four-insurance/", tpl, "calc", ld))
 
 def build_yangdo_calc():
