@@ -81,15 +81,16 @@
     t+=row('실수령액',comma(net)+'원','total');
     $('tbl').innerHTML=t;
     var m=[];
-    if(nt>g) m.push('<b>비과세 금액이 월 급여보다 큽니다</b> — 입력을 확인해 주세요');
-    if(r.base>=100000000) m.push('건강보험료는 상한이 있어 실제 보험료가 이보다 적을 수 있음');
+    if(nt>g) m.push('<b>비과세 금액이 월 급여보다 큼</b> — 입력 확인 필요');
+    if(r.base>=100000000) m.push('건강보험료 상한 적용으로 실제 보험료는 이보다 적을 수 있음');
     if(r.capped==='max') m.push('<b>국민연금 상한 659만원 적용</b>');
     if(r.capped==='min') m.push('<b>국민연금 하한 41만원 적용</b>');
     if(tax&&tax.cut) m.push('8세~20세 자녀 '+tax.kid+'명 공제 '+comma(tax.cut)+'원 반영');
-    m.push('소득세는 간이세액표 100% 기준 · 1년 세금은 연말정산으로 정해짐');
+    m.push('소득세는 간이세액표 100% 기준');
+    m.push('1년 세금은 연말정산으로 확정');
     m.push('사업주는 같은 금액 + 고용안정·직업능력개발·산재보험 추가 부담');
-    m.push('입·퇴사한 달은 1일 재직 여부로 달라짐');
-    m.push('10원 미만 절사로 고지액과 소액 차이 가능');
+    m.push('입·퇴사한 달은 1일 재직 여부로 차이 발생');
+    m.push('10원 미만 절사로 고지액과 소액 차이 발생');
     $('msg').innerHTML='· '+m.join('<br>· ');
   }
   ['pay0','nontax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
