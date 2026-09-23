@@ -11,7 +11,7 @@
     var D=window.__SIMPLE_TAX; if(!D) return null;
     var rows=D.rows, col=Math.min(Math.max(fam,1),11), th=base/1000, tax;
     if(th<rows[0][0]) tax=0;
-    else if(th<10000){
+    else if(th<=10000){
       var lo=0, hi=rows.length-1, i=0;
       while(lo<=hi){ var m=(lo+hi)>>1; if(rows[m][0]<=th){ i=m; lo=m+1; } else hi=m-1; }
       tax=rows[i][col]*D.rate;
@@ -39,8 +39,8 @@
     var nps=floor10(npsBase*NPS_RATE);
     var hi=floor10(base*HI_RATE);
     var ltc=floor10(hi*LTC_RATE);
-    var ei=Math.floor(base*EI_RATE+1e-6);
-    var stable=Math.floor(base*EMP_STABLE+1e-6);
+    var ei=floor10(base*EI_RATE);
+    var stable=floor10(base*EMP_STABLE);
     return {base:base,npsBase:npsBase,capped:capped,nps:nps,hi:hi,ltc:ltc,ei:ei,stable:stable,
             worker:nps+hi+ltc+ei, employer:nps+hi+ltc+ei+stable};
   }
@@ -67,7 +67,7 @@
     var t='';
     t+=row('월 급여',comma(g)+'원');
     if(nt) t+=row('비과세 금액','− '+comma(nt)+'원');
-    t+=row('보험료 기준 금액 <small>(보수월액)</small>',comma(r.base)+'원','sub');
+    t+=row('보험료 기준 금액 <small>(보수월액)</small>',comma(r.base)+'원','key');
     t+=row('국민연금 <small>(4.75%)</small>',comma(r.nps)+'원');
     t+=row('건강보험 <small>(3.595%)</small>',comma(r.hi)+'원');
     t+=row('장기요양 <small>(건강보험료의 13.14%)</small>',comma(r.ltc)+'원');
@@ -81,6 +81,8 @@
     t+=row('실수령액',comma(net)+'원','total');
     $('tbl').innerHTML=t;
     var m=[];
+    if(nt>g) m.push('<b>비과세 금액이 월 급여보다 큽니다</b> — 입력을 확인해 주세요');
+    if(r.base>=100000000) m.push('건강보험료는 상한이 있어 실제 보험료가 이보다 적을 수 있음');
     if(r.capped==='max') m.push('<b>국민연금 상한 659만원 적용</b>');
     if(r.capped==='min') m.push('<b>국민연금 하한 41만원 적용</b>');
     if(tax&&tax.cut) m.push('8세~20세 자녀 '+tax.kid+'명 공제 '+comma(tax.cut)+'원 반영');
