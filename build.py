@@ -172,7 +172,11 @@ def build_post(p, posts=()):
     if faqs:
         faq_html = '<section class="faq"><h2>자주 묻는 질문</h2>' + "".join(
             f"<h3>{esc(q)}</h3>{md(a)}" for q, a in faqs) + "</section>"
-    calc = f'<div class="box"><p class="label">바로 계산해 보기</p><p><a href="{p["calc"]}">증여세 계산기로 본인의 상황에 맞추어 계산해 보세요 →</a></p></div>' if p.get("calc") else ""
+    calc = ""
+    if p.get("calc"):
+        _cu, _, _ct = p["calc"].partition("|")
+        _cu, _ct = _cu.strip(), _ct.strip() or "증여세 계산기로 본인의 상황에 맞추어 계산해 보세요"
+        calc = f'<div class="box"><p class="label">바로 계산해 보기</p><p><a href="{esc(_cu)}">{esc(_ct)} →</a></p></div>' 
     blog = f' · <a href="{esc(p["blog"])}" target="_blank" rel="noopener">블로그에서 보기</a>' if p.get("blog") else ""
     upd = f' · 수정 {p["updated"]}' if p.get("updated") and p["updated"] != p["date"] else ""
     tp = topic_of(p)
