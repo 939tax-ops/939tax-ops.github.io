@@ -844,3 +844,14 @@ table.info td a:hover{text-decoration:underline}
 .cta-box p,.warn,.hint,.r-sub,.result2 .note,.steps li,.c-q,.box.fold p,.box.fold li,.lead{word-break:keep-all;overflow-wrap:break-word}
 .cta-box p,.warn,.lead{text-wrap:balance}
 @media (max-width:760px){.nav.open{max-height:calc(100dvh - 72px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}
+
+/* v29: 상단 헤더를 푸터와 같은 진녹색으로 — 로고도 푸터와 같은 흰 선 버전 사용 */
+.top,body.p-home .top{background:var(--green-dark);border-bottom-color:rgba(255,255,255,.16)}
+.menu-btn{border-color:rgba(255,255,255,.45);color:#fff}
+@media (min-width:761px){
+  .nav a{color:#DDE5DF}
+  .nav a:hover,.nav a.on,.nav .dd.on>.dd-t{color:#fff}
+  .nav .cta,.nav .cta:hover{background:#fff;color:var(--green)}
+  .nav .dd-m a{color:var(--text)}
+  .nav .dd-m a:hover{color:var(--green)}
+}

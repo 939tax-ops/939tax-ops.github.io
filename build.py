@@ -91,7 +91,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 </head>
 <body class="p-{active}">
 <header class="top"><div class="wrap">
-<a class="brand" href="/"><picture><source srcset="/assets/logo-h-dark.png" media="(prefers-color-scheme: dark) and (max-width: 760px)"><img src="/assets/logo-h.png" alt="세무회계 택 로고" width="154" height="40"></picture></a>
+<a class="brand" href="/"><img src="/assets/logo-h-dark.png" alt="세무회계 택 로고" width="154" height="40"></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
 <nav class="nav">{navh}<a class="cta" href="/contact/">문의하기</a></nav>
 </div></header>
