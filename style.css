@@ -843,3 +843,4 @@ table.info td a:hover{text-decoration:underline}
 /* v28: 한국어 줄바꿈을 단어 단위로 */
 .cta-box p,.warn,.hint,.r-sub,.result2 .note,.steps li,.c-q,.box.fold p,.box.fold li,.lead{word-break:keep-all;overflow-wrap:break-word}
 .cta-box p,.warn,.lead{text-wrap:balance}
+@media (max-width:760px){.nav.open{max-height:calc(100dvh - 72px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}}
