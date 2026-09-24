@@ -50,8 +50,20 @@ def person_ld():
             "worksFor": {"@id": SITE + "/#org"}, "url": SITE + "/about/", "image": SITE + "/assets/profile.jpg",
             "alumniOf": "고려대학교", "sameAs": [BLOG]}
 
+# 링크 카드(og:image) — 페이지별 대표 이미지. 없으면 로고(2026.09.24)
+OG_IMAGES = {
+    "/calculators/": "/assets/og/og-calculators.png",
+    "/calculators/bookkeeping-fee/": "/assets/og/og-calc-bookkeeping-fee.png",
+    "/calculators/gift-tax/": "/assets/og/og-calc-gift-tax.png",
+    "/calculators/acquisition-tax/": "/assets/og/og-calc-acquisition-tax.png",
+    "/calculators/four-insurance/": "/assets/og/og-calc-four-insurance.png",
+    "/calculators/freelancer-withholding/": "/assets/og/og-calc-freelancer-withholding.png",
+    "/contact/": "/assets/og/og-contact.png",
+}
+
 def page(title, desc, path, body, active="", ld=None, extra_head=""):
     canon = SITE + path
+    og_img = SITE + OG_IMAGES.get(path, "/assets/og-logo.png")
     graph = [org_ld()] + (ld or [])
     on = ' class="on"'
     def dd(label, key, head, items):
@@ -77,7 +89,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{canon}">
-<meta property="og:image" content="{SITE}/assets/og-logo.png">
+<meta property="og:image" content="{og_img}">
 <meta property="og:locale" content="ko_KR">
 <link rel="icon" href="/favicon.png" sizes="64x64" type="image/png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
