@@ -45,13 +45,9 @@
     t+=row('원천징수 합계', '− '+comma(r.tax)+'원', 'key minus');
     t+=row('실제 지급할 금액', comma(r.net)+'원', 'total');
     $('ftbl').innerHTML=t;
-    var other=calc(pay, rate===3?2:3), diff=Math.abs(r.tax-other.tax);
     var m=[];
     if(back && r.net>input) m.push('목표보다 '+comma(r.net-input)+'원 많은 금액에서 맞춰짐 <small>(1원 단위 계산)</small>');
     m.push('단순히 '+(rate===3?'3.3':'2.2')+'%를 곱한 '+comma(Math.floor(pay*(rate+rate*0.1)/100))+'원과 '+(Math.abs(r.tax-Math.floor(pay*(rate+rate*0.1)/100))?comma(Math.abs(r.tax-Math.floor(pay*(rate+rate*0.1)/100)))+'원 차이':'같음')+' <small>(10원 미만 절사)</small>');
-    m.push(rate===3
-      ? '2.2%가 되면 이 지급액 기준 월 '+comma(diff)+'원 덜 뗌 · 1년 '+comma(diff*12)+'원'
-      : '현행 3.3%보다 월 '+comma(diff)+'원 덜 뗌 · 1년 '+comma(diff*12)+'원');
     m.push('1년 세금은 다음 해 5월 종합소득세 신고로 확정');
     if(rate===2) m.push('<b>국회 통과 전 정부안 기준</b> · 2027년 1월 1일 이후 지급분부터 적용 예정');
     $('fmsg').innerHTML='· '+m.join('<br>· ');
