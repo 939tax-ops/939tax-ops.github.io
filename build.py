@@ -52,13 +52,13 @@ def person_ld():
 
 # 링크 카드(og:image) — 페이지별 대표 이미지. 없으면 로고(2026.09.24)
 OG_IMAGES = {
-    "/calculators/": "/assets/og/og-calculators.png",
-    "/calculators/bookkeeping-fee/": "/assets/og/og-calc-bookkeeping-fee.png",
-    "/calculators/gift-tax/": "/assets/og/og-calc-gift-tax.png",
-    "/calculators/acquisition-tax/": "/assets/og/og-calc-acquisition-tax.png",
-    "/calculators/four-insurance/": "/assets/og/og-calc-four-insurance.png",
-    "/calculators/freelancer-withholding/": "/assets/og/og-calc-freelancer-withholding.png",
-    "/contact/": "/assets/og/og-contact.png",
+    "/calculators/": "/assets/og/og-calculators-2.png",
+    "/calculators/bookkeeping-fee/": "/assets/og/og-calc-bookkeeping-fee-2.png",
+    "/calculators/gift-tax/": "/assets/og/og-calc-gift-tax-2.png",
+    "/calculators/acquisition-tax/": "/assets/og/og-calc-acquisition-tax-2.png",
+    "/calculators/four-insurance/": "/assets/og/og-calc-four-insurance-2.png",
+    "/calculators/freelancer-withholding/": "/assets/og/og-calc-freelancer-withholding-2.png",
+    "/contact/": "/assets/og/og-contact-2.png",
 }
 
 def page(title, desc, path, body, active="", ld=None, extra_head=""):
