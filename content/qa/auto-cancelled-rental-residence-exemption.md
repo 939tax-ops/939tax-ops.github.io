@@ -4,6 +4,7 @@ slug: auto-cancelled-rental-residence-exemption
 keywords: 거주주택 비과세, 임대주택 자동말소, 자동말소 5년, 단기임대 자동말소, 농어촌주택 특례, 조특법 99조의4, 양도세 중과 제외, 지방 저가주택 3억원, 오피스텔 주택수, 1세대 1주택 비과세, 임대료 5% 증액 제한, 거주주택 특례 제출서류
 category: business
 topic: capital-gains
+type: case
 source: 014. (업로드완료) [양도소득세] 집 4채인데 1주택 비과세 받을 수 있을까요｜자동말소 임대주택·농어촌주택 업무사례 (2026.09.15.)
 date: 2026-09-25
 updated: 2026-09-25

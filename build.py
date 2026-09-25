@@ -26,6 +26,9 @@ TOPICS = [("income", "종합소득세"), ("vat", "부가가치세"), ("corp", "�
 TOPIC_NAME = dict(TOPICS)
 TOPIC_SERVICE = {"income": "tax-filing", "vat": "tax-filing", "corp": "tax-filing", "payroll": "bookkeeping",
                  "capital-gains": "capital-gains", "gift": "inheritance-gift", "refund": "refund-claim", "audit": "tax-audit"}
+# 글 형식 표시(세목과 별개). 글 머리의 type: 값. case = 업무사례 — 복잡하거나 모호한 사안에 세무사 판단이 들어간 글
+TYPES = {"case": "업무사례"}
+def type_name(p): return TYPES.get(p.get("type", ""), "")
 def topic_of(p):
     t = p.get("topic", "etc")
     return t if t in TOPIC_NAME else "etc"
@@ -204,7 +207,7 @@ def build_post(p, posts=()):
     more_html = f'<div class="post-more">{blog_card}{rel_html}</div>{svc_link}<p class="rel-back"><a href="/qa/">← 세무 Q&amp;A 목록</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그 전체 글</a></p>' 
     art = f'''<div class="narrow"><article>
 <p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/qa/#{topic_of(p)}">{TOPIC_NAME[topic_of(p)]}</a></p>
-<h1>{esc(p["title"])}</h1>
+{f'<p class="post-type"><span class="b-case">{type_name(p)}</span></p>' if type_name(p) else ""}<h1>{esc(p["title"])}</h1>
 <p class="meta">{PERSON} 작성 · {p["date"]}{upd}{blog}</p>
 <div class="summary"><p class="label">요약 답변</p>{md(p["summary"])}</div>
 {md(body)}
@@ -234,11 +237,12 @@ def build_post(p, posts=()):
 def qa_item(p):
     return (f'<li><a href="/qa/{p["slug"]}/"><span class="t">{esc(p["title"])}</span>'
             f'<span class="s">{esc(p["description"])}</span>'
-            f'<span class="m">{TOPIC_NAME[topic_of(p)]} · {p["date"]}</span></a></li>')
+            f'<span class="m">{type_name(p) + " · " if type_name(p) else ""}{TOPIC_NAME[topic_of(p)]} · {p["date"]}</span></a></li>')
 
 def qa_card(p, big=False):
     tp = topic_of(p)
     badge = '<span class="b-new">최신 글</span>' if big else ""
+    if type_name(p): badge += f'<span class="b-case">{type_name(p)}</span>'
     return (f'<a class="qcard{" big" if big else ""}" href="/qa/{p["slug"]}/" data-t="{tp}">'
             f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span><span class="d">{p["date"].replace("-", ".")}</span></span>'
             f'<b>{esc(p["title"])}</b><span class="qs">{esc(p["description"])}</span><span class="go">자세히 보기 →</span></a>')
