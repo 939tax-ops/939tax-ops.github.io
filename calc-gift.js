@@ -34,9 +34,9 @@
   var $=function(id){return document.getElementById(id)};
   if(!$('gc')) return;
   var ASSET_WARN={
-    estate:'부동산은 시가·기준시가 등 어떤 금액으로 평가하느냐에 따라 세금이 달라질 수 있습니다. 대출·전세보증금을 함께 넘기는 경우에는 계산 방식이 달라집니다.',
-    stock:'상장주식은 증여일 전후 기간의 평균 주가로, 비상장주식은 별도 방식으로 평가해 입력한 금액과 다를 수 있습니다.',
-    etc:'재산 종류에 따라 평가 방법이 달라 입력한 금액과 다를 수 있습니다.'
+    estate:'시가·기준시가 중 무엇으로 평가하느냐에 따라 세금이 크게 달라지고, 대출·전세를 함께 넘기면 양도소득세까지 따져야 합니다.',
+    stock:'상장주식은 증여일 전후 평균 주가로, 비상장주식은 회사 가치를 따로 평가해야 해서 입력한 금액과 달라질 수 있습니다.',
+    etc:'정기금·차량 등은 재산마다 평가 방법이 달라 입력한 금액과 차이가 날 수 있습니다.'
   };
   function assetv(){var r=document.querySelector('input[name=asset]:checked');return r?r.value:'cash';}
   function relv(){var r=document.querySelector('input[name=rel]:checked');return r?r.value:'adult';}
@@ -51,10 +51,12 @@
     $('marryWrap').style.display=direct?'':'none'; $('genWrap').style.display=direct?'':'none';
     var prev=num('prev')||0; $('prevTaxWrap').style.display=prev>0?'':'none';
     var aw=$('assetWarn'); if(aw) aw.hidden=true;
+    var a0=assetv(), an=$('assetNote'); if(an){ if(ASSET_WARN[a0]){ an.innerHTML='<b style="color:var(--green)">개별 상담 권장</b> · '+ASSET_WARN[a0]; an.hidden=false; } else an.hidden=true; }
+    var nn=$('nonresNote'); if(nn) nn.hidden=!$('nonres').checked;
     var cur=num('cur'); $('mini').hidden=!cur; if(!cur){ $('pay').textContent='0원'; $('sub').textContent='금액을 넣으면 바로 계산됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; return; }
     var r=calc({rel:rel,cur:cur,prev:prev,prevTax:prev>0?num('prevTax'):null,marry:$('marry').checked,gen:$('gen').checked,ontime:$('ontime').checked});
     var how=document.querySelector('#gc .how'); if(how) how.hidden=false;
-    if($('nonres')&&$('nonres').checked){ if(how) how.hidden=true; $('miniPay').textContent='개별 상담 필요'; $('pay').textContent='개별 상담 필요'; $('sub').textContent='받는 사람이 해외에 사는 경우'; $('tbl').innerHTML=''; $('msg').innerHTML='· 공제와 과세 범위가 달라져 개별 확인이 필요합니다'; return; }
+    if($('nonres')&&$('nonres').checked){ if(how) how.hidden=true; $('miniPay').textContent='개별 상담 필요'; $('pay').textContent='개별 상담 필요'; $('sub').textContent='받는 사람이 해외에 사는 경우'; $('tbl').innerHTML=''; $('msg').innerHTML='해외 거주자는 증여재산공제를 받을 수 없고 과세 범위도 달라져 개별 확인이 필요합니다. 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; return; }
     if(r.blocked){ if(how) how.hidden=true; $('miniPay').textContent='개별 상담 필요'; $('pay').textContent='개별 상담 필요'; $('sub').textContent=''; $('tbl').innerHTML=''; $('msg').textContent='조부모 증여(세대생략 할증)와 10년 안의 이전 증여가 함께 있으면, 조부모에게 받은 비율과 이전에 낸 할증액을 따로 따져야 해서 이 계산기로는 정확히 계산할 수 없습니다. 문의를 남겨 주시면 확인해 드리겠습니다.'; return; }
     $('pay').textContent=comma(r.pay)+'원'; $('miniPay').textContent=comma(r.pay)+'원';
     $('sub').textContent=r.pay===0?'낼 세금이 없습니다':(kor(r.pay)+(r.filing?' · 3개월 안에 신고할 때':' · 신고세액공제 없이'));
@@ -75,7 +77,7 @@
     if(r.prevTaxAuto&&prev>0) m.push('이전 증여 세액은 입력하지 않아 같은 조건으로 추정했습니다. 실제 신고서의 산출세액을 넣으면 더 정확합니다.');
     if(rel==='none') m.push('친족이 아닌 사람에게 받은 재산은 증여재산공제가 없습니다.');
     $('msg').textContent=m.join(' ');
-    var a=assetv(); if(aw&&ASSET_WARN[a]){ aw.textContent=ASSET_WARN[a]+' 입력한 금액 기준의 참고 결과이며, 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; aw.hidden=false; }
+    var a=assetv(); if(aw&&ASSET_WARN[a]){ aw.textContent='입력한 금액 기준의 참고 결과입니다. 재산 평가에 따라 세금이 달라질 수 있으니, 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; aw.hidden=false; }
   }
   ['cur','prev','prevTax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   ['marry','gen','ontime','nonres'].forEach(function(id){ $(id).addEventListener('change',run); });
