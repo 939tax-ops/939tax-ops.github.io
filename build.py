@@ -131,6 +131,23 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 </html>
 '''
 
+_VER = {}
+def asset_ver(text):
+    """/xxx.js, /style.css 뒤에 ?v=파일지문 을 붙여 수정 시 방문자 브라우저가 새 파일을 받게 함(캐시 무효화)."""
+    import hashlib
+    def _v(m):
+        name = m.group(2)
+        if name not in _VER:
+            fp = os.path.join(ROOT, name)
+            if not os.path.isfile(fp):
+                _VER[name] = None
+            else:
+                with open(fp, "rb") as f:
+                    _VER[name] = hashlib.md5(f.read()).hexdigest()[:8]
+        v = _VER[name]
+        return m.group(0) if not v else f'{m.group(1)}="/{name}?v={v}"'
+    return re.sub(r'(src|href)="/([A-Za-z0-9_.-]+\.(?:js|css))"', _v, text)
+
 def write(rel, text):
     if rel.endswith(".html"):
         def _jt(mm):
@@ -139,6 +156,8 @@ def write(rel, text):
                 return mm.group(0)
             return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
         text = re.sub(r'<table class="info">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
+    if rel.endswith(".html"):
+        text = asset_ver(text)
     p = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, "w", encoding="utf-8", newline="\n") as f:
@@ -383,7 +402,7 @@ def build_home(posts):
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section><div class="wrap">
 <section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section>
 {('<section class="block lead-block" id="lead"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
-<section class="block"><h2 class="sec">최신 세무 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
+<section class="block"><h2 class="sec">최근 올라온 세금 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">문의 안내</h2>
 <table class="info">
