@@ -33,6 +33,12 @@
   window.__giftCalc=calc;
   var $=function(id){return document.getElementById(id)};
   if(!$('gc')) return;
+  var ASSET_WARN={
+    estate:'부동산은 시가·기준시가 등 어떤 금액으로 평가하느냐에 따라 세금이 달라질 수 있습니다. 대출·전세보증금을 함께 넘기는 경우에는 계산 방식이 달라집니다.',
+    stock:'상장주식은 증여일 전후 기간의 평균 주가로, 비상장주식은 별도 방식으로 평가해 입력한 금액과 다를 수 있습니다.',
+    etc:'재산 종류에 따라 평가 방법이 달라 입력한 금액과 다를 수 있습니다.'
+  };
+  function assetv(){var r=document.querySelector('input[name=asset]:checked');return r?r.value:'cash';}
   function relv(){var r=document.querySelector('input[name=rel]:checked');return r?r.value:'adult';}
   function num(id){var v=$(id).value.replace(/[^0-9]/g,'').slice(0,13);return v===''?null:Number(v);}
   function comma(n){return Math.round(n).toLocaleString('ko-KR');}
@@ -44,6 +50,7 @@
     var rel=relv(), direct=(rel==='adult'||rel==='minor');
     $('marryWrap').style.display=direct?'':'none'; $('genWrap').style.display=direct?'':'none';
     var prev=num('prev')||0; $('prevTaxWrap').style.display=prev>0?'':'none';
+    var aw=$('assetWarn'); if(aw) aw.hidden=true;
     var cur=num('cur'); $('mini').hidden=!cur; if(!cur){ $('pay').textContent='0원'; $('sub').textContent='금액을 넣으면 바로 계산됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; return; }
     var r=calc({rel:rel,cur:cur,prev:prev,prevTax:prev>0?num('prevTax'):null,marry:$('marry').checked,gen:$('gen').checked,ontime:$('ontime').checked});
     var how=document.querySelector('#gc .how'); if(how) how.hidden=false;
@@ -68,10 +75,11 @@
     if(r.prevTaxAuto&&prev>0) m.push('이전 증여 세액은 입력하지 않아 같은 조건으로 추정했습니다. 실제 신고서의 산출세액을 넣으면 더 정확합니다.');
     if(rel==='none') m.push('친족이 아닌 사람에게 받은 재산은 증여재산공제가 없습니다.');
     $('msg').textContent=m.join(' ');
+    var a=assetv(); if(aw&&ASSET_WARN[a]){ aw.textContent=ASSET_WARN[a]+' 입력한 금액 기준의 참고 결과이며, 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; aw.hidden=false; }
   }
   ['cur','prev','prevTax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   ['marry','gen','ontime','nonres'].forEach(function(id){ $(id).addEventListener('change',run); });
-  Array.prototype.forEach.call(document.querySelectorAll('input[name=rel]'),function(el){el.addEventListener('change',run);});
+  Array.prototype.forEach.call(document.querySelectorAll('input[name=rel],input[name=asset]'),function(el){el.addEventListener('change',run);});
   Array.prototype.forEach.call(document.querySelectorAll('.quick button'),function(b){b.addEventListener('click',function(){var el=$('cur');if(b.hasAttribute('data-clear')){el.value='';}else{el.value=String((num('cur')||0)+Number(b.getAttribute('data-add')));}fmt(el);run();});});
   run();
 })();

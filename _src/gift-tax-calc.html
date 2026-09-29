@@ -22,7 +22,14 @@
 </div>
 <label class="chk" style="margin-top:12px"><input type="checkbox" id="nonres"> 받는 사람이 해외에 살고 있어요 <span class="hint">비거주자</span></label>
 
-<p class="c-q"><span>2</span>얼마를 받았나요?</p>
+<p class="c-q"><span>2</span>무엇을, 얼마나 받았나요?</p>
+<div class="chips two" id="asset">
+<label><input type="radio" name="asset" value="cash" checked><span>현금<small>계좌이체 포함</small></span></label>
+<label><input type="radio" name="asset" value="estate"><span>부동산<small>아파트·토지 등</small></span></label>
+<label><input type="radio" name="asset" value="stock"><span>주식<small>상장·비상장</small></span></label>
+<label><input type="radio" name="asset" value="etc"><span>그 밖의 재산<small>정기금·차량 등</small></span></label>
+</div>
+<div style="height:12px"></div>
 <div class="amt"><input type="text" id="cur" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="cur"></div>
 <div class="quick"><button type="button" data-add="10000000">+1천만</button><button type="button" data-add="50000000">+5천만</button><button type="button" data-add="100000000">+1억</button><button type="button" data-add="1000000000">+10억</button><button type="button" data-clear>지우기</button></div>
@@ -51,6 +58,7 @@
 <p class="r-sub" id="sub">금액을 넣으면 바로 계산됩니다.</p>
 <details class="how"><summary>계산 과정 보기</summary><table id="tbl"></table></details>
 <p class="note" id="msg"></p>
+<p class="note" id="assetWarn" hidden style="background:rgba(255,255,255,.08);border-left:3px solid var(--yellow);padding:10px 12px;border-radius:4px;color:#fff"></p>
 </div>
 </div>
 </form>
@@ -59,6 +67,8 @@
 <ul>
 <li>부동산·주식 등 현금이 아닌 재산의 평가 (시가·기준시가 판단)</li>
 <li>부담부증여(대출·전세를 함께 넘기는 증여), 창업자금·가업승계 특례</li>
+<li>정기금(일정 기간 또는 평생 나눠 받는 돈)의 평가</li>
+<li>시세보다 싸게 사거나, 돈을 무이자·저리로 빌린 경우의 증여 여부 판단</li>
 <li>10년 안에 같은 관계의 다른 분(예: 부모에게 받은 뒤 조부모)에게 받아 이미 공제를 쓴 경우</li>
 <li>혼인·출산 공제를 전에 이미 받은 경우 (혼인·출산 합쳐 평생 1억원까지)</li>
 <li>조부모 증여(세대생략 할증)와 10년 안의 이전 증여가 함께 있는 경우 (상담으로 안내)</li>
