@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="세무회계택 세무 Q&amp;A" href="/feed.xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
-<link rel="stylesheet" href="/style.css?v=f6b2634a">
+<link rel="stylesheet" href="/style.css?v=ecbf3bd2">
 <script src="/lead.js?v=060734b8" defer></script>
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AccountingService", "@id": "https://tax939.com/#org", "name": "세무회계택", "alternateName": ["세무회계 택", "세무회계택 김태형 세무사"], "url": "https://tax939.com/", "logo": "https://tax939.com/assets/icon-512.png", "image": "https://tax939.com/assets/profile.jpg", "telephone": "+82-2-6952-6357", "faxNumber": "+82-2-6952-6359", "email": "tax939@naver.com", "address": {"@type": "PostalAddress", "streetAddress": "왕산로 200, 롯데캐슬SKY-L65 섹션오피스 1313호", "addressLocality": "동대문구", "addressRegion": "서울특별시", "addressCountry": "KR"}, "sameAs": ["https://blog.naver.com/tax939", "https://www.youtube.com/@taxfriends3", "https://pf.kakao.com/_TVxdkn"], "founder": {"@id": "https://tax939.com/about/#person"}}, {"@type": "WebApplication", "name": "급여 실수령액·4대보험 계산기", "url": "https://tax939.com/calculators/four-insurance/", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": "https://tax939.com/#org"}}]}</script>
@@ -56,12 +56,12 @@
 </div>
 
 <p class="c-q"><span class="w">2-1</span><b id="q1">월 급여</b> <small style="font-weight:400;color:var(--sub)" id="q1s">(세전, 비과세 포함한 총액)</small></p>
-<div class="amt"><input type="text" id="pay0" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="amt"><input type="text" id="pay0" aria-labelledby="q1" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="pay0"></div>
 <div class="quick"><button type="button" data-add="100000">+10만</button><button type="button" data-add="1000000">+100만</button><button type="button" data-add="3000000">+300만</button><button type="button" data-clear>지우기</button></div>
 
 <p class="c-q"><span class="w">2-2</span>비과세 금액 <small style="font-weight:400;color:var(--sub)">(식대·자가운전보조금 등, 없으면 0)</small></p>
-<div class="amt sm"><input type="text" id="nontax" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="amt sm"><input type="text" id="nontax" aria-label="비과세 금액(원)" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="nontax"></div>
 <div class="quick"><button type="button" data-add2="100000">+10만</button><button type="button" data-add2="200000">+20만</button><button type="button" data-clear2>지우기</button></div>
 
@@ -137,7 +137,7 @@
 <p class="fine" id="disclaimer">면책 고지 · 이 계산기는 2026년 요율과 2026년 3월 1일 시행 근로소득 간이세액표(100% 기준)로 계산한 참고용 결과이며, 공단이 고지하는 보험료나 실제 원천징수세액이 아닙니다. 부양가족 요건 해당 여부는 판단하지 않고 입력한 대로 계산하며, 소득세는 매달 떼는 금액일 뿐 1년 세금은 연말정산으로 다시 정해집니다. 기준소득월액·보수월액의 상·하한, 원 단위 처리, 중도 입·퇴사, 비과세 항목 판단, 요율·세액표 개정 등에 따라 실제 금액과 다를 수 있으며, 이 결과만을 근거로 한 판단이나 급여 지급으로 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. <a href="/disclaimer/">전문 보기</a></p>
 </div>
 <script src="/simple-tax-2026.js?v=0077deeb" defer></script>
-<script src="/calc-4ins.js?v=3876ef7c" defer></script>
+<script src="/calc-4ins.js?v=e777da56" defer></script>
 
 </main>
 <footer><div class="wrap f-grid">

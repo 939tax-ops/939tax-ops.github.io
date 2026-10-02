@@ -2,7 +2,7 @@
 @font-face{font-family:'MaruBuri';src:url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
 :root{
   --green:#13391E; --green-dark:#1C361F; --green-line:#C5D3C9; --tint:#EBF1ED; --tint-2:#F5F8F6;
-  --surface:#FFFFFF; --field:#BFC3C0; --soft:#D5DED7; --soft-bg:#F2F6F3; --ink-1:#1d2a20; --ink-2:#2b2f2c; --ink-3:#3e4541; --ink-4:#454b47; --ink-5:#555c57; --ink-6:#6b736d; --ink-7:#8a948c; --green-bg:#13391E; --text:#383839; --sub:#7E8083; --line:#D9D9D9; --red:#C00000; --hl:#FFEFBF; --yellow:#FFCD4A; --bg:#FFFFFF;
+  --surface:#FFFFFF; --field:#BFC3C0; --soft:#D5DED7; --soft-bg:#F2F6F3; --ink-1:#1d2a20; --ink-2:#2b2f2c; --ink-3:#3e4541; --ink-4:#454b47; --ink-5:#555c57; --ink-6:#6b736d; --ink-7:#8a948c; --green-bg:#13391E; --text:#383839; --sub:#686B6E; --line:#D9D9D9; --red:#C00000; --hl:#FFEFBF; --yellow:#FFCD4A; --bg:#FFFFFF;
   --serif:'MaruBuri','Pretendard',serif;
   --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
 }
@@ -860,3 +860,6 @@ table.info td a:hover{text-decoration:underline}
 .b-case{display:inline-block;background:var(--tint);color:var(--green);border-radius:999px;padding:2px 10px;font-weight:700;font-family:var(--sans);font-size:13px}
 .qcard .b-case{font-size:14px}
 .post-type{margin:0 0 8px}
+
+/* 2026-10-02 디자인 점검(Impeccable) 반영 — 모바일 빠른 버튼 크기 */
+@media (max-width:760px){.quick button{padding:9px 14px;min-height:40px;font-size:14px}}

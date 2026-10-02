@@ -21,7 +21,7 @@
 <label><input type="radio" name="rel" value="none"><span>친족 아님</span></label>
 </div>
 <label class="chk" style="margin-top:12px"><input type="checkbox" id="nonres"> 받는 사람이 해외에 살고 있어요 <span class="hint">비거주자</span></label>
-<p id="nonresNote" hidden style="margin:8px 0 0;padding:9px 12px;border-left:3px solid var(--green);background:var(--tint);border-radius:4px;font-size:13.5px;line-height:1.6;color:var(--text)"><b style="color:var(--green)">개별 상담 필요</b> · 해외에 살면 증여재산공제(5천만원 등)를 받을 수 없고, 거주자 판정과 과세 대상 재산부터 따로 확인해야 합니다.</p>
+<p id="nonresNote" hidden style="margin:8px 0 0;padding:9px 12px;border:1px solid var(--green-line);background:var(--tint);border-radius:6px;font-size:13.5px;line-height:1.6;color:var(--text)"><b style="color:var(--green)">개별 상담 필요</b> · 해외에 살면 증여재산공제(5천만원 등)를 받을 수 없고, 거주자 판정과 과세 대상 재산부터 따로 확인해야 합니다.</p>
 
 <p class="c-q"><span>2</span>무엇을, 얼마나 받았나요?</p>
 <div class="chips two" id="asset">
@@ -30,9 +30,9 @@
 <label><input type="radio" name="asset" value="stock"><span>주식<small>상장·비상장</small></span></label>
 <label><input type="radio" name="asset" value="etc"><span>그 밖의 재산<small>정기금·차량 등</small></span></label>
 </div>
-<p id="assetNote" hidden style="margin:8px 0 0;padding:9px 12px;border-left:3px solid var(--green);background:var(--tint);border-radius:4px;font-size:13.5px;line-height:1.6;color:var(--text)"></p>
+<p id="assetNote" hidden style="margin:8px 0 0;padding:9px 12px;border:1px solid var(--green-line);background:var(--tint);border-radius:6px;font-size:13.5px;line-height:1.6;color:var(--text)"></p>
 <div style="height:12px"></div>
-<div class="amt"><input type="text" id="cur" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="amt"><input type="text" id="cur" aria-label="받은 금액(원)" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="cur"></div>
 <div class="quick"><button type="button" data-add="10000000">+1천만</button><button type="button" data-add="50000000">+5천만</button><button type="button" data-add="100000000">+1억</button><button type="button" data-add="1000000000">+10억</button><button type="button" data-clear>지우기</button></div>
 <p class="mini" id="mini" hidden>예상 증여세 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
@@ -60,7 +60,7 @@
 <p class="r-sub" id="sub">금액을 넣으면 바로 계산됩니다.</p>
 <details class="how"><summary>계산 과정 보기</summary><table id="tbl"></table></details>
 <p class="note" id="msg"></p>
-<p class="note" id="assetWarn" hidden style="background:rgba(255,255,255,.08);border-left:3px solid var(--yellow);padding:10px 12px;border-radius:4px;color:#fff"></p>
+<p class="note" id="assetWarn" hidden style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);padding:10px 12px;border-radius:6px;color:#fff"></p>
 </div>
 </div>
 </form>

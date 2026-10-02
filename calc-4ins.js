@@ -76,7 +76,7 @@
     Array.prototype.forEach.call(kidSel.options,function(o){ o.hidden=Number(o.value)>fam-1; });
     if(Number(kidSel.value)>fam-1) kidSel.value=String(Math.max(0,fam-1));
     var kid=Number(kidSel.value)||0;
-    if(!input){ $('sum').textContent='0원'; $('sub').textContent=(back?'맞추려는 실수령액':'월 급여')+'을 넣으면 바로 산출됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; $('mini').hidden=true; return; }
+    if(!input){ $('sum').textContent='0원'; $('sub').textContent=(back?'맞추려는 실수령액을':'월 급여를')+' 넣으면 바로 산출됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; $('mini').hidden=true; return; }
     if(back){
       g=grossFor(input,nt,fam,kid);
       if(g<0){ $('sum').textContent='계산 범위 초과'; $('sub').textContent='실수령액이 너무 큽니다. 금액을 확인해 주세요.'; $('tbl').innerHTML=''; $('msg').textContent=''; $('mini').hidden=true; return; }
