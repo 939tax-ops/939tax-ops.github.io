@@ -69,17 +69,16 @@ FEEDBACK = {"action": "https://docs.google.com/forms/d/e/1FAIpQLSe7TndIZ2Qx9rO_1
             "calc": "entry.1631199236", "body": "entry.16688267"}
 def feedback_box(title):
     name = title.split(" | ")[0]
-    return (f'<div class="wrap"><details class="fb" data-cfg="{esc(json.dumps(dict(FEEDBACK, name=name), ensure_ascii=False))}">'
+    return (f'<details class="fb fb-top" data-cfg="{esc(json.dumps(dict(FEEDBACK, name=name), ensure_ascii=False))}">'
             '<summary>계산기 제안·오류 알려주기</summary>'
             '<form onsubmit="return false"><textarea maxlength="1000" aria-label="제안 또는 오류 내용" placeholder="바뀌었으면 하는 점이나 계산이 이상한 부분을 적어 주세요."></textarea>'
             '<div class="fb-row"><button type="submit" class="btn">보내기</button><span class="fb-msg" role="status"></span></div>'
-            '<p class="fb-note">적어 주시면 확인 후 빠르게 수정하겠습니다. 답장은 따로 드리지 않습니다.</p></form></details></div>'
-            '<script src="/feedback.js" defer></script>')
+            '<p class="fb-note">적어 주시면 확인 후 빠르게 수정하겠습니다. 답장은 따로 드리지 않습니다.</p></form></details>')
 
 def page(title, desc, path, body, active="", ld=None, extra_head=""):
     canon = SITE + path
     if path.startswith("/calculators/") and path != "/calculators/":
-        body = body + feedback_box(title)
+        body = body.replace('</h1>', '</h1>' + feedback_box(title), 1) + '<script src="/feedback.js" defer></script>'
     og_img = SITE + OG_IMAGES.get(path, "/assets/og-logo.png")
     graph = [org_ld()] + (ld or [])
     on = ' class="on"'

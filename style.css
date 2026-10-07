@@ -869,15 +869,22 @@ table.info td a:hover{text-decoration:underline}
 .calc2 .c-in>.chk input,.calc2 .more-opt .chk input{position:absolute;left:0;top:4px;margin:0}
 .calc2 .c-in>.chk .hint,.calc2 .more-opt .chk .hint{display:inline;margin-left:4px;white-space:normal}
 
-/* 계산기 제안·오류 신고(접이식, 회신 없음) */
-.fb{margin:28px auto 8px;max-width:760px;border-top:1px solid var(--line);padding-top:14px;font-family:var(--sans)}
-.fb summary{cursor:pointer;color:var(--sub);font-size:14.5px;list-style:none}
-.fb summary::-webkit-details-marker{display:none}
-.fb summary::before{content:"+ ";color:var(--green);font-weight:700}
-.fb[open] summary::before{content:"− "}
-.fb textarea{width:100%;min-height:90px;margin-top:10px;padding:10px 12px;border:1px solid var(--field);border-radius:8px;font:inherit;font-size:15px;resize:vertical;box-sizing:border-box}
+/* 계산기 제안·오류 신고 — 계산기 제목 오른쪽 위, 펼치면 아래로 떠서 열림(회신 없음) */
+.wrap:has(>.fb-top){position:relative}
+.fb-top{position:absolute;right:16px;top:30px;z-index:5;font-family:var(--sans);text-align:right}
+.fb-top summary{display:inline-block;cursor:pointer;list-style:none;border:1px solid var(--soft);border-radius:999px;padding:6px 14px;font-size:14px;color:var(--green);background:var(--surface)}
+.fb-top summary::-webkit-details-marker{display:none}
+.fb-top summary:hover{border-color:var(--green)}
+.fb-top[open] summary{background:var(--tint);border-color:var(--green)}
+.fb-top form{width:360px;margin-top:8px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 10px 24px rgba(19,57,30,.12);text-align:left}
+.fb-top textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--field);border-radius:8px;font:inherit;font-size:15px;resize:vertical;box-sizing:border-box}
 .fb-row{display:flex;align-items:center;gap:12px;margin-top:8px}
-.fb .btn{padding:8px 18px;font-size:14.5px;background:var(--green-bg);color:#fff;border:0;cursor:pointer}
-.fb .btn:disabled{opacity:.6}
+.fb-top .btn{padding:8px 18px;font-size:14.5px;background:var(--green-bg);color:#fff;border:0;cursor:pointer}
+.fb-top .btn:disabled{opacity:.6}
 .fb-msg{font-size:14px;color:var(--green)}
 .fb-note{margin:6px 0 0;font-size:13px;color:var(--sub)}
+@media (max-width:760px){
+  .fb-top{position:static;text-align:left;margin:4px 0 12px}
+  .fb-top summary{font-size:13.5px;padding:5px 12px}
+  .fb-top form{width:auto}
+}
