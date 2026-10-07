@@ -865,8 +865,9 @@ table.info td a:hover{text-decoration:underline}
 @media (max-width:760px){.quick button{padding:9px 14px;min-height:40px;font-size:14px}}
 
 /* 증여세 계산기: 관계 선택 아래 체크 항목(미성년·할증·비거주) 한 줄씩 */
-.calc2 .c-in>.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;margin:10px 0 0}
-.calc2 .c-in>.chk input{margin-top:5px}
+.calc2 .c-in>.chk,.calc2 .more-opt .chk{display:block;position:relative;padding-left:26px;font-weight:400;margin:10px 0 0;line-height:1.55}
+.calc2 .c-in>.chk input,.calc2 .more-opt .chk input{position:absolute;left:0;top:4px;margin:0}
+.calc2 .c-in>.chk .hint,.calc2 .more-opt .chk .hint{display:inline;margin-left:4px;white-space:normal}
 
 /* 계산기 제안·오류 신고(접이식, 회신 없음) */
 .fb{margin:28px auto 8px;max-width:760px;border-top:1px solid var(--line);padding-top:14px;font-family:var(--sans)}
