@@ -867,3 +867,16 @@ table.info td a:hover{text-decoration:underline}
 /* 증여세 계산기: 관계 선택 아래 체크 항목(미성년·할증·비거주) 한 줄씩 */
 .calc2 .c-in>.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;margin:10px 0 0}
 .calc2 .c-in>.chk input{margin-top:5px}
+
+/* 계산기 제안·오류 신고(접이식, 회신 없음) */
+.fb{margin:28px auto 8px;max-width:760px;border-top:1px solid var(--line);padding-top:14px;font-family:var(--sans)}
+.fb summary{cursor:pointer;color:var(--sub);font-size:14.5px;list-style:none}
+.fb summary::-webkit-details-marker{display:none}
+.fb summary::before{content:"+ ";color:var(--green);font-weight:700}
+.fb[open] summary::before{content:"− "}
+.fb textarea{width:100%;min-height:90px;margin-top:10px;padding:10px 12px;border:1px solid var(--field);border-radius:8px;font:inherit;font-size:15px;resize:vertical;box-sizing:border-box}
+.fb-row{display:flex;align-items:center;gap:12px;margin-top:8px}
+.fb .btn{padding:8px 18px;font-size:14.5px;background:var(--green-bg);color:#fff;border:0;cursor:pointer}
+.fb .btn:disabled{opacity:.6}
+.fb-msg{font-size:14px;color:var(--green)}
+.fb-note{margin:6px 0 0;font-size:13px;color:var(--sub)}
