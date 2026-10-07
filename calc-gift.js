@@ -10,7 +10,9 @@
   }
   function calc(o){
     if(o.gen&&o.prev>0&&(o.rel==='adult'||o.rel==='minor')) return {blocked:true};
-    var lim=LIMIT[o.rel]||0, V=o.cur+o.prev;
+    var full=LIMIT[o.rel]||0, V=o.cur+o.prev;
+    var used=(o.rel==='adult'||o.rel==='minor')?Math.min(full,o.other||0):0; // 제53조 후단: 10년 내 다른 직계존속 증여로 공제받은 금액만큼 한도 차감(합산과세는 하지 않음)
+    var lim=full-used;
     var ded=Math.min(lim,V);
     var direct=(o.rel==='adult'||o.rel==='minor');
     var marry=(direct&&o.marry)?Math.min(1e8,o.cur,Math.max(0,V-ded)):0; // 시행령 제46조① 먼저 받은 증여부터 차례로 공제
@@ -28,7 +30,7 @@
     var after=Math.max(0,tax+sur-credit);
     var filing=o.ontime?after*0.03:0;
     var pay=Math.floor(Math.round((after-filing)*1000)/1000); // 부동소수점 오차 제거 후 원 단위 버림
-    return {V:V,lim:lim,ded:ded,marry:marry,base:base,small:small,tax:tax,surRate:surRate,sur:sur,prevTaxAuto:o.prevTax===null,credit:credit,filing:filing,pay:pay};
+    return {V:V,full:full,used:used,lim:lim,ded:ded,marry:marry,base:base,small:small,tax:tax,surRate:surRate,sur:sur,prevTaxAuto:o.prevTax===null,credit:credit,filing:filing,pay:pay};
   }
   window.__giftCalc=calc;
   var $=function(id){return document.getElementById(id)};
@@ -39,7 +41,8 @@
     etc:'정기금·차량 등은 재산마다 평가 방법이 달라 입력한 금액과 차이가 날 수 있습니다.'
   };
   function assetv(){var r=document.querySelector('input[name=asset]:checked');return r?r.value:'cash';}
-  function relv(){var r=document.querySelector('input[name=rel]:checked');return r?r.value:'adult';}
+  function giverv(){var r=document.querySelector('input[name=rel]:checked');return r?r.value:'parent';}
+  function relv(){var g=giverv(); if(g==='parent'||g==='grand') return $('minor').checked?'minor':'adult'; return g;}
   function num(id){var v=$(id).value.replace(/[^0-9]/g,'').slice(0,13);return v===''?null:Number(v);}
   function comma(n){return Math.round(n).toLocaleString('ko-KR');}
   function kor(n){ if(!n) return ''; var eok=Math.floor(n/1e8), man=Math.floor((n%1e8)/1e4), won=Math.round(n%1e4), s=[];
@@ -48,13 +51,16 @@
   function row(a,b,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td>'+b+'</td></tr>';}
   function run(){
     var rel=relv(), direct=(rel==='adult'||rel==='minor');
-    $('marryWrap').style.display=direct?'':'none'; $('genWrap').style.display=direct?'':'none';
-    var prev=num('prev')||0; $('prevTaxWrap').style.display=prev>0?'':'none';
+    var giver=giverv();
+    $('marryWrap').style.display=direct?'':'none'; $('minorWrap').style.display=direct?'':'none'; $('genWrap').style.display=giver==='grand'?'':'none';
+    var ph=$('prevHint'); if(ph) ph.textContent=giver==='grand'?'조부모님은 두 분 합쳐서':(giver==='parent'?'부모님은 두 분 합쳐서':'');
+    var prev=num('prev')||0, other=direct?(num('other')||0):0;
+    var oh=$('otherWrap'); if(oh){ oh.style.display=direct?'':'none'; var ol=$('otherLbl'); if(ol) ol.textContent=giver==='grand'?'최근 10년 안에 부모님께 받은 금액':'최근 10년 안에 조부모님께 받은 금액'; } $('prevTaxWrap').style.display=prev>0?'':'none';
     var aw=$('assetWarn'); if(aw) aw.hidden=true;
     var a0=assetv(), an=$('assetNote'); if(an){ if(ASSET_WARN[a0]){ an.innerHTML='<b style="color:var(--green)">개별 상담 권장</b> · '+ASSET_WARN[a0]; an.hidden=false; } else an.hidden=true; }
     var nn=$('nonresNote'); if(nn) nn.hidden=!$('nonres').checked;
     var cur=num('cur'); $('mini').hidden=!cur; if(!cur){ $('pay').textContent='0원'; $('sub').textContent='금액을 넣으면 바로 계산됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; return; }
-    var r=calc({rel:rel,cur:cur,prev:prev,prevTax:prev>0?num('prevTax'):null,marry:$('marry').checked,gen:$('gen').checked,ontime:$('ontime').checked});
+    var r=calc({rel:rel,cur:cur,prev:prev,prevTax:prev>0?num('prevTax'):null,other:other,marry:$('marry').checked,gen:giver==='grand'&&$('gen').checked,ontime:$('ontime').checked});
     var how=document.querySelector('#gc .how'); if(how) how.hidden=false;
     if($('nonres')&&$('nonres').checked){ if(how) how.hidden=true; $('miniPay').textContent='개별 상담 필요'; $('pay').textContent='개별 상담 필요'; $('sub').textContent='받는 사람이 해외에 사는 경우'; $('tbl').innerHTML=''; $('msg').innerHTML='해외 거주자는 증여재산공제를 받을 수 없고 과세 범위도 달라져 개별 확인이 필요합니다. 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; return; }
     if(r.blocked){ if(how) how.hidden=true; $('miniPay').textContent='개별 상담 필요'; $('pay').textContent='개별 상담 필요'; $('sub').textContent=''; $('tbl').innerHTML=''; $('msg').textContent='조부모 증여(세대생략 할증)와 10년 안의 이전 증여가 함께 있으면, 조부모에게 받은 비율과 이전에 낸 할증액을 따로 따져야 해서 이 계산기로는 정확히 계산할 수 없습니다. 문의를 남겨 주시면 확인해 드리겠습니다.'; return; }
@@ -62,7 +68,7 @@
     $('sub').textContent=r.pay===0?'낼 세금이 없습니다':(kor(r.pay)+(r.filing?' · 3개월 안에 신고할 때':' · 신고세액공제 없이'));
     var t='';
     t+=row('증여받은 금액'+(prev>0?' (10년 합산)':''),comma(r.V)+'원');
-    t+=row('증여재산공제 (한도 '+comma(r.lim)+'원)','− '+comma(r.ded)+'원');
+    t+=row('증여재산공제 (한도 '+comma(r.lim)+'원'+(r.used?', 다른 직계존속 증여로 '+comma(r.used)+'원 사용':'')+')','− '+comma(r.ded)+'원');
     if(r.marry) t+=row('혼인·출산 공제','− '+comma(r.marry)+'원');
     t+=row('과세표준',comma(r.base)+'원');
     t+=row('산출세액',comma(r.tax)+'원');
@@ -75,12 +81,13 @@
     if(r.pay===0&&r.base===0&&!r.small) m.push('공제 한도 안이라 낼 세금이 없습니다.');
     if(r.small) m.push('과세표준이 50만원 미만이라 증여세를 부과하지 않습니다.');
     if(r.prevTaxAuto&&prev>0) m.push('이전 증여 세액은 입력하지 않아 같은 조건으로 추정했습니다. 실제 신고서의 산출세액을 넣으면 더 정확합니다.');
+    if(r.used) m.push('부모님과 조부모님께 받은 증여는 세금을 합쳐 계산하지는 않지만, 공제 한도는 10년 동안 함께 씁니다.');
     if(rel==='none') m.push('친족이 아닌 사람에게 받은 재산은 증여재산공제가 없습니다.');
     $('msg').textContent=m.join(' ');
     var a=assetv(); if(aw&&ASSET_WARN[a]){ aw.textContent='입력한 금액 기준의 참고 결과입니다. 재산 평가에 따라 세금이 달라질 수 있으니, 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; aw.hidden=false; }
   }
-  ['cur','prev','prevTax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
-  ['marry','gen','ontime','nonres'].forEach(function(id){ $(id).addEventListener('change',run); });
+  ['cur','prev','prevTax','other'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
+  ['marry','gen','minor','ontime','nonres'].forEach(function(id){ $(id).addEventListener('change',run); });
   Array.prototype.forEach.call(document.querySelectorAll('input[name=rel],input[name=asset]'),function(el){el.addEventListener('change',run);});
   Array.prototype.forEach.call(document.querySelectorAll('.quick button'),function(b){b.addEventListener('click',function(){var el=$('cur');if(b.hasAttribute('data-clear')){el.value='';}else{el.value=String((num('cur')||0)+Number(b.getAttribute('data-add')));}fmt(el);run();});});
   run();

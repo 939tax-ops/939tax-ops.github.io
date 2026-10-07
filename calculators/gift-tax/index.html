@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="세무회계택 세무 Q&amp;A" href="/feed.xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
-<link rel="stylesheet" href="/style.css?v=ecbf3bd2">
+<link rel="stylesheet" href="/style.css?v=e36250d4">
 <script src="/lead.js?v=060734b8" defer></script>
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AccountingService", "@id": "https://tax939.com/#org", "name": "세무회계택", "alternateName": ["세무회계 택", "세무회계택 김태형 세무사"], "url": "https://tax939.com/", "logo": "https://tax939.com/assets/icon-512.png", "image": "https://tax939.com/assets/profile.jpg", "telephone": "+82-2-6952-6357", "faxNumber": "+82-2-6952-6359", "email": "tax939@naver.com", "address": {"@type": "PostalAddress", "streetAddress": "왕산로 200, 롯데캐슬SKY-L65 섹션오피스 1313호", "addressLocality": "동대문구", "addressRegion": "서울특별시", "addressCountry": "KR"}, "sameAs": ["https://blog.naver.com/tax939", "https://www.youtube.com/@taxfriends3", "https://pf.kakao.com/_TVxdkn"], "founder": {"@id": "https://tax939.com/about/#person"}}, {"@type": "WebApplication", "name": "증여세 계산기", "url": "https://tax939.com/calculators/gift-tax/", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": "https://tax939.com/#org"}}]}</script>
@@ -48,14 +48,16 @@
 <div class="c-in">
 <p class="c-q"><span>1</span>누구에게 받았나요?</p>
 <div class="chips" id="rel">
-<label><input type="radio" name="rel" value="adult" checked><span>부모·조부모<small>받는 사람 성인</small></span></label>
-<label><input type="radio" name="rel" value="minor"><span>부모·조부모<small>받는 사람 미성년</small></span></label>
+<label><input type="radio" name="rel" value="parent" checked><span>부모</span></label>
+<label><input type="radio" name="rel" value="grand"><span>조부모<small>할아버지·할머니</small></span></label>
 <label><input type="radio" name="rel" value="spouse"><span>배우자</span></label>
 <label><input type="radio" name="rel" value="child"><span>자녀·손자녀</span></label>
 <label><input type="radio" name="rel" value="kin"><span>그 밖의 친족<small>시부모·며느리·형제 등</small></span></label>
 <label><input type="radio" name="rel" value="none"><span>친족 아님</span></label>
 </div>
-<label class="chk" style="margin-top:12px"><input type="checkbox" id="nonres"> 받는 사람이 해외에 살고 있어요 <span class="hint">비거주자</span></label>
+<label class="chk" id="minorWrap" style="margin-top:12px"><input type="checkbox" id="minor"> 받는 사람이 미성년자예요 <span class="hint">공제 5천만원 → 2천만원</span></label>
+<label class="chk" id="genWrap"><input type="checkbox" id="gen" checked> 부모님(중간 세대)이 살아 계세요 <span class="hint">조부모 증여는 세금 30% 할증</span></label>
+<label class="chk"><input type="checkbox" id="nonres"> 받는 사람이 해외에 살고 있어요 <span class="hint">비거주자</span></label>
 <p id="nonresNote" hidden style="margin:8px 0 0;padding:9px 12px;border:1px solid var(--green-line);background:var(--tint);border-radius:6px;font-size:13.5px;line-height:1.6;color:var(--text)"><b style="color:var(--green)">개별 상담 필요</b> · 해외에 살면 증여재산공제(5천만원 등)를 받을 수 없고, 거주자 판정과 과세 대상 재산부터 따로 확인해야 합니다.</p>
 
 <p class="c-q"><span>2</span>무엇을, 얼마나 받았나요?</p>
@@ -73,8 +75,8 @@
 <p class="mini" id="mini" hidden>예상 증여세 <b id="miniPay">0원</b> <a href="#out">자세히 ↓</a></p>
 
 <details class="more-opt" id="moreOpt">
-<summary>해당되면 펼쳐 보세요 <small>10년 안에 받은 적이 있거나 결혼·출산·조부모 증여인 경우</small></summary>
-<label for="prev">최근 10년 안에 같은 분께 받은 금액 <span class="hint">부모님은 두 분 합쳐서</span></label>
+<summary>해당되면 펼쳐 보세요 <small>10년 안에 받은 적이 있거나 결혼·출산 때 받은 경우</small></summary>
+<label for="prev">최근 10년 안에 같은 분께 받은 금액 <span class="hint" id="prevHint">부모님은 두 분 합쳐서</span></label>
 <div class="amt sm"><input type="text" id="prev" inputmode="numeric" placeholder="0"><em>원</em></div>
 <div class="won" data-for="prev"></div>
 <div id="prevTaxWrap">
@@ -82,8 +84,12 @@
 <div class="amt sm"><input type="text" id="prevTax" inputmode="numeric" placeholder="모르면 비워 두기"><em>원</em></div>
 <div class="won" data-for="prevTax"></div>
 </div>
+<div id="otherWrap">
+<label for="other"><span id="otherLbl">최근 10년 안에 조부모님께 받은 금액</span> <span class="hint">공제 한도를 함께 씁니다</span></label>
+<div class="amt sm"><input type="text" id="other" inputmode="numeric" placeholder="0"><em>원</em></div>
+<div class="won" data-for="other"></div>
+</div>
 <label class="chk" id="marryWrap"><input type="checkbox" id="marry"> 결혼(혼인신고 전후 2년)·출산(출생 후 2년) 때 받은 돈 <span class="hint">1억원 추가 공제</span></label>
-<label class="chk" id="genWrap"><input type="checkbox" id="gen"> 조부모에게 받았고 부모님이 살아 계심 <span class="hint">세금 30% 할증</span></label>
 <label class="chk"><input type="checkbox" id="ontime" checked> 3개월 안에 신고할 예정 <span class="hint">세금 3% 공제</span></label>
 </details>
 </div>
@@ -114,7 +120,7 @@
 </details>
 
 <details class="box fold"><summary class="label">계산 근거 (조문)</summary><ul>
-<li><a href="https://www.law.go.kr/법령/상속세및증여세법/제53조" target="_blank" rel="noopener">상속세 및 증여세법 제53조</a> 증여재산 공제(배우자 6억, 직계존속 5천만·미성년 2천만, 직계비속 5천만, 기타 친족 1천만) — 받는 사람이 거주자인 경우에만 적용</li>
+<li><a href="https://www.law.go.kr/법령/상속세및증여세법/제53조" target="_blank" rel="noopener">상속세 및 증여세법 제53조</a> 증여재산 공제(배우자 6억, 직계존속 5천만·미성년 2천만, 직계비속 5천만, 기타 친족 1천만) — 받는 사람이 거주자인 경우에만 적용, 10년 안에 같은 구분으로 이미 공제받은 금액은 한도에서 뺌(부모·조부모는 한도를 함께 씀)</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제53조의2" target="_blank" rel="noopener">제53조의2</a> 혼인·출산 증여재산 공제(합쳐서 1억원)</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제47조" target="_blank" rel="noopener">제47조 제2항</a> 10년 이내 동일인 증여 합산(직계존속은 그 배우자 포함)</li>
 <li><a href="https://www.law.go.kr/법령/상속세및증여세법/제55조" target="_blank" rel="noopener">제55조 제2항</a> 과세표준 50만원 미만은 과세하지 않음</li>
@@ -130,7 +136,7 @@
 <div class="cta-box"><p>증여세는 가족 관계와 10년 안의 증여 내역에 따라 달라질 수 있습니다.<br>문의 남겨 주시면 상황에 맞추어 확인 후 안내드리겠습니다.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn ghost" href="/qa/gift-tax-limit/">증여세 한도 설명 보기</a></div></div>
 <p class="fine" id="disclaimer">면책 고지 · 이 계산기는 2026년 9월 20일 시행 법령을 기준으로 한 참고용 산출 결과로, 세무 자문이나 실제 신고 세액이 아닙니다. 개별 사정, 입력 오류, 계산기 자체의 오류로 실제 세액과 다를 수 있으며, 이 결과만을 근거로 한 판단·신고로 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. <a href="/disclaimer/">전문 보기</a></p>
 </div>
-<script src="/calc-gift.js?v=a65e7c0e" defer></script>
+<script src="/calc-gift.js?v=1572bfb6" defer></script>
 
 </main>
 <footer><div class="wrap f-grid">

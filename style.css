@@ -863,3 +863,7 @@ table.info td a:hover{text-decoration:underline}
 
 /* 2026-10-02 디자인 점검(Impeccable) 반영 — 모바일 빠른 버튼 크기 */
 @media (max-width:760px){.quick button{padding:9px 14px;min-height:40px;font-size:14px}}
+
+/* 증여세 계산기: 관계 선택 아래 체크 항목(미성년·할증·비거주) 한 줄씩 */
+.calc2 .c-in>.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;margin:10px 0 0}
+.calc2 .c-in>.chk input{margin-top:5px}
