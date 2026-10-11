@@ -1015,3 +1015,38 @@ form.lead .lf-btn,.lf-fields input,.lf-fields select,.lf-fields textarea{border-
 .p-about .ch,.p-about .band,.p-about .ccard,.p-about .fee-disc .it,.p-contact .ch{border-radius:2px;box-shadow:none;transform:none}
 .p-about .ccard{border:1px solid var(--line)}
 .p-about .band{background:var(--surface);border:1px solid var(--line)}
+
+/* ===== 영상 연결 (2026.10.11): Q&A 상단 영상 줄(PC 4개·휴대폰 2개), 영상 상세, Q&A 글·기장 페이지 영상 상자 ===== */
+.vstrip{margin:4px 0 26px}
+.vhead{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 12px}
+.vhead h2{font-size:20px;color:var(--green);margin:0;font-family:var(--sans)}
+.vhead a{font-family:var(--sans);font-size:14.5px;color:var(--green);text-decoration:none;font-weight:700}
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.vgrid.vall{grid-template-columns:repeat(3,1fr);gap:24px 18px}
+.vcard{display:block;text-decoration:none;color:var(--text);font-family:var(--sans)}
+.vth{position:relative;display:block;aspect-ratio:16/9;border-radius:2px;overflow:hidden;border:1px solid var(--line);background:#000}
+.vth img{width:100%;height:100%;object-fit:cover;display:block}
+.vth i{position:absolute;left:50%;top:50%;width:46px;height:32px;margin:-16px 0 0 -23px;border-radius:6px;background:rgba(0,0,0,.72)}
+.vth i::after{content:"";position:absolute;left:19px;top:9px;border-left:12px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.vcard:hover .vth i{background:var(--green)}
+.vcard b{display:block;font-size:15px;line-height:1.45;margin:8px 0 2px;color:var(--ink-1)}
+.vcard .vd{font-size:13px;color:var(--sub)}
+@media(max-width:760px){.vgrid{grid-template-columns:repeat(2,1fr);gap:10px}.vstrip .vgrid .vcard:nth-child(n+3){display:none}.vcard b{font-size:14px}.vgrid.vall{grid-template-columns:1fr 1fr}}
+.b-vid{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--green);border:1px solid var(--green);border-radius:2px;padding:0 6px;line-height:1.6}
+.vbox{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:2px;padding:12px;margin:0 0 26px;text-decoration:none;color:var(--text);font-family:var(--sans)}
+.vbox:hover{background:var(--tint-2)}
+.vbox .vth{width:168px;flex:none}
+.vbox .k{display:block;font-size:13px;color:var(--green);font-weight:700}
+.vbox b{display:block;font-size:16px;line-height:1.45;color:var(--ink-1)}
+.vbox span.g{font-size:13.5px;color:var(--green);font-weight:700}
+@media(max-width:560px){.vbox{flex-direction:column;align-items:stretch}.vbox .vth{width:100%}}
+.svc-vid{margin:30px 0 8px}
+.vplayer{position:relative;aspect-ratio:16/9;border-radius:2px;overflow:hidden;background:#000;margin:0 0 22px;cursor:pointer}
+.vplayer img{width:100%;height:100%;object-fit:cover;display:block}
+.vplayer i{position:absolute;left:50%;top:50%;width:72px;height:50px;margin:-25px 0 0 -36px;border-radius:10px;background:rgba(0,0,0,.75)}
+.vplayer i::after{content:"";position:absolute;left:29px;top:15px;border-left:18px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.vplayer iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vpts{counter-reset:p;list-style:none;padding:0;margin:0}
+.vpts li{counter-increment:p;position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--line)}
+.vpts li::before{content:counter(p);position:absolute;left:0;top:12px;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font:700 14px/26px var(--sans);text-align:center}
+.vpts b{display:block;color:var(--ink-1)}

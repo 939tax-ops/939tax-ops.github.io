@@ -269,7 +269,7 @@ def build_post(p, posts=()):
 {f'<p class="post-type"><span class="b-case">{type_name(p)}</span></p>' if type_name(p) else ""}<h1>{esc(p["title"])}</h1>
 <p class="meta">{PERSON} 작성 · {p["date"]}{upd}{blog}</p>
 <div class="summary"><p class="label">핵심 요약</p>{md(p["summary"])}</div>
-{toc_html}{body_html}
+{vbox(VBY[VIDEO_OF_POST[p["slug"]]]) if p["slug"] in VIDEO_OF_POST else ""}{toc_html}{body_html}
 {faq_html}
 {calc}
 <details class="box fold laws"><summary class="label">근거 법령</summary><ul>{laws}</ul></details>
@@ -298,10 +298,88 @@ def qa_item(p):
             f'<span class="s">{esc(p["description"])}</span>'
             f'<span class="m">{type_name(p) + " · " if type_name(p) else ""}{TOPIC_NAME[topic_of(p)]} · {p["date"]}</span></a></li>')
 
+
+# ---------- 유튜브 영상 연결 (세친구 채널 중 김태형 세무사 단독 촬영분만 — 공동 출연분은 넣지 않음) ----------
+# 순서 = 목록·Q&A 상단 노출 순서(앞 4개). 조회수 기준 정렬은 월 1회 확인해 이 순서를 바꿈. slug가 있는 영상만 요약 페이지를 만들고, 없으면 유튜브로 바로 연결
+VIDEOS = [
+    {"k": "05", "yt": "_s_pJ5x8weA", "title": "부가가치세 줄이는 법, 많이 나오는 이유", "date": "2026-10-07"},
+    {"k": "04", "yt": "aEGBEYMQ4bs", "title": "스마트스토어·쿠팡 판매자가 꼭 확인할 세금 4가지", "date": "2026-09-21",
+     "slug": "online-seller-tax", "shot": "2026년 9월 촬영 기준",
+     "lead": "이미 판매 중인 스마트스토어·쿠팡 셀러라면 <strong>정산금과 매출의 차이</strong>부터 확인하셔야 합니다. 수수료 처리, 플랫폼별 신고 자료, 창업 감면 업종, 경비 증빙, 사업자등록 시점까지 정리했습니다.",
+     "points": [("통장에 들어온 정산금은 매출이 아닙니다", "플랫폼 수수료가 빠진 금액이 들어오기 때문에, 정산금을 그대로 매출로 잡으면 안 됩니다."),
+                ("수수료는 빼는 게 아니라 매입입니다", "수수료를 매출에서 빼고 신고하면 매출을 적게 신고한 것이 되고, 수수료에 대한 매입세액 공제도 놓칠 수 있습니다."),
+                ("플랫폼마다 부가세 신고 자료를 따로 받아 두셔야 합니다", "이 자료로 부가가치세를 신고하고, 같은 숫자가 종합소득세까지 이어집니다."),
+                ("창업 감면, 업종에 따라 갈립니다", "도소매업은 대상이 아니지만 통신판매업은 해당됩니다. 다만 업종이 맞아도 ‘창업’으로 보지 않는 경우가 있어 사전에 확인하셔야 합니다."),
+                ("흩어진 온라인 경비는 증빙으로 묶어 두세요", "여러 곳에서 나가는 온라인 경비를 증빙으로 모아 두는 것이 핵심입니다."),
+                ("사업자등록 기준은 스토어 개설일이 아니라 첫 판매일입니다", "첫 판매일부터 20일 안에 등록해야 하고, 늦으면 가산세가 붙을 수 있습니다.")],
+     "cta": "온라인 판매는 플랫폼·업종·시작 시점에 따라 처리가 달라질 수 있습니다.<br>본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.",
+     "more": ("/services/bookkeeping/", "세무기장 안내 보기")},
+    {"k": "03", "yt": "mWSMPScyxj0", "title": "간이과세자 vs 일반과세자, 무엇이 유리할까", "date": "2026-09-16"},
+    {"k": "02", "yt": "IITinorhGoc", "title": "개인사업자 등록 전 꼭 체크할 3가지", "date": "2026-09-09"},
+    {"k": "01", "yt": "DN7pyfIiDxs", "title": "자녀 증여 3가지: 현금·주식·유기정기금", "date": "2026-08-31"},
+]
+VBY = {v["k"]: v for v in VIDEOS}
+VIDEO_OF_POST = {"simplified-taxpayer-tax-invoice": "03", "gift-tax-limit": "01", "input-vat-non-deduction": "05"}
+
+def v_href(v):
+    if v.get("slug"): return f'/video/{v["slug"]}/', ""
+    return f'https://youtu.be/{v["yt"]}', ' target="_blank" rel="noopener"'
+
+def vcard(v):
+    h, t = v_href(v)
+    return (f'<a class="vcard" href="{h}"{t}><span class="vth"><img src="/assets/yt/v{v["k"]}.jpg" alt="" loading="lazy" width="640" height="360"><i></i></span>'
+            f'<b>{esc(v["title"])}</b><span class="vd">{v["date"].replace("-", ".")} · 유튜브</span></a>')
+
+def vstrip():
+    return ('<section class="vstrip" aria-label="영상으로 보는 Q&amp;A"><div class="vhead"><h2>영상으로 보는 Q&amp;A</h2><a href="/video/">전체 보기 →</a></div>'
+            '<div class="vgrid">' + "".join(vcard(v) for v in VIDEOS[:4]) + '</div></section>')
+
+def vbox(v, label="▶ 영상으로 보기"):
+    h, t = v_href(v)
+    go = "영상과 요약 보기" if v.get("slug") else "유튜브에서 보기"
+    return (f'<a class="vbox" href="{h}"{t}><span class="vth"><img src="/assets/yt/v{v["k"]}.jpg" alt="" loading="lazy" width="640" height="360"><i></i></span>'
+            f'<span><span class="k">{label}</span><b>{esc(v["title"])}</b><span class="g">{go} →</span></span></a>')
+
+VPLAYER_JS = """<script>document.querySelectorAll('.vplayer').forEach(function(el){function go(){el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+el.dataset.yt+'?autoplay=1&rel=0" title="유튜브 영상" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';el.classList.add('on');}el.addEventListener('click',go);el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});</script>"""
+
+def build_videos():
+    cards = "".join(vcard(v) for v in VIDEOS)
+    body = f'''<div class="wrap" style="padding-top:36px">
+<p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › 영상으로 보는 Q&amp;A</p>
+<h1 style="color:var(--green);margin:6px 0 6px">영상으로 보는 Q&amp;A</h1>
+<p class="lead" style="margin:0 0 22px">김태형 세무사가 직접 설명하는 세금 영상입니다. 영상은 촬영 시점의 법령을 기준으로 합니다.</p>
+<div class="vgrid vall">{cards}</div>
+<p class="rel-back" style="margin:28px 0 48px"><a href="/qa/">← 세무 Q&amp;A 목록</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 채널 바로가기</a></p>
+</div>'''
+    write("video/index.html", page(f"영상으로 보는 Q&A | {NAME}", "세무회계택 김태형 세무사가 직접 설명하는 세금 영상 모음입니다.", "/video/", body, "qa"))
+    for v in VIDEOS:
+        if not v.get("slug"): continue
+        li = "".join(f"<li><b>{esc(a)}</b>{esc(b)}</li>" for a, b in v["points"])
+        more = f'<a class="btn ghost" href="{v["more"][0]}">{v["more"][1]}</a>' if v.get("more") else ""
+        url = f'/video/{v["slug"]}/'
+        art = f'''<div class="narrow"><article>
+<p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/video/">영상으로 보는 Q&amp;A</a></p>
+<h1>{esc(v["title"])}</h1>
+<p class="meta">{PERSON} 직접 설명 · 유튜브 업로드 {v["date"].replace("-", ".")} · {v.get("shot", "")} · <a href="https://youtu.be/{v["yt"]}" target="_blank" rel="noopener">유튜브에서 보기</a></p>
+<div class="vplayer" data-yt="{v["yt"]}" role="button" tabindex="0" aria-label="영상 재생"><img src="/assets/yt/v{v["k"]}.jpg" alt="영상 썸네일" width="640" height="360"><i></i></div>
+<div class="summary"><p class="label">이 영상의 핵심 요약</p><p>{v["lead"]}</p></div>
+<h2>영상 내용 정리</h2>
+<ol class="vpts">{li}</ol>
+<div class="cta-box"><p>{v["cta"]}</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a>{more}</div></div>
+<p class="rel-back"><a href="/video/">← 영상 목록</a> · <a href="/qa/">세무 Q&amp;A 목록</a></p>
+<p class="fine">영상 촬영 시점의 법령을 기준으로 한 일반적인 세법 정보이며, 개별 사안에 따라 결론이 달라질 수 있습니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
+</article></div>
+{VPLAYER_JS}'''
+        ld = [{"@type": "VideoObject", "name": v["title"], "description": re.sub("<[^>]+>", "", v["lead"]),
+               "thumbnailUrl": f'{SITE}/assets/yt/v{v["k"]}.jpg', "uploadDate": v["date"],
+               "embedUrl": f'https://www.youtube.com/embed/{v["yt"]}', "contentUrl": f'https://www.youtube.com/watch?v={v["yt"]}'}]
+        write(f"video/{v['slug']}/index.html", page(f'{v["title"]} | {NAME}', re.sub("<[^>]+>", "", v["lead"]), url, art, "qa", ld))
+
 def qa_card(p, big=False):
     tp = topic_of(p)
     badge = '<span class="b-new">최신 글</span>' if big else ""
     if type_name(p): badge += f'<span class="b-case">{type_name(p)}</span>'
+    if p["slug"] in VIDEO_OF_POST: badge += '<span class="b-vid">▶ 영상</span>'
     return (f'<a class="qcard{" big" if big else ""}" href="/qa/{p["slug"]}/" data-t="{tp}">'
             f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span><span class="d">{p["date"].replace("-", ".")}</span></span>'
             f'<b>{esc(p["title"])}</b><span class="qs">{esc(p["description"])}</span><span class="go">자세히 보기 →</span></a>')
@@ -317,6 +395,7 @@ def build_qa_index(posts):
     body = f'''<div class="wrap qa-page" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 6px">세무 Q&amp;A</h1>
 <p class="lead" style="margin:0 0 20px">블로그에 쓴 글을 질문과 답으로 다시 정리하고, 근거 조문을 함께 적었습니다.<br>궁금하신 점은 아래 검색창에 평소 말투 그대로 적어 편하게 찾아보세요.</p>
+{vstrip()}
 {SEARCH_BOX}
 <div class="qchips" role="group" aria-label="종류별 보기">{chips}</div>
 <div class="qa-feed">{big}<div class="qgrid">{cards}</div></div>
@@ -769,6 +848,7 @@ def build_services(posts):
             items = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in rq)
             first = tps[0]
             rel_q = f'<section class="svc-qa"><h2>관련 세무 Q&amp;A</h2><ul>{items}</ul><p class="rel-svc"><a href="/qa/#{first}">{TOPIC_NAME[first]} Q&amp;A 더 보기 →</a></p></section>'
+        vid_b = (f'<section class="svc-vid"><h2>영상으로 먼저 보기</h2>{vbox(VBY["04"], "▶ 김태형 세무사 직접 설명")}</section>' if k == "bookkeeping" else "")
         why_b = (f'<section class="why-svc"><h2>기장 거래처 혜택</h2><div class="grid why-grid">{why_cards(wb)}</div></section>' if k == "bookkeeping" else "")
         body = f'''<div class="wrap svc-page" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
@@ -777,7 +857,7 @@ def build_services(posts):
 <div class="svc-cols">
 <section><h2>수행 업무</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
-</div>{note}{calc}{rel_q}{why_b}
+</div>{note}{calc}{rel_q}{vid_b}{why_b}
 {flow_html()}
 <p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
 {lead_form(SVC_TO_LEAD.get(k), "ls")}
@@ -834,6 +914,7 @@ def build_sitemap(posts):
     today = datetime.date.today().isoformat()
     urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
+    urls += [("/video/", today)] + [(f'/video/{v["slug"]}/', v["date"]) for v in VIDEOS if v.get("slug")]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
 
@@ -852,6 +933,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_disclaimer(); build_404(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
