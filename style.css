@@ -1001,3 +1001,17 @@ article h2[id],article section[id]{scroll-margin-top:84px}
 /* 사용 순서 안내: 연초록 알약 → 흰 칸 */
 .p-calc .steps li{background:var(--surface);border:1px solid var(--line)}
 .p-calc .card.soon b,.p-calc .card.soon span{color:var(--sub)}
+
+/* ===== 소개·보수·문의·기타 페이지 D+ (2026.10.11) + 상담 양식 내부 공통 ===== */
+:is(.p-about,.p-contact,.p-privacy,.p-) :is(.card,.box,.notice,form.lead,.check-card,.fee-disc .it,.addr-card,.addr-card .ac-copy,.loc-map,.ab-photo,.profile img,.pcard,.search,.search-row input,.search-row button,.s-item,.tabs span,.flow li,.cta-box,.rel-col,.contact-row a){border-radius:2px}
+:is(.p-about,.p-contact,.p-privacy,.p-) .btn{border-radius:3px}
+:is(.p-about,.p-contact,.p-privacy,.p-) :is(.card,.pcard,.ccard,.addr-card){box-shadow:none;transform:none}
+:is(.p-about,.p-contact,.p-privacy,.p-) .search{background:var(--surface);border:1px solid #8f9993}
+:is(.p-about,.p-contact) .grid:is(.svc-grid,.why-grid){gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+:is(.p-about,.p-contact) .grid:is(.svc-grid,.why-grid) .card{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-top:0;background:var(--surface)}
+:is(.p-about,.p-contact) a.card:hover{background:var(--tint-2);border-color:var(--line)}
+/* 상담 양식 내부(모든 페이지 공통) */
+form.lead .lf-btn,.lf-fields input,.lf-fields select,.lf-fields textarea{border-radius:3px}
+.p-about .ch,.p-about .band,.p-about .ccard,.p-about .fee-disc .it,.p-contact .ch{border-radius:2px;box-shadow:none;transform:none}
+.p-about .ccard{border:1px solid var(--line)}
+.p-about .band{background:var(--surface);border:1px solid var(--line)}
