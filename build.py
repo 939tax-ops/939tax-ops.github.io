@@ -475,7 +475,7 @@ def build_about():
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 </table>
-<div class="placeholder" style="margin-top:16px">찾아오시는 방법 상세 안내(대중교통·출입구·엘리베이터·주차)를 준비 중입니다.</div>
+<!-- 찾아오시는 방법 상세 안내(대중교통·출입구·엘리베이터·주차) 자리: 내용 확정 후 넣기 (2026-10-11 숨김) -->
 <img class="loc-map" style="margin:16px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 
 </section></div>'''
