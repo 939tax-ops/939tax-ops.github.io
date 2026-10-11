@@ -31,15 +31,14 @@ SERVICE_TOPICS = {"bookkeeping": ["vat", "income", "corp", "payroll"], "tax-fili
                   "capital-gains": ["capital-gains"], "inheritance-gift": ["gift"], "refund-claim": ["refund"],
                   "tax-audit": ["audit"], "tax-planning": ["capital-gains", "gift"]}
 
-# 상담 가능 지역 — 가까운 지역 목록(세무사님 확인 후 확정)
-AREAS = ["동대문구", "중랑구", "성북구", "광진구", "성동구"]
-AREA_TEXT = " · ".join(AREAS)
+# 상담 가능 지역(2026.10.11 확정 문구)
+AREA_TEXT = "서울 및 경기도 일부"
 
 # 상담 진행 절차(문의 페이지·업무 페이지 공통)
 FLOW = [("문의 남기기", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨 주세요."),
         ("연락드림", "상담 신청은 영업일 기준 1~2일 이내에 연락드립니다."),
         ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저 여쭤봅니다."),
-        ("상담·업무 진행", "보수는 보수 안내 기준으로 미리 말씀드린 뒤 진행합니다.")]
+        ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린 뒤 진행합니다.")]
 def flow_html(title="상담은 이렇게 진행됩니다"):
     li = "".join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a, b in FLOW)
     return f'<section class="flow-sec"><h2>{title}</h2><ol class="flow">{li}</ol></section>'
@@ -717,9 +716,8 @@ def build_contact():
 </table>
 <h2 class="sec" style="margin-top:40px">상담 가능 지역</h2>
 <table class="info area">
+<tr><th>상담 지역</th><td>{AREA_TEXT}</td></tr>
 <tr><th>방문 상담</th><td>서울 동대문구 청량리 사무소 (방문 전 미리 연락 부탁드립니다)</td></tr>
-<tr><th>비대면 상담</th><td>전화·카카오톡·이메일 상담은 지역과 관계없이 가능합니다</td></tr>
-<tr><th>가까운 지역</th><td>{AREA_TEXT}</td></tr>
 </table>
 </div>'''
     write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사에게 세무 상담·기장 문의를 남기는 페이지입니다.", "/contact/", body, "contact"))
