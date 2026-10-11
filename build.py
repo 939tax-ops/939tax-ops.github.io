@@ -237,12 +237,22 @@ def build_post(p, posts=()):
     svc = TOPIC_SERVICE.get(tp)
     svc_link = f'<p class="rel-svc"><a href="/services/{svc}/">관련 업무 안내 · {dict((k, t) for k, t, _ in ALL_SERVICES)[svc]} →</a></p>' if svc else ""
     more_html = f'<div class="post-more">{blog_card}{rel_html}</div>{svc_link}<p class="rel-back"><a href="/qa/">← 세무 Q&amp;A 목록</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그 전체 글</a></p>' 
+    # 목차(2026-10-11): 본문 소제목(h2)에 id를 붙이고, 3개 이상이면 요약 아래에 목차 표시
+    body_html, _heads = md(body), []
+    def _hid(m):
+        _heads.append(strip_tags(m.group(1)).strip())
+        return f'<h2 id="s{len(_heads)}">{m.group(1)}</h2>'
+    body_html = re.sub(r"<h2>(.*?)</h2>", _hid, body_html, flags=re.S)
+    if faq_html:
+        faq_html = faq_html.replace('<section class="faq">', '<section class="faq" id="faq">', 1)
+    _items = [(f"s{i}", h) for i, h in enumerate(_heads, 1)] + ([("faq", "자주 묻는 질문")] if faq_html else [])
+    toc_html = ('<nav class="toc" aria-label="목차"><p class="label">목차</p><ol>' + "".join(f'<li><a href="#{a}">{esc(h)}</a></li>' for a, h in _items) + '</ol></nav>\n') if len(_heads) >= 3 else ""
     art = f'''<div class="narrow"><article>
 <p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/qa/#{topic_of(p)}">{TOPIC_NAME[topic_of(p)]}</a></p>
 {f'<p class="post-type"><span class="b-case">{type_name(p)}</span></p>' if type_name(p) else ""}<h1>{esc(p["title"])}</h1>
 <p class="meta">{PERSON} 작성 · {p["date"]}{upd}{blog}</p>
-<div class="summary"><p class="label">요약 답변</p>{md(p["summary"])}</div>
-{md(body)}
+<div class="summary"><p class="label">핵심 요약</p>{md(p["summary"])}</div>
+{toc_html}{body_html}
 {faq_html}
 {calc}
 <details class="box fold laws"><summary class="label">근거 법령</summary><ul>{laws}</ul></details>
@@ -399,11 +409,9 @@ def build_home(posts):
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
-<div class="chips-h"><a href="/services/bookkeeping/">세무기장</a><a href="/services/">양도·상속·증여</a><a href="/services/refund-claim/">경정청구</a><a href="/services/tax-audit/">세무조사</a><a href="/services/tax-planning/">절세상담</a></div>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
 <div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
-<p class="hero-ch"><span>세금 소식은 여기에서도</span><a class="nb" href="{BLOG}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</a><a class="yt" href="{YOUTUBE}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세친구</a></p>
 </div>
 <div class="hero-img m" aria-hidden="true"></div>
 <a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에 계산해 보기 →</b></a>
@@ -414,17 +422,11 @@ def build_home(posts):
 </div><section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section><div class="wrap">
 <section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section>
-{('<section class="block lead-block" id="lead"><div class="lead-duo">' + lead_form(None, "lh") + lead_form(None, "lk", "check") + '</div></section>') if LEAD_ENABLED else ""}
+{('<section class="block lead-block" id="lead"><div class="lead-duo">' + lead_form(None, "lh") + check_card() + '</div></section>') if LEAD_ENABLED else ""}
 <section class="block"><h2 class="sec">최근 올라온 세금 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
-</div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다.</p><div class="grid">{calc_cards()}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
+</div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문을 기준으로 만든 간편 세금 계산기입니다. 결과는 참고용으로 활용해 주세요.</p><div class="grid">{calc_cards(True)}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">문의 안내</h2>
-<table class="info">
-<tr><th>상담 신청</th><td><a href="#lead">1:1 상담 신청하기 →</a> · <a href="/contact/">문의하기 페이지</a></td></tr>
-<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
-<tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
-<tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계택</a></td></tr>
-<tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
-</table>
+<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="/about/#location"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a></div>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
 </section></div>'''
     write("index.html", page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
@@ -463,15 +465,11 @@ def build_about():
 <a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법과 신고 일정, 실무 판단을 글로 정리해 드립니다.</span><span class="go">블로그 보기 →</span></a>
 <a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 쉽게 풀어서 설명해 드립니다.</span><span class="go">채널 보기 →</span></a>
 </div></div></section>
-<section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2>
-<div class="grid svc-grid">{svc}</div>
-<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div>
-<p class="ab-more"><a href="/services/">업무별 자세히 보기 →</a> · <a href="/fees/">보수 안내 →</a></p>
-</div></section>
+<div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>기장·신고대리, 양도·상속·증여, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">보수 안내 →</a></p></section></div>
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
-<div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><span>{ADDR1} {ADDR2} (02559)</span></div><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button></div>
+<div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2} (02559)</span></div></div></div>
 <script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
 <table class="info">
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
@@ -496,10 +494,12 @@ CALCS = [
     ("기장료", "기장료 계산기", "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다", "/calculators/bookkeeping-fee/"),
 ]
 
-def calc_cards():
+def calc_cards(hide_soon=False):
     out = []
     for c in CALCS:
         t, n, d = c[0], c[1], c[2]
+        if hide_soon and len(c) <= 3:
+            continue  # 홈에서는 준비 중 카드 숨김(2026-10-11)
         if len(c) > 3:
             out.append(f'<a class="card" href="{c[3]}"><span class="tag">{t}</span><b>{n}</b><span>{d}</span></a>')
         else:
@@ -509,7 +509,7 @@ def calc_cards():
 def build_calc_index():
     body = f'''<div class="wrap" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 6px">세금 계산기</h1>
-<p class="lead" style="margin:0 0 24px">조문 기준으로 만든 간편 계산기를 차례로 올릴 예정입니다. 결과는 참고용이며 실제 세액은 개별 사정에 따라 달라질 수 있습니다.</p>
+<p class="lead" style="margin:0 0 24px">조문을 기준으로 만든 간편 세금 계산기 모음입니다. 결과는 참고용이며 실제 세액은 개별 사정에 따라 달라질 수 있습니다.</p>
 <div class="grid">{calc_cards()}</div></div>'''
     write("calculators/index.html", page(f"세금 계산기 | {NAME}", "증여세 등 세금을 조문 기준으로 간편하게 계산해 보는 계산기 모음입니다.", "/calculators/", body, "calc"))
 
@@ -593,6 +593,15 @@ PRIVACY_KEEP = "상담 종료 후 1년"
 CHECK_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 가능 여부)"), ("property", "양도세 · 증여세 · 상속세 절세 가능 여부"),
                   ("bookkeeping", "사업자 세금 (기장·신고) 절세 점검"), ("etc", "기타 세금")]
 
+def check_card():
+    """홈 전용: 무료 확인 폼 대신 문의 페이지의 무료 확인 폼으로 보내는 요약 카드(2026-10-11)"""
+    items = "".join(f"<li>{t}</li>" for _, t in CHECK_SERVICES if _ != "etc")
+    return f'''<aside class="check-card"><h2>환급·절세 가능 여부 무료 확인</h2>
+<p>돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다.</p>
+<ul>{items}</ul>
+<a class="btn primary" href="/contact/#f-lk">무료 확인 신청하기 →</a>
+<p class="cc-foot">가능 여부 확인까지 무료입니다.<br>실제 신고·청구는 <a href="/fees/">보수 안내</a> 기준으로 진행합니다.</p></aside>'''
+
 def lead_form(pre=None, uid="lf", kind="consult"):
     if not LEAD_ENABLED:
         return ""
@@ -606,7 +615,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
     btn = "무료 확인 신청하기 →" if chk else "상담 신청하기 →"
     foot = "가능 여부 확인까지 무료입니다.<br>실제 신고·청구는 <a href=\"/fees/\">보수 안내</a> 기준으로 진행합니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료입니다."
-    return f'''<form class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
+    return f'''<form id="f-{uid}" class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
 <h2>{title}</h2>
 <p class="lf-sub">{sub}</p>
 <div class="lf-opts">{opts}</div>

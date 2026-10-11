@@ -888,3 +888,36 @@ table.info td a:hover{text-decoration:underline}
   .fb-top summary{font-size:13.5px;padding:5px 12px}
   .fb-top form{width:auto}
 }
+
+/* 2026-10-11 홈 개선 1: 무료 확인 요약 카드 */
+.check-card{align-self:start;border:1.5px solid var(--green);border-radius:14px;padding:28px 26px 22px;background:var(--surface);text-align:center;font-family:var(--sans)}
+.check-card h2{font-size:21px;color:var(--green);margin:0 0 10px}
+.check-card>p{font-size:14.5px;color:var(--sub);margin:0 0 18px;line-height:1.7}
+.check-card ul{list-style:none;margin:0 0 22px;padding:0;text-align:left;border-top:1px solid var(--line)}
+.check-card li{padding:13px 4px 13px 26px;border-bottom:1px solid var(--line);font-weight:700;font-size:15px;position:relative}
+.check-card li::before{content:'';position:absolute;left:6px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--green)}
+.check-card .btn{display:block;padding:14px 20px}
+.check-card .cc-foot{font-size:13px;color:var(--sub);margin:14px 0 0;line-height:1.7}
+.check-card .cc-foot a{color:var(--sub)}
+
+/* 2026-10-11 홈 개선 4: 문의 안내 표 → 한 줄 */
+.contact-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-family:var(--sans)}
+.contact-row a{display:block;border:1px solid var(--line);border-radius:10px;padding:16px 20px;text-decoration:none;background:var(--surface)}
+.contact-row a:hover{border-color:var(--green)}
+.contact-row span{display:block;font-size:13px;color:var(--sub);margin-bottom:4px}
+.contact-row b{color:var(--green);font-size:16px}
+@media (max-width:760px){.contact-row{grid-template-columns:1fr}}
+
+/* 2026-10-11 홈 개선 6: Q&A 글 목차 */
+.toc{border:1px solid var(--line);border-radius:8px;padding:14px 20px 12px;margin:0 0 30px;font-family:var(--sans)}
+.toc .label{font-weight:700;color:var(--green);font-size:14px;margin:0 0 6px}
+.toc ol{margin:0;padding-left:20px;font-size:15px;line-height:1.9}
+.toc a{color:var(--text);text-decoration:none}
+.toc a:hover{color:var(--green);text-decoration:underline}
+article h2[id],article section[id]{scroll-margin-top:84px}
+
+/* 2026-10-11 오시는 길 주소 카드: 주소 복사 버튼을 주소 앞으로, 주소 글씨 확대 */
+.addr-card .ac-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.addr-card .ac-t .ac-line span{font-size:17px;color:var(--text)}
+.addr-card .ac-line .ac-copy{padding:5px 11px;font-size:13.5px}
+@media (max-width:560px){.addr-card .ac-copy{margin-left:0}}
