@@ -958,3 +958,29 @@ article h2[id],article section[id]{scroll-margin-top:84px}
 /* 상담 양식 */
 .p-home .check-card{border-width:1px}
 @media(max-width:760px){.p-home .contact-row{grid-template-columns:1fr}}
+
+/* ===== 업무·Q&A 페이지 D+ (2026.10.11): 홈과 같은 기준 — 칸 나눈 표, 각진 모서리, 그림자·알약 모양 정리 ===== */
+.p-svc .card,.p-svc .svc-cols section,.p-svc .flow li,.p-svc .lead-duo form.lead,.p-svc form.lead,.p-svc .svc-others a,.p-svc .rel-col,
+.p-qa .qcard,.p-qa .qchips button,.p-qa .qa-more,.p-qa .blog-band,.p-qa .blog-card,.p-qa .toc,.p-qa .cta-box,.p-qa .rel-col,.p-qa .search,.p-qa .search-row input,.p-qa .search-row button,.p-qa .s-item,
+.p-qa .qcard .b-t,.p-qa .qcard .b-new,.p-qa .b-case,.p-qa .vbox,.p-qa .vth{border-radius:2px}
+.p-svc .btn,.p-qa .btn{border-radius:3px}
+.p-svc .card.svc,.p-svc .card.svc:hover,.p-qa .qcard,.p-qa .qcard:hover,.p-qa .blog-card:hover{box-shadow:none;transform:none}
+/* 업무 목록·기장 혜택: 칸 나눈 표 */
+.p-svc .svc-grid,.p-svc .why-grid{gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.p-svc .svc-grid .card,.p-svc .why-grid .card{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-top:0;background:var(--surface)}
+.p-svc a.card:hover{background:var(--tint-2);border-color:var(--line)}
+.p-svc .why-grid .card.soon{background:var(--surface)}
+/* 수행 업무 / 이런 분께: 두 칸 표 */
+.p-svc .svc-cols{gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.p-svc .svc-cols section{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+/* 다른 서비스: 알약 → 네모 */
+.p-svc .svc-others a:hover{background:var(--tint-2)}
+/* Q&A 목록: 떨어진 카드 → 칸 나눈 표, 카드마다 붙던 '자세히 보기 →' 숨김(카드 전체가 링크) */
+.p-qa .qgrid{gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.p-qa .qgrid .qcard{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.p-qa .qcard:hover{background:var(--tint-2)}
+.p-qa .qcard.big{border:1px solid var(--line);border-top:2px solid var(--ink-1)}
+.p-qa .qcard .go{display:none}
+.p-qa .blog-band{background:var(--surface);border:1px solid var(--line)}
+.p-qa .search{background:var(--surface);border:1px solid #8f9993}
+.p-qa .blog-card{border-left-width:3px}

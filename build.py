@@ -747,7 +747,7 @@ def build_404():
     write("404.html", page("페이지를 찾을 수 없습니다 | " + NAME, "", "/404.html", body).replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1))
 
 def build_services(posts):
-    cards = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(ALL_SERVICES, 1))
+    cards = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in ALL_SERVICES)  # 번호 뺌(2026.10.11 D+)
     body = f'''<div class="wrap" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 10px">주요 서비스</h1>
 <p class="lead">개인·법인 사업자 세무부터 부동산·가족 간 세금까지, 세무회계택이 수행하는 업무입니다.</p>
