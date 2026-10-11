@@ -1050,3 +1050,10 @@ form.lead .lf-btn,.lf-fields input,.lf-fields select,.lf-fields textarea{border-
 .vpts li{counter-increment:p;position:relative;padding:12px 0 12px 40px;border-bottom:1px solid var(--line)}
 .vpts li::before{content:counter(p);position:absolute;left:0;top:12px;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font:700 14px/26px var(--sans);text-align:center}
 .vpts b{display:block;color:var(--ink-1)}
+
+/* 소개 페이지 상단 버튼 2개: 카카오톡 상담(작게) + 상담 접수 폼 (2026.10.11) */
+.ab-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn.sm{padding:8px 14px;font-size:14.5px}
+.btn.kk.sm .ic{width:16px;height:16px}
+.ab-btns .btn.ghost{border:1px solid var(--green);color:var(--green);background:var(--surface)}
+form.lead{scroll-margin-top:90px}
