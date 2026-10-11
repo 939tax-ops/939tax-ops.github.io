@@ -1055,5 +1055,7 @@ form.lead .lf-btn,.lf-fields input,.lf-fields select,.lf-fields textarea{border-
 .ab-btns{display:flex;gap:8px;flex-wrap:wrap}
 .btn.sm{padding:8px 14px;font-size:14.5px}
 .btn.kk.sm .ic{width:16px;height:16px}
-.ab-btns .btn.ghost{border:1px solid var(--green);color:var(--green);background:var(--surface)}
+.ab-btns .btn.lc{background:var(--green-bg);color:#fff;border:1px solid var(--green-bg);display:inline-flex;align-items:center;gap:6px}
+.ab-btns .btn.lc:hover{background:#1f5230}
+.ab-btns .btn.lc .ic{width:16px;height:16px}
 form.lead{scroll-margin-top:90px}
