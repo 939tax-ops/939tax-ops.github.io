@@ -919,3 +919,20 @@ article h2[id],article section[id]{scroll-margin-top:84px}
 .addr-card .ac-t .ac-line span{font-size:17px;color:var(--text)}
 .addr-card .ac-line .ac-copy{padding:5px 11px;font-size:13.5px}
 @media (max-width:560px){.addr-card .ac-copy{margin-left:0}}
+
+/* 상담 진행 절차 · 업무 페이지 관련 Q&A · 상담 가능 지역 (2026.10.11) */
+.flow-sec{margin:8px 0 34px}
+.narrow .flow-sec h2{font-size:20px;color:var(--green);margin:0 0 14px}
+.svc-page .flow-sec{margin:40px 0 30px}
+.flow{list-style:none;counter-reset:f;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0;margin:0;font-family:var(--sans)}
+.flow li{counter-increment:f;border:1px solid var(--line);border-top:3px solid var(--green);border-radius:6px;padding:14px 14px 16px;background:var(--surface)}
+.flow li::before{content:"0" counter(f);display:block;font-size:13px;font-weight:800;color:var(--green);opacity:.6;margin-bottom:4px}
+.flow b{display:block;font-size:16px;color:var(--ink-1);margin-bottom:4px}
+.flow span{display:block;font-size:14px;line-height:1.6;color:var(--ink-4)}
+@media(max-width:760px){.flow{grid-template-columns:1fr 1fr}}
+.svc-qa{margin:30px 0 8px}
+.svc-qa h2{margin:0 0 10px}
+.svc-qa ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.svc-qa li{border-bottom:1px solid var(--line)}
+.svc-qa li a{display:block;padding:12px 2px;text-decoration:none;color:var(--text);font-size:16px;line-height:1.55}
+.svc-qa li a:hover{color:var(--green)}

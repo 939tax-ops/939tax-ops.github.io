@@ -26,6 +26,24 @@ TOPICS = [("income", "종합소득세"), ("vat", "부가가치세"), ("corp", "�
 TOPIC_NAME = dict(TOPICS)
 TOPIC_SERVICE = {"income": "tax-filing", "vat": "tax-filing", "corp": "tax-filing", "payroll": "bookkeeping",
                  "capital-gains": "capital-gains", "gift": "inheritance-gift", "refund": "refund-claim", "audit": "tax-audit"}
+# 업무 페이지에 노출할 관련 Q&A 세목(업무 → Q&A 방향)
+SERVICE_TOPICS = {"bookkeeping": ["vat", "income", "corp", "payroll"], "tax-filing": ["vat", "income", "corp"],
+                  "capital-gains": ["capital-gains"], "inheritance-gift": ["gift"], "refund-claim": ["refund"],
+                  "tax-audit": ["audit"], "tax-planning": ["capital-gains", "gift"]}
+
+# 상담 가능 지역 — 가까운 지역 목록(세무사님 확인 후 확정)
+AREAS = ["동대문구", "중랑구", "성북구", "광진구", "성동구"]
+AREA_TEXT = " · ".join(AREAS)
+
+# 상담 진행 절차(문의 페이지·업무 페이지 공통)
+FLOW = [("문의 남기기", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨 주세요."),
+        ("연락드림", "상담 신청은 영업일 기준 1~2일 이내에 연락드립니다."),
+        ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저 여쭤봅니다."),
+        ("상담·업무 진행", "보수는 보수 안내 기준으로 미리 말씀드린 뒤 진행합니다.")]
+def flow_html(title="상담은 이렇게 진행됩니다"):
+    li = "".join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a, b in FLOW)
+    return f'<section class="flow-sec"><h2>{title}</h2><ol class="flow">{li}</ol></section>'
+
 # 글 형식 표시(세목과 별개). 글 머리의 type: 값. case = 업무사례 — 복잡하거나 모호한 사안에 세무사 판단이 들어간 글
 TYPES = {"case": "업무사례"}
 def type_name(p): return TYPES.get(p.get("type", ""), "")
@@ -679,6 +697,7 @@ def build_contact():
     body = f'''<div class="narrow" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 6px">문의하기</h1>
 <p class="lead" style="margin:0 0 22px">문의를 남겨 주시면 내용을 확인한 뒤 연락드리겠습니다.</p>
+{flow_html()}
 <section class="block search-block" style="padding-top:0">{SEARCH_BOX}</section>
 <h2 class="sec">문의 남기기</h2>
 <div class="notice">
@@ -695,6 +714,12 @@ def build_contact():
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
 <tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
+</table>
+<h2 class="sec" style="margin-top:40px">상담 가능 지역</h2>
+<table class="info area">
+<tr><th>방문 상담</th><td>서울 동대문구 청량리 사무소 (방문 전 미리 연락 부탁드립니다)</td></tr>
+<tr><th>비대면 상담</th><td>전화·카카오톡·이메일 상담은 지역과 관계없이 가능합니다</td></tr>
+<tr><th>가까운 지역</th><td>{AREA_TEXT}</td></tr>
 </table>
 </div>'''
     write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사에게 세무 상담·기장 문의를 남기는 페이지입니다.", "/contact/", body, "contact"))
@@ -738,6 +763,14 @@ def build_services(posts):
         calc = f'<p style="font-family:var(--sans);margin-top:14px"><a class="more" href="{x["calc"][0]}">{x["calc"][1]} →</a></p>' if x.get("calc") else ""
         others = "".join(f'<a href="/services/{k2}/">{t2}</a>' for k2, t2, _ in ALL_SERVICES if k2 != k)
         wb = [("보수 할인", WHY[2][1]), ("보조금 정보 제공", WHY[3][1], WHY[3][2])]
+        tps = SERVICE_TOPICS.get(k, [])
+        biz = k in ("bookkeeping", "tax-filing")  # 사업자 업무는 사업자 세금(category: business) 글만
+        rq = [p for p in posts if topic_of(p) in tps and (not biz or p.get("category") == "business")][:5]
+        rel_q = ""
+        if rq:
+            items = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in rq)
+            first = tps[0]
+            rel_q = f'<section class="svc-qa"><h2>관련 세무 Q&amp;A</h2><ul>{items}</ul><p class="rel-svc"><a href="/qa/#{first}">{TOPIC_NAME[first]} Q&amp;A 더 보기 →</a></p></section>'
         why_b = (f'<section class="why-svc"><h2>기장 거래처 혜택</h2><div class="grid why-grid">{why_cards(wb)}</div></section>' if k == "bookkeeping" else "")
         body = f'''<div class="wrap svc-page" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
@@ -746,7 +779,8 @@ def build_services(posts):
 <div class="svc-cols">
 <section><h2>수행 업무</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
-</div>{note}{calc}{why_b}
+</div>{note}{calc}{rel_q}{why_b}
+{flow_html()}
 <p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
 {lead_form(SVC_TO_LEAD.get(k), "ls")}
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
