@@ -984,3 +984,20 @@ article h2[id],article section[id]{scroll-margin-top:84px}
 .p-qa .blog-band{background:var(--surface);border:1px solid var(--line)}
 .p-qa .search{background:var(--surface);border:1px solid #8f9993}
 .p-qa .blog-card{border-left-width:3px}
+
+/* ===== 계산기 페이지 D+ (2026.10.11): 홈·업무·Q&A와 같은 기준 ===== */
+.p-calc .card,.p-calc .c-in,.p-calc .chips span,.p-calc .amt,.p-calc .quick button,.p-calc .result2,.p-calc .how,.p-calc .mini,.p-calc .steps li,
+.p-calc .box,.p-calc .cta-box,.p-calc .fb-top summary,.p-calc .fb-top form,.p-calc .fb-top textarea,.p-calc .famfold>summary,.p-calc .chips-h span,.p-calc .chips-h a,
+.p-calc select,.p-calc input[type=text]{border-radius:2px}
+.p-calc .btn{border-radius:3px}
+.p-calc *{box-shadow:none}
+.p-calc .chips input:checked+span{box-shadow:inset 0 0 0 1px var(--green)}
+/* 계산기 목록: 칸 나눈 표 */
+.p-calc .grid{gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.p-calc .grid>.card{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.p-calc a.card:hover{background:var(--tint-2);border-color:var(--line)}
+.p-calc .card .tag{background:none;padding:0;color:var(--sub)}
+.p-calc .card.soon{background:var(--surface)}
+/* 사용 순서 안내: 연초록 알약 → 흰 칸 */
+.p-calc .steps li{background:var(--surface);border:1px solid var(--line)}
+.p-calc .card.soon b,.p-calc .card.soon span{color:var(--sub)}
