@@ -936,3 +936,25 @@ article h2[id],article section[id]{scroll-margin-top:84px}
 .svc-qa li{border-bottom:1px solid var(--line)}
 .svc-qa li a{display:block;padding:12px 2px;text-decoration:none;color:var(--text);font-size:16px;line-height:1.55}
 .svc-qa li a:hover{color:var(--green)}
+
+/* ===== 홈 디자인 D+ (2026.10.11): 둥근 카드 반복·그림자·의미 없는 번호 줄이기. 업무 분야·계산기 구간 연초록 배경과 '특징' 번호는 유지 ===== */
+.p-home .card,.p-home .band,.p-home .search,.p-home .contact-row a,.p-home .ccard,.p-home .pcard,.p-home .lead-duo form.lead,.p-home .check-card,.p-home .search-row input,.p-home .search-row button{border-radius:2px}
+.p-home .btn{border-radius:3px}
+.p-home .card.svc,.p-home .card.svc:hover,.p-home .ccard,.p-home .pcard,.p-home .ccard:hover,.p-home .pcard:hover{box-shadow:none;transform:none}
+/* 업무 분야·특징·계산기: 떨어진 카드 → 칸을 나눈 표 */
+.p-home .svc-grid,.p-home .why-grid,.p-home .calc-grid{gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.p-home .svc-grid .card,.p-home .why-grid .card,.p-home .calc-grid .card{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-top:0;background:var(--surface)}
+.p-home a.card:hover{background:var(--tint-2);border-color:var(--line)}
+.p-home .why-grid .card.soon{background:var(--surface)}
+.p-home .card .tag{background:none;padding:0;color:var(--sub)}
+/* 절세상담 띠·검색창·문의 안내 */
+.p-home .band{background:var(--surface);border:1px solid var(--line);border-top:0}
+.p-home .search{background:var(--surface);border:1px solid #8f9993}
+.p-home .contact-row{gap:0;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.p-home .contact-row a{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+/* 첫 화면 바로가기 카드: 띄운 느낌 대신 얇은 테두리 */
+.p-home .ccard,.p-home .pcard{border:1px solid var(--line)}
+.p-home .pcard img{box-shadow:none}
+/* 상담 양식 */
+.p-home .check-card{border-width:1px}
+@media(max-width:760px){.p-home .contact-row{grid-template-columns:1fr}}
