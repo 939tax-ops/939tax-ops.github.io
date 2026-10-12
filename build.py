@@ -522,7 +522,7 @@ def build_home(posts):
 <section class="block"><h2 class="sec">최근 올라온 세금 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문을 기준으로 만든 간편 세금 계산기입니다. 결과는 참고용으로 활용해 주세요.</p><div class="grid calc-grid">{calc_cards(True)}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">문의 안내</h2>
-<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="mailto:{EMAIL}"><span>이메일</span><b>{EMAIL}</b></a><a href="/about/#location"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a></div>
+<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="mailto:{EMAIL}"><span>이메일</span><b>{EMAIL}</b></a><a href="/about/#location"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a><a href="#lead"><span>온라인 문의</span><b>상담 신청하기 →</b></a></div>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
 </section></div>'''
     write("index.html", page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
