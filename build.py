@@ -425,10 +425,10 @@ def why_cards(items=None):
     return "".join(out)
 
 SERVICES = [
-    ("bookkeeping", "사업자 세무기장", "개인·법인사업자의 장부를 작성하고 매달 세무 이슈를 관리해 드립니다."),
-    ("tax-filing", "사업자 세금 신고대리", "부가가치세·종합소득세·법인세·원천세 등을 신고해 드립니다."),
+    ("bookkeeping", "세무기장", "개인·법인사업자의 장부를 작성하고 매달 세무 이슈를 관리해 드립니다."),
+    ("tax-filing", "세금 신고대리", "부가가치세·종합소득세·법인세·원천세 등을 신고해 드립니다."),
     ("capital-gains", "양도소득세", "주택·토지 등을 팔기 전 세액 검토와 매도 후 신고를 해 드립니다."),
-    ("inheritance-gift", "상속세·증여세", "상속·증여 전 예상 세액 안내와 발생 후 신고를 해 드립니다."),
+    ("inheritance-gift", "상속·증여세", "상속·증여 전 예상 세액 안내와 발생 후 신고를 해 드립니다."),
     ("refund-claim", "경정청구", "이미 낸 세금에서 빠뜨린 공제·감면을 찾은 후 환급을 청구해 드립니다."),
     ("tax-audit", "세무조사 대응", "세무조사·소명 요청에 필요한 자료를 준비하고 대응해 드립니다."),
 ]
@@ -467,8 +467,8 @@ SERVICE_DETAIL = {
     },
     "tax-audit": {
         "intro": "세무조사 통지나 소명 요청을 받았을 때 필요한 자료를 준비하고 과정 전반에 대응합니다.",
-        "do": ["조사·소명 요청 내용 검토", "제출 자료 준비", "소명서 작성", "조사 진행 과정 대응"],
-        "for": ["세무서에서 소명 요청이나 해명 안내를 받으신 분", "세무조사 사전통지를 받으신 분"],
+        "do": ["조사·소명 요청 내용 검토", "제출 자료 준비", "소명서 작성", "조사 진행 과정 대응", "과세처분에 대한 조세불복(이의신청·심사청구·심판청구) 대리"],
+        "for": ["세무서에서 소명 요청이나 해명 안내를 받으신 분", "세무조사 사전통지를 받으신 분", "세금 고지를 받았는데 결과에 동의하기 어려우신 분"],
     },
     "tax-planning": {
         "intro": "사업 시작, 부동산 매매, 증여·상속처럼 세금이 크게 갈리는 결정을 하기 전에 선택지별 세금을 비교해 드립니다.",
@@ -561,7 +561,7 @@ def build_about():
 <a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법과 신고 일정, 실무 판단을 글로 정리해 드립니다.</span><span class="go">블로그 보기 →</span></a>
 <a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 쉽게 풀어서 설명해 드립니다.</span><span class="go">채널 보기 →</span></a>
 </div></div></section>
-<div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>기장·신고대리, 양도·상속·증여, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">보수 안내 →</a></p></section></div>
+<div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">보수 안내 →</a></p></section></div>
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
@@ -680,13 +680,13 @@ FORM_URL = ""  # 구글 폼 주소가 정해지면 넣는다
 LEAD = {"action": "https://docs.google.com/forms/d/e/1FAIpQLSc_2XhlImW6OV6sCAvE4LV3rXaB6eaTJceSpR2-JH-PTYe1VA/formResponse",
         "service": "entry.1235054183", "name": "entry.1767689992", "phone": "entry.1909499942", "time": "entry.404254547", "memo": "entry.21609242", "agree": "entry.31240237"}
 LEAD_ENABLED = bool(LEAD["action"]) or bool(os.environ.get("LEAD_PREVIEW"))
-LEAD_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 검토)"), ("property", "양도세 · 증여세 · 상속세"),
-                 ("tax-planning", "절세상담"), ("bookkeeping", "세무기장 · 신고대리"), ("tax-audit", "세무조사 · 조세불복"), ("etc", "기타 세무상담")]
+LEAD_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 검토)"), ("property", "양도·상속·증여세"),
+                 ("tax-planning", "절세상담"), ("bookkeeping", "세무기장·신고대리"), ("tax-audit", "세무조사·조세불복"), ("etc", "기타 세무상담")]
 SVC_TO_LEAD = {"bookkeeping": "bookkeeping", "tax-filing": "bookkeeping", "capital-gains": "property", "inheritance-gift": "property",
                "refund-claim": "refund-claim", "tax-audit": "tax-audit", "tax-planning": "tax-planning"}
 PRIVACY_KEEP = "상담 종료 후 1년"
 
-CHECK_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 가능 여부)"), ("property", "양도세 · 증여세 · 상속세 절세 가능 여부"),
+CHECK_SERVICES = [("refund-claim", "경정청구 (낸 세금 환급 가능 여부)"), ("property", "양도·상속·증여세 절세 가능 여부"),
                   ("bookkeeping", "사업자 세금 (기장·신고) 절세 점검"), ("etc", "기타 세금")]
 
 def check_card():
@@ -831,7 +831,7 @@ def build_services(posts):
 <h1 style="color:var(--green);margin:0 0 10px">주요 서비스</h1>
 <p class="lead">개인·법인 사업자 세무부터 부동산·가족 간 세금까지, 세무회계택이 수행하는 업무입니다.</p>
 <section class="block" style="padding-top:12px"><div class="grid svc-grid">{cards}</div></section></div>'''
-    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 수행 업무 — 세무기장, 세금 신고대리, 양도소득세, 상속세·증여세, 경정청구, 세무조사 대응, 절세상담.", "/services/", body, "svc"))
+    write("services/index.html", page(f"주요 서비스 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 수행 업무 — 세무기장, 세금 신고대리, 양도소득세, 상속·증여세, 경정청구, 세무조사·조세불복, 절세상담.", "/services/", body, "svc"))
     for k, t, d in ALL_SERVICES:
         x = SERVICE_DETAIL[k]
         do = "".join(f"<li>{esc(v)}</li>" for v in x["do"])
@@ -872,9 +872,9 @@ def build_services(posts):
 
 # 보수 안내 — 기준: 09. 서식\00. 업무 필수자료(자체제작)\01. 세무대리보수료(세무회계택,2026.09.20,V3).xlsx
 FEES = [
-    ("기장 대리", [("개인사업자", "간이과세", "월 70,000원 ~"), ("개인사업자", "일반과세", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
+    ("세무기장", [("개인사업자", "간이과세", "월 70,000원 ~"), ("개인사업자", "일반과세", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
      ["1인 사업자 특별 할인을 적용한 최저 금액입니다.", "매출·자산 규모에 따라 달라지며, 세무조정료는 별도입니다."]),
-    ("신고 대리", [("부가가치세", "", "150,000원 ~"), ("종합소득세", "", "200,000원 ~"), ("사업장현황신고", "면세사업자", "200,000원 ~")], []),
+    ("세금 신고대리", [("부가가치세", "", "150,000원 ~"), ("종합소득세", "", "200,000원 ~"), ("사업장현황신고", "면세사업자", "200,000원 ~")], []),
     ("양도 · 상속 · 증여", [("양도소득세", "", "양도가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("증여세", "", "증여가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("상속세", "", "500,000원 + 상속재산의 0.4%"), ("신고 전 세액 계산", "", "100,000원 ~")],
