@@ -126,7 +126,7 @@ def feedback_box(title):
             '<summary>계산기 제안·오류 신고</summary>'
             '<form onsubmit="return false"><textarea maxlength="1000" aria-label="제안 또는 오류 내용" placeholder="바뀌었으면 하는 점이나 계산이 이상한 부분을 적어 주세요."></textarea>'
             '<div class="fb-row"><button type="submit" class="btn">보내기</button><span class="fb-msg" role="status"></span></div>'
-            '<p class="fb-note">적어 주시면 확인 후 빠르게 수정하겠습니다. 답장은 따로 드리지 않습니다.</p></form></details>')
+            '<p class="fb-note">계산기 제안이나 오류를 적어 주시면 확인하고 빠르게 수정 반영하겠습니다.<br>감사합니다.</p></form></details>')
 
 def page(title, desc, path, body, active="", ld=None, extra_head=""):
     canon = SITE + path
