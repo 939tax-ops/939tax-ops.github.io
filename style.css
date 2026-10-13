@@ -1083,3 +1083,17 @@ body.searching .qa-more-wrap{display:none}
 /* 지역 페이지 — 동네 칩 */
 .area-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .area-chips span{font-family:var(--sans);font-size:14.5px;color:var(--green);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+
+/* 지역 페이지 — 문장 단위 줄바꿈(좁은 화면에서는 자동 줄바꿈) */
+@media (max-width:620px){.ln br{display:none}}
+
+/* 계산기 하단 '함께 보면 좋은 글' — 설명 글보다 눈에 띄게 */
+.calc-read .post-more{margin-top:26px}
+.calc-read .rel-col{background:var(--tint);border:1px solid var(--green-line);padding:18px 20px 8px}
+.calc-read .rel-col .label{font-family:var(--sans);font-size:16px;font-weight:800;color:var(--green);margin:0 0 4px}
+.calc-read .rel-col ul{list-style:none;margin:0;padding:0}
+.calc-read .rel-col li{margin:0;border-top:1px solid var(--green-line);line-height:1.5}
+.calc-read .rel-col li:first-child{border-top:0}
+.calc-read .rel-col li a{display:block;padding:12px 2px;font-family:var(--sans);font-size:17px;font-weight:700;color:var(--green)}
+.calc-read .rel-col li a::after{content:" →";font-weight:700}
+.calc-read .rel-col li a:hover{text-decoration:none;opacity:.72}
