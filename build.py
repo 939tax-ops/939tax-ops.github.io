@@ -632,7 +632,6 @@ def build_about():
 <table class="info">
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
-<tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
 <!-- 찾아오시는 방법 상세 안내(대중교통·출입구·엘리베이터·주차) 자리: 내용 확정 후 넣기 (2026-10-11 숨김) -->
 <img class="loc-map" style="margin:16px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
@@ -858,7 +857,7 @@ def build_contact():
 </table>
 <h2 class="sec" style="margin-top:40px">상담 가능 지역</h2>
 <table class="info area">
-<tr><th>상담 지역</th><td>{AREA_TEXT} <a class="more" href="/area/dongdaemun/">동대문구 안내 보기 →</a></td></tr>
+<tr><th>상담 지역</th><td>{AREA_TEXT}</td></tr>
 <tr><th>방문 상담</th><td>서울 동대문구 청량리 사무소 (방문 전 미리 연락 부탁드립니다)</td></tr>
 </table>
 </div>'''
@@ -948,70 +947,6 @@ FEES = [
                       ("불복", "이의신청·심사·심판", "감액세액의 20% ~")], ["상담은 전화·대면·이메일·메신저 채팅 모두 가능합니다."]),
 ]
 
-AREA_DONG = ["청량리동", "전농동", "회기동", "제기동", "답십리동",
-             "휘경동", "이문동", "용두동", "장안동", "신설동"]
-
-def build_area():
-    import urllib.parse as up
-    q = "왕산로 200 롯데캐슬SKY-L65"
-    nmap = "https://map.naver.com/p/search/" + up.quote(q)
-    kmap = "https://map.kakao.com/?q=" + up.quote(q)
-    chips = "".join(f'<span>{d}</span>' for d in AREA_DONG)
-    svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>'
-                  for i, (k, t, d) in enumerate(SERVICES, 1))
-    body = f'''<div class="wrap" style="padding-top:28px">
-<p class="crumb"><a href="/">홈</a> › 동대문구 세무사</p>
-<h1 style="color:var(--green);margin:6px 0 10px;font-size:30px">동대문구 세무사 — 청량리 세무회계택</h1>
-<p class="lead">세무회계택은 서울 동대문구 왕산로 200(전농동) 롯데캐슬SKY-L65에 있는 세무사 사무소입니다.<br>
-청량리역 인근이라 동대문구 어느 동네에서든 오시기 편합니다.</p>
-<p>{PERSON}가 상담부터 신고서 최종 검토까지 직접 수행합니다.
-전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다.</p>
-<div class="btns" style="margin:18px 0 6px"><a class="btn kakao" href="/contact/#f-lc">상담 신청하기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
-</div>
-
-<section class="block alt"><div class="wrap">
-<h2 class="sec">동대문구 어느 동네에서든</h2>
-<p>사무소가 전농동에 있고 청량리역을 끼고 있어, 동대문구 전역에서 오시기 가깝습니다.</p>
-<div class="area-chips">{chips}</div>
-<p class="note" style="margin-top:14px">청량리역 일대는 전통시장과 상가가 모여 있고, 경희대학교·서울시립대학교·한국외국어대학교가 가까운 지역입니다.
-동대문구 외에 인근 성북구·중랑구·성동구에서도 상담하실 수 있습니다. 상담 가능 지역은 {AREA_TEXT}입니다.</p>
-</div></section>
-
-<div class="wrap">
-<section class="block"><h2 class="sec">수행 업무</h2>
-<div class="grid svc-grid">{svc}</div>
-<p class="ab-more" style="margin-top:16px"><a href="/services/">업무별 자세히 보기 →</a> · <a href="/qa/">세무 Q&amp;A 보기 →</a></p>
-</section>
-</div>
-
-<section class="block alt"><div class="wrap">
-<h2 class="sec">기장료를 공개하고 있습니다</h2>
-<p>세무회계택은 기장료와 신고 보수를 매출 구간별로 공개합니다.
-4대보험 근로자가 없는 1인 사업자의 월 기장료는 간이과세 70,000원, 일반과세 80,000원, 법인 120,000원부터입니다(부가세 별도).</p>
-<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a> · <a href="/fees/">보수 안내 전체 보기 →</a></p>
-</div></section>
-
-<div class="wrap">
-<section class="block"><h2 class="sec">오시는 길</h2>
-<table class="info">
-<tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
-<tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
-<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
-<tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
-</table>
-<p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.
-방문 상담은 미리 연락 주시면 시간을 맞춰 드립니다. <a class="more" href="/about/#location">약도 보기 →</a></p>
-</section>
-{lead_form(None, "la")}
-</div>'''
-    ld = [{"@type": "BreadcrumbList", "itemListElement": [
-              {"@type": "ListItem", "position": 1, "name": "홈", "item": SITE + "/"},
-              {"@type": "ListItem", "position": 2, "name": "동대문구 세무사", "item": SITE + "/area/dongdaemun/"}]}]
-    write("area/dongdaemun/index.html",
-          page(f"동대문구 세무사 | 청량리·전농동·회기동 세무기장 — {NAME} {PERSON}",
-               "서울 동대문구 왕산로 200, 청량리 세무회계택 김태형 세무사. 청량리동·전농동·회기동·제기동 등 동대문구 개인·법인사업자의 세무기장과 세금 신고를 수행합니다. 기장료 공개.",
-               "/area/dongdaemun/", body, "", ld))
-
 def build_fees():
     def sec(t, rows, notes):
         r = "".join(f'<div class="row"><span>{a}{f" <small>({b})</small>" if b else ""}</span><span>{c}</span></div>' for a, b, c in rows)
@@ -1042,7 +977,6 @@ def build_sitemap(posts):
     today = datetime.date.today().isoformat()
     urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
-    urls += [("/area/dongdaemun/", today)]
     urls += [("/video/", today)] + [(f'/video/{v["slug"]}/', v["date"]) for v in VIDEOS if v.get("slug")]
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
@@ -1062,6 +996,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")

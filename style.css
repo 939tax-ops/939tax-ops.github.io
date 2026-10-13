@@ -1080,7 +1080,3 @@ body.searching .qa-more-wrap{display:none}
 .calc-read .rel{margin-top:16px;font-family:var(--sans);font-size:15px}
 .calc-read .rel a{display:inline-block;margin:0 16px 6px 0}
 @media(max-width:700px){.calc-next{display:block}.calc-next .btn{margin-top:12px;width:100%;text-align:center}}
-
-/* 지역 페이지 — 동네 칩 */
-.area-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.area-chips span{font-family:var(--sans);font-size:14.5px;color:var(--green);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
