@@ -1060,3 +1060,13 @@ form.lead .lf-btn,.lf-fields input,.lf-fields select,.lf-fields textarea{border-
 .ab-btns .btn.lc:hover{background:#1f5230}
 .ab-btns .btn.lc .ic{width:16px;height:16px}
 form.lead{scroll-margin-top:90px}
+
+/* 세무 Q&A: 검색 중에는 분류 칩·영상 줄·글 목록을 감춘다 */
+body.searching .qchips,
+body.searching .vstrip,
+body.searching .qa-feed,
+body.searching .qa-none,
+body.searching .qa-more-wrap{display:none}
+.s-back{margin-top:18px}
+.s-reset{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--green);background:none;border:0;padding:0;cursor:pointer}
+.s-reset:hover{text-decoration:underline}

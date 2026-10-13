@@ -31,6 +31,42 @@ SERVICE_TOPICS = {"bookkeeping": ["vat", "income", "corp", "payroll"], "tax-fili
                   "capital-gains": ["capital-gains"], "inheritance-gift": ["gift"], "refund-claim": ["refund"],
                   "tax-audit": ["audit"], "tax-planning": ["capital-gains", "gift"]}
 
+# ---------- Q&A 글 하단 상담 유도(CTA) — 읽는 사람에 따라 갈라 쓴다 ----------
+# biz   = 사업자(기장 유도)  / asset = 양도·상속·증여  / person = 근로자·개인  / audit = 세무조사 / etc = 일반
+CTA_BY_TOPIC = {"vat": "biz", "corp": "biz", "income": "biz", "payroll": "biz",
+                "gift": "asset", "capital-gains": "asset",
+                "refund": "person", "audit": "audit", "local": "etc", "etc": "etc"}
+# 세목 기본값을 덮어쓰는 예외(근로자·개인이 읽는 글)
+CTA_BY_SLUG = {"monthly-rent-tax-credit": "person", "year-end-settlement-prep": "person",
+               "year-end-tax-overclaim-amended-return": "person", "retirement-income-tax": "person",
+               "eitc-semiannual-application": "person", "lottery-prize-tax": "person",
+               "freelancer-withholding-rate-cut": "person"}
+CTA_TEXT = {
+    "biz": ("이런 판단은 신고할 때가 아니라 매달 자료가 쌓이는 동안 갈립니다.<br>"
+            "기장을 맡기시면 월 단위로 함께 확인해 드립니다.",
+            [("/calculators/bookkeeping-fee/", "기장료 계산해 보기")]),
+    "asset": ("같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다.<br>"
+              "본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.", []),
+    "person": ("근로소득은 대부분 회사에서 정산되지만, 놓친 공제는 본인이 챙기셔야 합니다.<br>"
+               "이미 낸 세금에서 돌려받을 것이 있는지 확인해 보고 싶으시면 편하게 문의해 주세요.", []),
+    "audit": ("소명 요청이나 조사 통지를 받으셨다면 회신 전에 대응 방향부터 정하셔야 합니다.<br>"
+              "본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.",
+              [("/services/tax-audit/", "세무조사 대응 보기")]),
+    "etc": ("같은 질문이라도 사실관계에 따라 결과가 달라집니다.<br>"
+            "본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.", []),
+}
+
+def cta_box(p):
+    g = CTA_BY_SLUG.get(p.get("slug"), CTA_BY_TOPIC.get(topic_of(p), "etc"))
+    text, extra = CTA_TEXT[g]
+    btns = "".join(f'<a class="btn primary" href="{h}">{t} →</a>' for h, t in extra)
+    btns += f'<a class="btn kakao" href="/contact/">문의 남기기</a>'
+    btns += (f'<a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">'
+             '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" '
+             'd="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 '
+             '5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a>')
+    return f'<div class="cta-box"><p>{text}</p><div class="btns">{btns}</div></div>'
+
 # 상담 가능 지역(2026.10.11 확정 문구)
 AREA_TEXT = "서울 및 경기도 일부"
 
@@ -274,7 +310,7 @@ def build_post(p, posts=()):
 {calc}
 <details class="box fold laws"><summary class="label">근거 법령</summary><ul>{laws}</ul></details>
 <div class="box author"><img src="/assets/profile.jpg" alt="김태형 세무사" width="84" height="84"><div><p><b>{PERSON}</b> · {NAME} 대표</p><p style="color:var(--sub);font-size:15px">서울시 마을세무사(중랑구). 개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p></div></div>
-<div class="cta-box"><p>같은 질문이라도 가족 관계, 시기, 재산 종류에 따라 결과가 달라집니다.<br>본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div></div>
+{cta_box(p)}
 {more_html}
 <p class="fine">{p.get("updated", p["date"])} 기준 법령으로 작성한 일반적인 세법 정보이며, 개별 사안에 따라 결론이 달라질 수 있습니다. {"예시 금액은 따로 적지 않은 한 " + esc(p["assume"]) + "을 가정한 금액입니다. " if p.get("assume") else ""}<a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>'''
@@ -314,6 +350,8 @@ def load_videos():
 
 VIDEOS = load_videos()
 VBY = {v["k"]: v for v in VIDEOS}
+# 업무 분야 페이지에 붙일 관련 영상(영상이 생기면 여기에 추가)
+SERVICE_VIDEO = {"bookkeeping": "04", "tax-filing": "05", "inheritance-gift": "01", "tax-planning": "02"}
 VIDEO_OF_POST = {"simplified-taxpayer-tax-invoice": "03", "gift-tax-limit": "01", "input-vat-non-deduction": "05"}
 
 def v_href(v):
@@ -484,6 +522,28 @@ SEARCH_BOX = """<div class="search" data-search>
 </div>
 <script src="/search.js" defer></script>"""
 
+# 검색에 함께 걸리게 할 도구·안내 페이지(2026.10.13)
+SEARCH_TOOLS = [
+ ("기장료 계산기", "/calculators/bookkeeping-fee/", "계산기",
+  "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다. 1인 사업자 20% 할인도 반영됩니다.",
+  "기장료 기장 수수료 보수 세무대리 비용 얼마 간이과세 일반과세 법인"),
+ ("증여세 계산기", "/calculators/gift-tax/", "계산기",
+  "관계별 공제, 10년 합산, 혼인·출산 공제를 반영한 예상 증여세를 계산합니다.",
+  "증여세 증여 계산 공제 한도 부모 조부모 배우자 자녀 혼인 출산"),
+ ("1주택 취득세 계산기", "/calculators/acquisition-tax/", "계산기",
+  "주택 1채를 살 때 취득세·지방교육세·농어촌특별세를 생애최초 감면 적용 여부별로 계산합니다.",
+  "취득세 지방세 생애최초 감면 집 매수 아파트 지방교육세 농어촌특별세"),
+ ("급여 실수령액·4대보험 계산기", "/calculators/four-insurance/", "계산기",
+  "월 급여를 넣으면 4대보험과 소득세를 뺀 실수령액이, 세후 금액을 넣으면 필요한 세전 급여가 산출됩니다.",
+  "4대보험 사대보험 실수령액 월급 급여 국민연금 건강보험 고용보험 소득세 원천징수"),
+ ("프리랜서 3.3% 계산기", "/calculators/freelancer-withholding/", "계산기",
+  "지급액을 넣으면 3.3%를 뗀 실제 지급액이, 세후 금액을 넣으면 계약해야 할 지급액이 산출됩니다.",
+  "프리랜서 3.3 삼점삼 원천징수 2.2 인적용역 사업소득 지급액"),
+ ("보수 안내", "/fees/", "안내",
+  "기장료·신고대리·양도·상속·증여·상담 보수를 구간별로 공개하고 있습니다.",
+  "보수 수수료 기장료 신고 대리 비용 가격 얼마 상담료 견적"),
+]
+
 def build_search_index(posts):
     items = []
     for p in posts:
@@ -497,6 +557,8 @@ def build_search_index(posts):
         items.append({"t": v["title"], "u": f"/video/{v['slug']}/", "c": "영상",
                       "s": re.sub("<[^>]+>", "", v["lead"]), "h": [a for a, b in v["points"]],
                       "k": " ".join(b for a, b in v["points"])})
+    for t, u, c, sm, kw in SEARCH_TOOLS:  # 계산기·보수 안내도 검색에 걸리게(2026.10.13)
+        items.append({"t": t, "u": u, "c": c, "s": sm, "h": [], "k": kw})
     write("search-index.json", json.dumps(items, ensure_ascii=False))
 
 def build_home(posts):
@@ -848,7 +910,8 @@ def build_services(posts):
             items = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in rq)
             first = tps[0]
             rel_q = f'<section class="svc-qa"><h2>관련 세무 Q&amp;A</h2><ul>{items}</ul><p class="rel-svc"><a href="/qa/#{first}">{TOPIC_NAME[first]} Q&amp;A 더 보기 →</a></p></section>'
-        vid_b = (f'<section class="svc-vid"><h2>영상으로 먼저 보기</h2>{vbox(VBY["04"], "▶ 김태형 세무사 직접 설명")}</section>' if k == "bookkeeping" else "")
+        _vk = SERVICE_VIDEO.get(k)
+        vid_b = (f'<section class="svc-vid"><h2>영상으로 먼저 보기</h2>{vbox(VBY[_vk], "▶ 김태형 세무사 직접 설명")}</section>' if _vk and _vk in VBY else "")
         why_b = (f'<section class="why-svc"><h2>기장 거래처 혜택</h2><div class="grid why-grid">{why_cards(wb)}</div></section>' if k == "bookkeeping" else "")
         body = f'''<div class="wrap svc-page" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>

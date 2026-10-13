@@ -22,7 +22,21 @@
     [['세무조사','조사','소명','해명','통지'],['세무조사']],
     [['사업자','가게','장사','창업','개업','쇼핑몰','프리랜서'],['사업자']],
     [['장부','기장','세무사','맡기'],['기장']],
-    [['세율','몇퍼','퍼센트','%','얼마나'],['세율']]
+    [['세율','몇퍼','퍼센트','%','얼마나'],['세율']],
+    [['부가세','부가가치세','부가','매입세액','매출세액','세금계산서','계산서','간이과세','간이','일반과세','예정고지','예정신고','확정신고','매입','매출'],['부가가치세','부가세','매입세액','간이과세']],
+    [['종소세','종합소득세','소득세','5월','오월','종합소득','사업소득','필요경비','경비처리','비용처리'],['종합소득세','소득세','필요경비']],
+    [['양도세','양도소득세','장특','장기보유'],['양도','양도소득세','장기보유특별공제']],
+    [['상증세','상속증여','상속세','증여세'],['상속','증여']],
+    [['법인세','법인','주식회사'],['법인세','법인']],
+    [['원천세','원천징수','3.3','삼점삼','2.2','인건비','급여','월급','일용','알바','아르바이트','프리랜서'],['원천세','인건비','프리랜서']],
+    [['4대보험','사대보험','국민연금','건강보험','고용보험','산재','퇴사','입사','정산'],['4대보험','건강보험']],
+    [['연말정산','소득공제','세액공제','월세','의료비','교육비','기부금','연금저축'],['연말정산','공제']],
+    [['종부세','종합부동산세','재산세','취득세','지방세','보유세'],['지방세','종합부동산세','취득세']],
+    [['가산세','과태료','늦게','지연','미신고','무신고','기한후'],['가산세','신고']],
+    [['기장료','수수료','보수','비용','가격','견적'],['기장료','보수']],
+    [['창업','세액감면','감면','중소기업'],['창업','세액감면']],
+    [['퇴직금','퇴직','퇴직소득'],['퇴직']],
+    [['근로장려금','자녀장려금','장려금'],['근로장려금','장려금']]
   ];
   var PARTICLE=/(에게서|한테서|으로부터|로부터|에게|한테|께서|께|에서|으로|로|은|는|이|가|을|를|의|에|도|만|랑|이랑|하고|와|과|요|죠|나요|까요|는데|인데)$/;
   var STOP={'어떻게':1,'어떡':1,'되나':1,'되나요':1,'하나':1,'하나요':1,'인가':1,'인가요':1,'있나':1,'있나요':1,'할까':1,'궁금':1,'알려':1,'주세':1,'혹시':1,'그냥':1,'제가':1,'저는':1,'우리':1,'내가':1,'정도':1,'얼마':1,'세금':1,'내야':1,'하는':1,'해야':1,'받을':1,'수있':1};
@@ -38,7 +52,9 @@
     return {words:words,groups:groups};
   }
   function run(){
-    var q=input.value.trim(); if(!q){out.innerHTML='';return;}
+    var q=input.value.trim();
+    if(!q){ out.innerHTML=''; document.body.classList.remove('searching'); return; }
+    document.body.classList.add('searching');
     load(function(){
       var T=terms(q);
       var res=data.map(function(d){
@@ -49,16 +65,19 @@
         if(gn>=1) ok = ghit>=Math.max(1,Math.ceil(gn*0.6)) || (wn>0 && hit>=Math.ceil(wn*0.6));
         else ok = wn>0 && hit>=(wn<=2?wn:wn-1);
         return {d:d,sc:ok?sc:0};
-      }).filter(function(x){return x.sc>0}).sort(function(a,b){return b.sc-a.sc}).slice(0,3);
+      }).filter(function(x){return x.sc>0}).sort(function(a,b){return b.sc-a.sc}).slice(0,6);
       if(!res.length){
-        out.innerHTML='<div class="s-none"><p>아직 이 질문을 다룬 글이 없습니다. 궁금하신 내용을 남겨 주시면 확인 후 연락드리겠습니다.</p><p><a class="btn primary" href="/contact/">문의 남기기</a></p></div>';
+        out.innerHTML='<div class="s-none"><p>아직 이 질문을 다룬 글이 없습니다. 궁금하신 내용을 남겨 주시면 확인 후 연락드리겠습니다.</p><p><a class="btn primary" href="/contact/">문의 남기기</a></p>'+(document.querySelector('.qa-feed')?'<p class="s-back"><button type="button" class="s-reset">← 전체 목록 보기</button></p>':'')+'</div>';
         return;
       }
       out.innerHTML=res.map(function(x){var d=x.d;return '<a class="s-item" href="'+d.u+'"><span class="s-cat">'+esc(d.c)+'</span><b>'+esc(d.t)+'</b><span class="s-sum">'+esc(d.s)+'</span><span class="s-go">자세히 보기 →</span></a>'}).join('')+
-        '<p class="s-note">본인의 상황에 맞추어 확인이 필요하시면 <a href="/contact/">편하게 문의해 주세요</a>. 확인 후 연락드리겠습니다.</p>';
+        '<p class="s-note">본인의 상황에 맞추어 확인이 필요하시면 <a href="/contact/">편하게 문의해 주세요</a>. 확인 후 연락드리겠습니다.</p>'+
+        (document.querySelector('.qa-feed')?'<p class="s-back"><button type="button" class="s-reset">← 전체 목록 보기</button></p>':'');
     });
   }
   window.__searchTerms=terms;
   btn.addEventListener('click',run);
+  out.addEventListener('click',function(e){ if(e.target.closest('.s-reset')){ input.value=''; out.innerHTML=''; document.body.classList.remove('searching'); input.focus(); } });
+  input.addEventListener('input',function(){ if(!input.value.trim()){ out.innerHTML=''; document.body.classList.remove('searching'); } });
   input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();run();}});
 })();
