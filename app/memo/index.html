@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#1f5a43">
+<title>음성 메모</title>
+<style>
+/* 업무 대시보드용 음성 받아쓰기 — 말한 글을 대시보드 주소에 붙여 넘긴다. 아무것도 저장하지 않음 */
+:root{--bg:#f5f6f4;--fg:#1d2420;--muted:#65706a;--line:#d8ddd8;--accent:#1f5a43;--soft:#e4eee8;--red:#c62828;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#141816;--fg:#e6ebe7;--muted:#9aa49e;--line:#333b36;--accent:#7cc4a3;--soft:#22352c;--red:#ff7a72;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);gap:14px}
+h1{font-size:18px;margin:0}
+.sub{font-size:13px;color:var(--muted);margin:2px 0 0}
+#text{flex:1;min-height:140px;width:100%;font:inherit;font-size:17px;line-height:1.6;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:8px;padding:12px;resize:none}
+#mic{width:100%;font:inherit;font-size:19px;font-weight:700;padding:22px 0;border-radius:12px;border:0;background:var(--accent);color:var(--bg);cursor:pointer}
+#mic.on{background:var(--red)}
+.row{display:flex;gap:10px}
+.row button{flex:1;font:inherit;font-size:15px;font-weight:600;padding:13px 0;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.row button.go{border-color:var(--accent);color:var(--accent)}
+#msg{font-size:13px;color:var(--muted);min-height:18px}
+</style>
+</head><body>
+<div><h1>음성 메모 → 업무 대시보드</h1><p class="sub">말한 내용을 받아 적어 대시보드로 넘깁니다. 이 페이지는 아무것도 저장하지 않습니다.</p></div>
+<textarea id="text" placeholder="버튼을 누르고 말씀하세요"></textarea>
+<div id="msg"></div>
+<button id="mic" type="button">🎤 누르고 말하기</button>
+<div class="row"><button type="button" id="clear">지우기</button><button type="button" class="go" id="send">대시보드로 보내기</button></div>
+<script>
+const BOARD="https://claude.ai/artifact/3iEpzLjWhcsEDCVDq4EcHy";
+const $=id=>document.getElementById(id);
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null,on=false,base="",gotAny=false;
+function b64u(t){const by=new TextEncoder().encode(t);let s="";by.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");}
+function send(){const t=$("text").value.trim(); if(!t){$("msg").textContent="보낼 내용이 없습니다";return;} location.href=BOARD+"#v"+b64u(t);}
+function stop(){on=false;$("mic").classList.remove("on");$("mic").textContent="🎤 이어서 말하기";try{rec&&rec.stop()}catch(e){}}
+$("mic").onclick=()=>{
+  if(on){stop();return;}
+  if(!SR){$("msg").textContent="이 브라우저는 음성 인식을 지원하지 않습니다. 크롬으로 열어 주세요.";return;}
+  rec=new SR();rec.lang="ko-KR";rec.interimResults=true;rec.continuous=true;
+  base=$("text").value.trim();if(base)base+=" ";
+  rec.onresult=e=>{let f="",t="";for(let i=0;i<e.results.length;i++){const x=e.results[i][0].transcript;if(e.results[i].isFinal)f+=x;else t+=x;}$("text").value=base+f+t;gotAny=true;};
+  rec.onerror=e=>{$("msg").textContent=e.error==="not-allowed"?"마이크 사용을 허용해 주세요(주소창 왼쪽 자물쇠 → 권한).":"음성 인식 오류: "+e.error;stop();};
+  rec.onend=()=>{if(on){try{rec.start();return;}catch(e){}}stop();if($("text").value.trim())$("msg").textContent="내용을 확인하고 [대시보드로 보내기]를 누르세요.";};
+  rec.start();on=true;$("mic").classList.add("on");$("mic").textContent="■ 다 말했어요";$("msg").textContent="듣고 있습니다…";
+};
+$("send").onclick=send;
+$("clear").onclick=()=>{$("text").value="";$("msg").textContent="";};
+</script>
+</body></html>
