@@ -60,7 +60,7 @@ def cta_box(p):
     g = CTA_BY_SLUG.get(p.get("slug"), CTA_BY_TOPIC.get(topic_of(p), "etc"))
     text, extra = CTA_TEXT[g]
     btns = "".join(f'<a class="btn primary" href="{h}">{t} →</a>' for h, t in extra)
-    btns += f'<a class="btn kakao" href="/contact/">문의 남기기</a>'
+    btns += f'<a class="btn kakao" href="/contact/">상담 신청</a>'
     btns += (f'<a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">'
              '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" '
              'd="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 '
@@ -71,7 +71,7 @@ def cta_box(p):
 AREA_TEXT = "서울 및 경기도 일부"
 
 # 상담 진행 절차(문의 페이지·업무 페이지 공통)
-FLOW = [("문의 남기기", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨 주세요."),
+FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨 주세요."),
         ("연락드림", "상담 신청은 영업일 기준 1~2일 이내에 연락드립니다."),
         ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저 여쭤봅니다."),
         ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린 뒤 진행합니다.")]
@@ -398,7 +398,7 @@ def build_videos():
 <div class="summary"><p class="label">이 영상의 핵심 요약</p><p>{v["lead"]}</p></div>
 <h2>영상 내용 정리</h2>
 <ol class="vpts">{li}</ol>
-<div class="cta-box"><p>{v["cta"]}</p><div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a>{more}</div></div>
+<div class="cta-box"><p>{v["cta"]}</p><div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a>{more}</div></div>
 <p class="rel-back"><a href="/video/">← 영상 목록</a> · <a href="/qa/">세무 Q&amp;A 목록</a></p>
 <p class="fine">영상 촬영 시점의 법령을 기준으로 한 일반적인 세법 정보이며, 개별 사안에 따라 결론이 달라질 수 있습니다. <a href="/disclaimer/">이용 안내 및 면책</a></p>
 </article></div>
@@ -569,7 +569,7 @@ def build_home(posts):
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
-<div class="btns"><a class="btn kakao" href="/contact/">문의 남기기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
+<div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
 </div>
 <div class="hero-img m" aria-hidden="true"></div>
 <a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에 계산해 보기 →</b></a>
@@ -584,7 +584,7 @@ def build_home(posts):
 <section class="block"><h2 class="sec">최근 올라온 세금 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문을 기준으로 만든 간편 세금 계산기입니다. 결과는 참고용으로 활용해 주세요.</p><div class="grid calc-grid">{calc_cards(True)}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">문의 안내</h2>
-<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="#lead"><span>온라인 문의</span><b>상담 신청하기 →</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="mailto:{EMAIL}"><span>이메일</span><b>{EMAIL}</b></a><a href="/about/#location"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a></div>
+<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="#lead"><span>온라인 문의</span><b>상담 신청 →</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="mailto:{EMAIL}"><span>이메일</span><b>{EMAIL}</b></a><a href="/about/#location"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a></div>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
 </section></div>'''
     write("index.html", page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
@@ -605,7 +605,7 @@ def build_about():
 <div class="ab-head"><div>
 <p class="ab-eyebrow">{NAME}</p>
 <h1>김태형 <span>세무사</span></h1>
-</div><div class="ab-btns"><a class="btn lc sm" href="/contact/#f-lc">문의 남기기</a><a class="btn kk sm" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div></div>
+</div><div class="ab-btns"><a class="btn lc sm" href="/contact/#f-lc">상담 신청</a><a class="btn kk sm" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div></div>
 <p class="ab-motto">근거는 정확하게, 마음은 편안하게</p>
 <div class="ab-greet">
 <p>세무회계택은 동대문구 청량리에서 개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
@@ -772,7 +772,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     title = "환급·절세 가능 여부 무료 확인" if chk else "1:1 상담 신청"
     sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
     ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
-    btn = "무료 확인 신청하기 →" if chk else "상담 신청하기 →"
+    btn = "무료 확인 신청하기 →" if chk else "상담 신청 →"
     foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내드립니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료입니다."
     return f'''<form id="f-{uid}" class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
 <h2>{title}</h2>
@@ -832,7 +832,7 @@ def build_contact():
     if LEAD_ENABLED:
         form = '<div class="lead-duo">' + lead_form(None, "lc") + lead_form(None, "lk", "check") + '</div>'
     elif FORM_URL:
-        form = f'<div class="form-wrap"><iframe src="{FORM_URL}?embedded=true" title="문의 남기기" loading="lazy"></iframe></div>'
+        form = f'<div class="form-wrap"><iframe src="{FORM_URL}?embedded=true" title="상담 신청" loading="lazy"></iframe></div>'
     else:
         form = '<div class="placeholder">온라인 문의 접수 양식을 준비 중입니다. 그동안은 카카오톡 채널이나 이메일로 남겨 주세요.</div>'
     body = f'''<div class="narrow" style="padding-top:36px">
@@ -840,7 +840,7 @@ def build_contact():
 <p class="lead" style="margin:0 0 22px">문의를 남겨 주시면 내용을 확인한 뒤 연락드리겠습니다.</p>
 {flow_html()}
 <section class="block search-block" style="padding-top:0">{SEARCH_BOX}</section>
-<h2 class="sec">문의 남기기</h2>
+<h2 class="sec">상담 신청</h2>
 <div class="notice">
 <p><b>남기시기 전에 확인해 주세요</b></p>
 <ul>
@@ -964,9 +964,12 @@ def build_area():
 <h1 style="color:var(--green);margin:6px 0 10px;font-size:30px">동대문구·청량리 세무사 — 세무회계택 김태형 세무사</h1>
 <p class="lead">세무회계택은 서울 동대문구 왕산로 200(전농동) 롯데캐슬SKY-L65에 있는 세무사 사무소입니다.<br>
 청량리역 바로 인근이라 지하철·버스 어느 쪽으로도 찾아오시기 편합니다.</p>
+<p>청량리역은 KTX와 지하철 1호선·수인분당선·경의중앙선·경춘선이 만나는 서울 동북권 철도 거점입니다.
+지방에서 KTX로 올라오시거나 경기 동북부에서 오시는 경우에도 역에서 도보로 오실 수 있는 거리에 있습니다.
+앞으로 GTX-B·C 노선도 청량리역에서 교차할 예정입니다.</p>
 <p>{PERSON}가 상담부터 신고서 최종 검토까지 직접 수행합니다.
 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다.</p>
-<div class="btns" style="margin:18px 0 6px"><a class="btn primary" href="/contact/#f-lc">상담 신청하기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
+<div class="btns" style="margin:18px 0 6px"><a class="btn primary" href="/contact/#f-lc">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
 </div>
 
 <section class="block alt"><div class="wrap">
