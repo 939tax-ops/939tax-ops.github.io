@@ -1070,3 +1070,13 @@ body.searching .qa-more-wrap{display:none}
 .s-back{margin-top:18px}
 .s-reset{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--green);background:none;border:0;padding:0;cursor:pointer}
 .s-reset:hover{text-decoration:underline}
+
+/* 계산기: 결과 아래 상담 연결 + 펼친 설명 글 */
+.calc-next{margin-top:18px;background:var(--tint);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.calc-next p{margin:0;font-size:15.5px;line-height:1.75}
+.calc-read{margin-top:34px}
+.calc-read h2{font-size:21px;color:var(--green);margin:0 0 12px}
+.calc-read p{margin:0 0 13px;line-height:1.85}
+.calc-read .rel{margin-top:16px;font-family:var(--sans);font-size:15px}
+.calc-read .rel a{display:inline-block;margin:0 16px 6px 0}
+@media(max-width:700px){.calc-next{display:block}.calc-next .btn{margin-top:12px;width:100%;text-align:center}}
