@@ -1077,8 +1077,7 @@ body.searching .qa-more-wrap{display:none}
 .calc-read{margin-top:34px}
 .calc-read h2{font-size:21px;color:var(--green);margin:0 0 12px}
 .calc-read p{margin:0 0 13px;line-height:1.85}
-.calc-read .rel{margin-top:16px;font-family:var(--sans);font-size:15px}
-.calc-read .rel a{display:inline-block;margin:0 16px 6px 0}
+.calc-read .post-more{margin-top:22px}
 @media(max-width:700px){.calc-next{display:block}.calc-next .btn{margin-top:12px;width:100%;text-align:center}}
 
 /* 지역 페이지 — 동네 칩 */

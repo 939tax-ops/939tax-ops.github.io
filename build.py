@@ -140,7 +140,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
         cls = ' on' if key == active else ''
         return (f'<div class="dd{cls}"><a class="dd-t" href="{head}" aria-haspopup="true">{label}<span class="car" aria-hidden="true"></span></a>'
                 f'<div class="dd-m">{sub}</div></div>')
-    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "보수 안내"), ("/about/#location", "오시는 길")])
+    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "보수 안내"), ("/area/dongdaemun/", "동대문구 세무사"), ("/about/#location", "오시는 길")])
             + dd("주요 서비스", "svc", "/services/", [(f"/services/{k}/", t) for k, t, _ in ALL_SERVICES])
             + "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc")]))
     return f'''<!doctype html>
@@ -963,17 +963,17 @@ def build_area():
 <p class="crumb"><a href="/">홈</a> › 동대문구 세무사</p>
 <h1 style="color:var(--green);margin:6px 0 10px;font-size:30px">동대문구·청량리 세무사 — 세무회계택 김태형 세무사</h1>
 <p class="lead">세무회계택은 서울 동대문구 왕산로 200(전농동) 롯데캐슬SKY-L65에 있는 세무사 사무소입니다.<br>
-청량리역 인근이라 동대문구 어느 동네에서든 오시기 편합니다.</p>
+청량리역 바로 인근이라 지하철·버스 어느 쪽으로도 찾아오시기 편합니다.</p>
 <p>{PERSON}가 상담부터 신고서 최종 검토까지 직접 수행합니다.
 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다.</p>
-<div class="btns" style="margin:18px 0 6px"><a class="btn kakao" href="/contact/#f-lc">상담 신청하기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">카카오톡 상담</a></div>
+<div class="btns" style="margin:18px 0 6px"><a class="btn primary" href="/contact/#f-lc">상담 신청하기</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
 </div>
 
 <section class="block alt"><div class="wrap">
-<h2 class="sec">동대문구 어느 동네에서든</h2>
+<h2 class="sec">가까운 동네</h2>
 <div class="area-chips">{chips}</div>
 <p class="note" style="margin-top:14px">청량리역 일대는 전통시장과 상가가 모여 있고, 경희대학교·서울시립대학교·한국외국어대학교가 가까운 지역입니다.
-상담 가능 지역은 {AREA_TEXT}로, 동대문구 외에 인근 성북구·중랑구·성동구에서도 상담하실 수 있습니다.</p>
+동대문구 외에 성북구·중랑구·성동구에서 찾아주시는 분들도 있습니다.</p>
 </div></section>
 
 <div class="wrap">
