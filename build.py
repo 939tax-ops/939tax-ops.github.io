@@ -302,11 +302,12 @@ def write(rel, text):
             # 괄호 안 16자 이하: 괄호 묶음 전체를 한 줄로. 앞말에 붙은 괄호(연락처(…))는 앞말까지 함께, 띄운 괄호는 안쪽이 짧으면(≤10) 앞말과도 붙임
             def f(m):
                 w, sp, inner = m.group(1) or '', m.group(2), m.group(3)
+                pu = m.group(4) or ''
                 if w and not sp:
-                    return '<span class="nw">' + w + '(' + inner + ')</span>'
+                    return '<span class="nw">' + w + '(' + inner + ')' + pu + '</span>'
                 join = '\u00a0' if (sp and len(inner) <= 10) else sp
-                return w + join + '<span class="nw">(' + inner + ')</span>'
-            return re.sub(r'([^\s()<>]{1,8})?( ?)\(([^()<>\n]{1,16})\)', f, seg)
+                return w + join + '<span class="nw">(' + inner + ')' + pu + '</span>'
+            return re.sub(r'([^\s()<>]{1,8})?( ?)\(([^()<>\n]{1,16})\)([,.]?)', f, seg)
         _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>|<textarea\b.*?</textarea>|<option\b.*?</option>|<svg\b.*?</svg>|<head\b.*?</head>|<[^>]+>)', text, flags=re.S)
         text = ''.join(p if (i % 2 or not p) else _paren(p) for i, p in enumerate(_parts))
     if rel.endswith(".html"):
@@ -316,6 +317,8 @@ def write(rel, text):
                 return mm.group(0)
             return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
         text = re.sub(r'<table class="info[^"]*">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
+        # 짧은 '목적·기간' 같은 표 항목명은 가운뎃점에서 꺾이지 않게
+        text = re.sub(r'<th>([가-힣]{1,4}·[가-힣]{1,4})</th>', r'<th><span class="nw">\1</span></th>', text)
     if rel.endswith(".html"):
         text = line_rules(text)
         text = asset_ver(text)
@@ -1120,7 +1123,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <details><summary>내용 보기</summary><table>
 <tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
 <tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
-<tr><th>보유 기간</th><td>{PRIVACY_KEEP} 후 파기<br>상담으로 이어지지 않으면 신청일부터 1년 후 파기</td></tr>
+<tr><th>보유 기간</th><td>{PRIVACY_KEEP} 후 파기<br>상담으로 이어지지 않으면 <span class="nw">신청일부터 1년</span> 후 파기</td></tr>
 <tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
 </table></details>
 <label><input type="checkbox" name="a2"><span><b>[필수]</b> 개인정보 국외 보관 동의 <small>(신청 내용을 Google 서버에 저장)</small></span></label>
@@ -1128,7 +1131,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <tr><th>저장 항목</th><td>위 수집 항목 전부</td></tr>
 <tr><th>저장 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 암호화 통신으로 전송</td></tr>
 <tr><th>저장 서비스 제공업체</th><td>Google LLC (설문지·스프레드시트)<br>문의 googlekrsupport<wbr>@google.com</td></tr>
-<tr><th>목적·기간</th><td>상담 신청 내용 보관<br>{PRIVACY_KEEP}, 상담으로 이어지지 않으면 신청일부터 1년</td></tr>
+<tr><th>목적·기간</th><td>상담 신청 내용 보관<br>{PRIVACY_KEEP}<br>상담으로 이어지지 않으면 <span class="nw">신청일부터 1년</span></td></tr>
 <tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
 </table></details>
 </div>

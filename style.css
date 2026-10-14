@@ -1352,7 +1352,7 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .info td a,.byline a,.crumb a,.h2-cv a{text-decoration:none}
 .info td a:hover,.byline a:hover,.crumb a:hover{text-decoration:underline}
 .info td a{color:var(--green);font-weight:600}
-.nw{white-space:nowrap}
+.nw{white-space:nowrap !important;text-wrap-mode:nowrap !important}
 /* 동의 내용 표: 항목 이름(수집 항목 등)은 한 줄로 — 2026-10-15 */
 .lf-agree th{white-space:nowrap;width:1%}
 
