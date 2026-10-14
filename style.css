@@ -1342,3 +1342,13 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .s-item.s-calc .s-cat{background:var(--green-bg);color:#fff;font-weight:700}
 .s-item.s-calc .s-go{display:inline-block;margin-top:10px;padding:7px 14px;border-radius:3px;background:var(--green-bg);color:#fff}
 @media (prefers-color-scheme: dark) and (max-width:760px){.s-item.s-calc .s-go,.s-item.s-calc .s-cat{background:#2E8B55}}
+
+/* ===== 링크 정리(2026-10-15): 화살표·밑줄 반복 대신 — 섹션 대표 링크는 테두리 작은 버튼, 작은 링크는 초록 글씨(밑줄은 마우스 올릴 때만) ===== */
+.h2-more,.ab-more a,.rel-svc a,a.more,.vhead a,.qa-more,.svc-price a{display:inline-block;border:1px solid var(--line);border-radius:3px !important;padding:7px 14px;text-decoration:none !important;font-family:var(--sans);font-weight:700;font-size:14.5px;color:var(--green);background:var(--surface);line-height:1.4}
+.h2-more:hover,.ab-more a:hover,.rel-svc a:hover,a.more:hover,.vhead a:hover,.qa-more:hover,.svc-price a:hover{border-color:var(--green)}
+.svc-price a{font-size:13.5px;padding:5px 10px;font-weight:600}
+.lk-sep{display:inline-block;width:6px;font-size:0}
+@media (max-width:760px){.lk-sep{display:block;height:8px;width:auto}}
+.info td a,.byline a,.crumb a,.h2-cv a{text-decoration:none}
+.info td a:hover,.byline a:hover,.crumb a:hover{text-decoration:underline}
+.info td a{color:var(--green);font-weight:600}

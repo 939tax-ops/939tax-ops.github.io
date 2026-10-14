@@ -294,6 +294,10 @@ def line_rules(html):
 
 def write(rel, text):
     if rel.endswith(".html"):
+        # 링크·버튼 끝의 '→' 일괄 제거(2026-10-15, 'AI 느낌' 정리). 문장 속 방향 표시(1번 출구 → …)는 그대로 둠
+        text = text.replace('<span class="ar" aria-hidden="true">→</span>', '')
+        text = re.sub(r'\s*→(\s*(?:</b>|</span>)*\s*</(?:a|button)>)', r'\1', text)
+    if rel.endswith(".html"):
         def _jt(mm):
             lab = mm.group(1).replace(" ", "")
             if len(lab) > 4:
@@ -365,7 +369,7 @@ def build_post(p, posts=()):
     rel = "".join(f'<li><a href="/qa/{q["slug"]}/">{esc(q["title"])}</a></li>' for q in same)
     rel_html = f'<div class="rel-col"><p class="label">함께 보면 좋은 글</p><ul>{rel}</ul></div>' if rel else ""
     blog_card = (f'<a class="blog-card" href="{esc(p["blog"])}" target="_blank" rel="noopener"><span class="k">네이버 블로그</span>'
-                 f'<b>이 글의 블로그 원문 보기 →</b><span class="s">처음 올린 네이버 블로그 글로 이동합니다.</span></a>') if p.get("blog") else ""
+                 f'<b>이 글의 블로그 원문 보기</b><span class="s">처음 올린 네이버 블로그 글로 이동합니다.</span></a>') if p.get("blog") else ""
     svc = TOPIC_SERVICE.get(tp)
     svc_link = f'<p class="rel-svc"><a href="/services/{svc}/">관련 업무 안내 · {dict((k, t) for k, t, _ in ALL_SERVICES)[svc]} →</a></p>' if svc else ""
     more_html = f'<div class="post-more">{blog_card}{rel_html}</div>{svc_link}<p class="rel-back"><a href="/qa/">← 세무 Q&amp;A 목록</a> · <a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그 전체 글</a></p>' 
