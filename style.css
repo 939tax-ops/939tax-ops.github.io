@@ -1128,5 +1128,5 @@ body.searching .qa-more-wrap{display:none}
 @media (min-width:1000px){.qchips{flex-wrap:nowrap;gap:5px;justify-content:space-between}.qchips button{white-space:nowrap;padding:7px 10px;font-size:13.5px;flex:0 1 auto}}
 
 /* 2026-10-14 보조 분류 태그·영상 줄 필터 */
-.qcard .b-t{white-space:nowrap}.qcard .b-t2{opacity:.85}.qcard .qm{flex-wrap:wrap;row-gap:6px}
+.qcard .b-t{white-space:nowrap}.qcard .b-t2{opacity:.85}.qcard .qm{flex-wrap:wrap;row-gap:6px}.qcard .qm .d{margin-left:auto;white-space:nowrap}
 .vstrip[hidden],.vstrip .vcard[hidden]{display:none}
