@@ -14,7 +14,7 @@
       if (!name) return say('성함을 적어 주세요.');
       var isTel = /^[0-9\-+ ()]{9,20}$/.test(phone), isMail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(phone);
       if (!isTel && !isMail) return say('전화번호나 이메일 주소를 확인해 주세요.');
-      if (!f.a1.checked || !f.a2.checked) return say('개인정보 동의(전체 동의)에 체크해 주세요.');
+      if (!f.a1.checked || !f.a2.checked) return say('개인정보 동의에 체크해 주세요.');
       if (!cfg.action) return say('신청 접수 연결을 준비 중입니다. 전화나 카카오톡으로 연락해 주세요.');
       var d = new FormData();
       d.append(cfg.service, (cfg.tag||'') + svc.value + ' · ' + where()); d.append(cfg.name, name); d.append(cfg.phone, phone);

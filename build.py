@@ -1071,8 +1071,9 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="{ph}"></textarea></label>
 </div>
 <div class="lf-agree">
-<label class="lf-all"><input type="checkbox" data-all><span><b>전체 동의</b> · 아래 필수 항목 2가지에 모두 동의합니다</span></label>
+<label class="lf-all"><input type="checkbox" data-all><span><b>[필수]</b> 개인정보 수집·이용 및 보관에 동의합니다</span></label>
 <p class="lf-note">상담 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다.</p>
+<details class="lf-more"><summary>동의 항목 자세히 보기 (2개)</summary>
 <div class="lf-items">
 <label><input type="checkbox" name="a1"><span><b>[필수]</b> 개인정보 수집·이용 동의</span></label>
 <details><summary>내용 보기</summary><table>
@@ -1090,6 +1091,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
 </table></details>
 </div>
+</details>
 <p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
 </div>
 <button type="submit" class="lf-btn">{btn}</button>

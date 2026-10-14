@@ -1224,3 +1224,6 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .lf-items>label input{flex:none;margin-top:2px;width:16px;height:16px;accent-color:var(--green)}
 .lf-items>label small{color:var(--sub);font-size:12.5px}
 .lf-items details{margin:2px 0 0 24px}
+.lf-agree details.lf-more{margin:2px 0 4px 2px}
+.lf-agree details.lf-more>summary{font-size:13.5px}
+.lf-agree details.lf-more .lf-items{margin-top:4px}
