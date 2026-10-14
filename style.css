@@ -1153,3 +1153,6 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 /* 계산기: 계산 과정 표의 괄호 설명은 폰에서 항상 다음 줄로, 안내 문구(·)는 둘째 줄부터 들여쓰기 — 2026-10-14 */
 .mi{display:block;position:relative;padding-left:.9em}.mi::before{content:'·';position:absolute;left:.15em}
 @media (max-width:760px){.how td small{display:block;margin-top:1px;line-height:1.45}}
+/* 폰 하단 정보: 이메일·저작권 표기는 덩어리째 다음 줄로 — 2026-10-14 */
+.f-nw{white-space:nowrap}
+@media (max-width:560px){footer .f-br{display:block;height:0;font-size:0;line-height:0}}

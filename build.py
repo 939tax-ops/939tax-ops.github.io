@@ -195,8 +195,8 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <img src="/assets/logo-h-dark.png" alt="세무회계 택" width="170" height="44">
 <p>세무회계 택 · {PERSON}</p>
 <p>{ADDR1} {ADDR2}</p>
-<p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX} · 이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-<p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a> · © {datetime.date.today().year} {NAME}</p>
+<p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX}<span class="f-br"> · </span><span class="f-nw">이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></span></p>
+<p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a><span class="f-br"> · </span><span class="f-nw">© {datetime.date.today().year} {NAME}</span></p>
 </div>
 <nav class="f-sns" aria-label="세무회계택 채널">
 <a href="{KAKAO}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - 세무회계 택</span></a>
@@ -684,9 +684,9 @@ def build_home(posts):
 # 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-bus / #go-car 로 바로 열림
 ROUTE_SETS = {
     "line1": ("1호선", "청량리역 4번 출구", ["c-01","c-02","c-04","c-05b","c-06","c-07","c-08","c-09"]),
-    "gyeongui": ("기차·경의중앙선", "1번 출구 → 청량리역 4번 출구", ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05b","g-08","g-09","g-10","g-11"]),
+    "gyeongui": ("기차·경의중앙선", '<span style="white-space:nowrap">1번 출구 →</span> <span style="white-space:nowrap">청량리역 4번 출구</span>', ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05b","g-08","g-09","g-10","g-11"]),
     "bus": ("버스", "청량리역 버스환승센터", ["c-01","c-02","c-04","c-05b","c-06","c-07","c-08","c-09"]),
-    "car": ("자차", "지하4층만 주차 가능 (2시간 무료)", ["car-note","car-02b","car-03b","car-01","car-04","car-05","car-06b","car-07b"]),
+    "car": ("자차", '<span style="white-space:nowrap">지하4층만 주차 가능</span> <span style="white-space:nowrap">(2시간 무료)</span>', ["car-note","car-02b","car-03b","car-01","car-04","car-05","car-06b","car-07b"]),
 }
 ROUTE_ICONS = {
     "line1": '<rect x="14" y="6" width="36" height="42" rx="9"/><path d="M14 30h36M22 56l6-8M42 56l-6-8"/><circle cx="23" cy="39" r="2.5" fill="currentColor"/><circle cx="41" cy="39" r="2.5" fill="currentColor"/>',
@@ -829,7 +829,7 @@ def build_about():
 <p style="margin:16px 0"><a class="btn primary" href="/location/">사진으로 찾아오는 길 보기 →</a></p>
 <img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <table class="info">
-<tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
+<tr><th>지도</th><td><span style="white-space:nowrap"><a href="{nmap}" target="_blank" rel="noopener">네이버 지도</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵</a>에서 보기</span></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 <tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
@@ -854,7 +854,7 @@ def build_location():
 {route_html()}
 <img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <table class="info">
-<tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
+<tr><th>지도</th><td><span style="white-space:nowrap"><a href="{nmap}" target="_blank" rel="noopener">네이버 지도</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵</a>에서 보기</span></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 <tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
@@ -1242,7 +1242,7 @@ def build_area():
 앞으로 GTX-B·C 노선도 청량리역에서 교차할 예정입니다.</p>
 <table class="info">
 <tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
-<tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
+<tr><th>지도</th><td><span style="white-space:nowrap"><a href="{nmap}" target="_blank" rel="noopener">네이버 지도</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵</a>에서 보기</span></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 </table>
