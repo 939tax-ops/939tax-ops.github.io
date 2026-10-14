@@ -1246,7 +1246,7 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 }
 /* ===== 소개 페이지 정리 시안(2026-10-14) — .about-page.v2 ===== */
 .about-page.v2 .ab-cv a{color:inherit}
-@media (max-width:760px){
+@media (max-width:0px){ /* 폰 사진 축소안은 쓰지 않기로 함(2026-10-14) */
   .about-page.v2 .ab-hero{grid-template-columns:118px 1fr;gap:14px 16px;align-items:end;padding-bottom:12px}
   .about-page.v2 .ab-photo{height:150px;max-width:none;padding-top:8px;border-radius:10px;border-bottom:0}
   .about-page.v2 .ab-text{display:contents}
@@ -1263,7 +1263,7 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 @media (prefers-color-scheme: dark) and (max-width:760px){
   .btn.primary,.mbar a.p,form.lead .lf-btn,.ab-btns .btn.lc,.svc-top .btn.primary{background:#2E8B55 !important;border:1.5px solid #9BE0B4 !important;color:#fff !important;box-shadow:0 0 0 1px rgba(155,224,180,.15)}
 }
-.band span .kp{display:inline}
+.band span .kp{display:inline;white-space:nowrap}
 /* 홈 다듬기 — 2026-10-14: 세무사 사진 배경 흰색 / PC 첫 화면 '오시는 길'은 버튼 대신 글 링크로 균형 */
 .h2-rep-ph img{background:transparent !important}
 @media (min-width:561px){
@@ -1274,7 +1274,13 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 /* 소개 사진: 1번 사진 누끼, 흰 배경 — 2026-10-14 */
 .ab-photo,.about-page .ab-photo{background:transparent !important}
 
-@media (max-width:760px){.about-page.v2 .ab-photo{align-items:flex-start;justify-content:flex-start;padding-top:0;height:150px}.about-page.v2 .ab-photo img{width:175%;max-width:none;height:auto;margin:12px 0 0 -37.5%}}
+@media (max-width:0px){.about-page.v2 .ab-photo{align-items:flex-start;justify-content:flex-start;padding-top:0;height:150px}.about-page.v2 .ab-photo img{width:175%;max-width:none;height:auto;margin:12px 0 0 -37.5%}}
 .ab-photo picture{display:contents}
 /* 다크 모드(폰): 사진 뒤 흰 상자 대신 투명 — 누끼 사진이 배경 위에 바로 놓이게 (2026-10-14) */
 @media (prefers-color-scheme: dark) and (max-width:760px){.h2-rep-ph img,.ab-photo,.about-page .ab-photo{background:transparent !important}}
+/* 폰 첫 화면: 조세법전 사진을 글씨 뒤로 — PC처럼 글씨와 사진이 겹쳐 보이게 (2026-10-14) */
+@media (max-width:760px){
+  .hero-c1 .wrap{position:relative}
+  .hero-c1 .copy{position:relative;z-index:1;padding-bottom:170px}
+  .hero-c1 .hero-img.m{position:absolute;z-index:0;left:-20px;right:-20px;bottom:0;top:auto;height:72%;margin:0;background:url(/assets/hero-law-m.webp) center 70%/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.25) 30%,rgba(0,0,0,.8) 60%,#000 80%);mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.25) 30%,rgba(0,0,0,.8) 60%,#000 80%)}
+}
