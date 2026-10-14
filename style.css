@@ -1215,3 +1215,12 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
   .h2-cta{padding:40px 0;text-align:left}.h2-cta h2{font-size:23px}.h2-cta .btns{justify-content:flex-start}.h2-cta .btns .btn.ghost{display:none}
 }
 .h2-lc li .seg{display:inline}
+/* 동의: 전체 동의 하나 + 개별 항목(작게) — 2026-10-14 */
+.lf-agree>label.lf-all{margin-top:4px;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink-1);font-size:15px}
+.lf-agree .lf-all b{color:var(--green)}
+.lf-agree>.lf-note{margin:6px 0 6px 0;padding-left:2px}
+.lf-items{margin-left:12px;padding-left:12px;border-left:2px solid var(--line)}
+.lf-items>label{display:flex;gap:8px;align-items:flex-start;line-height:1.5;margin-top:8px;color:var(--ink-3);font-size:14px}
+.lf-items>label input{flex:none;margin-top:2px;width:16px;height:16px;accent-color:var(--green)}
+.lf-items>label small{color:var(--sub);font-size:12.5px}
+.lf-items details{margin:2px 0 0 24px}

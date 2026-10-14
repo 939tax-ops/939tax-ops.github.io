@@ -14,7 +14,7 @@
       if (!name) return say('성함을 적어 주세요.');
       var isTel = /^[0-9\-+ ()]{9,20}$/.test(phone), isMail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(phone);
       if (!isTel && !isMail) return say('전화번호나 이메일 주소를 확인해 주세요.');
-      if (!f.a1.checked || !f.a2.checked) return say('필수 동의 두 가지에 체크해 주세요.');
+      if (!f.a1.checked || !f.a2.checked) return say('개인정보 동의(전체 동의)에 체크해 주세요.');
       if (!cfg.action) return say('신청 접수 연결을 준비 중입니다. 전화나 카카오톡으로 연락해 주세요.');
       var d = new FormData();
       d.append(cfg.service, (cfg.tag||'') + svc.value + ' · ' + where()); d.append(cfg.name, name); d.append(cfg.phone, phone);
@@ -31,3 +31,11 @@
     });
   });
 })();
+
+/* 전체 동의 ↔ 개별 동의 연동 (2026-10-14) */
+document.querySelectorAll('form.lead').forEach(function(f){
+  var all=f.querySelector('[data-all]'); if(!all) return;
+  var items=[f.a1,f.a2].filter(Boolean);
+  all.addEventListener('change',function(){ items.forEach(function(c){ c.checked=all.checked; }); });
+  items.forEach(function(c){ c.addEventListener('change',function(){ all.checked=items.every(function(x){return x.checked;}); }); });
+});

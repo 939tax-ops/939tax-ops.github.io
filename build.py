@@ -1071,15 +1071,17 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="{ph}"></textarea></label>
 </div>
 <div class="lf-agree">
-<label><input type="checkbox" name="a1"><span><b>[필수]</b> 개인정보 수집·이용에 동의합니다</span></label>
+<label class="lf-all"><input type="checkbox" data-all><span><b>전체 동의</b> · 아래 필수 항목 2가지에 모두 동의합니다</span></label>
+<p class="lf-note">상담 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다.</p>
+<div class="lf-items">
+<label><input type="checkbox" name="a1"><span><b>[필수]</b> 개인정보 수집·이용 동의</span></label>
 <details><summary>내용 보기</summary><table>
 <tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
 <tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
 <tr><th>보유 기간</th><td>{PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
 <tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
 </table></details>
-<label><input type="checkbox" name="a2"><span><b>[필수]</b> Google 설문지(해외 서버) 저장에 동의합니다</span></label>
-<p class="lf-note">상담 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다.</p>
+<label><input type="checkbox" name="a2"><span><b>[필수]</b> 개인정보 국외 보관 동의 <small>(신청 내용을 Google 서버에 저장)</small></span></label>
 <details><summary>내용 보기</summary><table>
 <tr><th>저장 항목</th><td>위 수집 항목 전부</td></tr>
 <tr><th>저장 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 암호화 통신으로 전송</td></tr>
@@ -1087,6 +1089,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <tr><th>목적·기간</th><td>상담 신청 내용 보관 / {PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
 <tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
 </table></details>
+</div>
 <p class="lf-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
 </div>
 <button type="submit" class="lf-btn">{btn}</button>
