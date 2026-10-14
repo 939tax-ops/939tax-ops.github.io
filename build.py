@@ -239,7 +239,7 @@ _KEEP_RE = re.compile("|".join(map(re.escape, KEEP_PHRASES)) + r"|0\d{1,2}-\d{3,
 _SKIP = {"script", "style", "textarea", "select", "option", "title", "svg", "head"}
 # R4. 가운뎃점(·)으로 이은 말은 줄 첫머리에 '·'가 오지 않게 한다.
 #     짧으면(14자 이하) 통째로 묶고, 길면 '·' 앞에서만 끊기지 않게(WORD JOINER) 한다.
-_TOK = r'(?:\d,(?=\d{3})|[^\s·<>()（）,])+'  # 4,000만원 같은 천 단위 쉼표는 한 덩어리로
+_TOK = r'(?:\d,(?=\d{3})|[^\s·<>()（）,\u2060])+'  # 4,000만원 같은 천 단위 쉼표는 한 덩어리로
 _DOT_RE = re.compile(r'(?<![\w,.])' + _TOK + r'(?:·' + _TOK + r')+[,.]?')
 def _dot(m):
     t = m.group(0)
@@ -310,7 +310,7 @@ def write(rel, text):
                 return w + join + '<span class="nw">(' + inner + ')' + pu + '</span>'
             seg = re.sub(r'([%)])(?=[가-힣])', '\\1\u2060', seg)
             seg = re.sub(r'(\d[\d,.]*[가-힣㎡%]{0,2}) (이내|이하|이상|초과|미만)(?=[\s,.)]|$)', '\\1\u00a0\\2', seg)  # '3촌 이내'·'60㎡ 이하'는 한 덩어리  # 9.5%를: % 뒤 조사가 다음 줄로 떨어지지 않게
-            seg = re.sub(r'((?<![·\w])[^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,13})\)((?:\u2060[가-힣]{1,3})?[,.]?)', f, seg)  # 괄호 뒤 조사(를·에·로…)도 함께 묶음
+            seg = re.sub(r'((?<![·\w])[^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,14})\)((?:\u2060[가-힣]{1,3})?[,.]?)', f, seg)  # 괄호 뒤 조사(를·에·로…)도 함께 묶음
             seg = re.sub(r'\((?=[^\s)<])', '(\u2060', seg)  # 여는 괄호 뒤에서 줄이 꺾이지 않게
             return seg.replace(' · ', '\u00a0· ')  # ' · ' 구분점이 줄 첫머리로 가지 않게
         _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>|<textarea\b.*?</textarea>|<option\b.*?</option>|<svg\b.*?</svg>|<head\b.*?</head>|<[^>]+>)', text, flags=re.S)
