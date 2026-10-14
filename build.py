@@ -689,6 +689,8 @@ ROUTE_ICONS = {
     "bus": '<rect x="12" y="8" width="40" height="42" rx="7"/><path d="M12 32h40M20 16h24"/><circle cx="21" cy="41" r="2.5" fill="currentColor"/><circle cx="43" cy="41" r="2.5" fill="currentColor"/><path d="M18 50v6M46 50v6"/>',
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
+import urllib.parse as _up
+ROUTE_NMAP = "https://map.naver.com/p/search/" + _up.quote("왕산로 200 롯데캐슬SKY-L65")
 ROUTE_JOIN = {"c-05"}  # 앞 장(입구 두 개)과 한 화면에 나란히
 ROUTE_SIDE = {"car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
@@ -746,7 +748,7 @@ def route_html():
         sets += (f'<div class="rt-set" id="rt-{k}" hidden><h3>{pp(t)} 오시는 길</h3><p class="rt-lead">{ROUTE_INTRO.get(k, "")}</p>'
                  f'<div class="rt-nav"><button type="button" class="rt-prev">‹ 이전</button><span class="rt-cnt">1 / {n}</span><button type="button" class="rt-next">다음 ›</button></div>'
                  f'<div class="rt-dots">{dots}</div>'
-                 f'<div class="rt-view">{sl}</div><button type="button" class="rt-top">다른 방법 보기 ↑</button></div>')
+                 f'<div class="rt-view">{sl}</div><div class="rt-help"><a class="rt-map" href="{ROUTE_NMAP}" target="_blank" rel="noopener">네이버 지도에서 보기</a><a class="rt-tel" href="tel:{TEL}">길 헤매시면 전화 {TEL}</a></div><button type="button" class="rt-top">다른 방법 보기 ↑</button></div>')
     css = ('<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}'
            '.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}'
            '.rt-set{margin-top:18px;scroll-margin-top:84px;max-width:560px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 6px}.rt-lead{margin:0 0 12px;line-height:1.6}'
@@ -754,7 +756,7 @@ def route_html():
            '.rt-slide figcaption{margin:0 0 10px;padding:10px 14px;border-left:4px solid var(--green);background:var(--tint,#EBF1ED);border-radius:6px;font-size:17px;line-height:1.5;font-weight:700;color:var(--green)}'
            '.rt-nav{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.rt-nav button{border:1.5px solid var(--green);background:var(--surface);color:var(--green);border-radius:22px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;min-width:96px}.rt-nav button:disabled{opacity:.35;cursor:default}.rt-cnt{font-weight:700;color:var(--green)}'
            '.rt-dots{display:flex;justify-content:center;gap:7px;margin:4px 0 14px}.rt-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.rt-dots i.on{background:var(--green)}'
-           '.rt-view{margin-bottom:14px}@media(min-width:860px){.rt-set{max-width:980px}.rt-view{display:flex;gap:16px;align-items:flex-start}.rt-slide.on{flex:1 1 0;min-width:0}}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
+           '.rt-view{margin-bottom:14px}@media(min-width:860px){.rt-set{max-width:980px}.rt-view{display:flex;gap:16px;align-items:flex-start}.rt-slide.on{flex:1 1 0;min-width:0}}.rt-help{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.rt-help a{flex:1 1 200px;text-align:center;padding:11px 10px;border-radius:10px;font-weight:700;text-decoration:none}.rt-map{border:1.5px solid var(--green);color:var(--green)}.rt-tel{background:var(--green);color:#fff}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
     js = ('<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");'
           'function stp(){return window.matchMedia("(min-width:860px)").matches?2:1}'
           'function go(set,i){var sl=set.querySelectorAll(".rt-slide"),n=sl.length,k=stp(),pg=Math.ceil(n/k);i=Math.max(1,Math.min(pg,i));set._i=i;var a=(i-1)*k;'
@@ -772,7 +774,7 @@ def route_html():
           'S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t){go(t,1);if(sc)t.scrollIntoView({behavior:"smooth",block:"start"});}}'
           'B.forEach(function(b){b.addEventListener("click",function(){if(b.classList.contains("on")){b.classList.remove("on");b.setAttribute("aria-expanded",false);S.forEach(function(s){s.hidden=true});history.replaceState(null,"",location.pathname+"#route");return;}show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});'
           'var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
-    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 자차는 내비에 ‘왕산로 200’ 검색 후 → 꼭 지하 4층 주차(2시간 무료)</p></div>{js}'
+    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}</div>{js}'
 
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
@@ -812,16 +814,17 @@ def build_about():
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2}</span></div></div></div>
 <script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
+{route_html()}
+<img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <table class="info">
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 <tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
-{route_html()}
-<img class="loc-map" style="margin:16px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
+
 
 </section></div>'''
-    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
+    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld(), {"@type": "WebPageElement", "@id": SITE + "/about/#route", "name": "세무회계택 오시는 길", "description": "청량리역 4번 출구에서 도보 약 1~2분. 1호선·버스(청량리역 버스환승센터)는 4번 출구, 경의중앙선은 1번 출구로 나와 4번 출구 앞으로. 롯데캐슬SKY-L65 섹션오피스 입구로 들어와 13층 1313호. 자차는 내비에 왕산로 200 검색 후 지하 4층 주차(업무시설 엘리베이터 이용, 2시간 무료 등록).", "url": SITE + "/about/#route"}]))
 
 # 1주택 양도세 연도별 비교 계산기: 원본은 _draft/(git 제외). 공개하려면 True 로 바꾸고 build 후 push
 YANGDO_ENABLED = False
