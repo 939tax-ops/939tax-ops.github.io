@@ -80,10 +80,10 @@ def cta_box(p):
 AREA_TEXT = "서울 및 경기도 일부"
 
 # 상담 진행 절차(문의 페이지·업무 페이지 공통)
-FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨 주세요."),
-        ("접수 확인", "상담 신청은 영업일 기준 1~2일 이내에 연락드립니다."),
-        ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저 여쭤봅니다."),
-        ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린 뒤 진행합니다.")]
+FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨\u00a0주세요."),
+        ("접수 확인", "상담 신청은 영업일 기준 1~2일 이내에\u00a0연락드립니다."),
+        ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저\u00a0여쭤봅니다."),
+        ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린\u00a0뒤 진행합니다.")]
 def flow_html(title="상담은 이렇게 진행됩니다"):
     li = "".join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a, b in FLOW)
     return f'<section class="flow-sec"><h2>{title}</h2><ol class="flow">{li}</ol></section>'
@@ -1190,6 +1190,7 @@ SVC_PRICE = {
     "tax-planning": '상담 30분 100,000원~ <small>(사전 서류 검토 200,000원~ · 부가세 별도)</small>',
 }
 
+SVC2 = True  # 서비스 페이지 정리 적용(2026-10-14) — False로 바꾸면 이전 배치로 돌아감
 def build_services(posts):
     cards = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in ALL_SERVICES)  # 번호 뺌(2026.10.11 D+)
     body = f'''<div class="wrap" style="padding-top:36px">
@@ -1207,7 +1208,7 @@ def build_services(posts):
         wb = [("보수 할인", WHY[2][1]), ("보조금 정보 제공", WHY[3][1], WHY[3][2])]
         tps = SERVICE_TOPICS.get(k, [])
         biz = k in ("bookkeeping", "tax-filing")  # 사업자 업무는 사업자 세금(category: business) 글만
-        rq = [p for p in posts if topic_of(p) in tps and (not biz or p.get("category") == "business")][:5]
+        rq = [p for p in posts if topic_of(p) in tps and (not biz or p.get("category") == "business")][:(3 if SVC2 else 5)]
         rel_q = ""
         if rq:
             items = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in rq)
@@ -1216,7 +1217,7 @@ def build_services(posts):
         _vk = SERVICE_VIDEO.get(k)
         vid_b = (f'<section class="svc-vid"><h2>영상으로 먼저 보기</h2>{vbox(VBY[_vk], "▶ 김태형 세무사 직접 설명")}</section>' if _vk and _vk in VBY else "")
         why_b = (f'<section class="why-svc"><h2>기장 거래처 혜택</h2><div class="grid why-grid">{why_cards(wb)}</div></section>' if k == "bookkeeping" else "")
-        body = f'''<div class="wrap svc-page" style="padding-top:28px">
+        body = f'''<div class="wrap svc-page{" v2" if SVC2 else ""}" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
 <h1>{t}</h1>
 <p class="lead">{esc(x["intro"])}</p>
@@ -1226,7 +1227,7 @@ def build_services(posts):
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
 </div>{note}{calc}{rel_q}{vid_b}{why_b}
 {flow_html()}
-<p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>
+{"" if SVC2 else '<p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>'}
 {lead_form(SVC_TO_LEAD.get(k), "ls")}
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
 </div>'''
