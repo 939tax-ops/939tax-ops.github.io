@@ -689,14 +689,26 @@ ROUTE_ICONS = {
     "bus": '<rect x="12" y="8" width="40" height="42" rx="7"/><path d="M12 32h40M20 16h24"/><circle cx="21" cy="41" r="2.5" fill="currentColor"/><circle cx="43" cy="41" r="2.5" fill="currentColor"/><path d="M18 50v6M46 50v6"/>',
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
+ROUTE_SIDE = {"c-05", "car-02", "car-03"}  # 이쪽 아님 사진: 작게, 한 줄에
 def route_html():
     btns = "".join(f'<button type="button" class="rt-btn" data-k="{k}" aria-controls="rt-{k}"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">{ROUTE_ICONS[k]}</svg><b>{t}</b><small>{d}</small></button>' for k, (t, d, _) in ROUTE_SETS.items())
     sets = ""
     for k, (t, d, imgs) in ROUTE_SETS.items():
         n = len(imgs)
-        items = "".join(f'<figure><figcaption>{i} / {n}</figcaption><img src="/assets/route/{f}.webp" alt="{t}로 오시는 길 {i}단계" loading="lazy" width="900"></figure>' for i, f in enumerate(imgs, 1))
-        sets += f'<div class="rt-set" id="rt-{k}" hidden><h3>{t}로 오시는 길</h3>{items}<button type="button" class="rt-top">다른 방법 보기 ↑</button></div>'
-    css = '<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}.rt-set{margin-top:18px;scroll-margin-top:84px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 12px}.rt-set figure{margin:0 0 16px}.rt-set figcaption{font-size:13px;opacity:.7;margin-bottom:6px}.rt-set img{display:block;width:100%;max-width:560px;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-top{border:1px solid var(--green);background:var(--surface);color:var(--green);border-radius:20px;padding:8px 18px;font:inherit;font-size:14px;cursor:pointer}</style>'
+        items, grp = "", []
+        def fig(i, f, small=False):
+            cap = f'{i} / {n}' + (' · 이쪽 아님' if small else '')
+            return f'<figure><figcaption>{cap}</figcaption><img src="/assets/route/{f}.webp" alt="{t}{"으로" if t in ("1호선","경의중앙선") else "로"} 오시는 길 {i}단계" loading="lazy" width="900"></figure>'
+        for i, f in enumerate(imgs, 1):
+            if f in ROUTE_SIDE:
+                grp.append(fig(i, f, True)); continue
+            if grp:
+                items += '<div class="rt-row">' + "".join(grp) + '</div>'; grp = []
+            items += fig(i, f)
+        if grp: items += '<div class="rt-row">' + "".join(grp) + '</div>'
+
+        sets += f'<div class="rt-set" id="rt-{k}" hidden><h3>{t}{"으로" if t in ("1호선","경의중앙선") else "로"} 오시는 길</h3>{items}<button type="button" class="rt-top">다른 방법 보기 ↑</button></div>'
+    css = '<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}.rt-set{margin-top:18px;scroll-margin-top:84px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 12px}.rt-set figure{margin:0 0 16px}.rt-set figcaption{font-size:13px;opacity:.7;margin-bottom:6px}.rt-set img{display:block;width:100%;max-width:560px;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-row{display:flex;gap:10px;max-width:560px;margin:0 0 16px}.rt-row figure{flex:0 1 calc(50% - 5px);margin:0}.rt-top{border:1px solid var(--green);background:var(--surface);color:var(--green);border-radius:20px;padding:8px 18px;font:inherit;font-size:14px;cursor:pointer}</style>'
     js = '<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");function show(k,sc){B.forEach(function(b){b.classList.toggle("on",b.dataset.k===k);b.setAttribute("aria-expanded",b.dataset.k===k)});S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t&&sc)t.scrollIntoView({behavior:"smooth",block:"start"});}B.forEach(function(b){b.addEventListener("click",function(){show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});document.querySelectorAll(".rt-top").forEach(function(b){b.addEventListener("click",function(){document.getElementById("route").scrollIntoView({behavior:"smooth"})})});var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>'
     return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 차량번호를 알려주시면 2시간 무료 주차를 등록해 드립니다.</p></div>{js}'
 
