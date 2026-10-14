@@ -77,7 +77,7 @@ def cta_box(p):
     return f'<div class="cta-box"><p>{text}</p><div class="btns">{btns}</div></div>'
 
 # 상담 가능 지역(2026.10.11 확정 문구)
-AREA_TEXT = "서울 및 경기도 일부"
+AREA_TEXT = "서울 및 경기도\u00a0일부"
 
 # 상담 진행 절차(문의 페이지·업무 페이지 공통)
 FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨\u00a0주세요."),
@@ -297,6 +297,11 @@ def write(rel, text):
         # 링크·버튼 끝의 '→' 일괄 제거(2026-10-15, 'AI 느낌' 정리). 문장 속 방향 표시(1번 출구 → …)는 그대로 둠
         text = text.replace('<span class="ar" aria-hidden="true">→</span>', '')
         text = re.sub(r'\s*→(\s*(?:</b>|</span>)*\s*</(?:a|button)>)', r'\1', text)
+        # 짧은 괄호 묶음은 줄이 중간에서 안 꺾이게(2026-10-15): "경정청구 (낸 세금 환급 가능 여부)" → 괄호 앞뒤·안쪽 띄어쓰기를 붙임표 없는 공백으로
+        def _paren(seg):
+            return re.sub(r' \(([^()<>\n]{1,14})\)', lambda m: '\u00a0(' + m.group(1).replace(' ', '\u00a0') + ')', seg)
+        _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<[^>]+>)', text, flags=re.S)
+        text = ''.join(p if (i % 2 or not p) else _paren(p) for i, p in enumerate(_parts))
     if rel.endswith(".html"):
         def _jt(mm):
             lab = mm.group(1).replace(" ", "")
@@ -792,7 +797,7 @@ ROUTE_CAP = {
     "gy-02": "1번 출구로 나가기",
     "gy-03": "왼쪽 엘리베이터 또는 계단으로 내려가기",
     "c-01": "청량리역 4번 출구 (버스는 바로 앞 환승센터 하차)",
-    "c-02": "출구에서 오른쪽 오르막길, 오른쪽 보도로 올라가기",
+    "c-02": "출구에서 나와서<br>오른쪽 오르막길로",
     "c-03": "오른쪽 보도로 올라가기",
     "c-04": "두 번째 입구(섹션오피스)로",
     "c-05b": "오피스텔 입구는 지나쳐 주세요",
@@ -912,7 +917,7 @@ def build_about():
 <img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <table class="info">
 <tr><th>지도</th><td><span style="white-space:nowrap"><a href="{nmap}" target="_blank" rel="noopener">네이버 지도</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵</a>에서 보기</span></td></tr>
-<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
+<tr><th>전화</th><td><span class="nw"><a href="tel:{TEL}">{TEL}</a></span> <span class="nw">(팩스 {FAX})</span></td></tr>
 <tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
 
@@ -937,7 +942,7 @@ def build_location():
 <img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <table class="info">
 <tr><th>지도</th><td><span style="white-space:nowrap"><a href="{nmap}" target="_blank" rel="noopener">네이버 지도</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵</a>에서 보기</span></td></tr>
-<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
+<tr><th>전화</th><td><span class="nw"><a href="tel:{TEL}">{TEL}</a></span> <span class="nw">(팩스 {FAX})</span></td></tr>
 <tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
 
@@ -1343,7 +1348,7 @@ def build_area():
 <table class="info">
 <tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
 <tr><th>지도</th><td><span style="white-space:nowrap"><a href="{nmap}" target="_blank" rel="noopener">네이버 지도</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵</a>에서 보기</span></td></tr>
-<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
+<tr><th>전화</th><td><span class="nw"><a href="tel:{TEL}">{TEL}</a></span> <span class="nw">(팩스 {FAX})</span></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 </table>
 <img class="loc-map" style="margin:14px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역과 롯데백화점 사이 왕산로 200 롯데캐슬SKY-L65" loading="lazy">
