@@ -90,7 +90,7 @@
         out.innerHTML='<div class="s-none"><p>아직 이 질문을 다룬 글이 없습니다. 궁금하신 내용을 남겨 주시면 확인 후 연락드리겠습니다.</p><p><a class="btn primary" href="/contact/">문의 남기기</a></p>'+(document.querySelector('.qa-feed')?'<p class="s-back"><button type="button" class="s-reset">← 전체 목록 보기</button></p>':'')+'</div>';
         return;
       }
-      out.innerHTML=res.map(function(x){var d=x.d;return '<a class="s-item" href="'+d.u+'"><span class="s-cat">'+esc(d.c)+'</span><b>'+esc(d.t)+'</b><span class="s-sum">'+esc(d.s)+'</span><span class="s-go">자세히 보기 →</span></a>'}).join('')+
+      out.innerHTML=res.map(function(x){var d=x.d, calc=d.c==='계산기';return '<a class="s-item'+(calc?' s-calc':'')+'" href="'+d.u+'"><span class="s-cat">'+esc(d.c)+'</span><b>'+esc(d.t)+'</b><span class="s-sum">'+esc(d.s)+'</span><span class="s-go">'+(calc?'바로 계산해 보기':'자세히 보기')+'</span></a>'}).join('')+
         '<p class="s-note">본인의 상황에 맞추어 확인이 필요하시면 <a href="/contact/">편하게 문의해 주세요</a>. 확인 후 연락드리겠습니다.</p>'+
         (document.querySelector('.qa-feed')?'<p class="s-back"><button type="button" class="s-reset">← 전체 목록 보기</button></p>':'');
     });

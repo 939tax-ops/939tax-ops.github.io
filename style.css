@@ -1337,3 +1337,8 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .h2-act .act:hover{text-decoration-color:currentColor}
 .h2-act .act svg{width:16px;height:16px}
 .h2-act .act span{display:none}
+/* 검색 결과 중 계산기는 눈에 띄게 — 2026-10-15 */
+.s-item.s-calc{border:2px solid var(--green)}
+.s-item.s-calc .s-cat{background:var(--green-bg);color:#fff;font-weight:700}
+.s-item.s-calc .s-go{display:inline-block;margin-top:10px;padding:7px 14px;border-radius:3px;background:var(--green-bg);color:#fff}
+@media (prefers-color-scheme: dark) and (max-width:760px){.s-item.s-calc .s-go,.s-item.s-calc .s-cat{background:#2E8B55}}
