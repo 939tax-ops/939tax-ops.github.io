@@ -703,7 +703,7 @@ def build_home_v2(posts, out="index.html"):
 <h2>김태형 <span>세무사</span></h2>
 <p class="h2-rep-q">상담부터 신고서 최종 검토까지 세무사가 직접 맡습니다.<br>법령과 자료를 근거로 먼저 검토하고, 결과를 명확하게 설명드립니다.</p>
 <dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스 · 前 포스코건설</dd><dt>활동</dt><dd><a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세무사 세친구</a></dd></dl>
-<a class="h2-more" href="/about/">대표 세무사 소개 보기 →</a>
+<a class="h2-more" href="/about/">소개 자세히 보기 →</a>
 </div></div></section>
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid h2-svc">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section>
@@ -1377,8 +1377,7 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts);
-    if os.environ.get("HOME2_PREVIEW"): build_home_v2(posts, "_preview/home/index.html")  # 시안 — 커밋 금지
+    build_qa_index(posts); build_home_v2(posts)  # 홈 개편 적용(2026-10-14) — 이전 홈은 build_home()에 보관
     build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
