@@ -484,8 +484,11 @@ def build_videos():
                "embedUrl": f'https://www.youtube.com/embed/{v["yt"]}', "contentUrl": f'https://www.youtube.com/watch?v={v["yt"]}'}]
         write(f"video/{v['slug']}/index.html", page(f'{v["title"]} | {NAME}', re.sub("<[^>]+>", "", v["lead"]), url, art, "qa", ld))
 
+def date_tag(p):
+    return '<span class="d">' + p["date"].replace("-", ".") + '</span>'
+
 def tp2_tag(p):
-    """애매한 글은 보조 분류 태그를 하나 더 표시(필터는 주 분류 기준) — 2026-10-14"""
+    """애매한 글은 보조 분류 태그를 하나 더 표시(필터는 주 분류 기준). 태그 2개인 카드는 날짜를 빼서 줄 맞춤 — 2026-10-14"""
     t2 = p.get("topic2")
     return f'<span class="b-t b-t2">{TOPIC_NAME[t2]}</span>' if t2 in TOPIC_NAME and t2 != topic_of(p) else ""
 
@@ -495,7 +498,7 @@ def qa_card(p, big=False):
     if type_name(p): badge += f'<span class="b-case">{type_name(p)}</span>'
     if p["slug"] in VIDEO_OF_POST: badge += '<span class="b-vid">▶ 영상</span>'
     return (f'<a class="qcard{" big" if big else ""}" href="/qa/{p["slug"]}/" data-t="{tp}">'
-            f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span>{tp2_tag(p)}<span class="d">{p["date"].replace("-", ".")}</span></span>'
+            f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span>{tp2_tag(p) or date_tag(p)}</span>'
             f'<b>{esc(p["title"])}</b><span class="qs">{esc(p["description"])}</span><span class="go">자세히 보기 →</span></a>')
 
 def build_qa_index(posts):
