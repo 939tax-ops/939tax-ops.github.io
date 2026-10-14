@@ -239,7 +239,8 @@ _KEEP_RE = re.compile("|".join(map(re.escape, KEEP_PHRASES)) + r"|0\d{1,2}-\d{3,
 _SKIP = {"script", "style", "textarea", "select", "option", "title", "svg", "head"}
 # R4. 가운뎃점(·)으로 이은 말은 줄 첫머리에 '·'가 오지 않게 한다.
 #     짧으면(14자 이하) 통째로 묶고, 길면 '·' 앞에서만 끊기지 않게(WORD JOINER) 한다.
-_DOT_RE = re.compile(r'[^\s·<>()（）,]+(?:·[^\s·<>()（）,]+)+[,.]?')
+_TOK = r'(?:\d,(?=\d{3})|[^\s·<>()（）,])+'  # 4,000만원 같은 천 단위 쉼표는 한 덩어리로
+_DOT_RE = re.compile(r'(?<![\w,.])' + _TOK + r'(?:·' + _TOK + r')+[,.]?')
 def _dot(m):
     t = m.group(0)
     return f'<span class="kp">{t}</span>' if len(t) <= 14 else t.replace("·", "\u2060·")
@@ -307,8 +308,8 @@ def write(rel, text):
                     return '<span class="nw">' + w + '(' + inner + ')' + pu + '</span>'
                 join = '\u00a0' if (sp and len(inner) <= 10) else sp
                 return w + join + '<span class="nw">(' + inner + ')' + pu + '</span>'
-            seg = re.sub(r'%(?=[가-힣])', '%\u2060', seg)  # 9.5%를: % 뒤 조사가 다음 줄로 떨어지지 않게
-            return re.sub(r'([^\s()<>]{1,8})?( ?)\(([^()<>\n]{1,16})\)([,.]?)', f, seg)
+            seg = re.sub(r'([%)])(?=[가-힣])', '\\1\u2060', seg)  # 9.5%를: % 뒤 조사가 다음 줄로 떨어지지 않게
+            return re.sub(r'([^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,16})\)([,.]?)', f, seg)
         _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>|<textarea\b.*?</textarea>|<option\b.*?</option>|<svg\b.*?</svg>|<head\b.*?</head>|<[^>]+>)', text, flags=re.S)
         text = ''.join(p if (i % 2 or not p) else _paren(p) for i, p in enumerate(_parts))
     if rel.endswith(".html"):
