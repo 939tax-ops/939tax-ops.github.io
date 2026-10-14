@@ -691,7 +691,7 @@ ROUTE_ICONS = {
 }
 ROUTE_SIDE = {"car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
-    "car": "내비에 <b>‘왕산로 200’</b> → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)",
+    "car": "내비에 <b>‘왕산로 200’</b> 검색 후 → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)<br><b style=\"color:#C00000\">꼭 지하 4층에 주차해 주세요.</b>",
     "gyeongui": "1번 출구 → 청량리역 4번 출구 앞 → 이후 1호선과 같은 길",
     "bus": "청량리역 버스환승센터 하차 → 바로 앞 4번 출구",
     "line1": "4번 출구에서 도보 1~2분",
@@ -709,7 +709,7 @@ ROUTE_CAP = {
     "c-07": "게이트 그냥 통과 → 엘리베이터",
     "c-08": "13층, 유리벽 지나 왼쪽",
     "c-09": "1313호 도착",
-    "car-01": "‘업무시설’ 표지 따라가기",
+    "car-01": "지하 4층 주차 후 ‘업무시설’ 표지 따라가기",
     "car-02": "상가·오피스텔 엘리베이터 X",
     "car-03": "상가·오피스텔 엘리베이터 X",
     "car-04": "업무시설 문으로 들어가기",
@@ -765,7 +765,7 @@ def route_html():
           'S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t){go(t,1);if(sc)t.scrollIntoView({behavior:"smooth",block:"start"});}}'
           'B.forEach(function(b){b.addEventListener("click",function(){if(b.classList.contains("on")){b.classList.remove("on");b.setAttribute("aria-expanded",false);S.forEach(function(s){s.hidden=true});history.replaceState(null,"",location.pathname+"#route");return;}show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});'
           'var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
-    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 자차는 내비에 ‘왕산로 200’ → 지하 4층 주차(2시간 무료)</p></div>{js}'
+    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 자차는 내비에 ‘왕산로 200’ 검색 후 → 꼭 지하 4층 주차(2시간 무료)</p></div>{js}'
 
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
