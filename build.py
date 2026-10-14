@@ -679,7 +679,7 @@ def build_home(posts):
 # 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-bus / #go-car 로 바로 열림
 ROUTE_SETS = {
     "line1": ("1호선", "청량리역 4번 출구", ["c-01","c-02","c-03","c-04","c-05","c-06","c-07","c-08","c-09"]),
-    "gyeongui": ("경의중앙선", "1번 출구 → 청량리역 4번 출구", ["gy-01","gy-02","gy-03","c-01","c-02","c-03","c-04","c-05","c-06","c-07","c-08","c-09"]),
+    "gyeongui": ("경의중앙선", "1번 출구 → 청량리역 4번 출구", ["gy-01","gy-02","gy-03","g-04","g-05","g-06","g-07","c-05","g-08","g-09","g-10","g-11"]),
     "bus": ("버스", "청량리역 버스환승센터", ["c-01","c-02","c-03","c-04","c-05","c-06","c-07","c-08","c-09"]),
     "car": ("자차", "지하4층 · 2시간 무료", ["car-01","car-02","car-03","car-04","car-05","car-06","car-07"]),
 }
@@ -689,28 +689,83 @@ ROUTE_ICONS = {
     "bus": '<rect x="12" y="8" width="40" height="42" rx="7"/><path d="M12 32h40M20 16h24"/><circle cx="21" cy="41" r="2.5" fill="currentColor"/><circle cx="43" cy="41" r="2.5" fill="currentColor"/><path d="M18 50v6M46 50v6"/>',
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
-ROUTE_SIDE = {"c-05", "car-02", "car-03"}  # 이쪽 아님 사진: 작게, 한 줄에
+ROUTE_SIDE = {"c-05", "car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
+ROUTE_INTRO = {
+    "car": "내비게이션에 <b>‘왕산로 200’</b>을 입력하고 오셔서 건물 <b>지하 4층</b>에 주차해 주세요. 차량번호를 알려주시면 2시간 무료 주차를 등록해 드립니다.",
+    "gyeongui": "경의중앙선에서 내리시면 1번 출구로 나와 청량리역 4번 출구 앞으로 오시면 됩니다. 그다음은 1호선과 같은 길입니다.",
+    "bus": "청량리역 버스환승센터에서 내리시면 바로 앞이 청량리역 4번 출구입니다.",
+    "line1": "청량리역 4번 출구에서 도보 약 1~2분입니다.",
+}
+ROUTE_CAP = {
+    "gy-01": "경의중앙선에서 내리시면 ‘나가는 곳’ 표지를 따라 이동하세요.",
+    "gy-02": "1번 출구(청량리역 환승센터·왕산로) 쪽으로 나가세요.",
+    "gy-03": "바깥 데크에서 왼쪽 엘리베이터를 타거나 앞쪽 계단으로 내려가면 청량리역 4번 출구 앞입니다.",
+    "c-01": "청량리역 4번 출구입니다. 버스는 바로 앞 청량리역 버스환승센터에서 내리시면 됩니다.",
+    "c-02": "4번 출구에서 나와 오른쪽을 보시면 오르막길이 있습니다.",
+    "c-03": "오르막을 따라 오른쪽 보도로 올라오세요.",
+    "c-04": "오른쪽에 입구가 두 개 있습니다. 더 안쪽의 두 번째 입구(섹션오피스)로 오세요.",
+    "c-05": "첫 번째 오피스텔 입구는 지나쳐 가세요.",
+    "c-06": "‘SKY-L65 섹션오피스’ 입구로 들어오세요.",
+    "c-07": "1층 출입 게이트는 방문객도 그대로 지나가시면 됩니다. 안쪽 엘리베이터를 타세요.",
+    "c-08": "13층에서 내려 정면 유리벽을 지나 왼쪽으로 오세요.",
+    "c-09": "1313호 세무회계택입니다.",
+    "car-01": "지하 4층에 주차하신 뒤 ‘업무시설’ 표지를 따라오세요.",
+    "car-02": "상가·문화집회, 오피스텔 엘리베이터는 이쪽이 아닙니다.",
+    "car-03": "상가·문화집회, 오피스텔 엘리베이터는 이쪽이 아닙니다.",
+    "car-04": "‘업무시설(Section Office)’ 출입문으로 들어가세요.",
+    "car-05": "업무시설 엘리베이터를 타고 13층으로 오세요.",
+    "car-06": "13층에서 내려 정면 유리벽을 지나 왼쪽으로 오세요.",
+    "car-07": "1313호 세무회계택입니다.",
+}
+for _g, _c in {"g-04":"c-01","g-05":"c-02","g-06":"c-03","g-07":"c-04","g-08":"c-06","g-09":"c-07","g-10":"c-08","g-11":"c-09"}.items():
+    ROUTE_CAP[_g] = ROUTE_CAP[_c]
 def route_html():
+    def pp(t): return t + ("으로" if t in ("1호선", "경의중앙선") else "로")
     btns = "".join(f'<button type="button" class="rt-btn" data-k="{k}" aria-controls="rt-{k}"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">{ROUTE_ICONS[k]}</svg><b>{t}</b><small>{d}</small></button>' for k, (t, d, _) in ROUTE_SETS.items())
     sets = ""
     for k, (t, d, imgs) in ROUTE_SETS.items():
-        n = len(imgs)
-        items, grp = "", []
-        def fig(i, f, small=False):
-            cap = f'{i} / {n}' + (' · 이쪽 아님' if small else '')
-            return f'<figure><figcaption>{cap}</figcaption><img src="/assets/route/{f}.webp" alt="{t}{"으로" if t in ("1호선","경의중앙선") else "로"} 오시는 길 {i}단계" loading="lazy" width="900"></figure>'
-        for i, f in enumerate(imgs, 1):
+        slides, grp = [], []
+        for f in imgs:
             if f in ROUTE_SIDE:
-                grp.append(fig(i, f, True)); continue
-            if grp:
-                items += '<div class="rt-row">' + "".join(grp) + '</div>'; grp = []
-            items += fig(i, f)
-        if grp: items += '<div class="rt-row">' + "".join(grp) + '</div>'
-
-        sets += f'<div class="rt-set" id="rt-{k}" hidden><h3>{t}{"으로" if t in ("1호선","경의중앙선") else "로"} 오시는 길</h3>{items}<button type="button" class="rt-top">다른 방법 보기 ↑</button></div>'
-    css = '<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}.rt-set{margin-top:18px;scroll-margin-top:84px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 12px}.rt-set figure{margin:0 0 16px}.rt-set figcaption{font-size:13px;opacity:.7;margin-bottom:6px}.rt-set img{display:block;width:100%;max-width:560px;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-row{display:flex;gap:10px;max-width:560px;margin:0 0 16px}.rt-row figure{flex:0 1 calc(50% - 5px);margin:0}.rt-top{border:1px solid var(--green);background:var(--surface);color:var(--green);border-radius:20px;padding:8px 18px;font:inherit;font-size:14px;cursor:pointer}</style>'
-    js = '<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");function show(k,sc){B.forEach(function(b){b.classList.toggle("on",b.dataset.k===k);b.setAttribute("aria-expanded",b.dataset.k===k)});S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t&&sc)t.scrollIntoView({behavior:"smooth",block:"start"});}B.forEach(function(b){b.addEventListener("click",function(){show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});document.querySelectorAll(".rt-top").forEach(function(b){b.addEventListener("click",function(){document.getElementById("route").scrollIntoView({behavior:"smooth"})})});var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>'
-    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 차량번호를 알려주시면 2시간 무료 주차를 등록해 드립니다.</p></div>{js}'
+                grp.append(f); continue
+            if grp: slides.append(grp); grp = []
+            slides.append([f])
+        if grp: slides.append(grp)
+        n = len(slides)
+        sl = ""
+        for i, g in enumerate(slides, 1):
+            side = len(g) > 1 or g[0] in ROUTE_SIDE
+            imgh = "".join(f'<img src="/assets/route/{f}.webp" alt="{pp(t)} 오시는 길 {i}단계" loading="lazy" width="900">' for f in g)
+            cap = ROUTE_CAP.get(g[0], "")
+            sl += f'<figure class="rt-slide{" side" if side else ""}" data-i="{i}"><div class="rt-imgs">{imgh}</div><figcaption>{cap}</figcaption></figure>'
+        dots = "".join(f'<i data-i="{i}"></i>' for i in range(1, n + 1))
+        sets += (f'<div class="rt-set" id="rt-{k}" hidden><h3>{pp(t)} 오시는 길</h3><p class="rt-lead">{ROUTE_INTRO.get(k, "")}</p>'
+                 f'<div class="rt-view">{sl}</div>'
+                 f'<div class="rt-nav"><button type="button" class="rt-prev">‹ 이전</button><span class="rt-cnt">1 / {n}</span><button type="button" class="rt-next">다음 ›</button></div>'
+                 f'<div class="rt-dots">{dots}</div><button type="button" class="rt-top">다른 방법 보기 ↑</button></div>')
+    css = ('<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}'
+           '.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}'
+           '.rt-set{margin-top:18px;scroll-margin-top:84px;max-width:560px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 6px}.rt-lead{margin:0 0 12px;line-height:1.6}'
+           '.rt-view{touch-action:pan-y}.rt-slide{margin:0;display:none}.rt-slide.on{display:block}.rt-imgs{display:flex;gap:8px}.rt-imgs img{display:block;flex:1;min-width:0;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-slide.side .rt-imgs img{max-width:calc(50% - 4px)}'
+           '.rt-slide figcaption{margin:10px 2px 0;font-size:16px;line-height:1.55;font-weight:500}'
+           '.rt-nav{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.rt-nav button{border:1.5px solid var(--green);background:var(--surface);color:var(--green);border-radius:22px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;min-width:96px}.rt-nav button:disabled{opacity:.35;cursor:default}.rt-cnt{font-weight:700;color:var(--green)}'
+           '.rt-dots{display:flex;justify-content:center;gap:7px;margin:4px 0 14px}.rt-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.rt-dots i.on{background:var(--green)}'
+           '.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
+    js = ('<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");'
+          'function go(set,i){var sl=set.querySelectorAll(".rt-slide"),n=sl.length;i=Math.max(1,Math.min(n,i));set._i=i;'
+          'sl.forEach(function(s,j){s.classList.toggle("on",j===i-1)});set.querySelectorAll(".rt-dots i").forEach(function(d,j){d.classList.toggle("on",j===i-1)});'
+          'set.querySelector(".rt-cnt").textContent=i+" / "+n;set.querySelector(".rt-prev").disabled=i===1;set.querySelector(".rt-next").disabled=i===n;'
+          'if(sl[i])sl[i].querySelectorAll("img").forEach(function(m){m.loading="eager"});}'
+          'S.forEach(function(set){go(set,1);set.querySelector(".rt-prev").onclick=function(){go(set,set._i-1)};set.querySelector(".rt-next").onclick=function(){go(set,set._i+1)};'
+          'set.querySelectorAll(".rt-dots i").forEach(function(d){d.onclick=function(){go(set,+d.dataset.i)}});'
+          'var v=set.querySelector(".rt-view"),x0=null;v.addEventListener("touchstart",function(e){x0=e.touches[0].clientX},{passive:true});'
+          'v.addEventListener("touchend",function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(set,set._i+(dx<0?1:-1));x0=null});'
+          'set.querySelector(".rt-top").onclick=function(){document.getElementById("route").scrollIntoView({behavior:"smooth"})};});'
+          'function show(k,sc){B.forEach(function(b){b.classList.toggle("on",b.dataset.k===k);b.setAttribute("aria-expanded",b.dataset.k===k)});'
+          'S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t){go(t,1);if(sc)t.scrollIntoView({behavior:"smooth",block:"start"});}}'
+          'B.forEach(function(b){b.addEventListener("click",function(){if(b.classList.contains("on")){b.classList.remove("on");b.setAttribute("aria-expanded",false);S.forEach(function(s){s.hidden=true});history.replaceState(null,"",location.pathname+"#route");return;}show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});'
+          'var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
+    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 자차는 내비게이션에 ‘왕산로 200’ 입력 후 지하 4층 주차(2시간 무료 등록)</p></div>{js}'
 
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
