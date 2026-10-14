@@ -689,6 +689,7 @@ ROUTE_ICONS = {
     "bus": '<rect x="12" y="8" width="40" height="42" rx="7"/><path d="M12 32h40M20 16h24"/><circle cx="21" cy="41" r="2.5" fill="currentColor"/><circle cx="43" cy="41" r="2.5" fill="currentColor"/><path d="M18 50v6M46 50v6"/>',
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
+ROUTE_JOIN = {"c-05"}  # 앞 장(입구 두 개)과 한 화면에 나란히
 ROUTE_SIDE = {"car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
     "car": "내비에 <b>‘왕산로 200’</b> 검색 후 → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)<br><b style=\"color:#C00000\">꼭 지하 4층에 주차해 주세요.</b>",
@@ -729,15 +730,18 @@ def route_html():
             if f in ROUTE_SIDE:
                 grp.append(f); continue
             if grp: slides.append(grp); grp = []
+            if f in ROUTE_JOIN and slides:
+                slides[-1].append(f); continue
             slides.append([f])
         if grp: slides.append(grp)
         n = len(slides)
         sl = ""
         for i, g in enumerate(slides, 1):
-            side = len(g) > 1 or g[0] in ROUTE_SIDE
+            side = g[0] in ROUTE_SIDE
+            pair = len(g) > 1 and not side
             imgh = "".join(f'<img src="/assets/route/{f}.webp" alt="{pp(t)} 오시는 길 {i}단계" loading="lazy" width="900">' for f in g)
-            cap = ROUTE_CAP.get(g[0], "")
-            sl += f'<figure class="rt-slide{" side" if side else ""}" data-i="{i}"><figcaption>{cap}</figcaption><div class="rt-imgs">{imgh}</div></figure>'
+            cap = ROUTE_CAP.get(g[0], "") + (" · 오피스텔 입구는 지나치기" if pair else "")
+            sl += f'<figure class="rt-slide{" side" if side else ""}{" pair" if pair else ""}" data-i="{i}"><figcaption>{cap}</figcaption><div class="rt-imgs">{imgh}</div></figure>'
         dots = "".join(f'<i data-i="{i}"></i>' for i in range(1, n + 1))
         sets += (f'<div class="rt-set" id="rt-{k}" hidden><h3>{pp(t)} 오시는 길</h3><p class="rt-lead">{ROUTE_INTRO.get(k, "")}</p>'
                  f'<div class="rt-nav"><button type="button" class="rt-prev">‹ 이전</button><span class="rt-cnt">1 / {n}</span><button type="button" class="rt-next">다음 ›</button></div>'
@@ -750,15 +754,18 @@ def route_html():
            '.rt-slide figcaption{margin:0 0 10px;padding:10px 14px;border-left:4px solid var(--green);background:var(--tint,#EBF1ED);border-radius:6px;font-size:17px;line-height:1.5;font-weight:700;color:var(--green)}'
            '.rt-nav{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.rt-nav button{border:1.5px solid var(--green);background:var(--surface);color:var(--green);border-radius:22px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;min-width:96px}.rt-nav button:disabled{opacity:.35;cursor:default}.rt-cnt{font-weight:700;color:var(--green)}'
            '.rt-dots{display:flex;justify-content:center;gap:7px;margin:4px 0 14px}.rt-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.rt-dots i.on{background:var(--green)}'
-           '.rt-view{margin-bottom:14px}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
+           '.rt-view{margin-bottom:14px}@media(min-width:860px){.rt-set{max-width:980px}.rt-view{display:flex;gap:16px;align-items:flex-start}.rt-slide.on{flex:1 1 0;min-width:0}}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
     js = ('<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");'
-          'function go(set,i){var sl=set.querySelectorAll(".rt-slide"),n=sl.length;i=Math.max(1,Math.min(n,i));set._i=i;'
-          'sl.forEach(function(s,j){s.classList.toggle("on",j===i-1)});set.querySelectorAll(".rt-dots i").forEach(function(d,j){d.classList.toggle("on",j===i-1)});'
-          'set.querySelector(".rt-cnt").textContent=i+" / "+n;set.querySelector(".rt-prev").disabled=i===1;set.querySelector(".rt-next").disabled=i===n;'
-          'if(sl[i])sl[i].querySelectorAll("img").forEach(function(m){m.loading="eager"});}'
-          'S.forEach(function(set){go(set,1);set.querySelector(".rt-prev").onclick=function(){go(set,set._i-1)};set.querySelector(".rt-next").onclick=function(){go(set,set._i+1)};'
-          'set.querySelectorAll(".rt-dots i").forEach(function(d){d.onclick=function(){go(set,+d.dataset.i)}});'
-          'var v=set.querySelector(".rt-view"),x0=null;v.addEventListener("touchstart",function(e){x0=e.touches[0].clientX},{passive:true});'
+          'function stp(){return window.matchMedia("(min-width:860px)").matches?2:1}'
+          'function go(set,i){var sl=set.querySelectorAll(".rt-slide"),n=sl.length,k=stp(),pg=Math.ceil(n/k);i=Math.max(1,Math.min(pg,i));set._i=i;var a=(i-1)*k;'
+          'sl.forEach(function(s,j){s.classList.toggle("on",j>=a&&j<a+k)});'
+          'var D=set.querySelector(".rt-dots");if(D.children.length!==pg){D.innerHTML="";for(var q=1;q<=pg;q++){var d=document.createElement("i");d.dataset.i=q;d.onclick=function(){go(set,+this.dataset.i)};D.appendChild(d)}}'
+          'D.querySelectorAll("i").forEach(function(d,j){d.classList.toggle("on",j===i-1)});'
+          'set.querySelector(".rt-cnt").textContent=(k>1&&a+2<=n?(a+1)+"–"+(a+2):(a+1))+" / "+n;set.querySelector(".rt-prev").disabled=i===1;set.querySelector(".rt-next").disabled=i===pg;'
+          'for(var z=a+k;z<a+2*k&&z<n;z++)sl[z].querySelectorAll("img").forEach(function(m){m.loading="eager"});}'
+          'window.addEventListener("resize",function(){S.forEach(function(set){if(set._k!==stp()){set._k=stp();go(set,1)}})});'
+          'S.forEach(function(set){set._k=stp();go(set,1);set.querySelector(".rt-prev").onclick=function(){go(set,set._i-1)};set.querySelector(".rt-next").onclick=function(){go(set,set._i+1)};'
+                    'var v=set.querySelector(".rt-view"),x0=null;v.addEventListener("touchstart",function(e){x0=e.touches[0].clientX},{passive:true});'
           'v.addEventListener("touchend",function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(set,set._i+(dx<0?1:-1));x0=null});'
           'set.querySelector(".rt-top").onclick=function(){document.getElementById("route").scrollIntoView({behavior:"smooth"})};});'
           'function show(k,sc){B.forEach(function(b){b.classList.toggle("on",b.dataset.k===k);b.setAttribute("aria-expanded",b.dataset.k===k)});'
