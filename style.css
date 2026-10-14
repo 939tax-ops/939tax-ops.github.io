@@ -1355,3 +1355,8 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .nw{white-space:nowrap}
 /* 동의 내용 표: 항목 이름(수집 항목 등)은 한 줄로 — 2026-10-15 */
 .lf-agree th{white-space:nowrap;width:1%}
+
+/* 줄바꿈 정리 2(2026-10-15): 폰에서 버튼 글자·짧은 표 항목명이 두 줄로 꺾이지 않게 */
+.svc-top .btns .btn{white-space:nowrap}
+@media (max-width:760px){.svc-top .btns .btn.kk{flex:1.25}.svc-top .btns .btn .ic{margin-right:4px}}
+table.info th:has(.jt){white-space:nowrap}

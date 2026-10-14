@@ -299,8 +299,15 @@ def write(rel, text):
         text = re.sub(r'\s*→(\s*(?:</b>|</span>)*\s*</(?:a|button)>)', r'\1', text)
         # 짧은 괄호 묶음은 줄이 중간에서 안 꺾이게(2026-10-15): "경정청구 (낸 세금 환급 가능 여부)" → 괄호 앞뒤·안쪽 띄어쓰기를 붙임표 없는 공백으로
         def _paren(seg):
-            return re.sub(r' \(([^()<>\n]{1,14})\)', lambda m: '\u00a0(' + m.group(1).replace(' ', '\u00a0') + ')', seg)
-        _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<[^>]+>)', text, flags=re.S)
+            # 괄호 안 16자 이하: 괄호 묶음 전체를 한 줄로. 앞말에 붙은 괄호(연락처(…))는 앞말까지 함께, 띄운 괄호는 안쪽이 짧으면(≤10) 앞말과도 붙임
+            def f(m):
+                w, sp, inner = m.group(1) or '', m.group(2), m.group(3)
+                if w and not sp:
+                    return '<span class="nw">' + w + '(' + inner + ')</span>'
+                join = '\u00a0' if (sp and len(inner) <= 10) else sp
+                return w + join + '<span class="nw">(' + inner + ')</span>'
+            return re.sub(r'([^\s()<>]{1,8})?( ?)\(([^()<>\n]{1,16})\)', f, seg)
+        _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>|<textarea\b.*?</textarea>|<option\b.*?</option>|<svg\b.*?</svg>|<head\b.*?</head>|<[^>]+>)', text, flags=re.S)
         text = ''.join(p if (i % 2 or not p) else _paren(p) for i, p in enumerate(_parts))
     if rel.endswith(".html"):
         def _jt(mm):
@@ -308,7 +315,7 @@ def write(rel, text):
             if len(lab) > 4:
                 return mm.group(0)
             return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
-        text = re.sub(r'<table class="info">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
+        text = re.sub(r'<table class="info[^"]*">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
     if rel.endswith(".html"):
         text = line_rules(text)
         text = asset_ver(text)
@@ -1113,15 +1120,15 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <details><summary>내용 보기</summary><table>
 <tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
 <tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
-<tr><th>보유 기간</th><td>{PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
+<tr><th>보유 기간</th><td>{PRIVACY_KEEP} 후 파기<br>상담으로 이어지지 않으면 신청일부터 1년 후 파기</td></tr>
 <tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
 </table></details>
 <label><input type="checkbox" name="a2"><span><b>[필수]</b> 개인정보 국외 보관 동의 <small>(신청 내용을 Google 서버에 저장)</small></span></label>
 <details><summary>내용 보기</summary><table>
 <tr><th>저장 항목</th><td>위 수집 항목 전부</td></tr>
 <tr><th>저장 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / 신청 버튼을 누를 때 / 암호화 통신으로 전송</td></tr>
-<tr><th>저장 서비스 제공업체</th><td>Google LLC (설문지·스프레드시트) · 문의 googlekrsupport@google.com</td></tr>
-<tr><th>목적·기간</th><td>상담 신청 내용 보관 / {PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년)</td></tr>
+<tr><th>저장 서비스 제공업체</th><td>Google LLC (설문지·스프레드시트)<br>문의 googlekrsupport<wbr>@google.com</td></tr>
+<tr><th>목적·기간</th><td>상담 신청 내용 보관<br>{PRIVACY_KEEP}, 상담으로 이어지지 않으면 신청일부터 1년</td></tr>
 <tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 양식으로는 신청할 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
 </table></details>
 </div>
@@ -1145,7 +1152,7 @@ def build_privacy():
 <h2>4. 제3자 제공</h2><p>정보주체의 동의나 법령에 따른 경우가 아니면 제3자에게 제공하지 않습니다.</p>
 <h2>5. 국외 이전(보관)</h2>
 <p>신청 내용은 Google 설문지·스프레드시트에 저장되며, 이 과정에서 해외 서버에 보관됩니다. 저장 목적 외에 제공하거나 판매하지 않습니다.</p>
-<table class="info"><tr><th>저장 서비스 제공업체</th><td>Google LLC (문의 googlekrsupport@google.com)</td></tr><tr><th>국가</th><td>미국 등 Google 데이터센터 소재 국가</td></tr><tr><th>시기·방법</th><td>신청 시 인터넷 전송(암호화 통신)</td></tr><tr><th>항목</th><td>위 2번 항목 전부</td></tr><tr><th>목적·기간</th><td>신청 내용 보관 / 위 3번과 같음</td></tr><tr><th>거부</th><td>해외 서버 저장에 동의하지 않으시면 양식 신청은 할 수 없고, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr></table>
+<table class="info"><tr><th>저장 서비스 제공업체</th><td>Google LLC<br>문의 googlekrsupport<wbr>@google.com</td></tr><tr><th>국가</th><td>미국 등 Google 데이터센터 소재 국가</td></tr><tr><th>시기·방법</th><td>신청 시 인터넷 전송(암호화 통신)</td></tr><tr><th>항목</th><td>위 2번 항목 전부</td></tr><tr><th>목적·기간</th><td>신청 내용 보관 / 위 3번과 같음</td></tr><tr><th>거부</th><td>해외 서버 저장에 동의하지 않으시면 양식 신청은 할 수 없고, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr></table>
 <h2>6. 정보주체의 권리</h2><p>언제든지 본인 정보의 열람, 정정, 삭제, 처리 정지를 요청할 수 있습니다. 아래 연락처로 요청하시면 지체 없이 처리합니다.</p>
 <h2>7. 안전성 확보 조치</h2><p>신청 내용은 접근 권한을 대표 세무사로 한정한 계정에 보관하고, 2단계 인증을 사용합니다.</p>
 <h2>8. 개인정보 보호책임자</h2><table class="info"><tr><th>책임자</th><td>{PERSON} (대표 세무사)</td></tr><tr><th>연락처</th><td><a href="tel:{TEL}">{TEL}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></td></tr></table>
@@ -1184,7 +1191,7 @@ def build_contact():
 <h2 class="sec" style="margin-top:40px">상담 가능 지역</h2>
 <table class="info area">
 <tr><th>상담 지역</th><td>{AREA_TEXT} <a class="more" href="/area/dongdaemun/">동대문구 안내 보기 →</a></td></tr>
-<tr><th>방문 상담</th><td>서울 동대문구 청량리 사무소 (방문 전 미리 연락 부탁드립니다)</td></tr>
+<tr><th>방문 상담</th><td>서울 동대문구 청량리 사무소<br>방문 전 미리 연락 부탁드립니다</td></tr>
 </table>
 </div>'''
     write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사에게 세무 상담·기장 문의를 남기는 페이지입니다.", "/contact/", body, "contact"))
