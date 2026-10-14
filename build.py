@@ -737,7 +737,7 @@ def route_html():
             side = len(g) > 1 or g[0] in ROUTE_SIDE
             imgh = "".join(f'<img src="/assets/route/{f}.webp" alt="{pp(t)} 오시는 길 {i}단계" loading="lazy" width="900">' for f in g)
             cap = ROUTE_CAP.get(g[0], "")
-            sl += f'<figure class="rt-slide{" side" if side else ""}" data-i="{i}"><div class="rt-imgs">{imgh}</div><figcaption>{cap}</figcaption></figure>'
+            sl += f'<figure class="rt-slide{" side" if side else ""}" data-i="{i}"><figcaption>{cap}</figcaption><div class="rt-imgs">{imgh}</div></figure>'
         dots = "".join(f'<i data-i="{i}"></i>' for i in range(1, n + 1))
         sets += (f'<div class="rt-set" id="rt-{k}" hidden><h3>{pp(t)} 오시는 길</h3><p class="rt-lead">{ROUTE_INTRO.get(k, "")}</p>'
                  f'<div class="rt-nav"><button type="button" class="rt-prev">‹ 이전</button><span class="rt-cnt">1 / {n}</span><button type="button" class="rt-next">다음 ›</button></div>'
@@ -747,7 +747,7 @@ def route_html():
            '.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}'
            '.rt-set{margin-top:18px;scroll-margin-top:84px;max-width:560px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 6px}.rt-lead{margin:0 0 12px;line-height:1.6}'
            '.rt-view{touch-action:pan-y}.rt-slide{margin:0;display:none}.rt-slide.on{display:block}.rt-imgs{display:flex;gap:8px}.rt-imgs img{display:block;flex:1;min-width:0;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-slide.side .rt-imgs{flex-direction:column}'
-           '.rt-slide figcaption{margin:10px 2px 0;font-size:16px;line-height:1.55;font-weight:500}'
+           '.rt-slide figcaption{margin:0 0 10px;padding:10px 14px;border-left:4px solid var(--green);background:var(--tint,#EBF1ED);border-radius:6px;font-size:17px;line-height:1.5;font-weight:700;color:var(--green)}'
            '.rt-nav{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.rt-nav button{border:1.5px solid var(--green);background:var(--surface);color:var(--green);border-radius:22px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;min-width:96px}.rt-nav button:disabled{opacity:.35;cursor:default}.rt-cnt{font-weight:700;color:var(--green)}'
            '.rt-dots{display:flex;justify-content:center;gap:7px;margin:4px 0 14px}.rt-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.rt-dots i.on{background:var(--green)}'
            '.rt-view{margin-bottom:14px}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
