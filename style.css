@@ -1331,3 +1331,9 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .h2-search .search{margin:0}
 .h2-search .s-sum{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .h2-search .search-label{line-height:1.6}
+/* 홈 활동 링크: 상자 없이 다른 이력 글씨처럼 (로고 + 밑줄 글씨) — 2026-10-15 */
+.h2-act{flex-direction:column;gap:6px}
+.h2-act .act{border:0 !important;padding:0;background:none;font-weight:400;font-size:inherit;color:inherit;gap:6px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.h2-act .act:hover{text-decoration-color:currentColor}
+.h2-act .act svg{width:16px;height:16px}
+.h2-act .act span{display:none}
