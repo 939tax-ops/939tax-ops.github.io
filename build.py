@@ -712,7 +712,7 @@ def build_home_v2(posts, out="index.html"):
 <p class="ln">월 기장료입니다(부가세 별도). 신고 대리·양도·상속·증여 보수도 보수 안내에 모두 공개해 두었습니다.</p>
 <div class="area-fee"><div><span>간이과세자 (개인사업자)</span><b>70,000원~</b></div><div><span>일반과세자 (개인사업자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 보수도 할인됩니다.</p>
-<p class="ab-more" style="margin-top:14px"><a href="/fees/">보수 안내 전체 보기 →</a> · <a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
+<p class="ab-more" style="margin-top:14px"><a href="/fees/">보수 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
 </section>
 {flow_html()}
 </div>
@@ -841,13 +841,19 @@ def route_html():
           'var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
     return f'<div id="route">{css}<p class="rt-intro"><b>아래에서 오시는 방법을 눌러 주세요.</b><span>누르면 그 길만 사진으로 순서대로 보여 드립니다.</span></p><div class="rt-grid">{btns}</div>{sets}</div>{js}'
 
+AB2 = os.environ.get("AB2_PREVIEW")  # 소개 페이지 정리 시안 — 설정 시 _preview/ 에만 출력
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
     import urllib.parse as up
     nmap = "https://map.naver.com/p/search/" + up.quote(q)
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
+    CH_HTML = f'''<section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
+<div class="ch-grid">
+<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법과 신고 일정, 실무 판단을 글로 정리해 드립니다.</span><span class="go">블로그 보기 →</span></a>
+<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 쉽게 풀어서 설명해 드립니다.</span><span class="go">채널 보기 →</span></a>
+</div></div></section>'''
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(SERVICES, 1))
-    body = f'''<div class="wrap about-page" style="padding-top:36px">
+    body = f'''<div class="wrap about-page{" v2" if AB2 else ""}" style="padding-top:36px">
 <p class="crumb"><a href="/">홈</a> › 사무소 소개</p>
 <section class="ab-hero">
 <div class="ab-photo"><img src="/assets/profile-cut.webp" alt="{PERSON}" width="640" height="960"></div>
@@ -864,15 +870,12 @@ def build_about():
 <dl class="ab-cv">
 <dt>학력</dt><dd>고려대학교 공과대학 졸업</dd>
 <dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스<br>前 포스코건설</dd>
+{(f'<dt>활동</dt><dd><a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세무사 세친구</a></dd>') if AB2 else ""}
 </dl>
 </div>
 </section>
 </div>
-<section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
-<div class="ch-grid">
-<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법과 신고 일정, 실무 판단을 글로 정리해 드립니다.</span><span class="go">블로그 보기 →</span></a>
-<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 쉽게 풀어서 설명해 드립니다.</span><span class="go">채널 보기 →</span></a>
-</div></div></section>
+{"" if AB2 else CH_HTML}
 <div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">보수 안내 →</a></p></section></div>
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
@@ -890,7 +893,7 @@ def build_about():
 
 <script>(function(){{var h=location.hash;if(/^#(go-\\w+|route)$/.test(h))location.replace("/location/"+(h==="#route"?"":h));}})();</script>
 </section></div>'''
-    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
+    write(("_preview/" if AB2 else "") + "about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
 
 def build_location():
     q = "동대문구 왕산로 200 롯데캐슬SKY-L65"
@@ -1289,7 +1292,7 @@ def build_area():
 아래는 월 기장료입니다(부가세 별도).</p>
 <div class="area-fee"><div><span>간이과세자 (개인사업자)</span><b>70,000원~</b></div><div><span>일반과세자 (개인사업자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다.</p>
-<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a> · <a href="/fees/">보수 안내 전체 보기 →</a></p>
+<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a><span class="lk-sep"> · </span><a href="/fees/">보수 안내 전체 보기 →</a></p>
 </section></div>
 
 <section class="block alt"><div class="wrap">
@@ -1351,7 +1354,7 @@ def build_fees():
 <p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. 기장료 기준 금액: 개인 간이과세 월 87,500원 · 개인 일반과세 월 100,000원 · 법인 월 150,000원</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 {lead_form(None, "lfe")}
-<p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a> · <a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a> · <a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
+<p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a><span class="lk-sep"> · </span><a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
 </div>'''
     ld = [{"@type": "WebPage", "name": "세무 보수 안내", "url": SITE + "/fees/", "about": {"@id": SITE + "/#org"}},
           {"@type": "BreadcrumbList", "itemListElement": [

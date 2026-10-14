@@ -1244,3 +1244,23 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
   .svc-page.v2 .flow li span{font-size:14px;line-height:1.55;color:var(--ink-3)}
   .svc-page.v2 .flow li span .kp{display:inline}.svc-page.v2 .flow li span br{display:none}
 }
+/* ===== 소개 페이지 정리 시안(2026-10-14) — .about-page.v2 ===== */
+.about-page.v2 .ab-cv a{color:inherit}
+@media (max-width:760px){
+  .about-page.v2 .ab-hero{grid-template-columns:118px 1fr;gap:14px 16px;align-items:end;padding-bottom:12px}
+  .about-page.v2 .ab-photo{height:150px;max-width:none;padding-top:8px;border-radius:10px;border-bottom:0}
+  .about-page.v2 .ab-text{display:contents}
+  .about-page.v2 .ab-head{display:block}
+  .about-page.v2 .ab-head h1{font-size:28px}.about-page.v2 .ab-head h1 span{font-size:19px}
+  .about-page.v2 .ab-btns{display:none}
+  .about-page.v2 .ab-motto,.about-page.v2 .ab-greet,.about-page.v2 .ab-cv{grid-column:1/-1}
+  .about-page.v2 .ab-motto{margin-top:4px}
+}
+/* 링크 여러 개 나란히: 링크는 안 끊기게, 폰에서는 한 줄에 하나씩 — 2026-10-14 */
+.ab-more a,.rel-svc a{white-space:nowrap}
+@media (max-width:760px){.lk-sep{display:block;height:6px;font-size:0;line-height:0}}
+/* 다크 모드(폰): 상담 신청 버튼이 배경에 묻히지 않게 밝은 초록 + 테두리 — 2026-10-14 */
+@media (prefers-color-scheme: dark) and (max-width:760px){
+  .btn.primary,.mbar a.p,form.lead .lf-btn,.ab-btns .btn.lc,.svc-top .btn.primary{background:#2E8B55 !important;border:1.5px solid #9BE0B4 !important;color:#fff !important;box-shadow:0 0 0 1px rgba(155,224,180,.15)}
+}
+.band span .kp{display:inline}
