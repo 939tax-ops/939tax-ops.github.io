@@ -300,16 +300,16 @@ def write(rel, text):
         text = re.sub(r'\s*→(\s*(?:</b>|</span>)*\s*</(?:a|button)>)', r'\1', text)
         # 짧은 괄호 묶음은 줄이 중간에서 안 꺾이게(2026-10-15): "경정청구 (낸 세금 환급 가능 여부)" → 괄호 앞뒤·안쪽 띄어쓰기를 붙임표 없는 공백으로
         def _paren(seg):
-            # 괄호 안 16자 이하: 괄호 묶음 전체를 한 줄로. 앞말에 붙은 괄호(연락처(…))는 앞말까지 함께, 띄운 괄호는 안쪽이 짧으면(≤10) 앞말과도 붙임
+            # 괄호 안 13자 이하: 괄호 묶음 전체를 한 줄로. 앞말에 붙은 짧은 괄호(합 12자 이하)는 앞말까지 함께, 띄운 괄호는 안쪽이 짧으면(≤10) 앞말과도 붙임
             def f(m):
                 w, sp, inner = m.group(1) or '', m.group(2), m.group(3)
                 pu = m.group(4) or ''
-                if w and not sp:
+                if w and not sp and len(w) + len(inner) <= 12:
                     return '<span class="nw">' + w + '(' + inner + ')' + pu + '</span>'
                 join = '\u00a0' if (sp and len(inner) <= 10) else sp
                 return w + join + '<span class="nw">(' + inner + ')' + pu + '</span>'
             seg = re.sub(r'([%)])(?=[가-힣])', '\\1\u2060', seg)  # 9.5%를: % 뒤 조사가 다음 줄로 떨어지지 않게
-            return re.sub(r'([^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,16})\)([,.]?)', f, seg)
+            return re.sub(r'([^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,13})\)([,.]?)', f, seg)
         _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>|<textarea\b.*?</textarea>|<option\b.*?</option>|<svg\b.*?</svg>|<head\b.*?</head>|<[^>]+>)', text, flags=re.S)
         text = ''.join(p if (i % 2 or not p) else _paren(p) for i, p in enumerate(_parts))
     if rel.endswith(".html"):
@@ -320,6 +320,7 @@ def write(rel, text):
             return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
         text = re.sub(r'<table class="info[^"]*">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
         # 짧은 '목적·기간' 같은 표 항목명은 가운뎃점에서 꺾이지 않게
+        text = re.sub(r'<td>([^<>\n]{2,8})</td>', lambda m: '<td>' + m.group(1).replace(' ', '\u00a0') + '</td>', text)
         text = re.sub(r'<th>([가-힣]{1,4}·[가-힣]{1,4})</th>', r'<th><span class="nw">\1</span></th>', text)
     if rel.endswith(".html"):
         text = line_rules(text)
