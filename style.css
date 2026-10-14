@@ -1229,3 +1229,5 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .lf-agree details.lf-more .lf-items{margin-top:4px}
 .lf-agree .lf-all span{white-space:nowrap}
 @media (max-width:359px){.lf-agree .lf-all span{white-space:normal}}
+/* 아주 좁은 폰에서 기장료 계산기 카드 넘침 방지 — 2026-10-14 */
+@media (max-width:359px){.fee-calc b{white-space:normal;font-size:16px}}

@@ -193,7 +193,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <footer><div class="wrap f-grid">
 <div class="f-info">
 <img src="/assets/logo-h-dark.png" alt="세무회계 택" width="170" height="44">
-<p>세무회계 택 · {PERSON}</p>
+<p>세무회계 택 · {PERSON}<span class="f-br"> · </span><span class="f-nw">사업자등록번호 596-42-01252</span></p>
 <p>{ADDR1} {ADDR2}</p>
 <p>전화 <a href="tel:{TEL}">{TEL}</a> · 팩스 {FAX}<span class="f-br"> · </span><span class="f-nw">이메일 <a href="mailto:{EMAIL}">{EMAIL}</a></span></p>
 <p class="small">{'<a href="/privacy/"><b>개인정보 처리방침</b></a> · ' if LEAD_ENABLED else ''}<a href="/disclaimer/">이용 안내 및 면책</a><span class="f-br"> · </span><span class="f-nw">© {datetime.date.today().year} {NAME}</span></p>
