@@ -1148,3 +1148,5 @@ span.kp{width:auto!important;height:auto!important;min-width:0!important;border:
 table.info td,.lf-agree td{overflow-wrap:anywhere}
 .lf-agree table{table-layout:fixed}
 @media (max-width:420px){table.info th,table.info td{padding:10px 10px;font-size:15px}}
+/* 폰에서 홈 첫 화면 버튼 3개(상담 신청·카카오톡 상담·오시는 길) 한 줄 — 2026-10-14 */
+@media (max-width:560px){.hero-c1 .btns{flex-wrap:nowrap;gap:6px}.hero-c1 .btns .btn{flex:1 1 auto;padding:11px 6px;font-size:14.5px;text-align:center;justify-content:center;white-space:nowrap}.hero-c1 .btns .btn.kk{gap:4px}.hero-c1 .btns .btn.kk .ic{width:16px;height:16px}}
