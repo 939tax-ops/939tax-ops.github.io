@@ -125,6 +125,7 @@ OG_IMAGES = {
     "/calculators/four-insurance/": "/assets/og/og-calc-four-insurance-2.png",
     "/calculators/freelancer-withholding/": "/assets/og/og-calc-freelancer-withholding-2.png",
     "/contact/": "/assets/og/og-contact-2.png",
+    "/location/": "/assets/og/og-location.png",
 }
 
 # 계산기 제안·오류 신고 — 구글폼(939tax@gmail.com '홈페이지 계산기 제안·오류', 응답 알림 메일 켬). 회신 연락처는 받지 않음
@@ -150,9 +151,9 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
         cls = ' on' if key == active else ''
         return (f'<div class="dd{cls}"><a class="dd-t" href="{head}" aria-haspopup="true">{label}<span class="car" aria-hidden="true"></span></a>'
                 f'<div class="dd-m">{sub}</div></div>')
-    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "보수 안내"), ("/area/dongdaemun/", "동대문구 세무사"), ("/about/#location", "오시는 길")])
+    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "보수 안내"), ("/area/dongdaemun/", "동대문구 세무사"), ("/location/", "오시는 길")])
             + dd("주요 서비스", "svc", "/services/", [(f"/services/{k}/", t) for k, t, _ in ALL_SERVICES])
-            + "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc"), ("/about/#route", "오시는 길", "route")]))
+            + "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc"), ("/location/", "오시는 길", "route")]))
     return f'''<!doctype html>
 <html lang="ko">
 <head>
@@ -653,7 +654,7 @@ def build_home(posts):
 <p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
-<div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a><a class="btn ghost" href="/about/#route">오시는 길</a></div>
+<div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a><a class="btn ghost" href="/location/">오시는 길</a></div>
 </div>
 <div class="hero-img m" aria-hidden="true"></div>
 <a class="ccard" href="/calculators/gift-tax/"><span class="t">세금 계산기</span><b>증여세, 1분 만에 계산해 보기 →</b></a>
@@ -668,7 +669,7 @@ def build_home(posts):
 <section class="block"><h2 class="sec">최근 올라온 세금 Q&amp;A</h2><ul class="qa-list">{latest}</ul><p style="margin-top:16px;font-family:var(--sans)"><a href="/qa/">전체 보기 →</a></p></section>
 </div><section class="block alt"><div class="wrap"><h2 class="sec">세금 계산기</h2><p class="lead">조문을 기준으로 만든 간편 세금 계산기입니다. 결과는 참고용으로 활용해 주세요.</p><div class="grid calc-grid">{calc_cards(True)}</div><p style="margin-top:16px;font-family:var(--sans)"><a href="/calculators/">계산기 전체 보기 →</a></p></div></section><div class="wrap">
 <section class="block"><h2 class="sec">문의 안내</h2>
-<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="#lead"><span>온라인 문의</span><b>상담 신청 →</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="mailto:{EMAIL}"><span>이메일</span><b>{EMAIL}</b></a><a href="/about/#location"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a></div>
+<div class="contact-row"><a href="tel:{TEL}"><span>전화</span><b>{TEL}</b></a><a href="#lead"><span>온라인 문의</span><b>상담 신청 →</b></a><a href="{KAKAO}" target="_blank" rel="noopener"><span>카카오톡</span><b>카카오톡채널 - 세무회계택</b></a><a href="mailto:{EMAIL}"><span>이메일</span><b>{EMAIL}</b></a><a href="/location/"><span>오시는 길</span><b>동대문구 왕산로 200 →</b></a></div>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
 </section></div>'''
     write("index.html", page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
@@ -821,6 +822,31 @@ def build_about():
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2}</span></div></div></div>
 <script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
+<p style="margin:16px 0"><a class="btn primary" href="/location/">사진으로 찾아오는 길 보기 →</a></p>
+<img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
+<table class="info">
+<tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
+<tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
+<tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
+</table>
+
+
+<script>(function(){{var h=location.hash;if(/^#(go-\\w+|route)$/.test(h))location.replace("/location/"+(h==="#route"?"":h));}})();</script>
+</section></div>'''
+    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
+
+def build_location():
+    q = "동대문구 왕산로 200 롯데캐슬SKY-L65"
+    import urllib.parse as up
+    nmap = "https://map.naver.com/p/search/" + up.quote(q)
+    kmap = "https://map.kakao.com/?q=" + up.quote(q)
+    body = f'''<div class="wrap" style="padding-top:36px">
+<p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 찾아오는 길</p>
+<h1>세무회계택 찾아오는 길</h1>
+<p class="lead">청량리역 4번 출구에서 도보 약 1~2분, 롯데캐슬SKY-L65 섹션오피스 13층 1313호입니다.</p>
+<section class="block" id="location">
+<div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2}</span></div></div></div>
+<script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
 {route_html()}
 <img class="loc-map" style="margin:18px 0 14px" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 <table class="info">
@@ -831,7 +857,7 @@ def build_about():
 
 
 </section></div>'''
-    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld(), {"@type": "WebPageElement", "@id": SITE + "/about/#route", "name": "세무회계택 오시는 길", "description": "청량리역 4번 출구에서 도보 약 1~2분. 1호선·버스(청량리역 버스환승센터)는 4번 출구, 기차·경의중앙선은 1번 출구로 나와 4번 출구 앞으로. 롯데캐슬SKY-L65 섹션오피스 입구로 들어와 13층 1313호. 자차는 내비에 동대문구 왕산로 200 검색 후 지하 4층 주차(업무시설 엘리베이터 이용, 2시간 무료 등록).", "url": SITE + "/about/#route"}]))
+    write("location/index.html", page(f"찾아오는 길 | {NAME} {PERSON}", "청량리역 4번 출구 도보 1~2분, 롯데캐슬SKY-L65 섹션오피스 13층 1313호. 1호선·버스·기차·경의중앙선·자차(지하 4층 주차, 2시간 무료)별로 사진으로 안내합니다.", "/location/", body, "about", [{"@type": "WebPage", "@id": SITE + "/location/", "name": "세무회계택 오시는 길", "description": "청량리역 4번 출구에서 도보 약 1~2분. 1호선·버스(청량리역 버스환승센터)는 4번 출구, 기차·경의중앙선은 1번 출구로 나와 4번 출구 앞으로. 롯데캐슬SKY-L65 섹션오피스 입구로 들어와 13층 1313호. 자차는 내비에 동대문구 왕산로 200 검색 후 지하 4층 주차(업무시설 엘리베이터 이용, 2시간 무료 등록).", "url": SITE + "/location/"}]))
 
 # 1주택 양도세 연도별 비교 계산기: 원본은 _draft/(git 제외). 공개하려면 True 로 바꾸고 build 후 push
 YANGDO_ENABLED = False
@@ -1047,7 +1073,7 @@ def build_contact():
 <tr><th>카카오톡</th><td><a href="{KAKAO}" target="_blank" rel="noopener">카카오톡채널 - 세무회계택</a></td></tr>
 <tr><th>이메일</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a></td></tr>
-<tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/about/#location">오시는 길 보기 →</a></td></tr>
+<tr><th>주소</th><td>{ADDR1} {ADDR2}<br><a class="more" href="/location/">오시는 길 보기 →</a></td></tr>
 </table>
 <h2 class="sec" style="margin-top:40px">상담 가능 지역</h2>
 <table class="info area">
@@ -1250,7 +1276,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/location/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     urls += [("/area/dongdaemun/", today)]
     urls += [("/video/", today)] + [(f'/video/{v["slug"]}/', v["date"]) for v in VIDEOS if v.get("slug")]
@@ -1272,6 +1298,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts); build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
