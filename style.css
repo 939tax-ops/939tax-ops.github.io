@@ -1114,3 +1114,12 @@ body.searching .qa-more-wrap{display:none}
 .area-fee span{display:block;font-family:var(--sans);font-size:14px;color:var(--ink-5)}
 .area-fee b{display:block;margin-top:4px;font-family:var(--sans);font-size:22px;font-weight:800;color:var(--green)}
 @media(max-width:620px){.area-fee{grid-template-columns:1fr}.area-fee>div{display:flex;justify-content:space-between;align-items:center;text-align:left}.area-fee b{margin:0;font-size:19px}}
+
+/* ---------- 줄바꿈 규칙 (2026.10.14) — build.py line_rules()와 짝 ---------- */
+.kp,.seg{display:inline-block}
+.area-h1{color:var(--green);margin:6px 0 10px;font-size:30px;line-height:1.4}
+@media(max-width:620px){
+  .dash{display:none}
+  .seg2{display:block}
+  .area-h1{font-size:25px}
+}

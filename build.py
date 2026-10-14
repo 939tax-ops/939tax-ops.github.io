@@ -214,6 +214,71 @@ def asset_ver(text):
         return m.group(0) if not v else f'{m.group(1)}="/{name}?v={v}"'
     return re.sub(r'(src|href)="/([A-Za-z0-9_.-]+\.(?:js|css))"', _v, text)
 
+# ---------- 줄바꿈 규칙 (2026.10.14) ----------
+# R1. 끊기면 안 되는 덩어리는 통째로 다음 줄로 넘긴다 (span.kp = inline-block).
+#     화면보다 길면 그 안에서만 줄바꿈되므로 넘침은 없다.
+# R2. 제목류는 '질문?' / ' | ' / ' — ' 에서 먼저 끊는다 (span.seg).
+#     ' — '는 좁은 화면에서 대시를 숨기고 다음 줄로 내린다.
+# R3. 본문 문단은 문장 끝에서 <br>로 끊고 class="ln"을 단다 (좁은 화면에서는 br 해제).
+KEEP_PHRASES = ["세무회계택 김태형 세무사", "동대문구·청량리 세무사", "김태형 세무사",
+                "롯데캐슬SKY-L65", "섹션오피스 1313호", "세무회계 택"]
+_KEEP_RE = re.compile("|".join(map(re.escape, KEEP_PHRASES)) + r"|0\d{1,2}-\d{3,4}-\d{4}")
+_SKIP = {"script", "style", "textarea", "select", "option", "title", "svg", "head"}
+# R4. 가운뎃점(·)으로 이은 말은 줄 첫머리에 '·'가 오지 않게 한다.
+#     짧으면(14자 이하) 통째로 묶고, 길면 '·' 앞에서만 끊기지 않게(WORD JOINER) 한다.
+_DOT_RE = re.compile(r'[^\s·<>()（）,]+(?:·[^\s·<>()（）,]+)+')
+def _dot(m):
+    t = m.group(0)
+    return f'<span class="kp">{t}</span>' if len(t) <= 14 else t.replace("·", "\u2060·")
+
+def _segs(t):
+    t2 = t.strip()
+    if "<" in t2 or len(t2) < 14:
+        return t
+    if " — " in t2:
+        a, b = t2.split(" — ", 1)
+        return f'<span class="seg">{a}</span><span class="dash"> — </span><span class="seg seg2">{b}</span>'
+    for sep in (" | ", "｜"):
+        if sep in t2:
+            parts = t2.split(sep)
+            return " ".join(f'<span class="seg">{x}{" |" if i < len(parts)-1 else ""}</span>' for i, x in enumerate(parts))
+    m = re.match(r'^(.+?[?？])\s+(.+)$', t2)
+    if m:
+        return f'<span class="seg">{m.group(1)}</span> <span class="seg">{m.group(2)}</span>'
+    return t
+
+def line_rules(html):
+    i = html.find("<body")
+    if i < 0:
+        return html
+    head, body = html[:i], html[i:]
+    # R2: 제목·글 목록 제목
+    body = re.sub(r'(<h[123](?: [^>]*)?>)([^<]+)(</h[123]>)', lambda m: m.group(1) + _segs(m.group(2)) + m.group(3), body)
+    body = re.sub(r'(<a class="qcard[^"]*"[^>]*>.*?<b>)([^<]+)(</b>)', lambda m: m.group(1) + _segs(m.group(2)) + m.group(3), body, flags=re.S)
+    body = re.sub(r'(<li><a href="/(?:qa|video)/[^"]+/">)([^<]+)(</a></li>)', lambda m: m.group(1) + _segs(m.group(2)) + m.group(3), body)
+    body = re.sub(r'(<a class="vbox"[^>]*>.*?<b>)([^<]+)(</b>)', lambda m: m.group(1) + _segs(m.group(2)) + m.group(3), body, flags=re.S)
+    # R1: 텍스트 노드에만 적용
+    out, pos, skip = [], 0, None
+    for m in re.finditer(r'<(/?)([a-zA-Z0-9]+)([^>]*)>', body):
+        txt = body[pos:m.start()]
+        prev = body[max(0, pos-40):pos]
+        if skip or not txt.strip() or prev.endswith('<span class="kp">'):
+            out.append(txt)
+        else:
+            txt = _KEEP_RE.sub(lambda k: f'<span class="kp">{k.group(0)}</span>', txt)
+            out.append(_DOT_RE.sub(_dot, txt))
+        out.append(m.group(0))
+        tag = m.group(2).lower()
+        if skip:
+            if m.group(1) == "/" and tag == skip:
+                skip = None
+        elif not m.group(1) and tag in _SKIP and not m.group(3).rstrip().endswith("/"):
+            skip = tag
+        pos = m.end()
+    out.append(body[pos:])
+    return head + "".join(out)
+
+
 def write(rel, text):
     if rel.endswith(".html"):
         def _jt(mm):
@@ -223,6 +288,7 @@ def write(rel, text):
             return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
         text = re.sub(r'<table class="info">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
     if rel.endswith(".html"):
+        text = line_rules(text)
         text = asset_ver(text)
     p = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -960,7 +1026,7 @@ def build_area():
     others = "".join(f'<a href="/services/{k}/">{t}</a>' for k, t, d in SERVICES if k != "bookkeeping")
     body = f'''<div class="wrap" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › 동대문구 세무사</p>
-<h1 style="color:var(--green);margin:6px 0 10px;font-size:30px">동대문구·청량리 세무사 — 세무회계택 김태형 세무사</h1>
+<h1 class="area-h1">동대문구·청량리 세무사 — 세무회계택 김태형 세무사</h1>
 <p class="lead">세무회계택은 서울 동대문구 왕산로 200(전농동) 롯데캐슬SKY-L65에 있는 세무사 사무소입니다.<br>
 청량리역 바로 인근이라 지하철·버스 어느 쪽으로도 찾아오시기 편합니다.</p>
 <p class="ln">{PERSON}가 상담부터 신고서 최종 검토까지 직접 수행합니다.<br>
