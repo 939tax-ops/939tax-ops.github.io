@@ -601,7 +601,7 @@ SERVICE_DETAIL = {
 }
 
 SEARCH_BOX = """<div class="search" data-search>
-<label for="q" class="search-label">세금 궁금한 점, 단어나 문장으로 검색해 보세요</label>
+<label for="q" class="search-label">세금 궁금한 점, 단어나 문장으로 편하게 검색해 보세요</label>
 <div class="search-row"><input id="q" type="search" placeholder="예: 증여세 한도 / 부모님께 1억 받으면 세금 내나요?" autocomplete="off"><button type="button">검색</button></div>
 <div class="search-out" aria-live="polite"></div>
 </div>
