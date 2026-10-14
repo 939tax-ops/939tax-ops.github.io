@@ -1360,3 +1360,8 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .svc-top .btns .btn{white-space:nowrap}
 @media (max-width:760px){.svc-top .btns .btn.kk{flex:1.25}.svc-top .btns .btn .ic{margin-right:4px}}
 table.info th:has(.jt){white-space:nowrap}
+/* 계산 결과 제목: 괄호 설명은 한 덩어리로 다음 줄에(2026-10-15) */
+.r-label small{white-space:nowrap}
+.result2>.r-label small{display:block;margin-top:2px}
+#fi .r-label{flex-wrap:wrap;row-gap:1px;border-radius:14px}
+#fi .r-label small{flex-basis:100%;padding-left:29px;margin-top:0}
