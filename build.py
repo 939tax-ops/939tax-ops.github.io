@@ -716,14 +716,14 @@ def build_home_v2(posts, out="index.html"):
 </section>
 {flow_html()}
 </div>
-<section class="block alt"><div class="wrap"><h2 class="sec">먼저 알아보고 싶으시면</h2>
+<section class="block alt"><div class="wrap"><h2 class="sec">상담 전에 미리 확인해 보세요</h2>
 <div class="h2-learn">
 <div class="h2-lc"><p class="h2-k">세무 Q&amp;A</p><b>자주 묻는 세금 질문을 조문 근거와 함께 정리했습니다</b><ul>{qa3}</ul><a class="h2-more" href="/qa/">Q&amp;A 전체 보기 →</a></div>
 <div class="h2-lc"><p class="h2-k">세금 계산기</p><b>조문 기준으로 만든 간편 계산기입니다</b><div class="h2-chips">{calcs}</div><a class="h2-more" href="/calculators/">계산기 전체 보기 →</a></div>
 </div></div></section>
 <div class="wrap"><section class="block h2-cta">
 <h2>세금 고민, 먼저 편하게 남겨 주세요</h2>
-<p>대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다.</p>
+<p>대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내드립니다.</p>
 <div class="btns"><a class="btn primary" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
 <p class="h2-sub">이메일 <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="/location/">오시는 길 (청량리역 4번 출구 도보 1~2분)</a></p>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
@@ -1062,7 +1062,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
     ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
     btn = "무료 확인 신청하기 →" if chk else "상담 신청 →"
-    foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내드립니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료입니다."
+    foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내드립니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 비용이 발생할 수도 있는 경우에는 미리 안내드립니다."
     return f'''<form id="f-{uid}" class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
 <h2>{title}</h2>
 <p class="lf-sub">{sub}</p>
