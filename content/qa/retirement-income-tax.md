@@ -3,7 +3,7 @@ title: 퇴직금에도 세금이 붙나요? 퇴직소득세 계산 구조와 IRP
 slug: retirement-income-tax
 keywords: 퇴직금 세금, 퇴직소득세, 퇴직소득세 계산, 근속연수공제, 퇴직소득공제, 퇴직금 IRP, IRP 60일, 퇴직소득세 환급, 퇴직금 연금수령 세금, 연금 실제 수령연차, 퇴직금 원천징수, 임원 퇴직금 한도
 category: life
-topic: payroll
+topic: worker
 source: 009. (업로드완료) 퇴직금에도 세금이 붙나요｜오래 다닐수록 적게 냅니다 (2026.09.13.)
 date: 2026-09-22
 updated: 2026-09-22

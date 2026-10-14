@@ -20,20 +20,21 @@ BLOG = "https://blog.naver.com/tax939"
 YOUTUBE = "https://www.youtube.com/@taxfriends3"
 CATS = {"business": "사업자 세금", "life": "생활 세금"}
 # 세무 Q&A 분류(종류별 칩). 글 머리의 topic: 값으로 지정. 없으면 기타.
-TOPICS = [("income", "종합소득세"), ("biz", "사업자 세금"), ("vat", "부가가치세"), ("corp", "법인세"), ("payroll", "인건비·4대보험"),
-          ("capital-gains", "양도소득세"), ("gift", "상속·증여세"), ("refund", "경정청구·환급"),
-          ("audit", "세무조사"), ("etc", "기타")]
+TOPICS = [("biz", "사업자 세금"), ("worker", "근로자·프리랜서"), ("vat", "부가세"), ("capital-gains", "양도소득세"),
+          ("gift", "상속·증여세"), ("audit", "경정청구·세무조사"), ("etc", "기타"),
+          # 아래는 현재 글이 없어 버튼이 안 보이는 분류(2026-10-14 재구성 때 남겨 둠)
+          ("income", "종합소득세"), ("corp", "법인세"), ("payroll", "인건비·4대보험")]
 TOPIC_NAME = dict(TOPICS)
 TOPIC_SERVICE = {"income": "tax-filing", "biz": "tax-filing", "vat": "tax-filing", "corp": "tax-filing", "payroll": "bookkeeping",
                  "capital-gains": "capital-gains", "gift": "inheritance-gift", "refund": "refund-claim", "audit": "tax-audit"}
 # 업무 페이지에 노출할 관련 Q&A 세목(업무 → Q&A 방향)
-SERVICE_TOPICS = {"bookkeeping": ["biz", "vat", "income", "corp", "payroll"], "tax-filing": ["biz", "vat", "income", "corp"],
+SERVICE_TOPICS = {"bookkeeping": ["biz", "vat", "corp"], "tax-filing": ["biz", "vat", "income", "corp"],
                   "capital-gains": ["capital-gains"], "inheritance-gift": ["gift"], "refund-claim": ["refund"],
                   "tax-audit": ["audit"], "tax-planning": ["capital-gains", "gift"]}
 
 # ---------- Q&A 글 하단 상담 유도(CTA) — 읽는 사람에 따라 갈라 쓴다 ----------
 # biz   = 사업자(기장 유도)  / asset = 양도·상속·증여  / person = 근로자·개인  / audit = 세무조사 / etc = 일반
-CTA_BY_TOPIC = {"vat": "biz", "corp": "biz", "income": "biz", "biz": "biz", "payroll": "biz",
+CTA_BY_TOPIC = {"vat": "biz", "corp": "biz", "income": "biz", "biz": "biz", "worker": "person", "payroll": "biz",
                 "gift": "asset", "capital-gains": "asset",
                 "refund": "person", "audit": "audit", "local": "etc", "etc": "etc"}
 # 세목 기본값을 덮어쓰는 예외(근로자·개인이 읽는 글)
@@ -92,6 +93,7 @@ TYPES = {"case": "업무사례"}
 def type_name(p): return TYPES.get(p.get("type", ""), "")
 def topic_of(p):
     t = p.get("topic", "etc")
+    t = {"refund": "audit"}.get(t, t)  # 경정청구는 경정청구·세무조사로 합침(2026-10-14)
     return t if t in TOPIC_NAME else "etc"
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap">'

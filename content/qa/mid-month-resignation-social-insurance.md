@@ -3,7 +3,7 @@ title: 월중에 퇴사하면 4대보험은 어떻게 정산하나요? 1일 퇴�
 slug: mid-month-resignation-social-insurance
 keywords: 중도퇴사 4대보험, 퇴사 4대보험 정산, 건강보험 퇴직정산, 건강보험 퇴직정산 계산, 1일 퇴사 4대보험, 말일 퇴사 4대보험, 국민연금 퇴직정산, 고용보험 퇴직정산, 장기요양보험 정산, 퇴직정산 환급금, 4대보험 상실신고, 2026 4대보험 요율
 category: business
-topic: payroll
+topic: worker
 source: 012.(업로드 완료) [4대보험] 중도퇴사 4대보험, 1일 퇴사와 말일 퇴사 왜 한 달 차이 날까요｜퇴직정산 계산법 (2026.09.11.)
 date: 2026-09-22
 updated: 2026-09-22

@@ -3,7 +3,7 @@ title: 연말정산 공제를 잘못 받았으면 수정신고로 가산세를 �
 slug: year-end-tax-overclaim-amended-return
 keywords: 연말정산 과다공제, 연말정산 수정신고, 과소신고가산세, 가산세 감면율, 부양가족 중복공제, 수정신고 90% 감면, 경정 통지, 부정행위 40%, 소득금액 100만원, 연말정산 경정청구, 종합소득세 수정신고, 연말정산 공제 오류
 category: business
-topic: income
+topic: worker
 source: 002. (업로드완료) [종합소득세] 연말정산 과다공제, 지금 고치면 가산세 줄어드나요｜통지 전이면 감면 (2026.09.23.)
 date: 2026-10-01
 updated: 2026-10-08
