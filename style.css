@@ -1292,3 +1292,36 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .ch.lite .ar{flex:none;color:var(--green);font-weight:700}
 @media (max-width:640px){.ch-grid{gap:10px}.ch.lite{padding:13px 16px;gap:10px}.ch.lite .k{font-size:15px}.ch.lite .k .ic{width:22px;height:22px}.ch.lite .d{font-size:14px}}
 @media (max-width:640px){.ch.lite{display:grid;grid-template-columns:1fr auto;row-gap:3px}.ch.lite .k{grid-column:1}.ch.lite .d{grid-column:1;grid-row:2;padding-left:32px;white-space:nowrap}.ch.lite .ar{grid-column:2;grid-row:1/3}}
+
+/* ===================================================================
+   서류형 통일(2026-10-14): 둥근 카드·색 띠·그림자 등 'AI 느낌' 요소 정리
+   - 상자: 모서리 2px, 그림자·떠오르는 효과 없음
+   - 카드 묶음(절차 등): 업무 분야처럼 칸이 이어진 표 형태, 위 2px 진한 선
+   - 버튼: 모서리 3px / 알약형 태그·필터는 유지
+   =================================================================== */
+:is(.addr-card,.area-fee>div,.band,.blog-band,.blog-card,.box,.calc,.calc-next,.card,.ccard,.ch,.check-card,.contact-row a,.cta-box,.fee-disc .it,.h2-lc,.how,.lf-agree>label.lf-all,.loc-map,.mini,.notice,.pcard,.placeholder,.qcard,.rel-col,.result2,.s-item,.s-none,.search,.steps li,.svc-cols section,.svc-page.v2 .svc-cols,.svc-top,.toc,form.lead,.rt-btn,.rt-intro,.rt-slide figcaption,.famfold>summary,.only1,.stop,.area-bk){border-radius:2px !important}
+:is(.card,.ccard,.ch,.pcard,.rt-btn,.qcard,.blog-card){box-shadow:none !important;transform:none !important}
+:is(.btn,.mbar a,.lf-btn,.quick button,.nav .cta,.menu-btn,.search-row button,.addr-card .ac-copy,.rt-nav button,.rt-go){border-radius:3px !important}
+:is(.h2-rep-ph img,.ab-photo,.profile img,.hero .photo img){border-radius:0 !important}
+.h2-chips a{border-radius:2px !important}
+/* 상담 절차: 칸이 이어진 표 형태 */
+.flow{gap:0 !important;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.flow li{border:0 !important;border-right:1px solid var(--line) !important;border-bottom:1px solid var(--line) !important;border-radius:0 !important;background:var(--surface)}
+.flow li::before{opacity:.75}
+@media (max-width:760px){
+  .flow{grid-template-columns:1fr !important;border-left:0;border-top:2px solid var(--ink-1)}
+  .flow li{display:grid;grid-template-columns:34px 1fr;column-gap:10px;border-right:0 !important;padding:12px 2px !important;background:none}
+  .flow li::before{grid-row:1/3;margin:2px 0 0;font-size:14px}
+  .flow li b{font-size:15.5px}
+  .flow li span{font-size:14px;line-height:1.55;color:var(--ink-3)}
+  .flow li span .kp{display:inline}.flow li span br{display:none}
+}
+/* 색 띠 강조 줄이기: 왼쪽 굵은 초록 띠 → 위 진한 선 */
+.svc-top{border:1px solid var(--line) !important;border-top:2px solid var(--ink-1) !important}
+.svc-page.v2 .svc-cols,.svc-cols section{border-top-color:var(--ink-1) !important}
+.svc-page.v2 .svc-cols{border-top-width:2px !important}
+.rt-intro{background:none !important;border-left:3px solid var(--ink-1) !important;color:var(--ink-1) !important}
+.rt-slide figcaption{background:none !important;border-left:3px solid var(--ink-1) !important;color:var(--ink-1) !important}
+.rt-btn{border-width:1px !important}
+.h2-learn{gap:0 !important;border-top:2px solid var(--ink-1);border-left:1px solid var(--line)}
+.h2-learn .h2-lc{border:0 !important;border-right:1px solid var(--line) !important;border-bottom:1px solid var(--line) !important}
