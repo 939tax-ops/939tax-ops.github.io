@@ -40,7 +40,8 @@ CTA_BY_TOPIC = {"vat": "biz", "corp": "biz", "income": "biz", "payroll": "biz",
 CTA_BY_SLUG = {"monthly-rent-tax-credit": "person", "year-end-settlement-prep": "person",
                "year-end-tax-overclaim-amended-return": "person", "retirement-income-tax": "person",
                "eitc-semiannual-application": "person", "lottery-prize-tax": "person",
-               "freelancer-withholding-rate-cut": "person"}
+               "freelancer-withholding-rate-cut": "freelancer",
+               "mid-month-resignation-social-insurance": "payroll"}
 CTA_TEXT = {
     "biz": ("이런 판단은 신고할 때가 아니라 매달 자료가 쌓이는 동안 갈립니다.<br>"
             "기장을 맡기시면 월 단위로 함께 확인해 드립니다.",
@@ -52,6 +53,13 @@ CTA_TEXT = {
     "audit": ("소명 요청이나 조사 통지를 받으셨다면 회신 전에 대응 방향부터 정하셔야 합니다.<br>"
               "본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.",
               [("/services/tax-audit/", "세무조사 대응 보기")]),
+    "payroll": ("직원이 입사·퇴사할 때마다 4대보험 신고와 정산을 직접 챙기고 계신가요?<br>"
+                "기장을 맡기시면 급여·4대보험 신고까지 매달 함께 처리해 드립니다.",
+                [("/calculators/bookkeeping-fee/", "기장료 계산해 보기")]),
+    "freelancer": ("3.3%는 미리 떼는 세금일 뿐, 1년 세금은 다음 해 5월 종합소득세 신고로 정해집니다.<br>"
+                   "경비와 공제를 어떻게 잡느냐에 따라 환급액이 달라질 수도 있습니다.<br>"
+                   "신고 전에 확인해 보고 싶으시면 편하게 문의해 주세요.",
+                   [("/calculators/freelancer-withholding/", "프리랜서 실수령액 계산해 보기")]),
     "etc": ("같은 질문이라도 사실관계에 따라 결과가 달라집니다.<br>"
             "본인의 상황에 맞추어 확인해 보고 싶으시면 편하게 문의해 주세요.", []),
 }
