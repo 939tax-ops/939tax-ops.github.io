@@ -1097,3 +1097,20 @@ body.searching .qa-more-wrap{display:none}
 .calc-read .rel-col li a{display:block;padding:12px 2px;font-family:var(--sans);font-size:17px;font-weight:700;color:var(--green)}
 .calc-read .rel-col li a::after{content:" →";font-weight:700}
 .calc-read .rel-col li a:hover{text-decoration:none;opacity:.72}
+
+/* 지역 페이지 — 기장 강조 블록·창업 영상·자격 한 줄 */
+.area-cred{margin:-4px 0 0;font-family:var(--sans);font-size:15px;font-weight:700;color:var(--green)}
+.area-bk{background:var(--surface);border:1px solid var(--green-line);border-top:3px solid var(--green);border-radius:8px;padding:22px 24px 20px}
+.area-bk .t{margin:0 0 10px;font-size:18px;font-weight:700;color:var(--ink-1)}
+.area-other{margin:16px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--sans);font-size:14.5px}
+.area-other b{color:var(--green);margin-right:4px}
+.area-other a{text-decoration:none;color:var(--ink-3);white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:4px 13px;background:var(--surface)}
+.area-other a:hover{color:var(--green);border-color:var(--green)}
+.area-vids{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.area-vids .vbox{margin:0;background:var(--surface)}
+@media(max-width:760px){.area-vids{grid-template-columns:1fr}}
+.area-fee{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 4px}
+.area-fee>div{border:1px solid var(--green-line);border-radius:8px;padding:14px 16px;text-align:center;background:var(--surface)}
+.area-fee span{display:block;font-family:var(--sans);font-size:14px;color:var(--ink-5)}
+.area-fee b{display:block;margin-top:4px;font-family:var(--sans);font-size:22px;font-weight:800;color:var(--green)}
+@media(max-width:620px){.area-fee{grid-template-columns:1fr}.area-fee>div{display:flex;justify-content:space-between;align-items:center;text-align:left}.area-fee b{margin:0;font-size:19px}}

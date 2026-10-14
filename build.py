@@ -957,44 +957,55 @@ def build_area():
     nmap = "https://map.naver.com/p/search/" + up.quote(q)
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
     chips = "".join(f'<span>{d}</span>' for d in AREA_DONG)
-    svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>'
-                  for i, (k, t, d) in enumerate(SERVICES, 1))
+    others = "".join(f'<a href="/services/{k}/">{t}</a>' for k, t, d in SERVICES if k != "bookkeeping")
     body = f'''<div class="wrap" style="padding-top:28px">
 <p class="crumb"><a href="/">홈</a> › 동대문구 세무사</p>
 <h1 style="color:var(--green);margin:6px 0 10px;font-size:30px">동대문구·청량리 세무사 — 세무회계택 김태형 세무사</h1>
 <p class="lead">세무회계택은 서울 동대문구 왕산로 200(전농동) 롯데캐슬SKY-L65에 있는 세무사 사무소입니다.<br>
 청량리역 바로 인근이라 지하철·버스 어느 쪽으로도 찾아오시기 편합니다.</p>
-<p class="ln">청량리역은 KTX와 지하철 1호선·수인분당선·경의중앙선·경춘선이 만나는 서울 동북권 철도 거점입니다.<br>
-지방에서 KTX로 올라오시거나 경기 동북부에서 오시는 경우에도 역에서 걸어오실 수 있습니다.<br>
-앞으로 GTX-B·C 노선도 청량리역에서 교차할 예정입니다.</p>
 <p class="ln">{PERSON}가 상담부터 신고서 최종 검토까지 직접 수행합니다.<br>
 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다.</p>
+<p class="area-cred">현재 서울시 마을세무사(중랑구)로도 활동하고 있습니다.</p>
 <div class="btns" style="margin:18px 0 6px"><a class="btn primary" href="/contact/#f-lc">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
 </div>
 
 <section class="block alt"><div class="wrap">
+<h2 class="sec">동대문구 사업자 세무기장</h2>
+<div class="area-bk">
+<p class="t">개인·법인사업자의 장부를 작성하고 매달 세무 이슈를 관리해 드립니다.</p>
+<ul class="ticks"><li>사업을 시작해 장부를 처음 맡기시는 분</li><li>매출이 늘어 장부 작성이 부담되시는 분</li><li>직접 신고하다가 누락이 걱정되시는 분</li></ul>
+<div class="btns" style="margin-top:16px"><a class="btn primary" href="/services/bookkeeping/">세무기장 자세히 보기 →</a><a class="btn ghost" href="/calculators/bookkeeping-fee/">기장료 계산해 보기</a></div>
+</div>
+<p class="area-other"><b>그 밖의 업무</b>{others}</p>
+</div></section>
+
+<div class="wrap"><section class="block">
+<h2 class="sec">기장료를 공개하고 있습니다</h2>
+<p class="ln">세무회계택은 기장료와 신고 보수를 매출 구간별로 공개합니다.<br>
+아래는 4대보험 근로자가 없는 1인 사업자 기준 월 기장료입니다(부가세 별도).</p>
+<div class="area-fee"><div><span>간이과세자 (개인사업자)</span><b>70,000원~</b></div><div><span>일반과세자 (개인사업자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
+<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a> · <a href="/fees/">보수 안내 전체 보기 →</a></p>
+</section></div>
+
+<section class="block alt"><div class="wrap">
+<h2 class="sec">동대문구에서 창업을 준비하고 계시면</h2>
+<p class="ln">간이과세자와 일반과세자 중 무엇으로 시작할지, 업종코드를 무엇으로 할지는 사업자등록 때 정하게 됩니다.<br>
+등록 전에 아래 영상으로 먼저 확인해 보시고, 내 업종에 맞는 선택이 궁금하시면 상담 신청을 남겨 주세요.</p>
+<div class="area-vids">{vbox(VBY["02"], "▶ 김태형 세무사 직접 설명")}{vbox(VBY["03"], "▶ 김태형 세무사 직접 설명")}</div>
+</div></section>
+
+<div class="wrap"><section class="block">
 <h2 class="sec">가까운 동네</h2>
 <div class="area-chips">{chips}</div>
 <p class="note ln" style="margin-top:14px">청량리역 일대는 전통시장과 상가가 모여 있고, 고려대학교·경희대학교·서울시립대학교·한국외국어대학교가 가까운 지역입니다.<br>
 동대문구 외에 성북구·중랑구·성동구에서 찾아주시는 분들도 있습니다.</p>
-</div></section>
-
-<div class="wrap">
-<section class="block"><h2 class="sec">동대문구에서 수행하는 업무</h2>
-<div class="grid svc-grid">{svc}</div>
-<p class="ab-more" style="margin-top:16px"><a href="/services/">업무별 자세히 보기 →</a> · <a href="/qa/">세무 Q&amp;A 보기 →</a></p>
-</section>
-</div>
+</section></div>
 
 <section class="block alt"><div class="wrap">
-<h2 class="sec">기장료를 공개하고 있습니다</h2>
-<p>세무회계택은 기장료와 신고 보수를 매출 구간별로 공개합니다.
-4대보험 근로자가 없는 1인 사업자의 월 기장료는 간이과세 70,000원, 일반과세 80,000원, 법인 120,000원부터입니다(부가세 별도).</p>
-<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a> · <a href="/fees/">보수 안내 전체 보기 →</a></p>
-</div></section>
-
-<div class="wrap">
-<section class="block"><h2 class="sec">오시는 길</h2>
+<h2 class="sec">오시는 길</h2>
+<p class="ln">청량리역은 KTX와 지하철 1호선·수인분당선·경의중앙선·경춘선이 만나는 서울 동북권 철도 거점입니다.<br>
+지방에서 KTX로 올라오시거나 경기 동북부에서 오시는 경우에도 역에서 걸어오실 수 있습니다.<br>
+앞으로 GTX-B·C 노선도 청량리역에서 교차할 예정입니다.</p>
 <table class="info">
 <tr><th>주소</th><td>{ADDR1} {ADDR2}</td></tr>
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>
@@ -1004,7 +1015,9 @@ def build_area():
 <img class="loc-map" style="margin:14px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역과 롯데백화점 사이 왕산로 200 롯데캐슬SKY-L65" loading="lazy">
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.
 방문 상담은 미리 연락 주시면 시간을 맞춰 드립니다.</p>
-</section>
+</div></section>
+
+<div class="wrap">
 {lead_form(None, "la")}
 </div>'''
     ld = [{"@type": "BreadcrumbList", "itemListElement": [
