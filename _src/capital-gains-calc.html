@@ -12,7 +12,7 @@
 <li>파시기 전에 반드시 전문가에게 확인하세요.</li>
 </ul>
 <label style="display:flex;gap:10px;align-items:center;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid var(--green);cursor:pointer;font-weight:700;font-size:15px;color:var(--green)"><input type="checkbox" id="agree" style="width:20px;height:20px;flex:none;accent-color:#13391E">꼭 읽어 주세요 — 위 내용을 확인했고, 결과는 참고용으로만 쓰겠습니다</label>
-<p id="lockMsg" style="margin:8px 0 0;font-size:13px;color:var(--sub)">체크하시면 아래 계산기를 쓸 수 있습니다.</p>
+<p id="lockMsg" style="margin:10px 0 0;font-size:15px;font-weight:800;color:#c62828">↑ 위 칸에 체크하시면 아래 계산기를 쓸 수 있습니다.</p>
 </div>
 <ol class="steps">
 <li><b>주택</b>인지 <b>상가·토지</b>인지 고르고</li>
@@ -25,30 +25,30 @@
 <fieldset id="cgFs" disabled style="border:0;padding:0;margin:0;min-width:0">
 <p class="c-q"><span>1</span>무엇을 파나요?</p>
 <div class="chips">
-<label><input type="radio" name="kind" value="house" checked><span>주택<small>아파트·빌라·단독 등</small></span></label>
-<label><input type="radio" name="kind" value="land"><span>상가·토지<small>주택이 아닌 부동산</small></span></label>
+<label><input type="radio" name="kind" value="house" checked><span>주택<small>아파트 등 주택</small></span></label>
+<label><input type="radio" name="kind" value="land"><span>상가·토지<small>주택 외 상가·토지</small></span></label>
 </div>
 
 <div id="houseWrap">
 <p class="c-q" style="margin-top:22px"><span>2</span>비과세인가요, 과세인가요?</p>
 <div class="chips">
 <label><input type="radio" name="ex" value="y" checked><span>비과세<small>1세대 1주택 요건 충족</small></span></label>
-<label><input type="radio" name="ex" value="n"><span>과세<small>비과세 요건 미충족·다주택</small></span></label>
+<label><input type="radio" name="ex" value="n"><span>과세<small>비과세 요건 미충족</small></span></label>
 </div>
 <p class="hint" style="margin:8px 0 0">비과세 요건은 이 계산기가 판단하지 않습니다. 선택한 대로 계산합니다.</p>
 <div id="heavyWrap" hidden>
 <p class="hint" style="margin:14px 0 6px">다주택 중과 <small>(조정대상지역 주택만 해당)</small></p>
 <div class="chips">
 <label><input type="radio" name="hv" value="0" checked><span>중과 아님</span></label>
-<label><input type="radio" name="hv" value="2"><span>2주택 중과<small>+20%p</small></span></label>
-<label><input type="radio" name="hv" value="3"><span>3주택 이상 중과<small>+30%p</small></span></label>
+<label><input type="radio" name="hv" value="2"><span>2주택 중과<small>세율 +20%</small></span></label>
+<label><input type="radio" name="hv" value="3"><span>3주택 이상 중과<small>세율 +30%</small></span></label>
 </div>
 </div>
 </div>
 
 <div id="landWrap" hidden>
 <p class="c-q" style="margin-top:22px"><span>2</span>비사업용 토지인가요? <small style="font-weight:400;color:var(--sub)">(토지만 해당)</small></p>
-<label class="chk" style="display:flex;gap:8px;align-items:flex-start"><input type="checkbox" id="nb" style="margin-top:5px;width:18px;height:18px"><span><b>비사업용 토지에 해당</b> <small style="color:var(--sub)">(세율 +10%p · 해당 여부는 상담 권장)</small></span></label>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start"><input type="checkbox" id="nb" style="margin-top:5px;width:18px;height:18px"><span><b>비사업용 토지에 해당</b> <small style="color:var(--sub)">(세율 +10% · 해당 여부는 상담 권장)</small></span></label>
 </div>
 
 <div style="margin-top:22px">
