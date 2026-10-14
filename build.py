@@ -856,7 +856,7 @@ def build_about():
     body = f'''<div class="wrap about-page{" v2" if AB2 else ""}" style="padding-top:36px">
 <p class="crumb"><a href="/">홈</a> › 사무소 소개</p>
 <section class="ab-hero">
-<div class="ab-photo"><img src="/assets/profile-about.webp" alt="{PERSON}" width="640" height="960"></div>
+<div class="ab-photo"><picture><source media="(max-width:760px)" srcset="/assets/profile-cut.webp"><img src="/assets/profile-about.webp" alt="{PERSON}" width="640" height="960"></picture></div>  <!-- 폰은 2번 사진(기존), PC는 1번 사진 — 2026-10-14 -->
 <div class="ab-text">
 <div class="ab-head"><div>
 <p class="ab-eyebrow">{NAME}</p>

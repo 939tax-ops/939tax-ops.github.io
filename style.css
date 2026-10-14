@@ -1275,3 +1275,4 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .ab-photo,.about-page .ab-photo{background:#fff !important}
 @media (prefers-color-scheme: dark) and (max-width:760px){.ab-photo{background:#fff !important}}
 @media (max-width:760px){.about-page.v2 .ab-photo{align-items:flex-start;justify-content:flex-start;padding-top:0;height:150px}.about-page.v2 .ab-photo img{width:175%;max-width:none;height:auto;margin:12px 0 0 -37.5%}}
+.ab-photo picture{display:contents}
