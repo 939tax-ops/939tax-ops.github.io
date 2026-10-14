@@ -117,7 +117,7 @@
     m.push('사업주는 같은 금액 + 고용안정·직업능력개발·산재보험 추가 부담');
     m.push('입·퇴사한 달은 1일 재직 여부로 차이 발생');
     m.push('10원 미만 절사로 고지액과 소액 차이 발생');
-    $('msg').innerHTML='· '+m.join('<br>· ');
+    $('msg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
   }
   ['pay0','nontax'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   ['fam','kid'].forEach(function(id){ $(id).addEventListener('change',run); });

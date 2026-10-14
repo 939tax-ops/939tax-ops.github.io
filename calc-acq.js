@@ -51,7 +51,7 @@
     if(r.over12) m.push('<b style="color:#c62828">12억원 초과는 생애최초 감면 제외</b>');
     m.push('원 단위 끝전 처리에 따라 실제 고지세액과 소액 차이 가능');
     m.push('등기 비용(국민주택채권 매입, 법무사 보수 등)은 제외');
-    $('msg').innerHTML='· '+m.join('<br>· ');
+    $('msg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
   }
   $('price').addEventListener('input',function(){fmt(this);run();});
   Array.prototype.forEach.call(document.querySelectorAll('#ac input[type=radio]'),function(el){el.addEventListener('change',run);});

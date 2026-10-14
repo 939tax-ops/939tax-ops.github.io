@@ -50,7 +50,7 @@
     m.push('단순히 '+(rate===3?'3.3':'2.2')+'%를 곱한 '+comma(Math.floor(pay*(rate+rate*0.1)/100))+'원과 '+(Math.abs(r.tax-Math.floor(pay*(rate+rate*0.1)/100))?comma(Math.abs(r.tax-Math.floor(pay*(rate+rate*0.1)/100)))+'원 차이':'같음')+' <small>(10원 미만 절사)</small>');
     m.push('1년 세금은 다음 해 5월 종합소득세 신고로 확정');
     if(rate===2) m.push('<b>국회 통과 전 정부안 기준</b> · 2027년 1월 1일 이후 지급분부터 적용 예정');
-    $('fmsg').innerHTML='· '+m.join('<br>· ');
+    $('fmsg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
   }
   $('famt').addEventListener('input',function(){fmt(this);run();});
   Array.prototype.forEach.call(document.querySelectorAll('#fl input[type=radio]'),function(el){el.addEventListener('change',run);});

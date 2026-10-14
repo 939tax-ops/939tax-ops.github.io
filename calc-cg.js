@@ -50,12 +50,12 @@
     var m=[], consult=false;
     if(o.heavy&&house&&!exempt){ m.push(RED('중과는 조정대상지역에 있는 주택만 해당하고, 중과에서 빠지는 주택도 많습니다. 상담을 권장드립니다.')); consult=true; }
     if(o.nonbiz){ m.push(RED('비사업용 토지 해당 여부는 사용 기간·지목·지역 등으로 판단합니다. 상담을 권장드립니다.')); consult=true; }
-    if(!o.sale){ $('pay').textContent='0원'; $('sub').textContent='양도가액과 취득가액을 넣으면 바로 산출됩니다.'; $('tbl').innerHTML=''; $('msg').innerHTML=m.length?'· '+m.join('<br>· '):''; $('mini').hidden=true; return; }
+    if(!o.sale){ $('pay').textContent='0원'; $('sub').textContent='양도가액과 취득가액을 넣으면 바로 산출됩니다.'; $('tbl').innerHTML=''; $('msg').innerHTML=m.length?'<span class="mi">'+m.join('</span><span class="mi">')+'</span>':''; $('mini').hidden=true; return; }
     if(house&&exempt&&o.hold>=2&&o.live>o.hold){ $('mini').hidden=false; $('pay').textContent='입력 확인'; $('miniPay').textContent='입력 확인'; $('sub').textContent='거주기간이 보유기간보다 길 수 없습니다.'; $('tbl').innerHTML=''; $('msg').innerHTML=''; return; }
     var r=calc(o);
     $('mini').hidden=false;
     if(r.err==='need2'){ $('pay').textContent='계산 불가'; $('miniPay').textContent='계산 불가'; $('sub').textContent='비과세는 2년 이상 보유가 기본 요건입니다. 2년 미만이면 과세로 계산해 보세요.'; $('tbl').innerHTML=''; $('msg').innerHTML=''; return; }
-    if(r.exemptAll){ $('pay').textContent='0원'; $('miniPay').textContent='0원'; $('sub').textContent='양도가액 12억원 이하 — 비과세 요건을 충족하면 낼 세금이 없습니다.'; $('tbl').innerHTML=row('양도가액',comma(o.sale)+'원')+row('결과','비과세 (12억원 이하)','total'); $('msg').innerHTML='· '+['비과세 요건 충족 여부는 이 계산기가 판단하지 않습니다 — 요건을 충족한다는 전제의 결과']. concat(m).join('<br>· '); return; }
+    if(r.exemptAll){ $('pay').textContent='0원'; $('miniPay').textContent='0원'; $('sub').textContent='양도가액 12억원 이하 — 비과세 요건을 충족하면 낼 세금이 없습니다.'; $('tbl').innerHTML=row('양도가액',comma(o.sale)+'원')+row('결과','비과세 (12억원 이하)','total'); $('msg').innerHTML='<span class="mi">'+['비과세 요건 충족 여부는 이 계산기가 판단하지 않습니다 — 요건을 충족한다는 전제의 결과']. concat(m).join('</span><span class="mi">')+'</span>'; return; }
     if(!r.gain){ $('pay').textContent='0원'; $('miniPay').textContent='0원'; $('sub').textContent='양도차익이 없습니다(판 금액이 산 금액·필요경비 이하) — 낼 양도세가 없습니다.'; $('tbl').innerHTML=row('양도차익','0원','total'); $('msg').innerHTML='· 같은 해에 다른 부동산도 팔았다면 합산 계산이 달라지므로 상담을 권장드립니다.'; return; }
     $('pay').textContent=comma(r.total)+'원'; $('miniPay').textContent=comma(r.total)+'원';
     $('sub').textContent=r.rateNote+(r.ltRate?' · 장기보유특별공제 '+Math.round(r.ltRate*100)+'%':' · 장기보유특별공제 없음')+(consult?' · 상담을 권장드립니다':'');
@@ -70,10 +70,10 @@
     t+=row('합계',comma(r.total)+'원','total');
     $('tbl').innerHTML=t;
     if(exempt) m.unshift('비과세 요건 충족 여부는 이 계산기가 판단하지 않습니다 — 요건을 충족한다는 전제의 결과');
-    if(house&&!exempt&&!o.heavy) m.push('주택이 2채 이상이고 조정대상지역이면 중과가 적용될 수 있습니다');
+    if(house&&!exempt&&!o.heavy) m.push('현재 2주택자 이상이고 양도하려는 주택이 조정대상지역에 있다면 중과세율이 적용될 수 있습니다');
     if(!r.ltRate&&o.hold<3) m.push('보유 3년 미만은 장기보유특별공제가 없습니다');
     m.push('같은 해에 다른 부동산도 팔았다면 합산되어 세액이 달라집니다');
-    $('msg').innerHTML='· '+m.join('<br>· ');
+    $('msg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
   }
   ['sale','buy','cost'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   Array.prototype.forEach.call(document.querySelectorAll('#cg input[type=radio],#cg input[type=checkbox],#cg select'),function(el){el.addEventListener('change',run);});
