@@ -81,7 +81,7 @@ AREA_TEXT = "서울 및 경기도 일부"
 
 # 상담 진행 절차(문의 페이지·업무 페이지 공통)
 FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨 주세요."),
-        ("연락드림", "상담 신청은 영업일 기준 1~2일 이내에 연락드립니다."),
+        ("접수 확인", "상담 신청은 영업일 기준 1~2일 이내에 연락드립니다."),
         ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저 여쭤봅니다."),
         ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린 뒤 진행합니다.")]
 def flow_html(title="상담은 이렇게 진행됩니다"):
@@ -711,7 +711,7 @@ def build_about():
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
-<div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2} (02559)</span></div></div></div>
+<div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2}</span></div></div></div>
 <script>document.querySelectorAll('.ac-copy').forEach(function(b){{b.addEventListener('click',function(){{var t=b.getAttribute('data-copy');function ok(){{b.textContent='복사됨';setTimeout(function(){{b.textContent='주소 복사';}},1500);}}if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t).then(ok,function(){{fb();}});}}else{{fb();}}function fb(){{var x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{{document.execCommand('copy');ok();}}catch(e){{}}document.body.removeChild(x);}}}});}});</script>
 <table class="info">
 <tr><th>지도</th><td><a href="{nmap}" target="_blank" rel="noopener">네이버 지도에서 보기</a> · <a href="{kmap}" target="_blank" rel="noopener">카카오맵에서 보기</a></td></tr>

@@ -1130,3 +1130,7 @@ body.searching .qa-more-wrap{display:none}
 /* 2026-10-14 보조 분류 태그·영상 줄 필터 */
 .qcard .b-t{white-space:nowrap}.qcard .b-t2{opacity:.85}.qcard .qm{flex-wrap:wrap;row-gap:6px}.qcard .qm .d{margin-left:auto;white-space:nowrap}
 .vstrip[hidden],.vstrip .vcard[hidden]{display:none}
+
+/* 2026-10-14 상담 절차 제목: 줄바꿈 방지용 span이 설명 글 스타일을 물려받아 두 줄·작은 글씨로 보이던 문제 수정 */
+.flow b .kp{display:inline;font-size:inherit;line-height:inherit;color:inherit}
+.flow b{white-space:nowrap}
