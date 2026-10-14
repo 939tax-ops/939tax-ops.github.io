@@ -309,7 +309,9 @@ def write(rel, text):
                 join = '\u00a0' if (sp and len(inner) <= 10) else sp
                 return w + join + '<span class="nw">(' + inner + ')' + pu + '</span>'
             seg = re.sub(r'([%)])(?=[가-힣])', '\\1\u2060', seg)  # 9.5%를: % 뒤 조사가 다음 줄로 떨어지지 않게
-            return re.sub(r'([^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,13})\)([,.]?)', f, seg)
+            seg = re.sub(r'([^\s()<>·]{1,8})?( ?)\(([^()<>\n]{1,13})\)([,.]?)', f, seg)
+            seg = re.sub(r'\((?=[^\s)<])', '(\u2060', seg)  # 여는 괄호 뒤에서 줄이 꺾이지 않게
+            return seg.replace(' · ', '\u00a0· ')  # ' · ' 구분점이 줄 첫머리로 가지 않게
         _parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<title\b.*?</title>|<textarea\b.*?</textarea>|<option\b.*?</option>|<svg\b.*?</svg>|<head\b.*?</head>|<[^>]+>)', text, flags=re.S)
         text = ''.join(p if (i % 2 or not p) else _paren(p) for i, p in enumerate(_parts))
     if rel.endswith(".html"):
@@ -320,7 +322,7 @@ def write(rel, text):
             return '<th><span class="jt">' + "".join(f"<i>{c}</i>" for c in lab) + '</span></th>'
         text = re.sub(r'<table class="info[^"]*">.*?</table>', lambda m: re.sub(r'<th>([가-힣 ]+)</th>', _jt, m.group(0)), text, flags=re.S)
         # 짧은 '목적·기간' 같은 표 항목명은 가운뎃점에서 꺾이지 않게
-        text = re.sub(r'<td>([^<>\n]{2,8})</td>', lambda m: '<td>' + m.group(1).replace(' ', '\u00a0') + '</td>', text)
+        text = re.sub(r'<(t[dh])>([^<>\n]{2,10})</t[dh]>', lambda m: '<' + m.group(1) + '>' + m.group(2).replace(' ', '\u00a0') + '</' + m.group(1) + '>', text)
         text = re.sub(r'<th>([가-힣]{1,4}·[가-힣]{1,4})</th>', r'<th><span class="nw">\1</span></th>', text)
     if rel.endswith(".html"):
         text = line_rules(text)
