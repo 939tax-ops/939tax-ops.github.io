@@ -85,7 +85,7 @@
         if(gn>=1) ok = ghit>=Math.max(1,Math.ceil(gn*0.6)) || (wn>0 && hit>=Math.ceil(wn*0.6));
         else ok = wn>0 && hit>=(wn<=2?wn:wn-1);
         return {d:d,sc:ok?sc:0};
-      }).filter(function(x){return x.sc>0}).sort(function(a,b){return b.sc-a.sc}).slice(0,6);
+      }).filter(function(x){return x.sc>0}).sort(function(a,b){var ca=a.d.c==='계산기'?1:0, cb=b.d.c==='계산기'?1:0; return (cb-ca)||(b.sc-a.sc)}).slice(0,6); // 걸린 계산기는 항상 맨 위(2026.10.15)
       if(!res.length){
         out.innerHTML='<div class="s-none"><p>아직 이 질문을 다룬 글이 없습니다. 궁금하신 내용을 남겨 주시면 확인 후 연락드리겠습니다.</p><p><a class="btn primary" href="/contact/">문의 남기기</a></p>'+(document.querySelector('.qa-feed')?'<p class="s-back"><button type="button" class="s-reset">← 전체 목록 보기</button></p>':'')+'</div>';
         return;

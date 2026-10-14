@@ -1330,3 +1330,4 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .h2-search{margin:0 0 18px}
 .h2-search .search{margin:0}
 .h2-search .s-sum{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.h2-search .search-label{line-height:1.6}

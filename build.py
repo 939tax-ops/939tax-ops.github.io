@@ -738,7 +738,7 @@ def build_home_v2(posts, out="index.html"):
 {flow_html()}
 </div>
 <section class="block alt"><div class="wrap"><h2 class="sec">상담 전에 미리 확인해 보세요</h2>
-<div class="h2-search">{SEARCH_BOX.replace("세금 궁금한 점, 단어나 문장으로 편하게 검색해 보세요","단어나 문장으로 검색하면 세무 Q&amp;A와 계산기를 함께 찾아 드립니다").replace("예: 증여세 한도 / 부모님께 1억 받으면 세금 내나요?","예: 부가세 신고 기한 / 증여세 계산기 / 부모님께 1억 받으면?")}</div>
+<div class="h2-search">{SEARCH_BOX.replace("세금 궁금한 점, 단어나 문장으로 편하게 검색해 보세요","단어나 문장으로 검색하면<br>세무 Q&amp;A와 세금 계산기를 함께 찾아 드립니다").replace("예: 증여세 한도 / 부모님께 1억 받으면 세금 내나요?","예: 부가세 신고 기한 / 증여세 계산기 / 부모님께 1억 받으면?")}</div>
 <div class="h2-learn">
 <div class="h2-lc"><p class="h2-k">세무 Q&amp;A</p><b>자주 묻는 세금 질문을 조문 근거와 함께 정리했습니다</b><ul>{qa3}</ul><a class="h2-more" href="/qa/">Q&amp;A 전체 보기 →</a></div>
 <div class="h2-lc"><p class="h2-k">세금 계산기</p><b>조문 기준으로 만든 간편 계산기입니다</b><div class="h2-chips">{calcs}</div><a class="h2-more" href="/calculators/">계산기 전체 보기 →</a></div>
