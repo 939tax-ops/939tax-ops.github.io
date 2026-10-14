@@ -33,19 +33,23 @@ h1{font-size:18px;margin:0}
 const BOARD="https://claude.ai/artifact/3iEpzLjWhcsEDCVDq4EcHy";
 const $=id=>document.getElementById(id);
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+// 브라우저별 (2026.10.14): 엣지는 웹 음성 인식을 지원하지 않고, 삼성 인터넷은 일부만 됨 → 기기 자체 받아쓰기로 안내
+const UA=navigator.userAgent, EDGE=/Edg\//.test(UA), SAMSUNG=/SamsungBrowser/.test(UA), MOBILE=/Android|iPhone|iPad/.test(UA);
+function osHint(){ $("text").focus(); $("msg").textContent=MOBILE?"글 칸을 누르면 뜨는 키보드의 🎤(마이크) 버튼을 눌러 말씀하세요. 다 말하면 [대시보드로 보내기].":"키보드에서 윈도우 키 + H 를 누르면 윈도우 음성 입력이 켜집니다. 말한 뒤 [대시보드로 보내기]."; }
+if(EDGE){ $("mic").textContent="🎤 윈도우 음성 입력 (Win + H)"; }
 let rec=null,on=false,base="",gotAny=false;
 function b64u(t){const by=new TextEncoder().encode(t);let s="";by.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");}
 function send(){const t=$("text").value.trim(); if(!t){$("msg").textContent="보낼 내용이 없습니다";return;} location.href=BOARD+"#v"+b64u(t);}
 function stop(){on=false;$("mic").classList.remove("on");$("mic").textContent="🎤 이어서 말하기";try{rec&&rec.stop()}catch(e){}}
 $("mic").onclick=()=>{
   if(on){stop();return;}
-  if(!SR){$("msg").textContent="이 브라우저는 음성 인식을 지원하지 않습니다. 크롬으로 열어 주세요.";return;}
+  if(!SR||EDGE){osHint();return;}
   rec=new SR();rec.lang="ko-KR";rec.interimResults=true;rec.continuous=true;
   base=$("text").value.trim();if(base)base+=" ";
   rec.onresult=e=>{let f="",t="";for(let i=0;i<e.results.length;i++){const x=e.results[i][0].transcript;if(e.results[i].isFinal)f+=x;else t+=x;}$("text").value=base+f+t;gotAny=true;};
-  rec.onerror=e=>{$("msg").textContent=e.error==="not-allowed"?"마이크 사용을 허용해 주세요(주소창 왼쪽 자물쇠 → 권한).":"음성 인식 오류: "+e.error;stop();};
+  rec.onerror=e=>{const er=e.error; stop(); if(er==="not-allowed"||er==="service-not-allowed"){$("msg").textContent=SAMSUNG?"마이크 권한이 막혀 있습니다 — 주소창 왼쪽 자물쇠 → 권한에서 허용하거나, 아래 방법을 쓰세요.":"마이크 사용을 허용해 주세요(주소창 왼쪽 자물쇠 → 권한)."; if(SAMSUNG) setTimeout(osHint,2500); return;} if(er==="no-speech"){$("msg").textContent="말소리가 들리지 않았습니다. 다시 눌러 말씀해 주세요.";return;} osHint();};
   rec.onend=()=>{if(on){try{rec.start();return;}catch(e){}}stop();if($("text").value.trim())$("msg").textContent="내용을 확인하고 [대시보드로 보내기]를 누르세요.";};
-  rec.start();on=true;$("mic").classList.add("on");$("mic").textContent="■ 다 말했어요";$("msg").textContent="듣고 있습니다…";
+  try{rec.start();}catch(e){osHint();return;} on=true;$("mic").classList.add("on");$("mic").textContent="■ 다 말했어요";$("msg").textContent="듣고 있습니다…";
 };
 $("send").onclick=send;
 $("clear").onclick=()=>{$("text").value="";$("msg").textContent="";};
