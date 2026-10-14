@@ -204,6 +204,8 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <a href="{YOUTUBE}" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 - 세무사 세친구</span></a>
 </nav>
 </div></footer>
+<nav class="mbar" aria-label="빠른 연락"><a href="tel:{TEL}"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>전화</a><a class="k" href="{KAKAO}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡</a><a class="p" href="/contact/" data-mlead>상담 신청</a></nav>
+<script>(function(){{var f=document.querySelector("form.lead");if(f){{document.querySelectorAll("[data-mlead]").forEach(function(a){{a.addEventListener("click",function(e){{e.preventDefault();f.scrollIntoView({{behavior:"smooth",block:"start"}})}})}})}}}})();</script>
 </body>
 </html>
 '''
@@ -539,6 +541,7 @@ WHY = [
 
 def why_cards(items=None):
     src = WHY if items is None else items
+    src = [it for it in src if not (len(it) > 2 and it[2])]  # '준비 중' 항목은 시작 전까지 숨김 — 시작하면 WHY에서 준비 중 표시만 지우면 다시 나옴(2026-10-14)
     out = []
     for i, it in enumerate(src, 1):
         soon = it[2] if len(it) > 2 else ""
@@ -1018,14 +1021,14 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="{ph}"></textarea></label>
 </div>
 <div class="lf-agree">
-<label><input type="checkbox" name="a1"> <b>[필수]</b> 개인정보 수집·이용에 동의합니다</label>
+<label><input type="checkbox" name="a1"><span><b>[필수]</b> 개인정보 수집·이용에 동의합니다</span></label>
 <details><summary>내용 보기</summary><table>
 <tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택)</td></tr>
 <tr><th>이용 목적</th><td>상담 신청 확인 및 연락</td></tr>
 <tr><th>보유 기간</th><td>{PRIVACY_KEEP} (상담으로 이어지지 않으면 신청일부터 1년) 후 파기</td></tr>
 <tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 양식으로는 신청할 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
 </table></details>
-<label><input type="checkbox" name="a2"> <b>[필수]</b> Google 설문지(해외 서버) 저장에 동의합니다</label>
+<label><input type="checkbox" name="a2"><span><b>[필수]</b> Google 설문지(해외 서버) 저장에 동의합니다</span></label>
 <p class="lf-note">상담 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다.</p>
 <details><summary>내용 보기</summary><table>
 <tr><th>저장 항목</th><td>위 수집 항목 전부</td></tr>
@@ -1121,6 +1124,17 @@ def build_404():
     body = '<div class="narrow" style="padding:60px 20px"><h1 style="color:var(--green)">페이지를 찾을 수 없습니다</h1><p>주소가 바뀌었거나 삭제된 페이지입니다.</p><div class="btns"><a class="btn primary" href="/">첫 화면으로</a><a class="btn ghost" href="/qa/">세무 Q&amp;A</a></div></div>'
     write("404.html", page("페이지를 찾을 수 없습니다 | " + NAME, "", "/404.html", body).replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1))
 
+# 서비스 페이지 첫 화면 보수 한 줄 — /fees/ 공개 금액과 같게 유지할 것(2026-10-14)
+SVC_PRICE = {
+    "bookkeeping": '월 70,000원~ <small>(1인 사업자 할인 적용 · 부가세 별도)</small>',
+    "tax-filing": '부가가치세 150,000원~ · 종합소득세 200,000원~ <small>(부가세 별도)</small>',
+    "capital-gains": '양도가액의 0.1% <small>(최저 200,000원 · 부가세 별도)</small>',
+    "inheritance-gift": '증여세 증여가액의 0.1%(최저 200,000원) · 상속세 500,000원 + 상속재산의 0.4% <small>(부가세 별도)</small>',
+    "refund-claim": '환급 가능 여부 확인은 최대한 무료로 진행합니다',
+    "tax-audit": '세무조사 대응 1,500,000원~ · 불복 감액세액의 20%~ <small>(부가세 별도)</small>',
+    "tax-planning": '상담 30분 100,000원~ <small>(사전 서류 검토 200,000원~ · 부가세 별도)</small>',
+}
+
 def build_services(posts):
     cards = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in ALL_SERVICES)  # 번호 뺌(2026.10.11 D+)
     body = f'''<div class="wrap" style="padding-top:36px">
@@ -1151,6 +1165,7 @@ def build_services(posts):
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
 <h1>{t}</h1>
 <p class="lead">{esc(x["intro"])}</p>
+<div class="svc-top"><p class="svc-price"><span class="lb">보수</span><span class="v">{SVC_PRICE.get(k, "")}</span><a href="/fees/">보수 안내 전체 →</a></p><div class="btns"><a class="btn primary" href="/contact/" data-mlead>상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div></div>
 <div class="svc-cols">
 <section><h2>수행 업무</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>

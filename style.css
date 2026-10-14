@@ -1156,3 +1156,29 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 /* 폰 하단 정보: 이메일·저작권 표기는 덩어리째 다음 줄로 — 2026-10-14 */
 .f-nw{white-space:nowrap}
 @media (max-width:560px){footer .f-br{display:block;height:0;font-size:0;line-height:0}}
+/* 오류 수정 2026-10-14: 함께 보면 좋은 글 글머리 점이 둘째 줄에 붙던 문제 / 동의 문구 들여쓰기 */
+.rel-col li .seg{display:inline}
+.lf-agree>label{align-items:flex-start;line-height:1.5}.lf-agree>label input{flex:none;margin-top:2px}.lf-agree>label>span{flex:1;min-width:0}
+.lf-agree .lf-note{margin-left:26px}
+/* 폰 하단 고정 연락 바(전화·카카오톡·상담 신청) — 2026-10-14 */
+.mbar{display:none}
+@media (max-width:760px){
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+  .mbar{display:grid;grid-template-columns:1fr 1fr 1.25fr;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--surface,#fff);border-top:1px solid var(--line);padding:7px 10px calc(7px + env(safe-area-inset-bottom));gap:7px;box-shadow:0 -4px 14px rgba(0,0,0,.06)}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:8px;font-family:var(--sans);font-weight:700;font-size:15px;text-decoration:none;color:var(--green);border:1px solid var(--line)}
+  .mbar a svg{width:18px;height:18px}
+  .mbar a.k{background:#FEE500;border-color:#FEE500;color:#191600}
+  .mbar a.p{background:var(--green-bg,#1B3A26);border-color:var(--green-bg,#1B3A26);color:#fff}
+}
+/* 서비스 페이지 첫 화면: 보수 한 줄 + 연락 버튼 — 2026-10-14 */
+.svc-top{margin:16px 0 26px;padding:16px 18px;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:8px;background:var(--surface)}
+.svc-price{margin:0 0 14px;font-family:var(--sans);line-height:1.6;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.svc-price .lb{font-size:13px;font-weight:700;color:var(--sub);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
+.svc-price .v{font-weight:800;color:var(--green);font-size:17px}
+.svc-price .v small{font-weight:400;font-size:13px;color:var(--sub)}
+.svc-price a{font-size:14px;color:var(--sub);margin-left:auto}
+.svc-top .btns .btn{font-size:15px;padding:11px 18px}
+@media (max-width:760px){.svc-top .btns{flex-wrap:nowrap;gap:8px}.svc-top .btns .btn{flex:1;text-align:center;justify-content:center;padding:11px 8px}.svc-top .btns .btn.ghost{display:none}.svc-price a{margin-left:0}}
+/* 특징 카드 3개(준비 중 항목 숨김) → PC 3칸, 1개면 1칸 — 2026-10-14 */
+@media (min-width:701px){.why-grid{grid-template-columns:repeat(3,1fr)}.why-grid:has(> :only-child){grid-template-columns:1fr}}
+.svc-price .v small{white-space:nowrap;display:inline-block}
