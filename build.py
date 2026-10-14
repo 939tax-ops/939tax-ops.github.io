@@ -610,6 +610,16 @@ SEARCH_BOX = """<div class="search" data-search>
 </div>
 <script src="/search.js" defer></script>"""
 
+# 업무 안내 페이지 검색어(2026.10.14) — 줄임말·일상어 포함
+SVC_KW = {
+ "bookkeeping": "세무기장 기장 장부 기장료 기장 맡기기 세무사 사무실 개인사업자 법인사업자 매출 매입 정리 월 기장료",
+ "tax-filing": "신고대리 세금 신고 대행 부가세 부가가치세 종소세 종합소득세 법인세 원천세 사업장현황신고 면세사업자",
+ "capital-gains": "양도세 양도소득세 집 팔 때 주택 매도 상가 토지 1세대 1주택 비과세 다주택 중과 장특 장기보유특별공제",
+ "inheritance-gift": "상속세 증여세 상증세 상속 증여 부모님 자녀 재산 물려받기 사전증여 신고",
+ "refund-claim": "경정청구 환급 돌려받기 더 낸 세금 잘못 낸 세금 빠뜨린 공제 감면 누락 5년",
+ "tax-audit": "세무조사 소명 해명 자료 요청 통지 조세불복 이의신청 심사청구 심판청구 국세청",
+ "tax-planning": "절세 절세상담 세금 줄이기 미리 상담 세무 상담 상담료 사전 검토",
+}
 # 검색에 함께 걸리게 할 도구·안내 페이지(2026.10.13)
 SEARCH_TOOLS = [
  ("기장료 계산기", "/calculators/bookkeeping-fee/", "계산기",
@@ -630,6 +640,15 @@ SEARCH_TOOLS = [
  ("프리랜서 3.3% 계산기", "/calculators/freelancer-withholding/", "계산기",
   "지급액을 넣으면 3.3%를 뗀 실제 지급액이, 세후 금액을 넣으면 계약해야 할 지급액이 산출됩니다.",
   "프리랜서 3.3 삼점삼 원천징수 2.2 인적용역 사업소득 지급액"),
+ ("오시는 길", "/location/", "안내",
+  "청량리역 4번 출구 도보 1~2분, 롯데캐슬SKY-L65 섹션오피스 13층 1313호. 1호선·기차·버스·자차별 사진 안내.",
+  "오시는길 오는 길 위치 주소 지도 주차 찾아가는 길 청량리역 사무실 방문 길찾기"),
+ ("문의하기", "/contact/", "안내",
+  "전화·카카오톡·이메일·상담 신청 양식으로 문의하실 수 있습니다.",
+  "문의 상담 신청 연락처 전화번호 카톡 카카오톡 이메일 메일 예약 상담 예약"),
+ ("사무소 소개", "/about/", "안내",
+  "세무회계택 김태형 세무사의 이력과 업무 분야, 오시는 길 안내입니다.",
+  "소개 세무사 김태형 대표 경력 이력 사무소"),
  ("보수 안내", "/fees/", "안내",
   "기장료·신고대리·양도·상속·증여·상담 보수를 구간별로 공개하고 있습니다.",
   "보수 수수료 기장료 신고 대리 비용 가격 얼마 상담료 견적"),
@@ -648,6 +667,8 @@ def build_search_index(posts):
         items.append({"t": v["title"], "u": f"/video/{v['slug']}/", "c": "영상",
                       "s": re.sub("<[^>]+>", "", v["lead"]), "h": [a for a, b in v["points"]],
                       "k": " ".join(b for a, b in v["points"])})
+    for k, t, d in ALL_SERVICES:  # 업무 안내 페이지도 검색에 걸리게(2026.10.14)
+        items.append({"t": t + " 안내", "u": f"/services/{k}/", "c": "업무 안내", "s": d, "h": [], "k": SVC_KW.get(k, t)})
     for t, u, c, sm, kw in SEARCH_TOOLS:  # 계산기·보수 안내도 검색에 걸리게(2026.10.13)
         items.append({"t": t, "u": u, "c": c, "s": sm, "h": [], "k": kw})
     write("search-index.json", json.dumps(items, ensure_ascii=False))
@@ -702,7 +723,7 @@ def build_home_v2(posts, out="index.html"):
 <div class="h2-rep-tx">
 <h2>김태형 <span>세무사</span></h2>
 <p class="h2-rep-q">상담부터 신고서 최종 검토까지 세무사가 직접 맡습니다.<br>법령과 자료를 근거로 먼저 검토하고, 결과를 명확하게 설명드립니다.</p>
-<dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스 · 前 포스코건설</dd><dt>활동</dt><dd><a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세무사 세친구</a></dd></dl>
+<dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스 · 前 포스코건설</dd><dt>활동</dt><dd class="h2-act"><a class="act" href="{BLOG}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그 <span>세금 소식·업무 사례</span></a><a class="act" href="{YOUTUBE}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세무사 세친구 <span>영상으로 보는 세금</span></a></dd></dl>
 <a class="h2-more" href="/about/">소개 자세히 보기 →</a>
 </div></div></section>
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid h2-svc">{svc}</div>
@@ -717,6 +738,7 @@ def build_home_v2(posts, out="index.html"):
 {flow_html()}
 </div>
 <section class="block alt"><div class="wrap"><h2 class="sec">상담 전에 미리 확인해 보세요</h2>
+<div class="h2-search">{SEARCH_BOX.replace("세금 궁금한 점, 단어나 문장으로 편하게 검색해 보세요","단어나 문장으로 검색하면 세무 Q&amp;A와 계산기를 함께 찾아 드립니다").replace("예: 증여세 한도 / 부모님께 1억 받으면 세금 내나요?","예: 부가세 신고 기한 / 증여세 계산기 / 부모님께 1억 받으면?")}</div>
 <div class="h2-learn">
 <div class="h2-lc"><p class="h2-k">세무 Q&amp;A</p><b>자주 묻는 세금 질문을 조문 근거와 함께 정리했습니다</b><ul>{qa3}</ul><a class="h2-more" href="/qa/">Q&amp;A 전체 보기 →</a></div>
 <div class="h2-lc"><p class="h2-k">세금 계산기</p><b>조문 기준으로 만든 간편 계산기입니다</b><div class="h2-chips">{calcs}</div><a class="h2-more" href="/calculators/">계산기 전체 보기 →</a></div>
