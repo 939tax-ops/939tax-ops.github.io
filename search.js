@@ -76,16 +76,16 @@
     load(function(){
       var T=terms(q);
       var res=data.map(function(d){
-        var t=norm(d.t), s=norm(d.s), h=norm((d.h||[]).join(' ')), k=norm(d.k), all=t+h+k+s, sc=0, hit=0, ghit=0;
-        T.words.forEach(function(w){ var m=0, alts=[w].concat(ALT(w)); function has(x){return alts.some(function(a){return x.indexOf(a)>=0})} if(has(t)){sc+=5;m=1} if(has(h)){sc+=3;m=1} if(has(k)){sc+=3;m=1} if(has(s)){sc+=1;m=1} hit+=m; });
+        var t=norm(d.t), s=norm(d.s), h=norm((d.h||[]).join(' ')), k=norm(d.k), all=t+h+k+s, sc=0, hit=0, ghit=0, strong=0;
+        T.words.forEach(function(w){ var m=0, alts=[w].concat(ALT(w)); function has(x){return alts.some(function(a){return x.indexOf(a)>=0})} if(has(t)){sc+=5;m=1;strong=1} if(has(h)){sc+=3;m=1} if(has(k)){sc+=3;m=1;strong=1} if(has(s)){sc+=1;m=1} hit+=m; });
         T.groups.forEach(function(g){ if(g.some(function(x){return all.indexOf(x)>=0})){ghit++;sc+=4;} });
         if(d.c==='계산기' && T.groups.some(function(g){return g[0]==='계산기'})) sc+=12; // '계산' 들어간 검색은 계산기를 맨 위로
         if((d.c==='안내'||d.c==='업무 안내') && T.groups.some(function(g){return g[0]==='오시는'||g[0]==='문의'})) sc+=8;
         var wn=T.words.length, gn=T.groups.length, ok;
         if(gn>=1) ok = ghit>=Math.max(1,Math.ceil(gn*0.6)) || (wn>0 && hit>=Math.ceil(wn*0.6));
         else ok = wn>0 && hit>=(wn<=2?wn:wn-1);
-        return {d:d,sc:ok?sc:0};
-      }).filter(function(x){return x.sc>0}).sort(function(a,b){var ca=a.d.c==='계산기'?1:0, cb=b.d.c==='계산기'?1:0; return (cb-ca)||(b.sc-a.sc)}).slice(0,6); // 걸린 계산기는 항상 맨 위(2026.10.15)
+        return {d:d,sc:ok?sc:0,pin:(ok&&strong&&d.c==='계산기')?1:0};
+      }).filter(function(x){return x.sc>0}).sort(function(a,b){return (b.pin-a.pin)||(b.sc-a.sc)}).slice(0,6); // 검색어가 계산기 이름·키워드에 직접 걸리면 계산기를 맨 위로(2026.10.15)
       if(!res.length){
         out.innerHTML='<div class="s-none"><p>아직 이 질문을 다룬 글이 없습니다. 궁금하신 내용을 남겨 주시면 확인 후 연락드리겠습니다.</p><p><a class="btn primary" href="/contact/">문의 남기기</a></p>'+(document.querySelector('.qa-feed')?'<p class="s-back"><button type="button" class="s-reset">← 전체 목록 보기</button></p>':'')+'</div>';
         return;
