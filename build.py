@@ -847,10 +847,10 @@ def build_about():
     import urllib.parse as up
     nmap = "https://map.naver.com/p/search/" + up.quote(q)
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
-    CH_HTML = f'''<section class="block"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
+    CH_HTML = f'''<section class="block ch-sec"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
 <div class="ch-grid">
-<a class="ch" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><b>세금 소식과 업무 사례</b><span class="s">개정 세법과 신고 일정, 실무 판단을 글로 정리해 드립니다.</span><span class="go">블로그 보기 →</span></a>
-<a class="ch" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><b>영상으로 보는 세금 이야기</b><span class="s">제도 해설과 실제 사례를 쉽게 풀어서 설명해 드립니다.</span><span class="go">채널 보기 →</span></a>
+<a class="ch lite" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><span class="d">세금 소식과 업무 사례</span><span class="ar" aria-hidden="true">→</span></a>
+<a class="ch lite" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><span class="d">영상으로 보는 세금 이야기</span><span class="ar" aria-hidden="true">→</span></a>
 </div></div></section>'''
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(SERVICES, 1))
     body = f'''<div class="wrap about-page{" v2" if AB2 else ""}" style="padding-top:36px">

@@ -1284,3 +1284,11 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
   .hero-c1 .copy{position:relative;z-index:1;padding-bottom:170px}
   .hero-c1 .hero-img.m{position:absolute;z-index:0;left:-20px;right:-20px;bottom:0;top:auto;height:72%;margin:0;background:url(/assets/hero-law-m.webp) center 70%/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.25) 30%,rgba(0,0,0,.8) 60%,#000 80%);mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.25) 30%,rgba(0,0,0,.8) 60%,#000 80%)}
 }
+/* 소개 페이지 채널 칸 가볍게: 로고 + 한 줄 설명 (2026-10-14) */
+.ch-sec{padding-top:36px;padding-bottom:36px}
+.ch.lite{flex-direction:row;align-items:center;gap:14px;padding:15px 20px}
+.ch.lite .k{white-space:nowrap;flex:none}
+.ch.lite .d{flex:1;min-width:0;color:var(--sub);font-size:15px;line-height:1.5}
+.ch.lite .ar{flex:none;color:var(--green);font-weight:700}
+@media (max-width:640px){.ch-grid{gap:10px}.ch.lite{padding:13px 16px;gap:10px}.ch.lite .k{font-size:15px}.ch.lite .k .ic{width:22px;height:22px}.ch.lite .d{font-size:14px}}
+@media (max-width:640px){.ch.lite{display:grid;grid-template-columns:1fr auto;row-gap:3px}.ch.lite .k{grid-column:1}.ch.lite .d{grid-column:1;grid-row:2;padding-left:32px;white-space:nowrap}.ch.lite .ar{grid-column:2;grid-row:1/3}}
