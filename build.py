@@ -675,6 +675,31 @@ def build_home(posts):
                              "서울 동대문구 청량리에 있는 세무회계택 김태형 세무사 사무실입니다. 개인·법인사업자 기장, 종합소득세, 양도소득세, 상속·증여세, 경정청구 등의 세무업무를 수행합니다.",
                              "/", body, "home", [person_ld()]))
 
+
+# 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-bus / #go-car 로 바로 열림
+ROUTE_SETS = {
+    "line1": ("1호선", "청량리역 4번 출구", ["c-01","c-02","c-03","c-04","c-05","c-06","c-07","c-08","c-09"]),
+    "gyeongui": ("경의중앙선", "1번 출구 → 데크", ["gy-01","gy-02","gy-03","c-01","c-02","c-03","c-04","c-05","c-06","c-07","c-08","c-09"]),
+    "bus": ("버스", "청량리역 버스환승센터", ["c-01","c-02","c-03","c-04","c-05","c-06","c-07","c-08","c-09"]),
+    "car": ("자차", "지하4층 · 2시간 무료", ["car-01","car-02","car-03","car-04","car-05","c-08","c-09"]),
+}
+ROUTE_ICONS = {
+    "line1": '<rect x="14" y="6" width="36" height="42" rx="9"/><path d="M14 30h36M22 56l6-8M42 56l-6-8"/><circle cx="23" cy="39" r="2.5" fill="currentColor"/><circle cx="41" cy="39" r="2.5" fill="currentColor"/>',
+    "gyeongui": '<path d="M10 44V20c0-6 5-10 11-10h22c6 0 11 4 11 10v24z"/><path d="M10 30h44"/><circle cx="20" cy="38" r="2.5" fill="currentColor"/><circle cx="44" cy="38" r="2.5" fill="currentColor"/><path d="M6 54h52M18 44l-4 10M46 44l4 10"/>',
+    "bus": '<rect x="12" y="8" width="40" height="42" rx="7"/><path d="M12 32h40M20 16h24"/><circle cx="21" cy="41" r="2.5" fill="currentColor"/><circle cx="43" cy="41" r="2.5" fill="currentColor"/><path d="M18 50v6M46 50v6"/>',
+    "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
+}
+def route_html():
+    btns = "".join(f'<button type="button" class="rt-btn" data-k="{k}" aria-controls="rt-{k}"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">{ROUTE_ICONS[k]}</svg><b>{t}</b><small>{d}</small></button>' for k, (t, d, _) in ROUTE_SETS.items())
+    sets = ""
+    for k, (t, d, imgs) in ROUTE_SETS.items():
+        n = len(imgs)
+        items = "".join(f'<figure><figcaption>{i} / {n}</figcaption><img src="/assets/route/{f}.webp" alt="{t}로 오시는 길 {i}단계" loading="lazy" width="900"></figure>' for i, f in enumerate(imgs, 1))
+        sets += f'<div class="rt-set" id="rt-{k}" hidden><h3>{t}로 오시는 길</h3>{items}<button type="button" class="rt-top">다른 방법 보기 ↑</button></div>'
+    css = '<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:12.5px;opacity:.75}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}.rt-set{margin-top:18px;scroll-margin-top:84px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 12px}.rt-set figure{margin:0 0 16px}.rt-set figcaption{font-size:13px;opacity:.7;margin-bottom:6px}.rt-set img{display:block;width:100%;max-width:560px;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-top{border:1px solid var(--green);background:var(--surface);color:var(--green);border-radius:20px;padding:8px 18px;font:inherit;font-size:14px;cursor:pointer}</style>'
+    js = '<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");function show(k,sc){B.forEach(function(b){b.classList.toggle("on",b.dataset.k===k);b.setAttribute("aria-expanded",b.dataset.k===k)});S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t&&sc)t.scrollIntoView({behavior:"smooth",block:"start"});}B.forEach(function(b){b.addEventListener("click",function(){show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});document.querySelectorAll(".rt-top").forEach(function(b){b.addEventListener("click",function(){document.getElementById("route").scrollIntoView({behavior:"smooth"})})});var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>'
+    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 차량번호를 알려주시면 2시간 무료 주차를 등록해 드립니다.</p></div>{js}'
+
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
     import urllib.parse as up
@@ -718,7 +743,7 @@ def build_about():
 <tr><th>전화</th><td><a href="tel:{TEL}">{TEL}</a> (팩스 {FAX})</td></tr>
 <tr><th>지역</th><td><a href="/area/dongdaemun/">동대문구 세무사 안내 보기 →</a></td></tr>
 </table>
-<!-- 찾아오시는 방법 상세 안내(대중교통·출입구·엘리베이터·주차) 자리: 내용 확정 후 넣기 (2026-10-11 숨김) -->
+{route_html()}
 <img class="loc-map" style="margin:16px 0 0" src="/assets/map-location.svg" width="1600" height="905" alt="세무회계택 약도 — 청량리역 1호선과 청량리역·롯데백화점 사이, 청량리롯데캐슬 L65" loading="lazy">
 
 </section></div>'''
