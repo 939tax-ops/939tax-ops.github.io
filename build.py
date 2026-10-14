@@ -20,20 +20,20 @@ BLOG = "https://blog.naver.com/tax939"
 YOUTUBE = "https://www.youtube.com/@taxfriends3"
 CATS = {"business": "사업자 세금", "life": "생활 세금"}
 # 세무 Q&A 분류(종류별 칩). 글 머리의 topic: 값으로 지정. 없으면 기타.
-TOPICS = [("income", "종합소득세"), ("vat", "부가가치세"), ("corp", "법인세"), ("payroll", "인건비·4대보험"),
+TOPICS = [("income", "종합소득세"), ("biz", "사업자 세금"), ("vat", "부가가치세"), ("corp", "법인세"), ("payroll", "인건비·4대보험"),
           ("capital-gains", "양도소득세"), ("gift", "상속·증여세"), ("refund", "경정청구·환급"),
-          ("audit", "세무조사"), ("local", "지방세·재산세"), ("etc", "기타")]
+          ("audit", "세무조사"), ("etc", "기타")]
 TOPIC_NAME = dict(TOPICS)
-TOPIC_SERVICE = {"income": "tax-filing", "vat": "tax-filing", "corp": "tax-filing", "payroll": "bookkeeping",
+TOPIC_SERVICE = {"income": "tax-filing", "biz": "tax-filing", "vat": "tax-filing", "corp": "tax-filing", "payroll": "bookkeeping",
                  "capital-gains": "capital-gains", "gift": "inheritance-gift", "refund": "refund-claim", "audit": "tax-audit"}
 # 업무 페이지에 노출할 관련 Q&A 세목(업무 → Q&A 방향)
-SERVICE_TOPICS = {"bookkeeping": ["vat", "income", "corp", "payroll"], "tax-filing": ["vat", "income", "corp"],
+SERVICE_TOPICS = {"bookkeeping": ["biz", "vat", "income", "corp", "payroll"], "tax-filing": ["biz", "vat", "income", "corp"],
                   "capital-gains": ["capital-gains"], "inheritance-gift": ["gift"], "refund-claim": ["refund"],
                   "tax-audit": ["audit"], "tax-planning": ["capital-gains", "gift"]}
 
 # ---------- Q&A 글 하단 상담 유도(CTA) — 읽는 사람에 따라 갈라 쓴다 ----------
 # biz   = 사업자(기장 유도)  / asset = 양도·상속·증여  / person = 근로자·개인  / audit = 세무조사 / etc = 일반
-CTA_BY_TOPIC = {"vat": "biz", "corp": "biz", "income": "biz", "payroll": "biz",
+CTA_BY_TOPIC = {"vat": "biz", "corp": "biz", "income": "biz", "biz": "biz", "payroll": "biz",
                 "gift": "asset", "capital-gains": "asset",
                 "refund": "person", "audit": "audit", "local": "etc", "etc": "etc"}
 # 세목 기본값을 덮어쓰는 예외(근로자·개인이 읽는 글)

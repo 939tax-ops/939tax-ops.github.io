@@ -1123,3 +1123,6 @@ body.searching .qa-more-wrap{display:none}
   .seg2{display:block}
   .area-h1{font-size:25px}
 }
+
+/* 2026-10-14 세무 Q&A 분류 버튼: PC에서는 한 줄로 */
+@media (min-width:1000px){.qchips{flex-wrap:nowrap;gap:5px;justify-content:space-between}.qchips button{white-space:nowrap;padding:7px 10px;font-size:13.5px;flex:0 1 auto}}
