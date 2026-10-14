@@ -575,6 +575,7 @@ SERVICE_DETAIL = {
         "intro": "주택·토지·상가를 팔기 전에 세액을 먼저 따져 보고, 판 뒤에는 양도소득세 신고를 수행합니다.",
         "do": ["팔기 전 예상 양도소득세 계산", "비과세·감면 적용 여부 검토", "취득가액·필요경비 자료 확인", "양도소득세 신고"],
         "for": ["매도 시기나 방법을 정하기 전이신 분", "비과세가 되는지 확신이 없으신 분", "이미 계약을 마치고 신고를 앞두신 분"],
+        "calc": ("/calculators/capital-gains/", "양도소득세 계산기로 먼저 확인해 보기"),
     },
     "inheritance-gift": {
         "intro": "증여는 하기 전에 방법별 세액을 비교하고, 상속은 재산 평가부터 신고까지 함께 진행합니다.",
@@ -615,6 +616,9 @@ SEARCH_TOOLS = [
  ("증여세 계산기", "/calculators/gift-tax/", "계산기",
   "관계별 공제, 10년 합산, 혼인·출산 공제를 반영한 예상 증여세를 계산합니다.",
   "증여세 증여 계산 공제 한도 부모 조부모 배우자 자녀 혼인 출산"),
+ ("양도소득세 계산기", "/calculators/capital-gains/", "계산기",
+  "주택(비과세·과세·다주택 중과)과 상가·토지(비사업용 토지 포함)를 나눠 보유·거주 기간별 예상 양도세를 계산합니다. 참고용입니다.",
+  "양도세 양도소득세 집 팔 때 주택 매도 1주택 비과세 12억 고가주택 장기보유특별공제 다주택 중과 2주택 3주택 상가 토지 비사업용"),
  ("1주택 취득세 계산기", "/calculators/acquisition-tax/", "계산기",
   "주택 1채를 살 때 취득세·지방교육세·농어촌특별세를 생애최초 감면 적용 여부별로 계산합니다.",
   "취득세 지방세 생애최초 감면 집 매수 아파트 지방교육세 농어촌특별세"),
@@ -864,7 +868,7 @@ YANGDO_ENABLED = False
 
 CALCS = [
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
-    (("양도소득세", "1주택 양도세 연도별 비교", "2026~2029년 중 언제 파느냐에 따라 달라지는 1주택 양도세를 나란히 비교합니다", "/calculators/one-house-capital-gains/") if YANGDO_ENABLED else ("양도소득세", "양도소득세 계산기", "보유기간·공제를 반영한 예상 양도세")),
+    ("양도소득세", "양도소득세 계산기", "주택(비과세·과세·다주택 중과)과 상가·토지(비사업용 포함)를 나눠 보유·거주 기간별 예상 양도세를 계산합니다", "/calculators/capital-gains/"),
     ("취득세", "1주택 취득세 계산기", "주택 1채를 살 때 취득세·지방교육세·농어촌특별세를 생애최초 감면 적용 여부별로 계산합니다", "/calculators/acquisition-tax/"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
     ("원천세·인건비", "급여 실수령액·4대보험 계산기", "월 급여를 넣으면 4대보험과 소득세를 뺀 실수령액이, 세후 금액을 넣으면 필요한 세전 급여가 산출됩니다", "/calculators/four-insurance/"),
@@ -920,6 +924,16 @@ def build_acq_calc():
           page(f"1주택 취득세 계산기 2026 | {NAME}",
                "주택 1채를 사서 1주택이 되는 경우 매매가격과 전용면적을 넣으면 취득세·지방교육세·농어촌특별세를 계산합니다. 생애최초 감면 적용 여부별 계산.",
                "/calculators/acquisition-tax/", tpl, "calc", ld))
+
+def build_cg_calc():  # 양도소득세 계산기(2026.10.14) — 주택/상가·토지, 참고용 동의 체크 후 사용
+    tpl = open(os.path.join(ROOT, "_src", "capital-gains-calc.html"), encoding="utf-8").read()
+    ld = [{"@type": "WebApplication", "name": "양도소득세 계산기", "url": SITE + "/calculators/capital-gains/",
+           "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko",
+           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
+    write("calculators/capital-gains/index.html",
+          page(f"양도소득세 계산기 2026 (주택·상가·토지) | {NAME}",
+               "주택(1세대 1주택 비과세·과세·다주택 중과)과 상가·토지(비사업용 토지 포함)를 나눠 보유·거주 기간별 예상 양도소득세와 지방소득세를 계산하는 참고용 계산기입니다.",
+               "/calculators/capital-gains/", tpl, "calc", ld))
 
 def build_4ins_calc():
     tpl = open(os.path.join(ROOT, "_src", "four-insurance-calc.html"), encoding="utf-8").read()
@@ -1276,7 +1290,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/location/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/location/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/capital-gains/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     urls += [("/area/dongdaemun/", today)]
     urls += [("/video/", today)] + [(f'/video/{v["slug"]}/', v["date"]) for v in VIDEOS if v.get("slug")]
@@ -1298,6 +1312,6 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts); build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
