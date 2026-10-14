@@ -681,7 +681,7 @@ ROUTE_SETS = {
     "line1": ("1호선", "청량리역 4번 출구", ["c-01","c-02","c-04","c-05","c-06","c-07","c-08","c-09"]),
     "gyeongui": ("경의중앙선", "1번 출구 → 청량리역 4번 출구", ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05","g-08","g-09","g-10","g-11"]),
     "bus": ("버스", "청량리역 버스환승센터", ["c-01","c-02","c-04","c-05","c-06","c-07","c-08","c-09"]),
-    "car": ("자차", "지하4층 · 2시간 무료", ["car-01","car-02","car-03","car-04","car-05","car-06","car-07"]),
+    "car": ("자차", "지하4층 · 2시간 무료", ["car-01","car-note","car-02","car-03","car-04","car-05","car-06b","car-07b"]),
 }
 ROUTE_ICONS = {
     "line1": '<rect x="14" y="6" width="36" height="42" rx="9"/><path d="M14 30h36M22 56l6-8M42 56l-6-8"/><circle cx="23" cy="39" r="2.5" fill="currentColor"/><circle cx="41" cy="39" r="2.5" fill="currentColor"/>',
@@ -691,7 +691,11 @@ ROUTE_ICONS = {
 }
 import urllib.parse as _up
 ROUTE_NMAP = "https://map.naver.com/p/search/" + _up.quote("왕산로 200 롯데캐슬SKY-L65")
-ROUTE_JOIN = {"c-05"}  # 앞 장(입구 두 개)과 한 화면에 나란히
+ROUTE_NOTE = ('<div class="rt-note"><b class="rt-note-h">차로 오시는 분 안내</b>'
+              '<p><span>1</span><em>내비에 <b>‘왕산로 200’</b> 검색</em></p>'
+              '<p><span>2</span><em>주차는 <b class="red">꼭 지하 4층</b>에 해 주세요</em></p>'
+              '<p><span>3</span><em>최대 <b>2시간 무료</b> · 오시면 <b>차량번호</b>를 말씀해 주세요</em></p></div>')
+ROUTE_JOIN = {"c-05", "car-note"}  # 앞 장(입구 두 개)과 한 화면에 나란히
 ROUTE_SIDE = {"car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
     "car": "내비에 <b>‘왕산로 200’</b> 검색 후 → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)<br><b style=\"color:#C00000\">꼭 지하 4층에 주차해 주세요.</b>",
@@ -717,8 +721,8 @@ ROUTE_CAP = {
     "car-03": "상가·오피스텔 엘리베이터 X",
     "car-04": "업무시설 문으로 들어가기",
     "car-05": "엘리베이터 타고 13층",
-    "car-06": "13층, 유리벽 지나 왼쪽",
-    "car-07": "1313호 도착",
+    "car-06b": "13층, 유리벽 지나 왼쪽",
+    "car-07b": "1313호 도착",
 }
 for _g, _c in {"g-04":"c-01","g-05":"c-02","g-06":"c-03","g-07":"c-04","g-08":"c-06","g-09":"c-07","g-10":"c-08","g-11":"c-09"}.items():
     ROUTE_CAP[_g] = ROUTE_CAP[_c]
@@ -739,9 +743,9 @@ def route_html():
         n = len(slides)
         sl = ""
         for i, g in enumerate(slides, 1):
-            side = g[0] in ROUTE_SIDE
+            side = g[0] in ROUTE_SIDE or "car-note" in g
             pair = len(g) > 1 and not side
-            imgh = "".join(f'<img src="/assets/route/{f}.webp" alt="{pp(t)} 오시는 길 {i}단계" loading="lazy" width="900">' for f in g)
+            imgh = "".join((ROUTE_NOTE if f == "car-note" else f'<img src="/assets/route/{f}.webp" alt="{pp(t)} 오시는 길 {i}단계" loading="lazy" width="900">') for f in g)
             cap = ROUTE_CAP.get(g[0], "") + (" · 오피스텔 입구는 지나치기" if pair else "")
             sl += f'<figure class="rt-slide{" side" if side else ""}{" pair" if pair else ""}" data-i="{i}"><figcaption>{cap}</figcaption><div class="rt-imgs">{imgh}</div></figure>'
         dots = "".join(f'<i data-i="{i}"></i>' for i in range(1, n + 1))
@@ -756,7 +760,7 @@ def route_html():
            '.rt-slide figcaption{margin:0 0 10px;padding:10px 14px;border-left:4px solid var(--green);background:var(--tint,#EBF1ED);border-radius:6px;font-size:17px;line-height:1.5;font-weight:700;color:var(--green)}'
            '.rt-nav{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.rt-nav button{border:1.5px solid var(--green);background:var(--surface);color:var(--green);border-radius:22px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;min-width:96px}.rt-nav button:disabled{opacity:.35;cursor:default}.rt-cnt{font-weight:700;color:var(--green)}'
            '.rt-dots{display:flex;justify-content:center;gap:7px;margin:4px 0 14px}.rt-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.rt-dots i.on{background:var(--green)}'
-           '.rt-view{margin-bottom:14px}@media(min-width:860px){.rt-set{max-width:980px}.rt-view{display:flex;gap:16px;align-items:flex-start}.rt-slide.on{flex:1 1 0;min-width:0}}.rt-help{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.rt-help a{flex:1 1 200px;text-align:center;padding:11px 10px;border-radius:10px;font-weight:700;text-decoration:none}.rt-map{border:1.5px solid var(--green);color:var(--green)}.rt-tel{background:var(--green);color:#fff}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
+           '.rt-view{margin-bottom:14px}@media(min-width:860px){.rt-set{max-width:980px}.rt-view{display:flex;gap:16px;align-items:flex-start}.rt-slide.on{flex:1 1 0;min-width:0}}.rt-note{aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:18px 22px;border:2px solid var(--green);border-radius:12px;background:var(--tint,#EBF1ED);color:var(--green)}.rt-note-h{font-size:clamp(18px,2.2vw,22px)}.rt-note em{font-style:normal}.rt-note p{margin:0;font-size:clamp(16px,1.9vw,19px);line-height:1.45;display:flex;gap:10px;align-items:flex-start}.rt-note p span{flex:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}.rt-note .red{color:#C00000}.rt-help{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.rt-help a{flex:1 1 200px;text-align:center;padding:11px 10px;border-radius:10px;font-weight:700;text-decoration:none}.rt-map{border:1.5px solid var(--green);color:var(--green)}.rt-tel{background:var(--green);color:#fff}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
     js = ('<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");'
           'function stp(){return window.matchMedia("(min-width:860px)").matches?2:1}'
           'function go(set,i){var sl=set.querySelectorAll(".rt-slide"),n=sl.length,k=stp(),pg=Math.ceil(n/k);i=Math.max(1,Math.min(pg,i));set._i=i;var a=(i-1)*k;'
