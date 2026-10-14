@@ -1117,7 +1117,7 @@ body.searching .qa-more-wrap{display:none}
 
 /* ---------- 줄바꿈 규칙 (2026.10.14) — build.py line_rules()와 짝 ---------- */
 .seg{display:inline-block}
-.kp{display:inline;white-space:nowrap}
+.kp{display:inline;white-space:nowrap !important;text-wrap-mode:nowrap !important}
 .area-h1{color:var(--green);margin:6px 0 10px;font-size:30px;line-height:1.4}
 @media(max-width:620px){
   .dash{display:none}
