@@ -1134,3 +1134,7 @@ body.searching .qa-more-wrap{display:none}
 /* 2026-10-14 상담 절차 제목: 줄바꿈 방지용 span이 설명 글 스타일을 물려받아 두 줄·작은 글씨로 보이던 문제 수정 */
 .flow b .kp{display:inline;font-size:inherit;line-height:inherit;color:inherit}
 .flow b{white-space:nowrap}
+
+/* 2026.10.14 — 줄바꿈 덩어리(span.kp)가 다른 'X span' 규칙(계산기 선택칸 등)의 테두리·여백을 물려받아 상자 안의 상자로 보이던 문제 */
+span.kp{border:0!important;padding:0!important;margin:0!important;min-height:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;outline:0!important;font:inherit!important;color:inherit!important;text-align:inherit!important;letter-spacing:inherit!important}
+.chips span .kp,.p-calc .chips span .kp{display:inline-block}
