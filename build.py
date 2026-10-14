@@ -689,7 +689,7 @@ ROUTE_ICONS = {
     "bus": '<rect x="12" y="8" width="40" height="42" rx="7"/><path d="M12 32h40M20 16h24"/><circle cx="21" cy="41" r="2.5" fill="currentColor"/><circle cx="43" cy="41" r="2.5" fill="currentColor"/><path d="M18 50v6M46 50v6"/>',
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
-ROUTE_SIDE = {"c-05", "car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
+ROUTE_SIDE = {"car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
     "car": "내비에 <b>‘왕산로 200’</b> → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)",
     "gyeongui": "1번 출구 → 청량리역 4번 출구 앞 → 이후 1호선과 같은 길",
@@ -740,17 +740,17 @@ def route_html():
             sl += f'<figure class="rt-slide{" side" if side else ""}" data-i="{i}"><div class="rt-imgs">{imgh}</div><figcaption>{cap}</figcaption></figure>'
         dots = "".join(f'<i data-i="{i}"></i>' for i in range(1, n + 1))
         sets += (f'<div class="rt-set" id="rt-{k}" hidden><h3>{pp(t)} 오시는 길</h3><p class="rt-lead">{ROUTE_INTRO.get(k, "")}</p>'
-                 f'<div class="rt-view">{sl}</div>'
                  f'<div class="rt-nav"><button type="button" class="rt-prev">‹ 이전</button><span class="rt-cnt">1 / {n}</span><button type="button" class="rt-next">다음 ›</button></div>'
-                 f'<div class="rt-dots">{dots}</div><button type="button" class="rt-top">다른 방법 보기 ↑</button></div>')
+                 f'<div class="rt-dots">{dots}</div>'
+                 f'<div class="rt-view">{sl}</div><button type="button" class="rt-top">다른 방법 보기 ↑</button></div>')
     css = ('<style>.rt-intro{margin:18px 0 10px;font-weight:700}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}'
            '.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}'
            '.rt-set{margin-top:18px;scroll-margin-top:84px;max-width:560px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 6px}.rt-lead{margin:0 0 12px;line-height:1.6}'
-           '.rt-view{touch-action:pan-y}.rt-slide{margin:0;display:none}.rt-slide.on{display:block}.rt-imgs{display:flex;gap:8px}.rt-imgs img{display:block;flex:1;min-width:0;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-slide.side .rt-imgs img{max-width:calc(50% - 4px)}'
+           '.rt-view{touch-action:pan-y}.rt-slide{margin:0;display:none}.rt-slide.on{display:block}.rt-imgs{display:flex;gap:8px}.rt-imgs img{display:block;flex:1;min-width:0;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-slide.side .rt-imgs{flex-direction:column}'
            '.rt-slide figcaption{margin:10px 2px 0;font-size:16px;line-height:1.55;font-weight:500}'
            '.rt-nav{display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px}.rt-nav button{border:1.5px solid var(--green);background:var(--surface);color:var(--green);border-radius:22px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;min-width:96px}.rt-nav button:disabled{opacity:.35;cursor:default}.rt-cnt{font-weight:700;color:var(--green)}'
            '.rt-dots{display:flex;justify-content:center;gap:7px;margin:4px 0 14px}.rt-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.rt-dots i.on{background:var(--green)}'
-           '.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
+           '.rt-view{margin-bottom:14px}.rt-top{border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:20px;padding:7px 16px;font:inherit;font-size:14px;cursor:pointer}</style>')
     js = ('<script>(function(){var B=document.querySelectorAll(".rt-btn"),S=document.querySelectorAll(".rt-set");'
           'function go(set,i){var sl=set.querySelectorAll(".rt-slide"),n=sl.length;i=Math.max(1,Math.min(n,i));set._i=i;'
           'sl.forEach(function(s,j){s.classList.toggle("on",j===i-1)});set.querySelectorAll(".rt-dots i").forEach(function(d,j){d.classList.toggle("on",j===i-1)});'
