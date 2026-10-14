@@ -35,9 +35,6 @@
   window.__giftCalc=calc;
   var $=function(id){return document.getElementById(id)};
   if(!$('gc')) return;
-  var last=null; // 보고서(참고용)용 마지막 계산 결과
-  var GN={parent:'부모',grand:'조부모',spouse:'배우자',child:'자녀·손자녀',kin:'그 밖의 친족',none:'친족 아님'};
-  var AN={cash:'현금(계좌이체 포함)',estate:'부동산',stock:'주식',etc:'그 밖의 재산'};
   var ASSET_WARN={
     estate:'시가·기준시가 중 무엇으로 평가하느냐에 따라 세금이 크게 달라지고, 대출·전세를 함께 넘기면 양도소득세까지 따져야 합니다.',
     stock:'상장주식은 증여일 전후 평균 주가로, 비상장주식은 회사 가치를 따로 평가해야 해서 입력한 금액과 달라질 수 있습니다.',
@@ -54,7 +51,6 @@
   function row(a,b,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+a+'</td><td>'+b+'</td></tr>';}
   function run(){
     var rel=relv(), direct=(rel==='adult'||rel==='minor');
-    last=null; var rb=$('rptBtn'); if(rb) rb.hidden=true;
     var giver=giverv();
     $('marryWrap').style.display=direct?'':'none'; $('minorWrap').style.display=direct?'':'none'; $('genWrap').style.display=giver==='grand'?'':'none';
     var ph=$('prevHint'); if(ph) ph.textContent=giver==='grand'?'같은 쪽 할아버지·할머니는 합쳐서':(giver==='parent'?'부모님은 두 분 합쳐서':'');
@@ -88,40 +84,11 @@
     if(r.used) m.push('부모님과 조부모님께 받은 증여는 세금을 합쳐 계산하지는 않지만, 공제 한도는 10년 동안 함께 씁니다.');
     if(rel==='none') m.push('친족이 아닌 사람에게 받은 재산은 증여재산공제가 없습니다.');
     $('msg').textContent=m.join(' ');
-    // 보고서용 데이터
-    var a1=assetv(), pt=prev>0?num('prevTax'):null;
-    var inputs=[['증여하신 분',GN[giver]],['받는 사람',(direct?($('minor').checked?'미성년자':'성년')+' · ':'')+'국내 거주'],['재산 종류',AN[a1]],['이번에 받은 금액',comma(cur)+'원']];
-    if(prev>0){ inputs.push(['10년 내 같은 분께 받은 금액',comma(prev)+'원']); inputs.push(['그때 산출세액',pt!==null?comma(pt)+'원':'미입력 (자동 추정)']); }
-    if(direct&&other>0) inputs.push([giver==='grand'?'10년 내 부모·다른 조부모 증여':'10년 내 조부모 증여',comma(other)+'원']);
-    if(direct) inputs.push(['혼인·출산 공제',$('marry').checked?'적용':'미적용']);
-    if(giver==='grand') inputs.push(['중간 세대(부모) 생존',$('gen').checked?'예 (할증 대상)':'아니오']);
-    inputs.push(['3개월 안에 신고',$('ontime').checked?'예정':'예정 아님']);
-    var rows=[['증여받은 금액'+(prev>0?' (10년 합산)':''),r.V,''],['증여재산공제 (한도 '+comma(r.lim)+'원)',r.ded,'minus']];
-    if(r.marry) rows.push(['혼인·출산 공제',r.marry,'minus']);
-    rows.push(['과세표준',r.base,'']); rows.push(['산출세액',r.tax,'']);
-    if(r.sur) rows.push(['세대생략 할증 ('+(r.surRate*100)+'%)',r.sur,'plus']);
-    if(r.credit) rows.push(['이전 증여 납부세액공제'+(r.prevTaxAuto?' (추정)':''),r.credit,'minus']);
-    if(r.filing) rows.push(['신고세액공제 (3%)',r.filing,'minus']);
-    rows.push(['모의계산 세액',r.pay,'total']);
-    var ck=[];
-    if(ASSET_WARN[a1]) ck.push({t:'재산 평가 방법'});
-    ck.push('10년 안에 받은 다른 증여가 있는지 여부');
-    ck.push('증여인지 빌린 돈(차용)인지의 구분');
-    ck.push(a1==='estate'?'대출·전세를 함께 넘기는지 여부':'채무를 함께 넘기는 증여인지 여부');
-    if(giver==='grand') ck.push('세대생략 할증 적용 여부');
-    if(direct&&$('marry').checked) ck.push('혼인·출산 공제 적용 가능 여부');
-    ck.push('신고기한과 납부 방법');
-    var WN={estate:'부동산은',stock:'주식은',etc:'그 밖의 재산은'};
-    last={title:'증여세 모의계산 결과',basis:'2026년 9월 20일 시행 법령 기준',version:'증여세 계산기 v2026.10',file:'증여세_모의계산_참고용',inputs:inputs,rows:rows,
-      warn:ASSET_WARN[a1]?WN[a1]+' 평가 방법에 따라 세액이 크게 달라질 수도 있어 상담을 권장합니다. 위 결과는 입력하신 금액을 그대로 계산한 것입니다.':'',
-      notes:m,checks:ck};
-    if(rb) rb.hidden=false;
     var a=assetv(); if(aw&&ASSET_WARN[a]){ aw.textContent='입력한 금액 기준의 참고 결과입니다. 재산 평가에 따라 세금이 달라질 수 있으니, 본인의 상황에 맞추어 확인이 필요하시면 편하게 문의해 주세요.'; aw.hidden=false; }
   }
   ['cur','prev','prevTax','other'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   ['marry','gen','minor','ontime','nonres'].forEach(function(id){ $(id).addEventListener('change',run); });
   Array.prototype.forEach.call(document.querySelectorAll('input[name=rel],input[name=asset]'),function(el){el.addEventListener('change',run);});
-  if($('rptBtn')) $('rptBtn').addEventListener('click',function(){ if(last&&window.CalcReport) window.CalcReport.open(last); });
   Array.prototype.forEach.call(document.querySelectorAll('.quick button'),function(b){b.addEventListener('click',function(){var el=$('cur');if(b.hasAttribute('data-clear')){el.value='';}else{el.value=String((num('cur')||0)+Number(b.getAttribute('data-add')));}fmt(el);run();});});
   run();
 })();
