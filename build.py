@@ -691,31 +691,31 @@ ROUTE_ICONS = {
 }
 ROUTE_SIDE = {"c-05", "car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
-    "car": "내비게이션에 <b>‘왕산로 200’</b>을 입력하고 오셔서 건물 <b>지하 4층</b>에 주차해 주세요. 차량번호를 알려주시면 2시간 무료 주차를 등록해 드립니다.",
-    "gyeongui": "경의중앙선에서 내리시면 1번 출구로 나와 청량리역 4번 출구 앞으로 오시면 됩니다. 그다음은 1호선과 같은 길입니다.",
-    "bus": "청량리역 버스환승센터에서 내리시면 바로 앞이 청량리역 4번 출구입니다.",
-    "line1": "청량리역 4번 출구에서 도보 약 1~2분입니다.",
+    "car": "내비에 <b>‘왕산로 200’</b> → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)",
+    "gyeongui": "1번 출구 → 청량리역 4번 출구 앞 → 이후 1호선과 같은 길",
+    "bus": "청량리역 버스환승센터 하차 → 바로 앞 4번 출구",
+    "line1": "4번 출구에서 도보 1~2분",
 }
 ROUTE_CAP = {
-    "gy-01": "경의중앙선에서 내리시면 ‘나가는 곳’ 표지를 따라 이동하세요.",
-    "gy-02": "1번 출구(청량리역 환승센터·왕산로) 쪽으로 나가세요.",
-    "gy-03": "바깥 데크에서 왼쪽 엘리베이터를 타거나 앞쪽 계단으로 내려가면 청량리역 4번 출구 앞입니다.",
-    "c-01": "청량리역 4번 출구입니다. 버스는 바로 앞 청량리역 버스환승센터에서 내리시면 됩니다.",
-    "c-02": "4번 출구에서 나와 오른쪽을 보시면 오르막길이 있습니다.",
-    "c-03": "오르막을 따라 오른쪽 보도로 올라오세요.",
-    "c-04": "오른쪽에 입구가 두 개 있습니다. 더 안쪽의 두 번째 입구(섹션오피스)로 오세요.",
-    "c-05": "첫 번째 오피스텔 입구는 지나쳐 가세요.",
-    "c-06": "‘SKY-L65 섹션오피스’ 입구로 들어오세요.",
-    "c-07": "1층 출입 게이트는 방문객도 그대로 지나가시면 됩니다. 안쪽 엘리베이터를 타세요.",
-    "c-08": "13층에서 내려 정면 유리벽을 지나 왼쪽으로 오세요.",
-    "c-09": "1313호 세무회계택입니다.",
-    "car-01": "지하 4층에 주차하신 뒤 ‘업무시설’ 표지를 따라오세요.",
-    "car-02": "상가·문화집회, 오피스텔 엘리베이터는 이쪽이 아닙니다.",
-    "car-03": "상가·문화집회, 오피스텔 엘리베이터는 이쪽이 아닙니다.",
-    "car-04": "‘업무시설(Section Office)’ 출입문으로 들어가세요.",
-    "car-05": "업무시설 엘리베이터를 타고 13층으로 오세요.",
-    "car-06": "13층에서 내려 정면 유리벽을 지나 왼쪽으로 오세요.",
-    "car-07": "1313호 세무회계택입니다.",
+    "gy-01": "‘나가는 곳’ 따라 이동",
+    "gy-02": "1번 출구로 나가기",
+    "gy-03": "왼쪽 엘리베이터 또는 계단으로 내려가기",
+    "c-01": "청량리역 4번 출구 (버스는 바로 앞 환승센터 하차)",
+    "c-02": "출구에서 오른쪽 오르막길로",
+    "c-03": "오른쪽 보도로 올라가기",
+    "c-04": "두 번째 입구(섹션오피스)로",
+    "c-05": "오피스텔 입구는 지나치기",
+    "c-06": "섹션오피스로 들어가기",
+    "c-07": "게이트 그냥 통과 → 엘리베이터",
+    "c-08": "13층, 유리벽 지나 왼쪽",
+    "c-09": "1313호 도착",
+    "car-01": "‘업무시설’ 표지 따라가기",
+    "car-02": "상가·오피스텔 엘리베이터 X",
+    "car-03": "상가·오피스텔 엘리베이터 X",
+    "car-04": "업무시설 문으로 들어가기",
+    "car-05": "엘리베이터 타고 13층",
+    "car-06": "13층, 유리벽 지나 왼쪽",
+    "car-07": "1313호 도착",
 }
 for _g, _c in {"g-04":"c-01","g-05":"c-02","g-06":"c-03","g-07":"c-04","g-08":"c-06","g-09":"c-07","g-10":"c-08","g-11":"c-09"}.items():
     ROUTE_CAP[_g] = ROUTE_CAP[_c]
@@ -765,7 +765,7 @@ def route_html():
           'S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t){go(t,1);if(sc)t.scrollIntoView({behavior:"smooth",block:"start"});}}'
           'B.forEach(function(b){b.addEventListener("click",function(){if(b.classList.contains("on")){b.classList.remove("on");b.setAttribute("aria-expanded",false);S.forEach(function(s){s.hidden=true});history.replaceState(null,"",location.pathname+"#route");return;}show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});'
           'var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
-    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 자차는 내비게이션에 ‘왕산로 200’ 입력 후 지하 4층 주차(2시간 무료 등록)</p></div>{js}'
+    return f'<div id="route">{css}<p class="rt-intro">오시는 방법을 누르면 그 길만 사진으로 보여 드립니다.</p><div class="rt-grid">{btns}</div>{sets}<p style="margin-top:14px;font-size:14px;opacity:.8">청량리역 4번 출구에서 도보 약 1~2분 · 자차는 내비에 ‘왕산로 200’ → 지하 4층 주차(2시간 무료)</p></div>{js}'
 
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
