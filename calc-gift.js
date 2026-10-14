@@ -57,7 +57,7 @@
     var prev=num('prev')||0, other=direct?(num('other')||0):0;
     var oh=$('otherWrap'); if(oh){ oh.style.display=direct?'':'none'; var ol=$('otherLbl'); if(ol) ol.textContent=giver==='grand'?'최근 10년 안에 부모님이나 다른 쪽 조부모님께 받은 금액':'최근 10년 안에 조부모님께 받은 금액(친가·외가 모두)'; } $('prevTaxWrap').style.display=prev>0?'':'none';
     var aw=$('assetWarn'); if(aw) aw.hidden=true;
-    var a0=assetv(), an=$('assetNote'); if(an){ if(ASSET_WARN[a0]){ an.innerHTML='<b style="color:var(--green)">개별 상담 권장</b> · '+ASSET_WARN[a0]; an.hidden=false; } else an.hidden=true; }
+    var a0=assetv(), an=$('assetNote'); if(an){ if(ASSET_WARN[a0]){ an.innerHTML='<b style="color:var(--green)">개별 상담을 권장드립니다.</b> '+ASSET_WARN[a0]; an.hidden=false; } else an.hidden=true; }
     var nn=$('nonresNote'); if(nn) nn.hidden=!$('nonres').checked;
     var cur=num('cur'); $('mini').hidden=!cur; if(!cur){ $('pay').textContent='0원'; $('sub').textContent='금액을 넣으면 바로 계산됩니다.'; $('tbl').innerHTML=''; $('msg').textContent=''; return; }
     var r=calc({rel:rel,cur:cur,prev:prev,prevTax:prev>0?num('prevTax'):null,other:other,marry:$('marry').checked,gen:giver==='grand'&&$('gen').checked,ontime:$('ontime').checked});
