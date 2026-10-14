@@ -56,7 +56,7 @@
     $('mini').hidden=false;
     if(r.err==='need2'){ $('pay').textContent='계산 불가'; $('miniPay').textContent='계산 불가'; $('sub').textContent='비과세는 2년 이상 보유가 기본 요건입니다. 2년 미만이면 과세로 계산해 보세요.'; $('tbl').innerHTML=''; $('msg').innerHTML=''; return; }
     if(r.exemptAll){ $('pay').textContent='0원'; $('miniPay').textContent='0원'; $('sub').textContent='양도가액 12억원 이하 — 비과세 요건을 충족하면 낼 세금이 없습니다.'; $('tbl').innerHTML=row('양도가액',comma(o.sale)+'원')+row('결과','비과세 (12억원 이하)','total'); $('msg').innerHTML='<span class="mi">'+['비과세 요건 충족 여부는 이 계산기가 판단하지 않습니다 — 요건을 충족한다는 전제의 결과']. concat(m).join('</span><span class="mi">')+'</span>'; return; }
-    if(!r.gain){ $('pay').textContent='0원'; $('miniPay').textContent='0원'; $('sub').textContent='양도차익이 없습니다(판 금액이 산 금액·필요경비 이하) — 낼 양도세가 없습니다.'; $('tbl').innerHTML=row('양도차익','0원','total'); $('msg').innerHTML='· 같은 해에 다른 부동산도 팔았다면 합산 계산이 달라지므로 상담을 권장드립니다.'; return; }
+    if(!r.gain){ $('pay').textContent='0원'; $('miniPay').textContent='0원'; $('sub').textContent='양도차익이 없습니다(판 금액이 산 금액·필요경비 이하) — 낼 양도세가 없습니다.'; $('tbl').innerHTML=row('양도차익','0원','total'); $('msg').innerHTML='<span class="mi">같은 해에 다른 부동산도 팔았다면 합산 계산이 달라지므로 상담을 권장드립니다.</span>'; return; }
     $('pay').textContent=comma(r.total)+'원'; $('miniPay').textContent=comma(r.total)+'원';
     $('sub').textContent=r.rateNote+(r.ltRate?' · 장기보유특별공제 '+Math.round(r.ltRate*100)+'%':' · 장기보유특별공제 없음')+(consult?' · 상담을 권장드립니다':'');
     var t='';

@@ -42,7 +42,7 @@
     var r=calc({type:type,sales:sales,asset:asset,grant:grant,solo:val('solo')==='y',sincere:false});
     $('mini').hidden=false;
     if(r.nego){
-      if(type==='simple'){ $('pay').textContent='간이과세 기준 초과'; $('miniPay').textContent='기준 초과'; $('sub').textContent='연 매출 1억 400만원 이상이면 일반과세자입니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').innerHTML='· 간이과세는 직전 연도 공급대가 1억 400만원 미만까지 적용<br>· 위에서 개인(일반과세)을 선택해 확인 필요'; return; }
+      if(type==='simple'){ $('pay').textContent='간이과세 기준 초과'; $('miniPay').textContent='기준 초과'; $('sub').textContent='연 매출 1억 400만원 이상이면 일반과세자입니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').innerHTML='<span class="mi">간이과세는 직전 연도 공급대가 1억 400만원 미만까지 적용</span><span class="mi">위에서 개인(일반과세)을 선택해 확인 필요</span>'; return; }
       $('pay').textContent='별도 협의'; $('miniPay').textContent='별도 협의'; $('sub').textContent='규모가 커서 업무 범위를 확인한 뒤 정합니다.'; $('tbl').innerHTML=row('기준금액',comma(r.base)+'원'); $('msg').textContent=''; return; }
     $('pay').textContent='월 '+comma(r.mPay)+'원'; $('miniPay').textContent='월 '+comma(r.mPay)+'원';
     $('sub').textContent='부가가치세 포함 월 '+comma(r.mVat)+'원'+(r.disc?' · 1인 사업자 기준':' · 4대보험 직원 반영');
