@@ -3,6 +3,7 @@ title: 신고하지 않은 가족 간 증여, 국세청은 어떻게 알게 되�
 slug: gift-detection-routes
 category: business
 topic: gift
+topic2: audit
 source: 017. (업로드완료) [증여세] 가족끼리 준 돈, 국세청은 어떻게 알까요｜증여가 드러나는 5가지 경로 (2026.10.04.)
 date: 2026-10-12
 updated: 2026-10-13

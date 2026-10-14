@@ -436,12 +436,12 @@ def v_href(v):
 
 def vcard(v):
     h, t = v_href(v)
-    return (f'<a class="vcard" href="{h}"{t}><span class="vth"><img src="/assets/yt/v{v["k"]}.jpg" alt="" loading="lazy" width="640" height="360"><i></i></span>'
+    return (f'<a class="vcard" href="{h}"{t} data-t="{v.get("topic", "etc")}"><span class="vth"><img src="/assets/yt/v{v["k"]}.jpg" alt="" loading="lazy" width="640" height="360"><i></i></span>'
             f'<b>{esc(v["title"])}</b><span class="vd">{v["date"].replace("-", ".")} · 유튜브</span></a>')
 
 def vstrip():
     return ('<section class="vstrip" aria-label="영상으로 보는 Q&amp;A"><div class="vhead"><h2>영상으로 보는 Q&amp;A</h2><a href="/video/">전체 보기 →</a></div>'
-            '<div class="vgrid">' + "".join(vcard(v) for v in VIDEOS[:4]) + '</div></section>')
+            '<div class="vgrid">' + "".join(vcard(v) for v in VIDEOS) + '</div></section>')
 
 def vbox(v, label="▶ 영상으로 보기"):
     h, t = v_href(v)
@@ -484,13 +484,18 @@ def build_videos():
                "embedUrl": f'https://www.youtube.com/embed/{v["yt"]}', "contentUrl": f'https://www.youtube.com/watch?v={v["yt"]}'}]
         write(f"video/{v['slug']}/index.html", page(f'{v["title"]} | {NAME}', re.sub("<[^>]+>", "", v["lead"]), url, art, "qa", ld))
 
+def tp2_tag(p):
+    """애매한 글은 보조 분류 태그를 하나 더 표시(필터는 주 분류 기준) — 2026-10-14"""
+    t2 = p.get("topic2")
+    return f'<span class="b-t b-t2">{TOPIC_NAME[t2]}</span>' if t2 in TOPIC_NAME and t2 != topic_of(p) else ""
+
 def qa_card(p, big=False):
     tp = topic_of(p)
     badge = '<span class="b-new">최신 글</span>' if big else ""
     if type_name(p): badge += f'<span class="b-case">{type_name(p)}</span>'
     if p["slug"] in VIDEO_OF_POST: badge += '<span class="b-vid">▶ 영상</span>'
     return (f'<a class="qcard{" big" if big else ""}" href="/qa/{p["slug"]}/" data-t="{tp}">'
-            f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span><span class="d">{p["date"].replace("-", ".")}</span></span>'
+            f'<span class="qm">{badge}<span class="b-t">{TOPIC_NAME[tp]}</span>{tp2_tag(p)}<span class="d">{p["date"].replace("-", ".")}</span></span>'
             f'<b>{esc(p["title"])}</b><span class="qs">{esc(p["description"])}</span><span class="go">자세히 보기 →</span></a>')
 
 def build_qa_index(posts):

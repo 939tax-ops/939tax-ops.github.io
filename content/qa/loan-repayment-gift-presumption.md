@@ -4,6 +4,7 @@ slug: loan-repayment-gift-presumption
 keywords: 대출 상환 자금출처, 부채 사후관리, 채무상환 증여추정, 해명자료 제출 안내, 증여추정 배제기준, 부모님이 대출 대신 갚아줌, 대환대출 자금출처, 자금출처 소명자료, 증여세 추정, 상환자금 증여, 대출 갚고 세무서 안내문
 category: life
 topic: gift
+topic2: audit
 source: 022. (업로드완료) 대출 갚으면 세무조사 대상이 되나요｜갚은 돈의 출처가 기준입니다 (2026.09.17.)
 date: 2026-10-10
 updated: 2026-10-13
