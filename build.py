@@ -679,9 +679,9 @@ def build_home(posts):
 # 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-bus / #go-car 로 바로 열림
 ROUTE_SETS = {
     "line1": ("1호선", "청량리역 4번 출구", ["c-01","c-02","c-04","c-05","c-06","c-07","c-08","c-09"]),
-    "gyeongui": ("경의중앙선", "1번 출구 → 청량리역 4번 출구", ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05","g-08","g-09","g-10","g-11"]),
+    "gyeongui": ("기차·경의중앙선", "1번 출구 → 청량리역 4번 출구", ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05","g-08","g-09","g-10","g-11"]),
     "bus": ("버스", "청량리역 버스환승센터", ["c-01","c-02","c-04","c-05","c-06","c-07","c-08","c-09"]),
-    "car": ("자차", "지하4층 · 2시간 무료", ["car-01","car-note","car-02","car-03","car-04","car-05","car-06b","car-07b"]),
+    "car": ("자차", "지하4층 · 2시간 무료", ["car-note","car-01","car-02","car-03","car-04","car-05","car-06b","car-07b"]),
 }
 ROUTE_ICONS = {
     "line1": '<rect x="14" y="6" width="36" height="42" rx="9"/><path d="M14 30h36M22 56l6-8M42 56l-6-8"/><circle cx="23" cy="39" r="2.5" fill="currentColor"/><circle cx="41" cy="39" r="2.5" fill="currentColor"/>',
@@ -690,15 +690,15 @@ ROUTE_ICONS = {
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
 import urllib.parse as _up
-ROUTE_NMAP = "https://map.naver.com/p/search/" + _up.quote("왕산로 200 롯데캐슬SKY-L65")
+ROUTE_NMAP = "https://map.naver.com/p/search/" + _up.quote("동대문구 왕산로 200 롯데캐슬SKY-L65")
 ROUTE_NOTE = ('<div class="rt-note"><b class="rt-note-h">차로 오시는 분 안내</b>'
-              '<p><span>1</span><em>내비에 <b>‘왕산로 200’</b> 검색</em></p>'
+              '<p><span>1</span><em>내비에 <b>‘동대문구 왕산로 200’</b> 검색 후</em></p>'
               '<p><span>2</span><em>주차는 <b class="red">꼭 지하 4층</b>에 해 주세요</em></p>'
-              '<p><span>3</span><em>최대 <b>2시간 무료</b> · 오시면 <b>차량번호</b>를 말씀해 주세요</em></p></div>')
-ROUTE_JOIN = {"c-05", "car-note"}  # 앞 장(입구 두 개)과 한 화면에 나란히
+              '<p><span>3</span><em>최대 <b>2시간 무료</b> 주차 가능하며, <b>차량번호</b> 꼭 말씀해 주세요</em></p></div>')
+ROUTE_JOIN = {"c-05", "car-01"}  # 앞 장(입구 두 개)과 한 화면에 나란히
 ROUTE_SIDE = {"car-02", "car-03"}  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)에 나란히
 ROUTE_INTRO = {
-    "car": "내비에 <b>‘왕산로 200’</b> 검색 후 → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)<br><b style=\"color:#C00000\">꼭 지하 4층에 주차해 주세요.</b>",
+    "car": "내비에 <b>‘동대문구 왕산로 200’</b> 검색 후 → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)<br><b style=\"color:#C00000\">꼭 지하 4층에 주차해 주세요.</b>",
     "gyeongui": "1번 출구 → 청량리역 4번 출구 앞 → 이후 1호선과 같은 길",
     "bus": "청량리역 버스환승센터 하차 → 바로 앞 4번 출구",
     "line1": "4번 출구에서 도보 1~2분",
@@ -717,6 +717,7 @@ ROUTE_CAP = {
     "c-08": "13층, 유리벽 지나 왼쪽",
     "c-09": "1313호 도착",
     "car-01": "지하 4층 주차 후 ‘업무시설’ 표지 따라가기",
+    "car-note": "지하 4층 주차 후 ‘업무시설’ 표지 따라가기",
     "car-02": "상가·오피스텔 엘리베이터 X",
     "car-03": "상가·오피스텔 엘리베이터 X",
     "car-04": "업무시설 문으로 들어가기",
@@ -727,7 +728,7 @@ ROUTE_CAP = {
 for _g, _c in {"g-04":"c-01","g-05":"c-02","g-06":"c-03","g-07":"c-04","g-08":"c-06","g-09":"c-07","g-10":"c-08","g-11":"c-09"}.items():
     ROUTE_CAP[_g] = ROUTE_CAP[_c]
 def route_html():
-    def pp(t): return t + ("으로" if t in ("1호선", "경의중앙선") else "로")
+    def pp(t): return t + ("으로" if t in ("1호선", "경의중앙선", "기차·경의중앙선") else "로")
     btns = "".join(f'<button type="button" class="rt-btn" data-k="{k}" aria-controls="rt-{k}"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" aria-hidden="true">{ROUTE_ICONS[k]}</svg><b>{t}</b><small>{d}</small></button>' for k, (t, d, _) in ROUTE_SETS.items())
     sets = ""
     for k, (t, d, imgs) in ROUTE_SETS.items():
@@ -828,7 +829,7 @@ def build_about():
 
 
 </section></div>'''
-    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld(), {"@type": "WebPageElement", "@id": SITE + "/about/#route", "name": "세무회계택 오시는 길", "description": "청량리역 4번 출구에서 도보 약 1~2분. 1호선·버스(청량리역 버스환승센터)는 4번 출구, 경의중앙선은 1번 출구로 나와 4번 출구 앞으로. 롯데캐슬SKY-L65 섹션오피스 입구로 들어와 13층 1313호. 자차는 내비에 왕산로 200 검색 후 지하 4층 주차(업무시설 엘리베이터 이용, 2시간 무료 등록).", "url": SITE + "/about/#route"}]))
+    write("about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld(), {"@type": "WebPageElement", "@id": SITE + "/about/#route", "name": "세무회계택 오시는 길", "description": "청량리역 4번 출구에서 도보 약 1~2분. 1호선·버스(청량리역 버스환승센터)는 4번 출구, 기차·경의중앙선은 1번 출구로 나와 4번 출구 앞으로. 롯데캐슬SKY-L65 섹션오피스 입구로 들어와 13층 1313호. 자차는 내비에 동대문구 왕산로 200 검색 후 지하 4층 주차(업무시설 엘리베이터 이용, 2시간 무료 등록).", "url": SITE + "/about/#route"}]))
 
 # 1주택 양도세 연도별 비교 계산기: 원본은 _draft/(git 제외). 공개하려면 True 로 바꾸고 build 후 push
 YANGDO_ENABLED = False
