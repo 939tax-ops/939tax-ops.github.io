@@ -1276,3 +1276,5 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 @media (prefers-color-scheme: dark) and (max-width:760px){.ab-photo{background:#fff !important}}
 @media (max-width:760px){.about-page.v2 .ab-photo{align-items:flex-start;justify-content:flex-start;padding-top:0;height:150px}.about-page.v2 .ab-photo img{width:175%;max-width:none;height:auto;margin:12px 0 0 -37.5%}}
 .ab-photo picture{display:contents}
+/* 다크 모드(폰): 사진 뒤 흰 상자 대신 투명 — 누끼 사진이 배경 위에 바로 놓이게 (2026-10-14) */
+@media (prefers-color-scheme: dark) and (max-width:760px){.h2-rep-ph img,.ab-photo,.about-page .ab-photo{background:transparent !important}}
