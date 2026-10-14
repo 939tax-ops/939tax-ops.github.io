@@ -1227,3 +1227,5 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .lf-agree details.lf-more{margin:2px 0 4px 2px}
 .lf-agree details.lf-more>summary{font-size:13.5px}
 .lf-agree details.lf-more .lf-items{margin-top:4px}
+.lf-agree .lf-all span{white-space:nowrap}
+@media (max-width:359px){.lf-agree .lf-all span{white-space:normal}}

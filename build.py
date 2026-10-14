@@ -1071,7 +1071,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
 <label class="wide"><span>간단한 내용 <span class="opt">(선택)</span></span><textarea name="memo" rows="2" maxlength="300" placeholder="{ph}"></textarea></label>
 </div>
 <div class="lf-agree">
-<label class="lf-all"><input type="checkbox" data-all><span><b>[필수]</b> 개인정보 수집·이용 및 보관에 동의합니다</span></label>
+<label class="lf-all"><input type="checkbox" data-all><span><b>[필수]</b> 개인정보 수집·이용·보관 동의</span></label>
 <p class="lf-note">상담 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다.</p>
 <details class="lf-more"><summary>동의 항목 자세히 보기 (2개)</summary>
 <div class="lf-items">
