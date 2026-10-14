@@ -1179,6 +1179,39 @@ table.info td,.lf-agree td{overflow-wrap:anywhere}
 .svc-price a{font-size:14px;color:var(--sub);margin-left:auto}
 .svc-top .btns .btn{font-size:15px;padding:11px 18px}
 @media (max-width:760px){.svc-top .btns{flex-wrap:nowrap;gap:8px}.svc-top .btns .btn{flex:1;text-align:center;justify-content:center;padding:11px 8px}.svc-top .btns .btn.ghost{display:none}.svc-price a{margin-left:0}}
-/* 특징 카드 3개(준비 중 항목 숨김) → PC 3칸, 1개면 1칸 — 2026-10-14 */
-@media (min-width:701px){.why-grid{grid-template-columns:repeat(3,1fr)}.why-grid:has(> :only-child){grid-template-columns:1fr}}
 .svc-price .v small{white-space:nowrap;display:inline-block}
+/* ===== 홈 개편 시안(2026-10-14) — h2- 접두어 ===== */
+.h2-k{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--sub);margin:0 0 6px}
+.h2-rep{padding:56px 0;border-bottom:1px solid var(--line)}
+.h2-rep-in{display:grid;grid-template-columns:260px 1fr;gap:44px;align-items:center}
+.h2-rep-ph img{display:block;width:100%;height:auto;border-radius:10px;background:var(--soft-bg)}
+.h2-rep-tx h2{margin:0 0 14px;font-size:30px;color:var(--green)}.h2-rep-tx h2 span{font-size:20px;font-weight:500;color:var(--ink-3)}
+.h2-rep-q{margin:0 0 20px;font-size:17px;line-height:1.75;color:var(--ink-2)}
+.h2-cv{display:grid;grid-template-columns:52px 1fr;gap:8px 14px;margin:0 0 20px;font-family:var(--sans);font-size:15px;line-height:1.6}
+.h2-cv dt{font-weight:700;color:var(--green)}.h2-cv dd{margin:0;color:var(--ink-2)}.h2-cv a{color:inherit}
+.h2-more{font-family:var(--sans);font-weight:700;color:var(--green);text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:1px}
+.h2-learn{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.h2-lc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 24px;display:flex;flex-direction:column}
+.h2-lc>b{font-size:17px;color:var(--ink-1);line-height:1.5;margin-bottom:12px}
+.h2-lc ul{margin:0 0 16px;padding-left:18px;line-height:1.7}.h2-lc li{margin:4px 0}.h2-lc ul a{color:var(--ink-2);text-decoration:none}.h2-lc ul a:hover{text-decoration:underline}
+.h2-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.h2-chips a{font-family:var(--sans);font-size:14.5px;border:1px solid var(--line);border-radius:20px;padding:6px 13px;text-decoration:none;color:var(--green);background:var(--surface)}
+.h2-lc .h2-more{margin-top:auto;align-self:flex-start}
+.h2-cta{text-align:center;padding:60px 0}
+.h2-cta h2{margin:0 0 10px;font-size:28px;color:var(--green)}.h2-cta>p{margin:0 0 22px;color:var(--ink-3)}
+.h2-cta .btns{justify-content:center;margin-bottom:18px}
+.h2-cta .h2-sub{font-family:var(--sans);font-size:15px;color:var(--ink-3);margin:0 0 8px}.h2-cta .h2-sub a{color:inherit}
+@media (max-width:760px){
+  .h2-rep{padding:36px 0}
+  .h2-rep-in{grid-template-columns:110px 1fr;gap:18px;align-items:start}
+  .h2-rep-tx h2{font-size:24px;margin:0 0 10px}.h2-rep-tx h2 span{font-size:16px}
+  .h2-rep-q{font-size:15.5px;grid-column:1/-1}
+  .h2-rep-tx{display:contents}
+  .h2-rep-ph{grid-row:auto}.h2-rep-tx h2{align-self:center}
+  .h2-cv{grid-column:1/-1;font-size:14.5px}.h2-more{justify-self:start}
+  .h2-rep-tx .h2-more{grid-column:1/-1}
+  .h2-svc{grid-template-columns:1fr !important}
+  .h2-svc .card{padding:14px 16px !important}
+  .h2-learn{grid-template-columns:1fr}
+  .h2-cta{padding:40px 0;text-align:left}.h2-cta h2{font-size:23px}.h2-cta .btns{justify-content:flex-start}.h2-cta .btns .btn.ghost{display:none}
+}
+.h2-lc li .seg{display:inline}

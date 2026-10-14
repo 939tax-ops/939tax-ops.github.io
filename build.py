@@ -541,7 +541,6 @@ WHY = [
 
 def why_cards(items=None):
     src = WHY if items is None else items
-    src = [it for it in src if not (len(it) > 2 and it[2])]  # '준비 중' 항목은 시작 전까지 숨김 — 시작하면 WHY에서 준비 중 표시만 지우면 다시 나옴(2026-10-14)
     out = []
     for i, it in enumerate(src, 1):
         soon = it[2] if len(it) > 2 else ""
@@ -682,6 +681,57 @@ def build_home(posts):
     write("index.html", page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
                              "서울 동대문구 청량리에 있는 세무회계택 김태형 세무사 사무실입니다. 개인·법인사업자 기장, 종합소득세, 양도소득세, 상속·증여세, 경정청구 등의 세무업무를 수행합니다.",
                              "/", body, "home", [person_ld()]))
+
+def build_home_v2(posts, out="index.html"):
+    """홈 구조 개편 시안(2026-10-14): 첫 화면 → 대표 세무사 → 업무 분야 → 보수 → 진행 → 더 알아보기 → 연락."""
+    svc = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in SERVICES)
+    qa3 = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in posts[:3])
+    calcs = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/calculators/gift-tax/","증여세"),("/calculators/capital-gains/","양도소득세"),("/calculators/acquisition-tax/","취득세"),("/calculators/four-insurance/","4대보험·실수령액"),("/calculators/freelancer-withholding/","프리랜서 3.3%"),("/calculators/bookkeeping-fee/","기장료")])
+    kk_ic = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>'
+    body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
+<div class="copy">
+<p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
+<h1>근거는 정확하게,<br>마음은 편안하게</h1>
+<p>개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
+<div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="/location/">오시는 길</a></div>
+</div>
+<div class="hero-img m" aria-hidden="true"></div>
+</div></div>
+<section class="h2-rep"><div class="wrap h2-rep-in">
+<div class="h2-rep-ph"><img src="/assets/profile-upper.webp" alt="{PERSON}" width="520" height="525" loading="lazy"></div>
+<div class="h2-rep-tx">
+<h2>김태형 <span>세무사</span></h2>
+<p class="h2-rep-q">상담부터 신고서 최종 검토까지 세무사가 직접 맡습니다.<br>법령과 자료를 근거로 먼저 검토하고, 결과를 명확하게 설명드립니다.</p>
+<dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스 · 前 포스코건설</dd><dt>활동</dt><dd><a href="{BLOG}" target="_blank" rel="noopener">네이버 블로그</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 세무사 세친구</a></dd></dl>
+<a class="h2-more" href="/about/">대표 세무사 소개 보기 →</a>
+</div></div></section>
+<section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid h2-svc">{svc}</div>
+<div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section>
+<div class="wrap"><section class="block">
+<h2 class="sec">보수를 공개하고 있습니다</h2>
+<p class="ln">월 기장료입니다(부가세 별도). 신고 대리·양도·상속·증여 보수도 보수 안내에 모두 공개해 두었습니다.</p>
+<div class="area-fee"><div><span>간이과세자 (개인사업자)</span><b>70,000원~</b></div><div><span>일반과세자 (개인사업자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
+<p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 보수도 할인됩니다.</p>
+<p class="ab-more" style="margin-top:14px"><a href="/fees/">보수 안내 전체 보기 →</a> · <a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
+</section>
+{flow_html()}
+</div>
+<section class="block alt"><div class="wrap"><h2 class="sec">먼저 알아보고 싶으시면</h2>
+<div class="h2-learn">
+<div class="h2-lc"><p class="h2-k">세무 Q&amp;A</p><b>자주 묻는 세금 질문을 조문 근거와 함께 정리했습니다</b><ul>{qa3}</ul><a class="h2-more" href="/qa/">Q&amp;A 전체 보기 →</a></div>
+<div class="h2-lc"><p class="h2-k">세금 계산기</p><b>조문 기준으로 만든 간편 계산기입니다</b><div class="h2-chips">{calcs}</div><a class="h2-more" href="/calculators/">계산기 전체 보기 →</a></div>
+</div></div></section>
+<div class="wrap"><section class="block h2-cta">
+<h2>세금 고민, 먼저 편하게 남겨 주세요</h2>
+<p>대표 세무사가 직접 확인 후 연락드립니다. 신청 확인과 첫 연락은 무료입니다.</p>
+<div class="btns"><a class="btn primary" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
+<p class="h2-sub">이메일 <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="/location/">오시는 길 (청량리역 4번 출구 도보 1~2분)</a></p>
+<p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
+</section></div>'''
+    write(out, page(f"{NAME} {PERSON} | 서울 동대문구 청량리 세무사",
+                    "서울 동대문구 청량리에 있는 세무회계택 김태형 세무사 사무실입니다. 개인·법인사업자 기장, 종합소득세, 양도소득세, 상속·증여세, 경정청구 등의 세무업무를 수행합니다.",
+                    "/", body, "home", [person_ld()]))
+
 
 
 # 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-bus / #go-car 로 바로 열림
@@ -1327,6 +1377,8 @@ if __name__ == "__main__":
     posts = [parse(f) for f in glob.glob(os.path.join(ROOT, "content", "qa", "*.md"))]
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
-    build_qa_index(posts); build_home(posts); build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_qa_index(posts); build_home(posts);
+    if os.environ.get("HOME2_PREVIEW"): build_home_v2(posts, "_preview/home/index.html")  # 시안 — 커밋 금지
+    build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")
