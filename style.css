@@ -1383,3 +1383,4 @@ table.info th:has(.jt){white-space:nowrap}
 .area-fee span{white-space:nowrap}
 @media(min-width:621px) and (max-width:900px){.area-fee span{font-size:12.5px}}
 @media(max-width:620px){.area-fee>div{flex-direction:row;justify-content:space-between;align-items:center}}
+.area-fee span span{display:inline}
