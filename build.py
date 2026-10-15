@@ -785,7 +785,7 @@ def build_home_v2(posts, out="index.html"):
 <div class="wrap"><section class="block">
 <h2 class="sec">보수를 공개하고 있습니다</h2>
 <p class="ln">월 기장료입니다(부가세 별도). 신고 대리·양도·상속·증여 보수도 보수 안내에 모두 공개해 두었습니다.</p>
-<div class="area-fee"><div><span>간이과세자 (개인사업자)</span><b>70,000원~</b></div><div><span>일반과세자 (개인사업자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
+<div class="area-fee"><div><span>개인사업자 (간이과세자)</span><b>70,000원~</b></div><div><span>개인사업자 (일반과세자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 보수도 할인됩니다.</p>
 <p class="ab-more" style="margin-top:14px"><a href="/fees/">보수 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
 </section>
@@ -1367,7 +1367,7 @@ def build_area():
 <h2 class="sec">기장료를 공개하고 있습니다</h2>
 <p class="ln">세무회계택은 기장료와 신고 보수를 매출 구간별로 공개합니다.<br>
 아래는 월 기장료입니다(부가세 별도).</p>
-<div class="area-fee"><div><span>간이과세자 (개인사업자)</span><b>70,000원~</b></div><div><span>일반과세자 (개인사업자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
+<div class="area-fee"><div><span>개인사업자 (간이과세자)</span><b>70,000원~</b></div><div><span>개인사업자 (일반과세자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다.</p>
 <p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a><span class="lk-sep"> · </span><a href="/fees/">보수 안내 전체 보기 →</a></p>
 </section></div>

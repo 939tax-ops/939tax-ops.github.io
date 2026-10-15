@@ -1377,3 +1377,9 @@ table.info th:has(.jt){white-space:nowrap}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
 }
+
+/* 보수 3칸(2026-10-15): 항목명 한 줄 + 금액 줄 맞춤, 칸 가운데 정렬 */
+.area-fee>div{display:flex;flex-direction:column;justify-content:center;align-items:center}
+.area-fee span{white-space:nowrap}
+@media(min-width:621px) and (max-width:900px){.area-fee span{font-size:12.5px}}
+@media(max-width:620px){.area-fee>div{flex-direction:row;justify-content:space-between;align-items:center}}
