@@ -1384,3 +1384,7 @@ table.info th:has(.jt){white-space:nowrap}
 @media(min-width:621px) and (max-width:900px){.area-fee span{font-size:12.5px}}
 @media(max-width:620px){.area-fee>div{flex-direction:row;justify-content:space-between;align-items:center}}
 .area-fee span span{display:inline}
+
+/* 홈 세무사 칸(2026-10-15): 활동 링크 가로 배치, 학력·경력·활동 글씨는 내용 높이의 가운데 */
+.h2-cv dt{align-self:center}
+.h2-act{flex-direction:row;flex-wrap:wrap;gap:6px 28px;align-items:center}
