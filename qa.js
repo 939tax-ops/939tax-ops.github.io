@@ -16,7 +16,8 @@
     chips.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-f') === cur); });
     // 영상 줄도 같은 분류로 거르기: 해당 영상 최대 4개, 없으면 줄 숨김(2026-10-14)
     var vs = Array.prototype.slice.call(document.querySelectorAll('.vstrip .vcard')), vn = 0;
-    vs.forEach(function(v){ var ok = (cur === 'all' || v.getAttribute('data-t') === cur) && vn < 4; v.hidden = !ok; if (ok) vn++; });
+    var vmax = window.matchMedia('(max-width:760px)').matches ? 2 : 4;  // 폰 2개·PC 4개(2026-10-15: CSS 순번 숨김 대신 걸러진 영상 기준으로 셈)
+    vs.forEach(function(v){ var ok = (cur === 'all' || v.getAttribute('data-t') === cur) && vn < vmax; v.hidden = !ok; if (ok) vn++; });
     var strip = document.querySelector('.vstrip'); if (strip) strip.hidden = vn === 0;
   }
   chips.forEach(function(b){ b.addEventListener('click', function(){

@@ -1032,7 +1032,7 @@ form.lead .lf-btn,.lf-fields input,.lf-fields select,.lf-fields textarea{border-
 .vcard:hover .vth i{background:var(--green)}
 .vcard b{display:block;font-size:15px;line-height:1.45;margin:8px 0 2px;color:var(--ink-1)}
 .vcard .vd{font-size:13px;color:var(--sub)}
-@media(max-width:760px){.vgrid{grid-template-columns:repeat(2,1fr);gap:10px}.vstrip .vgrid .vcard:nth-child(n+3){display:none}.vcard b{font-size:14px}.vgrid.vall{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.vgrid{grid-template-columns:repeat(2,1fr);gap:10px}.vcard b{font-size:14px}.vgrid.vall{grid-template-columns:1fr 1fr}}
 .b-vid{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--green);border:1px solid var(--green);border-radius:2px;padding:0 6px;line-height:1.6}
 .vbox{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:2px;padding:12px;margin:0 0 26px;text-decoration:none;color:var(--text);font-family:var(--sans)}
 .vbox:hover{background:var(--tint-2)}
@@ -1366,3 +1366,14 @@ table.info th:has(.jt){white-space:nowrap}
 .result2>.r-label small{display:block;margin-top:2px}
 #fi .r-label{flex-wrap:wrap;row-gap:1px;border-radius:14px}
 #fi .r-label small{flex-basis:100%;padding-left:29px;margin-top:0}
+
+/* 영상 분류 표시·영상 목록 분류 버튼(2026-10-15) */
+.vcard .vt{color:var(--green);font-weight:600}
+.vall .vcard[hidden]{display:none}
+.vchips{margin:0 0 20px}
+
+/* 움직임 줄이기(2026-10-15): 휴대폰·PC에서 '동작 줄이기'를 켠 사람에게는 화면 이동·전환 효과를 끔 */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
+}

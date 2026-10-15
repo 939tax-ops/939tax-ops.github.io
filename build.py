@@ -108,7 +108,7 @@ def org_ld():
             "telephone": "+82-2-6952-6357", "faxNumber": "+82-2-6952-6359", "email": EMAIL,
             "address": {"@type": "PostalAddress", "streetAddress": "왕산로 200, " + ADDR2,
                         "addressLocality": "동대문구", "addressRegion": "서울특별시", "addressCountry": "KR"},
-            "sameAs": [BLOG, YOUTUBE, "https://pf.kakao.com/_TVxdkn"],
+            "sameAs": [BLOG, YOUTUBE, "https://pf.kakao.com/_TVxdkn", "https://map.naver.com/p/entry/place/2003070557"],
             "founder": {"@id": SITE + "/about/#person"}}
 
 def person_ld():
@@ -297,6 +297,8 @@ def write(rel, text):
     if rel.endswith(".html"):
         # 링크·버튼 끝의 '→' 일괄 제거(2026-10-15, 'AI 느낌' 정리). 문장 속 방향 표시(1번 출구 → …)는 그대로 둠
         text = text.replace('<span class="ar" aria-hidden="true">→</span>', '')
+        # 움직임 줄이기 설정 사용자는 자바스크립트 부드러운 스크롤도 끔(2026-10-15)
+        text = text.replace('behavior:"smooth"', 'behavior:(matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth")')
         text = re.sub(r'\s*→(\s*(?:</b>|</span>)*\s*</(?:a|button)>)', r'\1', text)
         # 짧은 괄호 묶음은 줄이 중간에서 안 꺾이게(2026-10-15): "경정청구 (낸 세금 환급 가능 여부)" → 괄호 앞뒤·안쪽 띄어쓰기를 붙임표 없는 공백으로
         def _paren(seg):
@@ -448,7 +450,7 @@ def qa_item(p):
 # ---------- 유튜브 영상 연결 (세친구 채널 중 김태형 세무사 단독 촬영분만 — 공동 출연분은 넣지 않음) ----------
 # 순서 = 목록·Q&A 상단 노출 순서(앞 4개). 조회수 기준 정렬은 월 1회 확인해 이 순서를 바꿈. slug가 있는 영상만 요약 페이지를 만들고, 없으면 유튜브로 바로 연결
 # 영상 데이터: content/video/<번호>-<slug>.json 한 편에 파일 하나 (2026.10.11 build.py에서 분리 — 예약 작업이 새 영상 초안을 파일로만 추가하도록)
-#   필수 키: k(편 번호 2자리), yt(유튜브 ID), title(유튜브 제목 그대로), date(업로드일 YYYY-MM-DD), slug, shot, lead, points[[소제목, 설명]...], cta, more[주소, 버튼글자](선택)
+#   필수 키: k(편 번호 2자리), yt(유튜브 ID), title(유튜브 제목 그대로), date(업로드일 YYYY-MM-DD), topic(세무 Q&A 분류 키 — TOPICS 중 하나: biz·worker·vat·capital-gains·gift·audit·etc), slug, shot, lead, points[[소제목, 설명]...], cta, more[주소, 버튼글자](선택)
 #   썸네일: assets/yt/v<k>.jpg (640x360)
 def load_videos():
     out = []
@@ -456,6 +458,10 @@ def load_videos():
         with open(f, encoding="utf-8") as fp:
             out.append(json.load(fp))
     out.sort(key=lambda v: (v["date"], v["k"]), reverse=True)
+    for v in out:  # 분류가 없거나 틀리면 '기타'로 두고 빌드 때 알림(2026-10-15)
+        if v.get("topic") not in TOPIC_NAME:
+            print(f'  [영상 분류 확인 필요] {v.get("k")} {v.get("title","")[:30]} — topic {v.get("topic")!r} → etc')
+            v["topic"] = "etc"
     return out
 
 VIDEOS = load_videos()
@@ -471,7 +477,7 @@ def v_href(v):
 def vcard(v):
     h, t = v_href(v)
     return (f'<a class="vcard" href="{h}"{t} data-t="{v.get("topic", "etc")}"><span class="vth"><img src="/assets/yt/v{v["k"]}.jpg" alt="" loading="lazy" width="640" height="360"><i></i></span>'
-            f'<b>{esc(v["title"])}</b><span class="vd">{v["date"].replace("-", ".")} · 유튜브</span></a>')
+            f'<b>{esc(v["title"])}</b><span class="vd"><span class="vt">{TOPIC_NAME[v["topic"]]}</span> · {v["date"].replace("-", ".")}</span></a>')
 
 def vstrip():
     return ('<section class="vstrip" aria-label="영상으로 보는 Q&amp;A"><div class="vhead"><h2>영상으로 보는 Q&amp;A</h2><a href="/video/">전체 보기 →</a></div>'
@@ -487,14 +493,21 @@ VPLAYER_JS = """<script>document.querySelectorAll('.vplayer').forEach(function(e
 
 def build_videos():
     cards = "".join(vcard(v) for v in VIDEOS)
+    vc = {}
+    for v in VIDEOS: vc[v["topic"]] = vc.get(v["topic"], 0) + 1
+    vchips = (f'<div class="qchips vchips" role="group" aria-label="분류별 보기"><button class="on" data-f="all">전체 <em>{len(VIDEOS)}</em></button>'
+              + "".join(f'<button data-f="{k}">{t} <em>{vc[k]}</em></button>' for k, t in TOPICS if vc.get(k)) + '</div>')
     body = f'''<div class="wrap" style="padding-top:36px">
 <p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › 영상으로 보는 Q&amp;A</p>
 <h1 style="color:var(--green);margin:6px 0 6px">영상으로 보는 Q&amp;A</h1>
 <p class="lead" style="margin:0 0 22px">김태형 세무사가 직접 설명하는 세금 영상입니다. 영상은 촬영 시점의 법령을 기준으로 합니다.</p>
+{vchips}
 <div class="vgrid vall">{cards}</div>
 <p class="rel-back" style="margin:28px 0 48px"><a href="/qa/">← 세무 Q&amp;A 목록</a> · <a href="{YOUTUBE}" target="_blank" rel="noopener">유튜브 채널 바로가기</a></p>
 </div>'''
-    write("video/index.html", page(f"영상으로 보는 Q&A | {NAME}", "세무회계택 김태형 세무사가 직접 설명하는 세금 영상 모음입니다.", "/video/", body, "qa"))
+    vjs = """<script>(function(){var bs=document.querySelectorAll('.vchips button'),cs=document.querySelectorAll('.vall .vcard');function go(f){bs.forEach(function(b){b.classList.toggle('on',b.dataset.f===f)});cs.forEach(function(c){c.hidden=!(f==='all'||c.dataset.t===f)});}
+bs.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.f);history.replaceState(null,'',b.dataset.f==='all'?location.pathname:'#'+b.dataset.f);})});var h=location.hash.slice(1);if(h&&document.querySelector('.vchips button[data-f="'+h+'"]'))go(h);})();</script>"""
+    write("video/index.html", page(f"영상으로 보는 Q&A | {NAME}", "세무회계택 김태형 세무사가 직접 설명하는 세금 영상 모음입니다.", "/video/", body + vjs, "qa"))
     for v in VIDEOS:
         if not v.get("slug"): continue
         li = "".join(f"<li><b>{esc(a)}</b>{esc(b)}</li>" for a, b in v["points"])
@@ -503,7 +516,7 @@ def build_videos():
         art = f'''<div class="narrow"><article>
 <p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/video/">영상으로 보는 Q&amp;A</a></p>
 <h1>{esc(v["title"])}</h1>
-<p class="meta">{PERSON} 직접 설명 · 유튜브 업로드 {v["date"].replace("-", ".")} · {v.get("shot", "")} · <a href="https://youtu.be/{v["yt"]}" target="_blank" rel="noopener">유튜브에서 보기</a></p>
+<p class="meta"><a class="b-t" href="/qa/#{v["topic"]}">{TOPIC_NAME[v["topic"]]}</a> · {PERSON} 직접 설명 · 유튜브 업로드 {v["date"].replace("-", ".")} · {v.get("shot", "")} · <a href="https://youtu.be/{v["yt"]}" target="_blank" rel="noopener">유튜브에서 보기</a></p>
 <div class="vplayer" data-yt="{v["yt"]}" role="button" tabindex="0" aria-label="영상 재생"><img src="/assets/yt/v{v["k"]}.jpg" alt="영상 썸네일" width="640" height="360"><i></i></div>
 <div class="summary"><p class="label">이 영상의 핵심 요약</p><p>{v["lead"]}</p></div>
 <h2>영상 내용 정리</h2>
@@ -801,7 +814,8 @@ ROUTE_ICONS = {
     "car": '<path d="M8 40v-8l6-14h36l6 14v8z"/><path d="M8 32h48"/><circle cx="19" cy="44" r="5"/><circle cx="45" cy="44" r="5"/>',
 }
 import urllib.parse as _up
-ROUTE_NMAP = "https://map.naver.com/p/search/" + _up.quote("동대문구 왕산로 200 롯데캐슬SKY-L65")
+NPLACE = "https://map.naver.com/p/entry/place/2003070557"  # 네이버 플레이스 '세무회계택 김태형 세무사'(2026-10-15, 대표님이 준 naver.me/FoXv10nW 의 실제 주소)
+ROUTE_NMAP = NPLACE
 ROUTE_NOTE = ('<div class="rt-note"><b class="rt-note-h">차로 오시는 분 안내</b>'
               '<p><span>1</span><em>내비에 <b>‘동대문구 왕산로 200’</b> 검색 후</em></p>'
               '<p><span>2</span><em>주차는 <b class="red">꼭 지하 4층</b>에 해 주세요</em></p>'
@@ -898,7 +912,7 @@ AB2 = os.environ.get("AB2_PREVIEW")  # 소개 페이지 정리 시안 — 설정
 def build_about():
     q = "왕산로 200 롯데캐슬SKY-L65"
     import urllib.parse as up
-    nmap = "https://map.naver.com/p/search/" + up.quote(q)
+    nmap = NPLACE
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
     CH_HTML = f'''<section class="block ch-sec"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
 <div class="ch-grid">
@@ -951,7 +965,7 @@ def build_about():
 def build_location():
     q = "동대문구 왕산로 200 롯데캐슬SKY-L65"
     import urllib.parse as up
-    nmap = "https://map.naver.com/p/search/" + up.quote(q)
+    nmap = NPLACE
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
     body = f'''<div class="wrap" style="padding-top:36px">
 <p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 찾아오는 길</p>
@@ -1314,7 +1328,7 @@ AREA_DONG = ["청량리동", "전농동", "회기동", "제기동", "답십리�
 def build_area():
     import urllib.parse as up
     q = "왕산로 200 롯데캐슬SKY-L65"
-    nmap = "https://map.naver.com/p/search/" + up.quote(q)
+    nmap = NPLACE
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
     chips = "".join(f'<span>{d}</span>' for d in AREA_DONG)
     others = "".join(f'<a href="/services/{k}/">{t}</a>' for k, t, d in SERVICES if k != "bookkeeping")

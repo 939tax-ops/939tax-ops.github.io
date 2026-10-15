@@ -80,7 +80,7 @@
   Array.prototype.forEach.call(document.querySelectorAll('#cg .quick button'),function(b){b.addEventListener('click',function(){var id=b.parentNode.getAttribute('data-for'),el=$(id);if(b.hasAttribute('data-clear')){el.value='';}else{el.value=String(num(id)+Number(b.getAttribute('data-add')));}fmt(el);run();});});
   function lock(){ var ok=$('agree').checked; $('cgFs').disabled=!ok; $('cgIn').style.opacity=ok?'':'.45'; $('out').style.opacity=ok?'':'.35'; $('lockMsg').hidden=ok; }
   $('agree').addEventListener('change',lock);
-  $('cgIn').addEventListener('click',function(){ if($('agree').checked) return; var m=$('lockMsg'); m.textContent='↑ 먼저 위 칸에 체크해 주세요. 체크하시면 계산기를 쓸 수 있습니다.'; $('agree').parentNode.scrollIntoView({behavior:'smooth',block:'center'}); },true);
+  $('cgIn').addEventListener('click',function(){ if($('agree').checked) return; var m=$('lockMsg'); m.textContent='↑ 먼저 위 칸에 체크해 주세요. 체크하시면 계산기를 쓸 수 있습니다.'; $('agree').parentNode.scrollIntoView({behavior:(matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'),block:'center'}); },true);
   lock();
   run();
 })();
