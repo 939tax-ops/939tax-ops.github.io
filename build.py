@@ -117,16 +117,24 @@ def person_ld():
             "alumniOf": "고려대학교", "sameAs": [BLOG]}
 
 # 링크 카드(og:image) — 페이지별 대표 이미지. 없으면 로고(2026.09.24)
-OG_IMAGES = {
-    "/calculators/": "/assets/og/og-calculators-2.png",
-    "/calculators/bookkeeping-fee/": "/assets/og/og-calc-bookkeeping-fee-2.png",
-    "/calculators/gift-tax/": "/assets/og/og-calc-gift-tax-2.png",
-    "/calculators/acquisition-tax/": "/assets/og/og-calc-acquisition-tax-2.png",
-    "/calculators/four-insurance/": "/assets/og/og-calc-four-insurance-2.png",
-    "/calculators/freelancer-withholding/": "/assets/og/og-calc-freelancer-withholding-2.png",
-    "/contact/": "/assets/og/og-contact-2.png",
+OG_IMAGES = {  # 2026-10-15: 지금 화면으로 다시 찍음(-3.jpg, 1200x630). 파일 이름을 바꿔야 블로그·카톡 미리보기가 새로 받음
+    "/calculators/": "/assets/og/og-calculators-3.jpg",
+    "/calculators/bookkeeping-fee/": "/assets/og/og-calc-bookkeeping-fee-3.jpg",
+    "/calculators/gift-tax/": "/assets/og/og-calc-gift-tax-3.jpg",
+    "/calculators/capital-gains/": "/assets/og/og-calc-capital-gains-3.jpg",
+    "/calculators/acquisition-tax/": "/assets/og/og-calc-acquisition-tax-3.jpg",
+    "/calculators/four-insurance/": "/assets/og/og-calc-four-insurance-3.jpg",
+    "/calculators/freelancer-withholding/": "/assets/og/og-calc-freelancer-withholding-3.jpg",
+    "/contact/": "/assets/og/og-contact-3.jpg",
     "/location/": "/assets/og/og-location.png",
 }
+# 세무 Q&A 글: assets/og/qa/<slug>.jpg (글 첫 화면 — 제목·핵심 요약)가 있으면 그것을 씀. 새 글은 게시 후 찍어 넣을 것(없으면 로고)
+def og_for(path):
+    if path in OG_IMAGES: return OG_IMAGES[path]
+    m = re.match(r"^/qa/([^/]+)/$", path)
+    if m and os.path.exists(os.path.join(ROOT, "assets", "og", "qa", m.group(1) + ".jpg")):
+        return f"/assets/og/qa/{m.group(1)}.jpg"
+    return "/assets/og-logo.png"
 
 # 계산기 제안·오류 신고 — 구글폼(939tax@gmail.com '홈페이지 계산기 제안·오류', 응답 알림 메일 켬). 회신 연락처는 받지 않음
 FEEDBACK = {"action": "https://docs.google.com/forms/d/e/1FAIpQLSe7TndIZ2Qx9rO_1Eumh5uQlBAxGaGvrXLFDneITC5RKjafqw/formResponse",
@@ -143,7 +151,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
     canon = SITE + path
     if path.startswith("/calculators/") and path != "/calculators/":
         body = body.replace('</h1>', '</h1>' + feedback_box(title), 1) + '<script src="/feedback.js" defer></script>'
-    og_img = SITE + OG_IMAGES.get(path, "/assets/og-logo.png")
+    og_img = SITE + og_for(path)
     graph = [org_ld()] + (ld or [])
     on = ' class="on"'
     def dd(label, key, head, items):
