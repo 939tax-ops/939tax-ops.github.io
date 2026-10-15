@@ -134,6 +134,8 @@ def og_for(path):
     m = re.match(r"^/qa/([^/]+)/$", path)
     if m and os.path.exists(os.path.join(ROOT, "assets", "og", "qa", m.group(1) + ".jpg")):
         return f"/assets/og/qa/{m.group(1)}.jpg"
+    if m:  # 새 글인데 미리보기 이미지가 없으면 빌드 때 알림 — 게시(push) 후 'Claude outputs/tools/og_shot_playwright.js'로 찍고 다시 빌드·push
+        print(f"  [링크 미리보기 이미지 없음] /qa/{m.group(1)}/ → 로고로 나감")
     return "/assets/og-logo.png"
 
 # 계산기 제안·오류 신고 — 구글폼(939tax@gmail.com '홈페이지 계산기 제안·오류', 응답 알림 메일 켬). 회신 연락처는 받지 않음
