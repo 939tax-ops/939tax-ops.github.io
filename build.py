@@ -991,11 +991,11 @@ YANGDO_ENABLED = False
 
 CALCS = [
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
-    ("양도소득세", "양도소득세 계산기", "주택·상가·토지를 나눠 보유·거주 기간별로 계산한 예상 양도세", "/calculators/capital-gains/"),
+    ("양도소득세", "양도소득세 계산기", "주택·상가·토지를 나눠 <span class=\"nw\">보유·거주 기간별로</span> 계산한 예상 양도세", "/calculators/capital-gains/"),
     ("취득세", "1주택 취득세 계산기", "1주택 취득세·지방교육세·농어촌특별세, 생애최초 감면 반영", "/calculators/acquisition-tax/"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
-    ("원천세·인건비", "급여 실수령액·4대보험 계산기", "4대보험·소득세를 뺀 실수령액, 세후 금액으로 세전 급여 역산", "/calculators/four-insurance/"),
-    ("원천세·인건비", "프리랜서 3.3% 계산기", "3.3%를 뗀 실제 지급액, 세후 금액으로 계약 금액 역산", "/calculators/freelancer-withholding/"),
+    ("원천세·인건비", "급여 실수령액·4대보험 계산기", "4대보험·소득세를 뺀 실수령액, <span class=\"nw\">세후 금액으로</span> 세전 급여 역산", "/calculators/four-insurance/"),
+    ("원천세·인건비", "프리랜서 3.3% 계산기", "3.3%를 뗀 실제 지급액, <span class=\"nw\">세후 금액으로</span> 계약 금액 역산", "/calculators/freelancer-withholding/"),
     ("기장료", "기장료 계산기", "매출액별 보수 기준표에 따른 월 기장료", "/calculators/bookkeeping-fee/"),
 ]
 
