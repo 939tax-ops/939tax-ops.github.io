@@ -379,6 +379,26 @@ def inline(text):
 
 def strip_tags(s): return re.sub(r"<[^>]+>", "", s)
 
+# 세무 Q&A → 신고기한 계산기 연결(2026-10-20). 글 주소 → 계산기에서 미리 고를 세목(#값). 없으면 분류로 자동
+DEADLINE_POSTS = {"capital-gains-filing-deadline": "cg", "overseas-stock-capital-gains": "stk", "inheritance-filing-schedule": "inh",
+                  "inherited-property-appraisal-value": "inh", "inheritance-lump-sum-deduction": "inh", "gift-tax-limit": "gift",
+                  "gift-detection-routes": "gift", "holiday-allowance-gift-tax": "gift", "business-registration-document-exemption": "biz",
+                  "first-home-acquisition-tax-exemption": "acq", "late-filing-penalty": "", "tax-assessment-period": ""}
+DEADLINE_NAMES = {"cg": "양도소득세 신고기한", "stk": "해외주식 양도세 신고기한", "inh": "상속세 신고기한", "gift": "증여세 신고기한", "biz": "사업자등록 신청기한", "acq": "취득세 신고기한", "": "세금 신고기한"}
+def deadline_box(p):
+    k = DEADLINE_POSTS.get(p["slug"])
+    if k is None:
+        tp = topic_of(p)
+        if tp == "capital-gains":
+            k = "cg"
+        elif tp == "gift":
+            k = "inh" if "상속" in p["title"] else "gift"
+        else:
+            return ""
+    href = "/calculators/filing-deadline/" + (f"#{k}" if k else "")
+    return (f'<div class="box"><p class="label">신고기한 계산기</p><p><a href="{href}">{DEADLINE_NAMES[k]}, 내 날짜로 계산해 보기 →</a></p>'
+            f'<p style="font-size:14px;color:var(--sub);margin:4px 0 0">주말·공휴일 연기와 기한이 지났을 때의 가산세 감면 구간까지 보여 드립니다.</p></div>')
+
 def build_post(p, posts=()):
     body = p["body"]
     faq_md = ""
@@ -428,6 +448,7 @@ def build_post(p, posts=()):
 <p class="meta">{PERSON} 작성 · {p["date"]}{upd}{blog}</p>
 <div class="summary"><p class="label">핵심 요약</p>{md(p["summary"])}</div>
 {vbox(VBY[VIDEO_OF_POST[p["slug"]]]) if p["slug"] in VIDEO_OF_POST else ""}{toc_html}{body_html}
+{deadline_box(p)}
 {faq_html}
 {calc}
 <details class="box fold laws"><summary class="label">근거 법령</summary><ul>{laws}</ul></details>
@@ -688,6 +709,9 @@ SEARCH_TOOLS = [
  ("1주택 취득세 계산기", "/calculators/acquisition-tax/", "계산기",
   "주택 1채를 살 때 취득세·지방교육세·농어촌특별세를 생애최초 감면 적용 여부별로 계산합니다.",
   "취득세 지방세 생애최초 감면 집 매수 아파트 지방교육세 농어촌특별세"),
+ ("신고기한 계산기", "/calculators/filing-deadline/", "계산기",
+  "양도소득세 예정신고·증여세·상속세·취득세·해외주식 양도세·사업자등록 기한을 주말·공휴일 연기까지 반영해 계산합니다.",
+  "신고기한 신고기간 언제까지 마감 기한 양도세 신고기한 증여세 신고기한 상속세 신고기한 취득세 60일 사업자등록 20일 해외주식 양도세 5월 가산세 기한 후 신고 공휴일"),
  ("급여 실수령액·4대보험 계산기", "/calculators/four-insurance/", "계산기",
   "월 급여를 넣으면 4대보험과 소득세를 뺀 실수령액이, 세후 금액을 넣으면 필요한 세전 급여가 산출됩니다.",
   "4대보험 사대보험 실수령액 월급 급여 국민연금 건강보험 고용보험 소득세 원천징수"),
@@ -761,7 +785,7 @@ def build_home_v2(posts, out="index.html"):
     """홈 구조 개편 시안(2026-10-14): 첫 화면 → 대표 세무사 → 업무 분야 → 보수 → 진행 → 더 알아보기 → 연락."""
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in SERVICES)
     qa3 = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in posts[:3])
-    calcs = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/calculators/gift-tax/","증여세"),("/calculators/capital-gains/","양도소득세"),("/calculators/acquisition-tax/","취득세"),("/calculators/four-insurance/","4대보험·실수령액"),("/calculators/freelancer-withholding/","프리랜서 3.3%"),("/calculators/bookkeeping-fee/","기장료")])
+    calcs = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/calculators/gift-tax/","증여세"),("/calculators/capital-gains/","양도소득세"),("/calculators/acquisition-tax/","취득세"),("/calculators/filing-deadline/","신고기한"),("/calculators/four-insurance/","4대보험·실수령액"),("/calculators/freelancer-withholding/","프리랜서 3.3%"),("/calculators/bookkeeping-fee/","기장료")])
     kk_ic = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>'
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
@@ -1003,6 +1027,7 @@ CALCS = [
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
     ("양도소득세", "양도소득세 계산기", "주택·상가·토지를 나눠 <span class=\"nw\">보유·거주 기간별로</span> 계산한 예상 양도세", "/calculators/capital-gains/"),
     ("취득세", "1주택 취득세 계산기", "1주택 취득세·지방교육세·농어촌특별세, 생애최초 감면 반영", "/calculators/acquisition-tax/"),
+    ("신고기한", "신고기한 계산기", "양도세·증여세·상속세·취득세·해외주식·사업자등록 기한, <span class=\"nw\">주말·공휴일까지</span> 반영", "/calculators/filing-deadline/"),
     ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
     ("원천세·인건비", "급여 실수령액·4대보험 계산기", "4대보험·소득세를 뺀 실수령액, <span class=\"nw\">세후 금액으로</span> 세전 급여 역산", "/calculators/four-insurance/"),
     ("원천세·인건비", "프리랜서 3.3% 계산기", "3.3%를 뗀 실제 지급액, <span class=\"nw\">세후 금액으로</span> 계약 금액 역산", "/calculators/freelancer-withholding/"),
@@ -1067,6 +1092,20 @@ def build_cg_calc():  # 양도소득세 계산기(2026.10.14) — 주택/상가�
           page(f"양도소득세 계산기 2026 (주택·상가·토지) | {NAME}",
                "주택(1세대 1주택 비과세·과세·다주택 중과)과 상가·토지(비사업용 토지 포함)를 나눠 보유·거주 기간별 예상 양도소득세와 지방소득세를 계산하는 참고용 계산기입니다.",
                "/calculators/capital-gains/", tpl, "calc", ld))
+
+def build_deadline_calc():  # 신고기한 계산기(2026.10.20) — 양도·증여·상속·취득세·사업자등록, 주말·공휴일 연기 반영
+    tpl = open(os.path.join(ROOT, "_src", "filing-deadline-calc.html"), encoding="utf-8").read()
+    ld = [{"@type": "WebApplication", "name": "신고기한 계산기", "url": SITE + "/calculators/filing-deadline/",
+           "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko",
+           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
+    _faq = tpl.split('<section class="calc-read faq-dl">', 1)[1].split("</section>", 1)[0] if 'class="calc-read faq-dl"' in tpl else ""
+    _qs = re.findall(r"<h3>(.*?)</h3>\s*<p>(.*?)</p>", _faq, re.S)
+    if _qs:
+        ld.append({"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": strip_tags(q), "acceptedAnswer": {"@type": "Answer", "text": strip_tags(a)}} for q, a in _qs]})
+    write("calculators/filing-deadline/index.html",
+          page(f"세금 신고기한 계산기 (양도세·증여세·상속세·취득세) | {NAME}",
+               "양도소득세 예정신고, 증여세, 상속세, 취득세, 해외주식 양도세, 사업자등록 기한을 기준일만 넣으면 주말·공휴일 연기까지 반영해 계산합니다. 기한이 지났다면 가산세 감면 구간도 함께 보여 줍니다.",
+               "/calculators/filing-deadline/", tpl, "calc", ld))
 
 def build_4ins_calc():
     tpl = open(os.path.join(ROOT, "_src", "four-insurance-calc.html"), encoding="utf-8").read()
@@ -1441,7 +1480,7 @@ def build_fees():
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()
-    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/location/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/capital-gains/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
+    urls = [("/", today), ("/qa/", today), ("/about/", today), ("/location/", today), ("/calculators/", today), ("/calculators/gift-tax/", today), ("/calculators/bookkeeping-fee/", today), ("/calculators/acquisition-tax/", today), ("/calculators/capital-gains/", today), ("/calculators/filing-deadline/", today), ("/calculators/four-insurance/", today), ("/calculators/freelancer-withholding/", today), ("/contact/", today), ("/disclaimer/", today), ("/services/", today), ("/fees/", today)] + ([("/privacy/", today)] if LEAD_ENABLED else []) + [(f"/services/{k}/", today) for k, _, _ in ALL_SERVICES] + ([("/calculators/one-house-capital-gains/", today)] if YANGDO_ENABLED else [])
     urls += [(f"/qa/{p['slug']}/", p.get("updated", p["date"])) for p in posts]
     urls += [("/area/dongdaemun/", today)]
     urls += [("/video/", today)] + [(f'/video/{v["slug"]}/', v["date"]) for v in VIDEOS if v.get("slug")]
@@ -1464,6 +1503,6 @@ if __name__ == "__main__":
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
     build_qa_index(posts); build_home_v2(posts)  # 홈 개편 적용(2026-10-14) — 이전 홈은 build_home()에 보관
-    build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_deadline_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")

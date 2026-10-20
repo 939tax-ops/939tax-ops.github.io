@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세금 신고기한 계산기 (양도세·증여세·상속세·취득세) | 세무회계택</title>
+<meta name="description" content="양도소득세 예정신고, 증여세, 상속세, 취득세, 해외주식 양도세, 사업자등록 기한을 기준일만 넣으면 주말·공휴일 연기까지 반영해 계산합니다. 기한이 지났다면 가산세 감면 구간도 함께 보여 줍니다.">
+<link rel="canonical" href="https://tax939.com/calculators/filing-deadline/">
+<meta name="naver-site-verification" content="e074d43c1aa971b277361693bbff22e6a1cf9253" />
+<meta name="google-site-verification" content="H_CwM250NOvT-HL7Ky2uBmvKYMq18bXleFuTAcapo3k" />
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세무회계택">
+<meta property="og:title" content="세금 신고기한 계산기 (양도세·증여세·상속세·취득세) | 세무회계택">
+<meta property="og:description" content="양도소득세 예정신고, 증여세, 상속세, 취득세, 해외주식 양도세, 사업자등록 기한을 기준일만 넣으면 주말·공휴일 연기까지 반영해 계산합니다. 기한이 지났다면 가산세 감면 구간도 함께 보여 줍니다.">
+<meta property="og:url" content="https://tax939.com/calculators/filing-deadline/">
+<meta property="og:image" content="https://tax939.com/assets/og-logo.png">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="/favicon.png" sizes="64x64" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="세무회계택 세무 Q&amp;A" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="/style.css?v=c54cae45">
+<script src="/lead.js?v=069e9548" defer></script>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "AccountingService", "@id": "https://tax939.com/#org", "name": "세무회계택", "alternateName": ["세무회계 택", "세무회계택 김태형 세무사"], "url": "https://tax939.com/", "logo": "https://tax939.com/assets/icon-512.png", "image": "https://tax939.com/assets/profile.jpg", "telephone": "+82-2-6952-6357", "faxNumber": "+82-2-6952-6359", "email": "tax939@naver.com", "address": {"@type": "PostalAddress", "streetAddress": "왕산로 200, 롯데캐슬SKY-L65 섹션오피스 1313호", "addressLocality": "동대문구", "addressRegion": "서울특별시", "addressCountry": "KR"}, "sameAs": ["https://blog.naver.com/tax939", "https://www.youtube.com/@taxfriends3", "https://pf.kakao.com/_TVxdkn", "https://map.naver.com/p/entry/place/2003070557"], "founder": {"@id": "https://tax939.com/about/#person"}}, {"@type": "WebApplication", "name": "신고기한 계산기", "url": "https://tax939.com/calculators/filing-deadline/", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": "https://tax939.com/#org"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "신고기한 마지막 날이 토요일이나 공휴일이면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "그다음 날이 기한입니다. 다음 날도 일요일이나 공휴일이면 평일이 될 때까지 넘어갑니다. 국세와 취득세(지방세) 모두 같습니다."}}, {"@type": "Question", "name": "증여세 신고기한은 어떻게 세나요?", "acceptedAnswer": {"@type": "Answer", "text": "증여받은 날이 속하는 달의 말일부터 3개월입니다. 3월 5일에 받았든 3월 28일에 받았든 기한은 똑같이 6월 30일입니다."}}, {"@type": "Question", "name": "집을 팔면 양도소득세는 언제까지 신고하나요?", "acceptedAnswer": {"@type": "Answer", "text": "양도일이 속하는 달의 말일부터 2개월입니다. 양도일은 잔금일이 원칙이고, 잔금보다 등기를 먼저 했다면 등기접수일입니다. 손해를 봤거나 차익이 없어도 예정신고 대상이며, 부담부증여로 넘긴 채무 부분은 3개월입니다."}}, {"@type": "Question", "name": "가족이 외국에 살면 상속세 신고기한이 달라지나요?", "acceptedAnswer": {"@type": "Answer", "text": "돌아가신 분이나 상속인이 외국에 주소를 둔 경우에는 6개월이 아니라 9개월입니다. 외국에 주소를 둔 경우에 해당하는지는 따로 확인이 필요합니다."}}, {"@type": "Question", "name": "신고기한을 넘기면 어떻게 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "낼 세금이 있다면 무신고가산세(세액의 20%)와 납부지연가산세가 붙습니다. 기한이 지난 뒤 1개월 안에 신고하면 무신고가산세의 50%, 3개월 안이면 30%, 6개월 안이면 20%가 감면됩니다. 양도소득세 예정신고를 놓쳤다면 확정신고기한(다음 해 5월 31일)까지 신고해도 50% 감면이 유지되고, 상속세·증여세는 기한을 넘기면 신고세액공제 3%를 받을 수 없습니다."}}, {"@type": "Question", "name": "해외주식 양도소득세는 언제 신고하나요?", "acceptedAnswer": {"@type": "Answer", "text": "해외주식은 예정신고가 없고, 판 해의 다음 해 5월 1일부터 31일까지 확정신고합니다. 연도는 매도 주문일이 아니라 결제일 기준입니다."}}]}]}</script>
+</head>
+<body class="p-calc">
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/assets/logo-h-dark.png" alt="세무회계 택 로고" width="154" height="40"></a>
+<button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
+<nav class="nav"><div class="dd"><a class="dd-t" href="/about/" aria-haspopup="true">사무소 소개<span class="car" aria-hidden="true"></span></a><div class="dd-m"><a href="/about/"><span class="kp">인사말·대표</span> 소개</a><a href="/fees/">보수 안내</a><a href="/area/dongdaemun/">동대문구 세무사</a><a href="/location/">오시는 길</a></div></div><div class="dd"><a class="dd-t" href="/services/" aria-haspopup="true">주요 서비스<span class="car" aria-hidden="true"></span></a><div class="dd-m"><a href="/services/bookkeeping/">세무기장</a><a href="/services/tax-filing/">세금 신고대리</a><a href="/services/capital-gains/">양도소득세</a><a href="/services/inheritance-gift/"><span class="kp">상속·증여세</span></a><a href="/services/refund-claim/">경정청구</a><a href="/services/tax-audit/">세무조사 대응</a><a href="/services/tax-planning/">절세상담</a></div></div><a href="/qa/">세무 Q&A</a><a href="/calculators/" class="on">세금 계산기</a><a href="/location/">오시는 길</a><a class="cta" href="/contact/">문의하기</a></nav>
+</div></header>
+<main>
+<style>
+.dl-alert{margin:16px 0 0;padding:14px 16px;border-radius:8px;background:#fff;color:var(--text);font-size:14.5px;line-height:1.65}
+.dl-alert p{margin:0 0 6px}
+.dl-alert.bad{border:2px solid #c62828}
+.dl-alert.ok{background:var(--surface)}
+.dl-alert .al-h{color:#c62828;font-weight:800;font-size:16px;line-height:1.5}
+.dl-alert .al-l{list-style:none;margin:6px 0 0;padding:0;font-size:14px}
+.dl-alert .al-l li{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-bottom:1px solid var(--line);color:var(--sub)}
+.dl-alert .al-l li.on{background:#fdecea;color:#c62828;font-weight:800}
+.dl-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.dl-btns .btn{flex:1;text-align:center;min-width:120px}
+.dl-btns .btn.lc{background:var(--green-bg);color:#fff;border-color:var(--green-bg)}
+.dl-date{font-size:18px;padding:10px 12px;border:1px solid var(--field);border-radius:2px;background:#fff;width:100%;max-width:280px;font-family:var(--sans)}
+.result2 .big.dl-big{font-size:30px}
+.dl-docs,.dl-cal{margin:12px 0 0;padding:12px 14px;border-radius:8px;background:#fff;color:var(--text);font-size:14px;line-height:1.6}
+.dl-docs .dd-h,.dl-cal .cl-h{margin:0 0 6px;font-weight:800;color:var(--green);font-size:14.5px}
+.dl-docs ul{margin:0;padding-left:18px}
+.dl-docs .dd-f{margin:6px 0 0;color:var(--sub);font-size:13px}
+.dl-cal .cl-b{display:flex;gap:8px;flex-wrap:wrap}
+.dl-cal .cl-b a{flex:1;min-width:120px;text-align:center;padding:9px 10px;border:1.5px solid var(--green);border-radius:6px;color:var(--green);font-weight:700;text-decoration:none;font-size:14px}
+.faq-dl h3{font-size:17px;margin:20px 0 6px;color:var(--green)}
+.faq-dl p{margin:0 0 6px}
+#dl .how td:first-child{white-space:nowrap;padding-right:12px;width:1%;vertical-align:top}
+#dl .how td:last-child{white-space:normal;word-break:keep-all}
+@media (max-width:420px){.result2 .big.dl-big{font-size:25px}}
+</style>
+<div class="wrap" style="padding-top:28px;max-width:980px">
+<p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 신고기한 계산기</p>
+<h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">신고기한 계산기</h1><details class="fb fb-top" data-cfg="{&quot;action&quot;: &quot;https://docs.google.com/forms/d/e/1FAIpQLSe7TndIZ2Qx9rO_1Eumh5uQlBAxGaGvrXLFDneITC5RKjafqw/formResponse&quot;, &quot;calc&quot;: &quot;entry.1631199236&quot;, &quot;body&quot;: &quot;entry.16688267&quot;, &quot;name&quot;: &quot;세금 신고기한 계산기 (양도세·증여세·상속세·취득세)&quot;}"><summary>계산기 <span class="kp">제안·오류</span> 신고</summary><form onsubmit="return false"><textarea maxlength="1000" aria-label="제안 또는 오류 내용" placeholder="바뀌었으면 하는 점이나 계산이 이상한 부분을 적어 주세요."></textarea><div class="fb-row"><button type="submit" class="btn">보내기</button><span class="fb-msg" role="status"></span></div><p class="fb-note">계산기 제안이나 오류를 적어 주시면 확인하고 빠르게 수정 반영하겠습니다.<br>감사합니다.</p></form></details>
+<p class="lead" style="margin:0 0 18px">2026년 10월 20일 확인 법령 기준 · 양도세⁠·증여세⁠·상속세⁠·취득세⁠·해외주식⁠·사업자등록 기한을 <b><span class="kp">주말·공휴일까지</span> 반영</b>해 계산합니다</p>
+
+<div class="ref-box" style="border:2px solid var(--green);background:var(--tint-2);padding:14px 18px;margin:0 0 18px;font-family:var(--sans);border-radius:2px">
+<p style="margin:0 0 2px;font-weight:800;color:var(--green);font-size:17px">참고용 계산기입니다</p>
+<ul style="margin:4px 0 0;padding-left:18px;font-size:14px;line-height:1.75;color:var(--ink-2)">
+<li>기준일<span class="nw">(⁠<span class="kp">양도일·증여일·취득일</span> 등)⁠을</span> 언제로 볼지는 이 계산기가 판단하지 않습니다. 넣은 날짜대로만 계산합니다.</li>
+<li>기한이 <span class="kp">토·일요일이나</span> 공휴일이면 다음 평일까지로 늘려 계산합니다.</li>
+<li>기한이 가깝거나 지났다면 바로 전문가에게 확인하세요.</li>
+</ul>
+</div>
+<ol class="steps">
+<li><b>무엇을 신고하는지</b> 고르고</li>
+<li><b>기준일</b>을 넣으면</li>
+<li><b>신고기한</b>과 남은 날이 바로 나옵니다</li>
+</ol>
+
+<form class="calc2" id="dl" onsubmit="return false">
+<div class="c-in">
+<p class="c-q"><span>1</span>무엇을 신고하나요?</p>
+<div class="chips">
+<label><input type="radio" name="t" value="cg" checked><span>양도소득세<small><span class="kp">집·토지</span> 판 뒤 예정신고</small></span></label>
+<label><input type="radio" name="t" value="gift"><span>증여세<small>재산을 받은 뒤</small></span></label>
+<label><input type="radio" name="t" value="inh"><span>상속세<small>돌아가신 뒤</small></span></label>
+<label><input type="radio" name="t" value="acq"><span>취득세<small>부동산 등을 취득한 뒤</small></span></label>
+<label><input type="radio" name="t" value="biz"><span>사업자등록<small>사업을 시작한 뒤</small></span></label>
+<label><input type="radio" name="t" value="stk"><span>해외주식<small>판 다음 해 5월 신고</small></span></label>
+</div>
+
+<div id="cgWrap">
+<p class="hint" style="margin:14px 0 6px">어떻게 넘겼나요?</p>
+<div class="chips two">
+<label><input type="radio" name="cgk" value="s" checked><span>매매 등<small>2개월</small></span></label>
+<label><input type="radio" name="cgk" value="b"><span>부담부증여<small>넘긴 채무 부분 · 3개월</small></span></label>
+</div>
+</div>
+<div id="inhWrap" hidden>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:14px"><input type="checkbox" id="inhF" style="margin-top:5px;width:18px;height:18px"><span><b>돌아가신 분이나 상속인이 외국에 주소를 둠</b> <small style="color:var(--sub)">(⁠9개월 · 주민등록만으로 정해지지 않을 수도 있어 해당 여부는 상담을 권장드립니다)</small></span></label>
+</div>
+<div id="acqWrap" hidden>
+<p class="hint" style="margin:14px 0 6px">어떻게 취득했나요?</p>
+<div class="chips">
+<label><input type="radio" name="acqk" value="s" checked><span>매매 등<small>60일</small></span></label>
+<label><input type="radio" name="acqk" value="g"><span>증여<small>부담부증여 포함 · 3개월</small></span></label>
+<label><input type="radio" name="acqk" value="i"><span>상속<small>6개월</small></span></label>
+</div>
+<div id="acqFWrap" hidden>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input type="checkbox" id="acqF" style="margin-top:5px;width:18px;height:18px"><span><b>외국에 주소를 둔 상속인이 있음</b> <small style="color:var(--sub)">(⁠9개월 · 해당 여부는 상담을 권장드립니다)</small></span></label>
+</div>
+</div>
+
+<p class="c-q" style="margin-top:22px"><span>2</span><b id="evLabel" style="font-weight:inherit">양도일 <small style="font-weight:400;color:var(--sub);font-size:14px">(⁠잔금일과 등기접수일 중 빠른 날)</small></b></p>
+<input type="date" id="ev" class="dl-date" min="2020-01-01" max="2030-12-31" aria-label="기준일">
+<p class="hint" id="evHint" style="margin:8px 0 0"></p>
+<p class="mini" id="mini" hidden><span id="miniLbl">신고기한</span> <b id="miniDue"></b> <a href="#out">자세히 ↓</a></p>
+</div>
+
+<div class="c-out">
+<div class="result2" id="out">
+<p class="r-label" id="rLabel">신고기한</p>
+<p class="big dl-big" id="due">날짜를 넣어 주세요</p>
+<p class="r-sub" id="sub"></p>
+<div id="alert" class="dl-alert" hidden></div>
+<div id="docs" class="dl-docs" hidden></div>
+<div id="cal" class="dl-cal" hidden></div>
+<details class="how" open style="margin-top:14px"><summary>계산 과정 보기</summary><table id="tbl"></table></details>
+<p class="note" id="msg"></p>
+</div>
+</div>
+</form>
+
+<section class="calc-next"><p>기한 안에 신고를 마치려면 서류 준비와 세액 검토에 시간이 필요합니다.<br>기준일이 헷갈리거나 기한이 얼마 남지 않았다면 먼저 연락 주세요.</p><a class="btn primary" href="/contact/#f-lc">이 결과로 상담 신청하기</a></section>
+
+<details class="box fold" style="margin-top:28px"><summary class="label">기한을 넘기면 붙는 가산세</summary>
+<ul>
+<li>무신고가산세: 신고하지 않은 세액의 20% <span class="nw">(⁠부정행위는 40%)</span></li>
+<li>납부지연가산세: 내지 않은 세액에 늦어진 날수만큼 하루 단위로 계속 붙음</li>
+<li>기한 후 신고 감면: 기한이 지난 뒤 1개월 이내 신고하면 무신고가산세 50%, 3개월 이내 30%, 6개월 이내 20% 감면 (⁠납부지연가산세는 감면 대상 아님)</li>
+<li>양도소득세는 예정신고를 하지 않았더라도 확정신고기한<span class="nw">(⁠다음 해 5월 31일)⁠까지</span> 기한 후 신고하면 무신고가산세 50% 감면</li>
+<li>낼 세금이 없으면 무신고가산세도 없습니다. 다만 <span class="kp">상속세·증여세는</span> 기한이 지나면 신고세액공제 3%⁠를 받을 수 없습니다</li>
+<li>사업자등록을 늦게 하면: 사업 개시일부터 등록 신청 전날까지 공급가액의 1% 미등록가산세</li>
+</ul>
+<p class="src">국세기본법 제47조의2 <span class="kp">제1항·제47조의4</span> <span class="kp">제1항·제48조</span> 제2항 <span class="kp">제2호·제3호</span> 라목, 소득세법 제110조 제1항, 상속세 및 증여세법 제69조, 지방세기본법 제53조 <span class="kp">제1항·제57조</span> 제2항 제2호, 부가가치세법 제60조 제1항 제1호</p>
+</details>
+
+<details class="box fold" style="margin-top:16px"><summary class="label">계산 기준</summary>
+<ul>
+<li>양도소득세 예정신고: 양도일이 속하는 달의 말일부터 2개월 (⁠부담부증여의 채무 부분은 3개월). 양도일은 잔금일이 원칙이고, 잔금보다 등기를 먼저 했다면 등기접수일</li>
+<li>증여세: 증여받은 날이 속하는 달의 말일부터 3개월</li>
+<li>상속세: 상속개시일이 속하는 달의 말일부터 6개월 (⁠돌아가신 분이나 상속인이 외국에 주소를 둔 경우 9개월)</li>
+<li>취득세: 매매 등은 취득일부터 60일 / <span class="kp">증여·부담부증여는</span> 취득일이 속하는 달의 말일부터 3개월 / 상속은 상속개시일이 속하는 달의 말일부터 6개월 (⁠외국에 주소를 둔 상속인이 있으면 9개월)</li>
+<li>사업자등록: 사업 개시일부터 20일 이내</li>
+<li>해외주식 양도소득세: 예정신고 없이, 결제일이 속한 해의 다음 해 5월 1일~31일 확정신고</li>
+<li><span class="kp">양도소득세·상속세·증여세는</span> 신고기한까지 세금도 함께 냅니다. <span class="kp">상속세·증여세는</span> 낼 세금이 1천만원을 넘으면 기한 후 2개월 안에 나눠 낼 수 <span class="nw">있고(⁠분납),</span> 2천만원을 넘으면 연부연납을 신청할 수 있습니다</li>
+<li>'○일부터 60일'처럼 날수로 정한 기간은 첫날을 빼고 셉니다</li>
+<li>기한이 토요일⁠·일요일⁠·공휴일⁠·대체공휴일⁠·노동절이면 그다음 날이 기한입니다. 다음 날도 쉬는 날이면 평일까지 넘깁니다</li>
+<li>공휴일은 2025~2028년만 반영했습니다. 정부가 임시공휴일을 새로 지정하면 반영되지 않을 수 있습니다</li>
+<li>토지거래허가구역 토지를 허가 전에 대금 청산한 경우, 국내 주식 <span class="nw">양도(⁠반기 기준 예정신고),</span> 부동산 양도소득세 확정신고는 계산하지 않습니다</li>
+</ul>
+<p class="src">소득세법 제94조 제1항 제3호 <span class="kp">다목·제98조·제105조</span> <span class="kp">제1항·제106조</span> <span class="kp">제1항·제110조</span> 제1항, 같은 법 시행령 제162조 제1항 제2호, 상속세 및 증여세법 제67조 <span class="kp">제1항·제4항·제68조</span> 제1항⁠·제69조⁠·제70조⁠·제71조 제1항, 지방세법 제20조 <span class="kp">제1항·제4항,</span> 부가가치세법 제8조 제1항, 국세기본법 <span class="kp">제4조·제5조</span> 제1항, 지방세기본법 <span class="kp">제23조·제24조</span> 제1항, 공휴일에 관한 법률 제2조, 관공서의 공휴일에 관한 규정 <span class="kp">제2조·제3조</span></p>
+</details>
+
+<section class="calc-read"><h2>신고기한은 어떻게 세나요</h2>
+<p>세금마다 기한을 세는 방식이 두 가지입니다. <span class="kp">양도소득세·증여세·상속세는</span> '그날이 속하는 달의 말일부터 몇 개월'로 셉니다. 3월 5일에 증여받았든 3월 28일에 받았든 3월 말일에서 3개월을 세므로 기한은 똑같이 6월 30일입니다.</p>
+<p>매매로 취득한 부동산의 취득세와 사업자등록은 '그날부터 며칠'로 셉니다. 첫날은 빼고 세기 때문에 4월 10일에 잔금을 치렀다면 취득세 기한은 60일째인 6월 9일입니다.</p>
+<p>이렇게 나온 날이 <span class="kp">토·일요일이나</span> 공휴일이면 그다음 평일이 기한이 됩니다. 기한 안에 신고하면 <span class="kp">상속세·증여세는</span> 신고세액공제 3%⁠를 받고, 기한을 넘기면 가산세가 붙습니다.</p>
+<div class="post-more"><div class="rel-col"><p class="label">함께 보면 좋은 글</p><ul><li><a href="/qa/capital-gains-filing-deadline/">양도소득세는 언제까지 신고하나요</a></li><li><a href="/qa/inheritance-filing-schedule/">상속세 신고기한 <span class="kp">6개월·9개월</span> 일정</a></li><li><a href="/qa/late-filing-penalty/">신고를 늦게 하면 가산세가 얼마나 붙나요</a></li></ul></div><div class="rel-col"><p class="label">함께 쓰면 좋은 계산기</p><ul><li><a href="/calculators/capital-gains/">양도소득세 계산기</a></li><li><a href="/calculators/gift-tax/">증여세 계산기</a></li><li><a href="/calculators/acquisition-tax/">1주택 취득세 계산기</a></li></ul></div></div></section>
+<section class="calc-read faq-dl"><h2>자주 묻는 질문</h2>
+<h3>신고기한 마지막 날이 토요일이나 공휴일이면 어떻게 되나요?</h3>
+<p>그다음 날이 기한입니다. 다음 날도 일요일이나 공휴일이면 평일이 될 때까지 넘어갑니다. 국세와 <span class="nw">취득세(⁠지방세)</span> 모두 같습니다.</p>
+<h3>증여세 신고기한은 어떻게 세나요?</h3>
+<p>증여받은 날이 속하는 달의 말일부터 3개월입니다. 3월 5일에 받았든 3월 28일에 받았든 기한은 똑같이 6월 30일입니다.</p>
+<h3>집을 팔면 양도소득세는 언제까지 신고하나요?</h3>
+<p>양도일이 속하는 달의 말일부터 2개월입니다. 양도일은 잔금일이 원칙이고, 잔금보다 등기를 먼저 했다면 등기접수일입니다. 손해를 봤거나 차익이 없어도 예정신고 대상이며, 부담부증여로 넘긴 채무 부분은 3개월입니다.</p>
+<h3>가족이 외국에 살면 상속세 신고기한이 달라지나요?</h3>
+<p>돌아가신 분이나 상속인이 외국에 주소를 둔 경우에는 6개월이 아니라 9개월입니다. 외국에 주소를 둔 경우에 해당하는지는 따로 확인이 필요합니다.</p>
+<h3>신고기한을 넘기면 어떻게 되나요?</h3>
+<p>낼 세금이 있다면 무신고가산세<span class="nw">(⁠세액의 20%)⁠와</span> 납부지연가산세가 붙습니다. 기한이 지난 뒤 1개월 안에 신고하면 무신고가산세의 50%, 3개월 안이면 30%, 6개월 안이면 20%⁠가 감면됩니다. 양도소득세 예정신고를 놓쳤다면 확정신고기한<span class="nw">(⁠다음 해 5월 31일)⁠까지</span> 신고해도 50% 감면이 유지되고, <span class="kp">상속세·증여세는</span> 기한을 넘기면 신고세액공제 3%⁠를 받을 수 없습니다.</p>
+<h3>해외주식 양도소득세는 언제 신고하나요?</h3>
+<p>해외주식은 예정신고가 없고, 판 해의 다음 해 5월 1일부터 31일까지 확정신고합니다. 연도는 매도 주문일이 아니라 결제일 기준입니다.</p>
+</section>
+<div class="cta-box"><p>기준일을 언제로 볼지, 기한 안에 무엇을 준비해야 하는지는 거래마다 다릅니다.<br>기한이 다가온다면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/#f-lc">상담 신청</a></div></div>
+<p class="fine" id="disclaimer">면책 고지 · 이 계산기는 2026년 10월 20일에 확인한 법령을 기준으로 한 참고용 계산 결과로, 세무 자문이 아닙니다. 기준일 판단과 예외 규정 해당 여부는 판단하지 않으며, 정부의 임시공휴일 <span class="kp">지정·전산</span> 장애 등에 따라 실제 기한과 다를 수 있습니다. 이 결과만을 근거로 한 <span class="kp">판단·신고로</span> 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. <a href="/disclaimer/">전문 보기</a></p>
+</div>
+<script src="/calc-deadline.js?v=f56f12d2" defer></script>
+<script src="/feedback.js?v=a0e0944e" defer></script>
+</main>
+<footer><div class="wrap f-grid">
+<div class="f-info">
+<img src="/assets/logo-h-dark.png" alt="세무회계 택" width="170" height="44">
+<p><span class="kp">세무회계 택</span> · <span class="kp">김태형 세무사</span><span class="f-br"> · </span><span class="f-nw">사업자등록번호 596-42-01252</span></p>
+<p>서울특별시 동대문구 왕산로 200 <span class="kp">롯데캐슬SKY-L65</span> <span class="kp">섹션오피스 1313호</span></p>
+<p>전화 <a href="tel:02-6952-6357"><span class="kp">02-6952-6357</span></a> · 팩스 <span class="kp">02-6952-6359</span><span class="f-br"> · </span><span class="f-nw">이메일 <a href="mailto:tax939@naver.com">tax939@naver.com</a></span></p>
+<p class="small"><a href="/privacy/"><b>개인정보 처리방침</b></a> · <a href="/disclaimer/">이용 안내 및 면책</a><span class="f-br"> · </span><span class="f-nw">© 2026 세무회계택</span></p>
+</div>
+<nav class="f-sns" aria-label="세무회계택 채널">
+<a href="https://pf.kakao.com/_TVxdkn/chat" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-kakao.png" alt="" width="40" height="40"></span><span class="t">카카오톡채널 - <span class="kp">세무회계 택</span></span></a>
+<a href="https://blog.naver.com/tax939" target="_blank" rel="noopener"><span class="m"><img class="nv" src="/assets/sns-naver-white.svg" alt="" width="78" height="15"></span><span class="t">네이버 블로그 - 세무회계택</span></a>
+<a href="https://www.youtube.com/@taxfriends3" target="_blank" rel="noopener"><span class="m"><img src="/assets/sns-youtube.png" alt="" width="40" height="28"></span><span class="t">유튜브 - 세무사 세친구</span></a>
+</nav>
+</div></footer>
+<nav class="mbar" aria-label="빠른 연락"><a href="tel:02-6952-6357"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>전화</a><a class="k" href="https://pf.kakao.com/_TVxdkn/chat" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡</a><a class="p" href="/contact/" data-mlead>상담 신청</a></nav>
+<script>(function(){var f=document.querySelector("form.lead");if(f){document.querySelectorAll("[data-mlead]").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();f.scrollIntoView({behavior:(matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"),block:"start"})})})}})();</script>
+</body>
+</html>

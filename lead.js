@@ -39,3 +39,11 @@ document.querySelectorAll('form.lead').forEach(function(f){
   all.addEventListener('change',function(){ items.forEach(function(c){ c.checked=all.checked; }); });
   items.forEach(function(c){ c.addEventListener('change',function(){ all.checked=items.every(function(x){return x.checked;}); }); });
 });
+
+/* 계산기 → 상담 신청서 자동 채우기 (2026-10-20): 상담 분야·메모만 채움. 이름·연락처·동의는 본인이 직접 */
+(function(){
+  var p=null; try{ p=JSON.parse(sessionStorage.getItem('tax939_prefill')||'null'); sessionStorage.removeItem('tax939_prefill'); }catch(e){}
+  if(!p) return; var f=document.getElementById('f-lc'); if(!f) return;
+  var r=f.querySelector('.lf-opts input[value="'+String(p.svc||'').replace(/"/g,'')+'"]'); if(r) r.checked=true;
+  if(f.memo && !f.memo.value && p.memo){ f.memo.value=String(p.memo).slice(0,300); f.memo.rows=4; }
+})();

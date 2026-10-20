@@ -1,0 +1,153 @@
+<style>
+.dl-alert{margin:16px 0 0;padding:14px 16px;border-radius:8px;background:#fff;color:var(--text);font-size:14.5px;line-height:1.65}
+.dl-alert p{margin:0 0 6px}
+.dl-alert.bad{border:2px solid #c62828}
+.dl-alert.ok{background:var(--surface)}
+.dl-alert .al-h{color:#c62828;font-weight:800;font-size:16px;line-height:1.5}
+.dl-alert .al-l{list-style:none;margin:6px 0 0;padding:0;font-size:14px}
+.dl-alert .al-l li{display:flex;justify-content:space-between;gap:8px;padding:5px 8px;border-bottom:1px solid var(--line);color:var(--sub)}
+.dl-alert .al-l li.on{background:#fdecea;color:#c62828;font-weight:800}
+.dl-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.dl-btns .btn{flex:1;text-align:center;min-width:120px}
+.dl-btns .btn.lc{background:var(--green-bg);color:#fff;border-color:var(--green-bg)}
+.dl-date{font-size:18px;padding:10px 12px;border:1px solid var(--field);border-radius:2px;background:#fff;width:100%;max-width:280px;font-family:var(--sans)}
+.result2 .big.dl-big{font-size:30px}
+.dl-docs,.dl-cal{margin:12px 0 0;padding:12px 14px;border-radius:8px;background:#fff;color:var(--text);font-size:14px;line-height:1.6}
+.dl-docs .dd-h,.dl-cal .cl-h{margin:0 0 6px;font-weight:800;color:var(--green);font-size:14.5px}
+.dl-docs ul{margin:0;padding-left:18px}
+.dl-docs .dd-f{margin:6px 0 0;color:var(--sub);font-size:13px}
+.dl-cal .cl-b{display:flex;gap:8px;flex-wrap:wrap}
+.dl-cal .cl-b a{flex:1;min-width:120px;text-align:center;padding:9px 10px;border:1.5px solid var(--green);border-radius:6px;color:var(--green);font-weight:700;text-decoration:none;font-size:14px}
+.faq-dl h3{font-size:17px;margin:20px 0 6px;color:var(--green)}
+.faq-dl p{margin:0 0 6px}
+#dl .how td:first-child{white-space:nowrap;padding-right:12px;width:1%;vertical-align:top}
+#dl .how td:last-child{white-space:normal;word-break:keep-all}
+@media (max-width:420px){.result2 .big.dl-big{font-size:25px}}
+</style>
+<div class="wrap" style="padding-top:28px;max-width:980px">
+<p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 신고기한 계산기</p>
+<h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">신고기한 계산기</h1>
+<p class="lead" style="margin:0 0 18px">2026년 10월 20일 확인 법령 기준 · 양도세·증여세·상속세·취득세·해외주식·사업자등록 기한을 <b>주말·공휴일까지 반영</b>해 계산합니다</p>
+
+<div class="ref-box" style="border:2px solid var(--green);background:var(--tint-2);padding:14px 18px;margin:0 0 18px;font-family:var(--sans);border-radius:2px">
+<p style="margin:0 0 2px;font-weight:800;color:var(--green);font-size:17px">참고용 계산기입니다</p>
+<ul style="margin:4px 0 0;padding-left:18px;font-size:14px;line-height:1.75;color:var(--ink-2)">
+<li>기준일(양도일·증여일·취득일 등)을 언제로 볼지는 이 계산기가 판단하지 않습니다. 넣은 날짜대로만 계산합니다.</li>
+<li>기한이 토·일요일이나 공휴일이면 다음 평일까지로 늘려 계산합니다.</li>
+<li>기한이 가깝거나 지났다면 바로 전문가에게 확인하세요.</li>
+</ul>
+</div>
+<ol class="steps">
+<li><b>무엇을 신고하는지</b> 고르고</li>
+<li><b>기준일</b>을 넣으면</li>
+<li><b>신고기한</b>과 남은 날이 바로 나옵니다</li>
+</ol>
+
+<form class="calc2" id="dl" onsubmit="return false">
+<div class="c-in">
+<p class="c-q"><span>1</span>무엇을 신고하나요?</p>
+<div class="chips">
+<label><input type="radio" name="t" value="cg" checked><span>양도소득세<small>집·토지 판 뒤 예정신고</small></span></label>
+<label><input type="radio" name="t" value="gift"><span>증여세<small>재산을 받은 뒤</small></span></label>
+<label><input type="radio" name="t" value="inh"><span>상속세<small>돌아가신 뒤</small></span></label>
+<label><input type="radio" name="t" value="acq"><span>취득세<small>부동산 등을 취득한 뒤</small></span></label>
+<label><input type="radio" name="t" value="biz"><span>사업자등록<small>사업을 시작한 뒤</small></span></label>
+<label><input type="radio" name="t" value="stk"><span>해외주식<small>판 다음 해 5월 신고</small></span></label>
+</div>
+
+<div id="cgWrap">
+<p class="hint" style="margin:14px 0 6px">어떻게 넘겼나요?</p>
+<div class="chips two">
+<label><input type="radio" name="cgk" value="s" checked><span>매매 등<small>2개월</small></span></label>
+<label><input type="radio" name="cgk" value="b"><span>부담부증여<small>넘긴 채무 부분 · 3개월</small></span></label>
+</div>
+</div>
+<div id="inhWrap" hidden>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:14px"><input type="checkbox" id="inhF" style="margin-top:5px;width:18px;height:18px"><span><b>돌아가신 분이나 상속인이 외국에 주소를 둠</b> <small style="color:var(--sub)">(9개월 · 주민등록만으로 정해지지 않을 수도 있어 해당 여부는 상담을 권장드립니다)</small></span></label>
+</div>
+<div id="acqWrap" hidden>
+<p class="hint" style="margin:14px 0 6px">어떻게 취득했나요?</p>
+<div class="chips">
+<label><input type="radio" name="acqk" value="s" checked><span>매매 등<small>60일</small></span></label>
+<label><input type="radio" name="acqk" value="g"><span>증여<small>부담부증여 포함 · 3개월</small></span></label>
+<label><input type="radio" name="acqk" value="i"><span>상속<small>6개월</small></span></label>
+</div>
+<div id="acqFWrap" hidden>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input type="checkbox" id="acqF" style="margin-top:5px;width:18px;height:18px"><span><b>외국에 주소를 둔 상속인이 있음</b> <small style="color:var(--sub)">(9개월 · 해당 여부는 상담을 권장드립니다)</small></span></label>
+</div>
+</div>
+
+<p class="c-q" style="margin-top:22px"><span>2</span><b id="evLabel" style="font-weight:inherit">양도일 <small style="font-weight:400;color:var(--sub);font-size:14px">(잔금일과 등기접수일 중 빠른 날)</small></b></p>
+<input type="date" id="ev" class="dl-date" min="2020-01-01" max="2030-12-31" aria-label="기준일">
+<p class="hint" id="evHint" style="margin:8px 0 0"></p>
+<p class="mini" id="mini" hidden><span id="miniLbl">신고기한</span> <b id="miniDue"></b> <a href="#out">자세히 ↓</a></p>
+</div>
+
+<div class="c-out">
+<div class="result2" id="out">
+<p class="r-label" id="rLabel">신고기한</p>
+<p class="big dl-big" id="due">날짜를 넣어 주세요</p>
+<p class="r-sub" id="sub"></p>
+<div id="alert" class="dl-alert" hidden></div>
+<div id="docs" class="dl-docs" hidden></div>
+<div id="cal" class="dl-cal" hidden></div>
+<details class="how" open style="margin-top:14px"><summary>계산 과정 보기</summary><table id="tbl"></table></details>
+<p class="note" id="msg"></p>
+</div>
+</div>
+</form>
+
+<section class="calc-next"><p>기한 안에 신고를 마치려면 서류 준비와 세액 검토에 시간이 필요합니다.<br>기준일이 헷갈리거나 기한이 얼마 남지 않았다면 먼저 연락 주세요.</p><a class="btn primary" href="/contact/#f-lc">이 결과로 상담 신청하기 →</a></section>
+
+<details class="box fold" style="margin-top:28px"><summary class="label">기한을 넘기면 붙는 가산세</summary>
+<ul>
+<li>무신고가산세: 신고하지 않은 세액의 20% (부정행위는 40%)</li>
+<li>납부지연가산세: 내지 않은 세액에 늦어진 날수만큼 하루 단위로 계속 붙음</li>
+<li>기한 후 신고 감면: 기한이 지난 뒤 1개월 이내 신고하면 무신고가산세 50%, 3개월 이내 30%, 6개월 이내 20% 감면 (납부지연가산세는 감면 대상 아님)</li>
+<li>양도소득세는 예정신고를 하지 않았더라도 확정신고기한(다음 해 5월 31일)까지 기한 후 신고하면 무신고가산세 50% 감면</li>
+<li>낼 세금이 없으면 무신고가산세도 없습니다. 다만 상속세·증여세는 기한이 지나면 신고세액공제 3%를 받을 수 없습니다</li>
+<li>사업자등록을 늦게 하면: 사업 개시일부터 등록 신청 전날까지 공급가액의 1% 미등록가산세</li>
+</ul>
+<p class="src">국세기본법 제47조의2 제1항·제47조의4 제1항·제48조 제2항 제2호·제3호 라목, 소득세법 제110조 제1항, 상속세 및 증여세법 제69조, 지방세기본법 제53조 제1항·제57조 제2항 제2호, 부가가치세법 제60조 제1항 제1호</p>
+</details>
+
+<details class="box fold" style="margin-top:16px"><summary class="label">계산 기준</summary>
+<ul>
+<li>양도소득세 예정신고: 양도일이 속하는 달의 말일부터 2개월 (부담부증여의 채무 부분은 3개월). 양도일은 잔금일이 원칙이고, 잔금보다 등기를 먼저 했다면 등기접수일</li>
+<li>증여세: 증여받은 날이 속하는 달의 말일부터 3개월</li>
+<li>상속세: 상속개시일이 속하는 달의 말일부터 6개월 (돌아가신 분이나 상속인이 외국에 주소를 둔 경우 9개월)</li>
+<li>취득세: 매매 등은 취득일부터 60일 / 증여·부담부증여는 취득일이 속하는 달의 말일부터 3개월 / 상속은 상속개시일이 속하는 달의 말일부터 6개월 (외국에 주소를 둔 상속인이 있으면 9개월)</li>
+<li>사업자등록: 사업 개시일부터 20일 이내</li>
+<li>해외주식 양도소득세: 예정신고 없이, 결제일이 속한 해의 다음 해 5월 1일~31일 확정신고</li>
+<li>양도소득세·상속세·증여세는 신고기한까지 세금도 함께 냅니다. 상속세·증여세는 낼 세금이 1천만원을 넘으면 기한 후 2개월 안에 나눠 낼 수 있고(분납), 2천만원을 넘으면 연부연납을 신청할 수 있습니다</li>
+<li>'○일부터 60일'처럼 날수로 정한 기간은 첫날을 빼고 셉니다</li>
+<li>기한이 토요일·일요일·공휴일·대체공휴일·노동절이면 그다음 날이 기한입니다. 다음 날도 쉬는 날이면 평일까지 넘깁니다</li>
+<li>공휴일은 2025~2028년만 반영했습니다. 정부가 임시공휴일을 새로 지정하면 반영되지 않을 수 있습니다</li>
+<li>토지거래허가구역 토지를 허가 전에 대금 청산한 경우, 국내 주식 양도(반기 기준 예정신고), 부동산 양도소득세 확정신고는 계산하지 않습니다</li>
+</ul>
+<p class="src">소득세법 제94조 제1항 제3호 다목·제98조·제105조 제1항·제106조 제1항·제110조 제1항, 같은 법 시행령 제162조 제1항 제2호, 상속세 및 증여세법 제67조 제1항·제4항·제68조 제1항·제69조·제70조·제71조 제1항, 지방세법 제20조 제1항·제4항, 부가가치세법 제8조 제1항, 국세기본법 제4조·제5조 제1항, 지방세기본법 제23조·제24조 제1항, 공휴일에 관한 법률 제2조, 관공서의 공휴일에 관한 규정 제2조·제3조</p>
+</details>
+
+<section class="calc-read"><h2>신고기한은 어떻게 세나요</h2>
+<p>세금마다 기한을 세는 방식이 두 가지입니다. 양도소득세·증여세·상속세는 '그날이 속하는 달의 말일부터 몇 개월'로 셉니다. 3월 5일에 증여받았든 3월 28일에 받았든 3월 말일에서 3개월을 세므로 기한은 똑같이 6월 30일입니다.</p>
+<p>매매로 취득한 부동산의 취득세와 사업자등록은 '그날부터 며칠'로 셉니다. 첫날은 빼고 세기 때문에 4월 10일에 잔금을 치렀다면 취득세 기한은 60일째인 6월 9일입니다.</p>
+<p>이렇게 나온 날이 토·일요일이나 공휴일이면 그다음 평일이 기한이 됩니다. 기한 안에 신고하면 상속세·증여세는 신고세액공제 3%를 받고, 기한을 넘기면 가산세가 붙습니다.</p>
+<div class="post-more"><div class="rel-col"><p class="label">함께 보면 좋은 글</p><ul><li><a href="/qa/capital-gains-filing-deadline/">양도소득세는 언제까지 신고하나요</a></li><li><a href="/qa/inheritance-filing-schedule/">상속세 신고기한 6개월·9개월 일정</a></li><li><a href="/qa/late-filing-penalty/">신고를 늦게 하면 가산세가 얼마나 붙나요</a></li></ul></div><div class="rel-col"><p class="label">함께 쓰면 좋은 계산기</p><ul><li><a href="/calculators/capital-gains/">양도소득세 계산기</a></li><li><a href="/calculators/gift-tax/">증여세 계산기</a></li><li><a href="/calculators/acquisition-tax/">1주택 취득세 계산기</a></li></ul></div></div></section>
+<section class="calc-read faq-dl"><h2>자주 묻는 질문</h2>
+<h3>신고기한 마지막 날이 토요일이나 공휴일이면 어떻게 되나요?</h3>
+<p>그다음 날이 기한입니다. 다음 날도 일요일이나 공휴일이면 평일이 될 때까지 넘어갑니다. 국세와 취득세(지방세) 모두 같습니다.</p>
+<h3>증여세 신고기한은 어떻게 세나요?</h3>
+<p>증여받은 날이 속하는 달의 말일부터 3개월입니다. 3월 5일에 받았든 3월 28일에 받았든 기한은 똑같이 6월 30일입니다.</p>
+<h3>집을 팔면 양도소득세는 언제까지 신고하나요?</h3>
+<p>양도일이 속하는 달의 말일부터 2개월입니다. 양도일은 잔금일이 원칙이고, 잔금보다 등기를 먼저 했다면 등기접수일입니다. 손해를 봤거나 차익이 없어도 예정신고 대상이며, 부담부증여로 넘긴 채무 부분은 3개월입니다.</p>
+<h3>가족이 외국에 살면 상속세 신고기한이 달라지나요?</h3>
+<p>돌아가신 분이나 상속인이 외국에 주소를 둔 경우에는 6개월이 아니라 9개월입니다. 외국에 주소를 둔 경우에 해당하는지는 따로 확인이 필요합니다.</p>
+<h3>신고기한을 넘기면 어떻게 되나요?</h3>
+<p>낼 세금이 있다면 무신고가산세(세액의 20%)와 납부지연가산세가 붙습니다. 기한이 지난 뒤 1개월 안에 신고하면 무신고가산세의 50%, 3개월 안이면 30%, 6개월 안이면 20%가 감면됩니다. 양도소득세 예정신고를 놓쳤다면 확정신고기한(다음 해 5월 31일)까지 신고해도 50% 감면이 유지되고, 상속세·증여세는 기한을 넘기면 신고세액공제 3%를 받을 수 없습니다.</p>
+<h3>해외주식 양도소득세는 언제 신고하나요?</h3>
+<p>해외주식은 예정신고가 없고, 판 해의 다음 해 5월 1일부터 31일까지 확정신고합니다. 연도는 매도 주문일이 아니라 결제일 기준입니다.</p>
+</section>
+<div class="cta-box"><p>기준일을 언제로 볼지, 기한 안에 무엇을 준비해야 하는지는 거래마다 다릅니다.<br>기한이 다가온다면 편하게 문의해 주세요.</p><div class="btns"><a class="btn kakao" href="/contact/#f-lc">상담 신청</a></div></div>
+<p class="fine" id="disclaimer">면책 고지 · 이 계산기는 2026년 10월 20일에 확인한 법령을 기준으로 한 참고용 계산 결과로, 세무 자문이 아닙니다. 기준일 판단과 예외 규정 해당 여부는 판단하지 않으며, 정부의 임시공휴일 지정·전산 장애 등에 따라 실제 기한과 다를 수 있습니다. 이 결과만을 근거로 한 판단·신고로 생긴 손해에 대하여는 관련 법령이 허용하는 범위에서 책임을 지지 않습니다. <a href="/disclaimer/">전문 보기</a></p>
+</div>
+<script src="/calc-deadline.js" defer></script>
