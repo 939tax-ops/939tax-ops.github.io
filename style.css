@@ -1390,3 +1390,8 @@ table.info th:has(.jt){white-space:nowrap}
 .h2-act{flex-direction:row;flex-wrap:wrap;gap:6px 28px;align-items:center}
 .h2-cv{grid-template-columns:60px 1fr}
 .h2-cv dt{text-align:center}
+/* 2026-10-20: build.py가 자동으로 넣는 줄바꿈 방지 묶음(span.nw)이 '.c-q span'(번호 원)·'.chips span'(선택 칸) 같은
+   상자 모양을 물려받아 글씨가 원·상자 안에 갇히던 문제 — span.kp와 같이 어떤 상자 모양도 받지 않게 고정 */
+span.nw{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;border:0!important;padding:0!important;margin:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;outline:0!important;font:inherit!important;color:inherit!important;text-align:inherit!important;letter-spacing:inherit!important;display:inline!important;position:static!important;top:auto!important;vertical-align:baseline!important}
+/* 계산기 아래 '함께 보면 좋은 글' 상자: 초록 배경 없이 테두리만 */
+.calc-read .rel-col{background:none}

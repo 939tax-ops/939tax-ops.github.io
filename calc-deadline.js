@@ -75,8 +75,8 @@
   // 처음 상담 때 준비하면 좋은 서류(1차) — 사무소 '세목별 필요서류 마스터' 기준
   var DOCS={cg:['양도할 때·취득할 때 매매계약서','주민등록등본·초본','등기부등본','건축물대장 또는 토지대장','상속·증여로 받은 재산이면 그때의 신고서'],
             cgb:['증여계약서','가족관계증명서','전세계약서 또는 대출잔액증명원 (넘긴 채무 확인)','증여하는 분이 취득할 때 매매계약서'],
-            gift:['가족관계증명서','받는 분 신분증 사본','현금이면 이체 내역','부동산이면 증여계약서·등기부등본'],
-            inh:['안심상속 원스톱서비스(사망자 재산조회) 결과','돌아가신 분의 가족관계증명서·기본증명서','재산 목록 (부동산 주소, 차량 등)','장례비 영수증'],
+            gift:['가족관계증명서','받는 분 신분증 사본','현금이면 이체 내역','부동산이면 증여계약서·등기부등본','10년 안에 같은 분께 받은 증여가 있으면 그때의 증여세 신고서 (부모님은 아버지·어머니 합산)'],
+            inh:['안심상속 원스톱서비스(사망자 재산조회) 결과','돌아가신 분의 가족관계증명서·기본증명서','재산 목록 (부동산 주소, 차량 등)','장례비 영수증','돌아가신 분이 10년 안에 상속인에게 증여한 재산이 있으면 그때의 증여세 신고서'],
             biz:['사업자등록 신청서','사업장 임대차계약서 사본']};
   var SVC={biz:'세무기장·신고대리'};
   var LAST=null;
@@ -97,7 +97,7 @@
     var ev=parse($('ev').value), now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
     var R=RULES[key()];
     $('rLabel').textContent=(R.tax?'신고기한':'신청기한')+' · '+R.name;
-    if(!ev||ev.getFullYear()<2020||ev.getFullYear()>2030){ $('docs').hidden=true; $('cal').hidden=true; LAST=null; }
+    if(!ev||ev.getFullYear()<2020||ev.getFullYear()>2030){ $('docs').hidden=true; LAST=null; }
     if(!ev){ $('due').textContent='날짜를 넣어 주세요'; $('sub').textContent=LBL[lk][0].replace(/ \(.*\)$/,'')+'을 넣으면 바로 계산됩니다.'; $('alert').hidden=true; $('tbl').innerHTML=''; $('msg').innerHTML=''; $('mini').hidden=true; return; }
     if(ev.getFullYear()<2020||ev.getFullYear()>2030){ $('due').textContent='날짜를 확인해 주세요'; $('sub').textContent='2020년~2030년 사이 날짜만 계산합니다.'; $('alert').hidden=true; $('tbl').innerHTML=''; $('msg').innerHTML=''; $('mini').hidden=true; return; }
     var r=calc(key(),ev,today);
@@ -138,8 +138,7 @@
     }
     $('alert').className='dl-alert '+cls; $('alert').innerHTML=a+(cls==='bad'?CTA:''); $('alert').hidden=false;
     var dk=key()==='cgb'?'cgb':t, dl=DOCS[dk];
-    if(dl){ $('docs').innerHTML='<p class="dd-h">처음 상담 때 준비하시면 좋은 서류</p><ul><li>'+dl.join('</li><li>')+'</li></ul><p class="dd-f">경우에 따라 더 필요한 서류는 상담하면서 따로 안내드립니다.</p>'; $('docs').hidden=false; } else { $('docs').hidden=true; }
-    if(r.left>=0){ $('cal').innerHTML=calLinks(R,r.due); $('cal').hidden=false; } else { $('cal').hidden=true; }
+    if(dl){ $('docs').innerHTML='<p class="dd-h">처음 상담 때 준비하시면 좋은 서류</p><ul><li>'+dl.join('</li><li>')+'</li></ul><p class="dd-f">경우에 따라 필요한 서류는 상담하면서 추가로 안내드립니다.</p>'; $('docs').hidden=false; } else { $('docs').hidden=true; }
     LAST={svc:SVC[t]||'양도·상속·증여세',memo:'[신고기한 계산기] '+R.name+' · 기준일 '+sd(ev)+' · 기한 '+sd(r.due)+' · '+(r.left>0?r.left+'일 남음':r.left===0?'오늘 기한':(-r.left)+'일 지남')};
     // 계산 과정
     var tb='';
@@ -162,14 +161,6 @@
     if(key()==='cg') m.push('토지거래허가구역 토지를 허가 전에 대금 청산했다면 기준일이 달라집니다 · 상담을 권장드립니다');
     m.push('정부가 임시공휴일을 새로 지정하면 기한이 달라질 수 있습니다');
     $('msg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
-  }
-  function pad(n){return ('0'+n).slice(-2);}
-  function cdate(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());}
-  function calLinks(R,due){
-    var nx=addDays(due,1), title=R.name+' 기한', info='세무회계택 김태형 세무사 02-6952-6357 · https://tax939.com/calculators/filing-deadline/';
-    var g='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+cdate(due)+'/'+cdate(nx)+'&details='+encodeURIComponent(info);
-    var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//tax939//filing-deadline//KO','BEGIN:VEVENT','UID:'+cdate(due)+'-'+Date.now()+'@tax939.com','DTSTAMP:'+cdate(new Date())+'T000000Z','DTSTART;VALUE=DATE:'+cdate(due),'DTEND;VALUE=DATE:'+cdate(nx),'SUMMARY:'+title,'DESCRIPTION:'+info,'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+title+' 이틀 전','TRIGGER:-PT39H','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
-    return '<p class="cl-h">기한을 잊지 않게 캘린더에 저장해 두세요</p><div class="cl-b"><a href="'+g+'" target="_blank" rel="noopener">구글 캘린더</a><a href="data:text/calendar;charset=utf-8,'+encodeURIComponent(ics)+'" download="신고기한.ics">휴대폰 캘린더 (.ics)</a></div>';
   }
   // 이 페이지에서 상담 신청서로 넘어갈 때 상담 분야·메모를 미리 채움(브라우저 안에서만, 개인정보 없음)
   document.addEventListener('click',function(e){
