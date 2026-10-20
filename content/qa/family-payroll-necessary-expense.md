@@ -3,7 +3,7 @@ title: 배우자나 자녀에게 준 월급도 사업 필요경비로 인정되�
 slug: family-payroll-necessary-expense
 keywords: 가족 인건비, 배우자 급여 비용처리, 가족 직원 월급, 인건비 필요경비, 가공인건비, 부당행위계산 부인, 특수관계인 급여, 근로계약서, 원천징수 지급명세서, 부정과소신고가산세, 배우자 기본공제, 개인사업자 인건비
 category: life
-topic: payroll
+topic: biz
 source: 033. (업로드완료) 가족을 직원으로 쓰면 월급을 비용으로 넣을 수 있나요｜실제로 일하면 가능 (2026.10.10.)
 date: 2026-10-17
 updated: 2026-10-18

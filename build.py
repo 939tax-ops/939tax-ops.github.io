@@ -94,7 +94,14 @@ def type_name(p): return TYPES.get(p.get("type", ""), "")
 def topic_of(p):
     t = p.get("topic", "etc")
     t = {"refund": "audit"}.get(t, t)  # 경정청구는 경정청구·세무조사로 합침(2026-10-14)
+    # 2026-10-20: 쓰지 않기로 한 분류(종합소득세·법인세·인건비)가 글에 붙으면 칩이 늘어나 줄이 깨짐 → 사업자 세금으로 돌리고 경고
+    if t in RETIRED_TOPICS:
+        if p.get("slug") not in _TOPIC_WARNED:
+            _TOPIC_WARNED.add(p.get("slug")); print(f"  [분류 확인 필요] {p.get('slug')}: topic '{t}'은 쓰지 않는 분류 → '사업자 세금'으로 표시. 글 머리 topic을 biz·worker·vat·capital-gains·gift·audit·etc 중 하나로 고쳐 주세요")
+        t = "biz"
     return t if t in TOPIC_NAME else "etc"
+RETIRED_TOPICS = {"income", "corp", "payroll", "local"}
+_TOPIC_WARNED = set()
 ROOT = os.path.dirname(os.path.abspath(__file__))
 FONT = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap">'
 VERIFY = ('<meta name="naver-site-verification" content="e074d43c1aa971b277361693bbff22e6a1cf9253" />\n'
@@ -584,7 +591,9 @@ def build_qa_index(posts):
     for p in posts:
         counts[topic_of(p)] = counts.get(topic_of(p), 0) + 1
     chips = f'<button class="on" data-f="all">전체 <em>{len(posts)}</em></button>' + "".join(
-        f'<button data-f="{k}">{t} <em>{counts[k]}</em></button>' for k, t in TOPICS if counts.get(k))
+        f'<button data-f="{k}">{t} <em>{counts[k]}</em></button>'
+        # 2026-10-20: 글이 많은 분류부터, '기타'는 맨 뒤 (분류가 늘어도 순서가 흐트러지지 않게)
+        for k, t in sorted([(k, t) for k, t in TOPICS if counts.get(k)], key=lambda x: (x[0] == "etc", -counts[x[0]])))
     big = qa_card(posts[0], True) if posts else '<p class="lead">준비 중입니다.</p>'
     cards = "".join(qa_card(p) for p in posts[1:])
     body = f'''<div class="wrap qa-page" style="padding-top:36px">
@@ -1028,7 +1037,7 @@ CALCS = [
     ("양도소득세", "양도소득세 계산기", "주택·상가·토지를 나눠 <span class=\"nw\">보유·거주 기간별로</span> 계산한 예상 양도세", "/calculators/capital-gains/"),
     ("취득세", "1주택 취득세 계산기", "1주택 취득세·지방교육세·농어촌특별세, 생애최초 감면 반영", "/calculators/acquisition-tax/"),
     ("신고기한", "신고기한 계산기", "양도세·증여세·상속세·취득세·해외주식·사업자등록 기한, <span class=\"nw\">주말·공휴일까지</span> 반영", "/calculators/filing-deadline/"),
-    ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),
+    # ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),  # 2026-10-20 숨김(준비 중 카드)
     ("원천세·인건비", "급여 실수령액·4대보험 계산기", "4대보험·소득세를 뺀 실수령액, <span class=\"nw\">세후 금액으로</span> 세전 급여 역산", "/calculators/four-insurance/"),
     ("원천세·인건비", "프리랜서 3.3% 계산기", "3.3%를 뗀 실제 지급액, <span class=\"nw\">세후 금액으로</span> 계약 금액 역산", "/calculators/freelancer-withholding/"),
     ("기장료", "기장료 계산기", "매출액별 보수 기준표에 따른 월 기장료", "/calculators/bookkeeping-fee/"),

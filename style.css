@@ -1126,7 +1126,8 @@ body.searching .qa-more-wrap{display:none}
 }
 
 /* 2026-10-14 세무 Q&A 분류 버튼: PC에서는 한 줄로 */
-@media (min-width:1000px){.qchips{flex-wrap:nowrap;gap:5px;justify-content:space-between}.qchips button{white-space:nowrap;padding:7px 10px;font-size:13.5px;flex:0 1 auto}}
+/* 2026-10-20: 한 줄 고정(nowrap)은 분류가 7개일 때 기준이라 10개로 늘자 상자 밖으로 삐져나감 → 줄바꿈 허용, 버튼 글자만 한 줄 유지 */
+@media (min-width:1000px){.qchips{gap:7px}.qchips button{white-space:nowrap;padding:7px 13px;font-size:14px}}
 
 /* 2026-10-14 보조 분류 태그·영상 줄 필터 */
 .qcard .b-t{white-space:nowrap}.qcard .b-t2{opacity:.85}.qcard .qm{flex-wrap:wrap;row-gap:6px}.qcard .qm .d{margin-left:auto;white-space:nowrap}
@@ -1395,3 +1396,7 @@ table.info th:has(.jt){white-space:nowrap}
 span.nw{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;border:0!important;padding:0!important;margin:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;outline:0!important;font:inherit!important;color:inherit!important;text-align:inherit!important;letter-spacing:inherit!important;display:inline!important;position:static!important;top:auto!important;vertical-align:baseline!important}
 /* 계산기 아래 '함께 보면 좋은 글' 상자: 초록 배경 없이 테두리만 */
 .calc-read .rel-col{background:none}
+/* 2026-10-20 화면 균형: 신고기한 계산기는 결과 칸이 길어 PC에서 왼쪽 입력 칸 아래가 비므로, 입력 칸이 따라 내려오게 */
+@media (min-width:761px){#dl .c-in{position:sticky;top:84px}#dl .c-out{position:static}}
+/* 휴대폰 요약 줄의 '자세히 ↓'가 화살표만 다음 줄로 넘어가지 않게 */
+.mini a{white-space:nowrap}

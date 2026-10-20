@@ -3,7 +3,7 @@ title: 기준경비율로 종합소득세를 신고하면 세금이 얼마나 �
 slug: estimated-expense-rate-tax-gap
 keywords: 기준경비율, 단순경비율, 추계신고, 무기장가산세, 간편장부, 복식부기, 기장세액공제, 프리랜서 종합소득세, 단순경비율 3600만원, 경비율 적용 기준, 장부 신고 세금 비교, 인적용역 경비율
 category: life
-topic: income
+topic: worker
 source: 032. (업로드완료) 장부 없이 신고하면 세금이 얼마나 차이 나나요｜기준 넘으면 약 3배 (2026.10.09.)
 date: 2026-10-17
 updated: 2026-10-17
