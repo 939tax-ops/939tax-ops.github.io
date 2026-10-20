@@ -1400,3 +1400,6 @@ span.nw{width:auto!important;height:auto!important;min-width:0!important;min-hei
 @media (min-width:761px){#dl .c-in{position:sticky;top:84px}#dl .c-out{position:static}}
 /* 휴대폰 요약 줄의 '자세히 ↓'가 화살표만 다음 줄로 넘어가지 않게 */
 .mini a{white-space:nowrap}
+/* 2026-10-20: '영상으로 보는 Q&A' 전체 보기 버튼을 제목 바로 옆으로 */
+.vhead{justify-content:flex-start;align-items:center;gap:14px}
+.vhead a{padding:5px 12px;font-size:13.5px}
