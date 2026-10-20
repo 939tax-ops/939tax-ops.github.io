@@ -45,5 +45,10 @@ document.querySelectorAll('form.lead').forEach(function(f){
   var p=null; try{ p=JSON.parse(sessionStorage.getItem('tax939_prefill')||'null'); sessionStorage.removeItem('tax939_prefill'); }catch(e){}
   if(!p) return; var f=document.getElementById('f-lc'); if(!f) return;
   var r=f.querySelector('.lf-opts input[value="'+String(p.svc||'').replace(/"/g,'')+'"]'); if(r) r.checked=true;
-  if(f.memo && !f.memo.value && p.memo){ f.memo.value=String(p.memo).slice(0,300); f.memo.rows=4; }
+  if(f.memo && !f.memo.value && p.memo){
+    f.memo.value=String(p.memo).slice(0,300); f.memo.rows=5;
+    var n=document.createElement('small'); n.className='lf-prefill'; n.style.cssText='display:block;margin-top:6px;color:var(--sub);font-size:13px;line-height:1.5';
+    n.textContent='위 내용은 계산기에서 자동으로 들어갔습니다. 그 아래에 궁금한 점을 자유롭게 이어서 적어 주세요.';
+    f.memo.insertAdjacentElement('afterend',n);
+  }
 })();

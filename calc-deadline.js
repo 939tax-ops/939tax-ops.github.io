@@ -78,6 +78,10 @@
             gift:['가족관계증명서','받는 분 신분증 사본','현금이면 이체 내역','부동산이면 증여계약서·등기부등본','10년 안에 같은 분께 받은 증여가 있으면 그때의 증여세 신고서 (부모님은 아버지·어머니 합산)'],
             inh:['안심상속 원스톱서비스(사망자 재산조회) 결과','돌아가신 분의 가족관계증명서·기본증명서','재산 목록 (부동산 주소, 차량 등)','장례비 영수증','돌아가신 분이 10년 안에 상속인에게 증여한 재산이 있으면 그때의 증여세 신고서'],
             biz:['사업자등록 신청서','사업장 임대차계약서 사본']};
+  var GIFT_DOCS={'현금·예금':['보낸 분 → 받은 분 이체 내역','현금 증여계약서 (없으면 사무소 양식으로 작성)'],
+                 '부동산':['증여계약서','등기부등본','건축물대장 또는 토지대장','임대 중이면 임대차계약서'],
+                 '주식':['증권사 잔고증명서·거래내역'],
+                 '그 밖의 재산':['받은 재산을 확인할 수 있는 자료 (계약서·내역 등)']};
   var SVC={biz:'세무기장·신고대리'};
   var LAST=null;
   var CTA='<div class="dl-btns"><a class="btn lc sm" href="/contact/#f-lc">문의 남기기</a><a class="btn kakao sm" href="https://pf.kakao.com/_TVxdkn/chat" target="_blank" rel="noopener">카카오톡 상담</a></div>';
@@ -90,7 +94,7 @@
   }
   function run(){
     var t=val('t');
-    $('cgWrap').hidden=t!=='cg'; $('inhWrap').hidden=t!=='inh'; $('acqWrap').hidden=t!=='acq';
+    $('cgWrap').hidden=t!=='cg'; $('giftWrap').hidden=t!=='gift'; $('inhWrap').hidden=t!=='inh'; $('acqWrap').hidden=t!=='acq';
     $('acqFWrap').hidden=!(t==='acq'&&val('acqk')==='i');
     var lk=t==='acq'?({s:'acq',g:'acqg',i:'acqi'})[val('acqk')]:(t==='cg'&&val('cgk')==='b')?'cgb':t;
     var lb=/^(.*?) \((.*)\)$/.exec(LBL[lk][0]); $('evLabel').innerHTML=lb?lb[1]+' <small style="font-weight:400;color:var(--sub);font-size:14px">('+lb[2]+')</small>':LBL[lk][0]; $('evHint').textContent=LBL[lk][1]; $('evHint').hidden=!LBL[lk][1];
@@ -137,9 +141,10 @@
       a='<p>기한까지 '+r.left+'일 남았습니다. 신고 전 검토가 필요하시면 상담을 권장드립니다.</p>';
     }
     $('alert').className='dl-alert '+cls; $('alert').innerHTML=a+(cls==='bad'?CTA:''); $('alert').hidden=false;
-    var dk=key()==='cgb'?'cgb':t, dl=DOCS[dk];
+    var dk=key()==='cgb'?'cgb':t, dl=DOCS[dk], gk=t==='gift'?val('gk'):'';
+    if(gk&&GIFT_DOCS[gk]) dl=['가족관계증명서','받는 분 신분증 사본'].concat(GIFT_DOCS[gk],[DOCS.gift[DOCS.gift.length-1]]);
     if(dl){ $('docs').innerHTML='<p class="dd-h">처음 상담 때 준비하시면 좋은 서류</p><ul><li>'+dl.join('</li><li>')+'</li></ul><p class="dd-f">경우에 따라 필요한 서류는 상담하면서 추가로 안내드립니다.</p>'; $('docs').hidden=false; } else { $('docs').hidden=true; }
-    LAST={svc:SVC[t]||'양도·상속·증여세',memo:'[신고기한 계산기] '+R.name+' · 기준일 '+sd(ev)+' · 기한 '+sd(r.due)+' · '+(r.left>0?r.left+'일 남음':r.left===0?'오늘 기한':(-r.left)+'일 지남')};
+    LAST={svc:SVC[t]||'양도·상속·증여세',memo:'[신고기한 계산기] '+R.name+(gk?' · 받은 재산: '+gk:'')+'\n기준일 '+sd(ev)+' · 기한 '+sd(r.due)+' · '+(r.left>0?r.left+'일 남음':r.left===0?'오늘 기한':(-r.left)+'일 지남')+'\n'};
     // 계산 과정
     var tb='';
     tb+=row(LBL[lk][0].replace(/ \(.*\)$/,''),sd(ev));
