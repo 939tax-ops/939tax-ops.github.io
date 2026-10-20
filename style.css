@@ -1403,3 +1403,7 @@ span.nw{width:auto!important;height:auto!important;min-width:0!important;min-hei
 /* 2026-10-20: '영상으로 보는 Q&A' 전체 보기 버튼을 제목 바로 옆으로 */
 .vhead{justify-content:flex-start;align-items:center;gap:14px}
 .vhead a{padding:5px 12px;font-size:13.5px}
+
+/* 글 목록 제목 줄 정리(2026-10-20): 두 줄이면 길이를 고르게 나누고, '질문? 부제'는 질문·부제를 줄로 나눔 */
+.rel-col li,.h2-lc li{text-wrap:balance;word-break:keep-all}
+.rel-col li .seg,.h2-lc li .seg{display:block;text-wrap:balance}
