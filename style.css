@@ -6,7 +6,7 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:17px;line-height:1.85;word-break:keep-all;overflow-wrap:break-word}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:17px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word}
 a{color:var(--green)}
 img{max-width:100%;height:auto}
 .wrap{max-width:980px;margin:0 auto;padding:0 20px}
@@ -1076,7 +1076,7 @@ body.searching .qa-more-wrap{display:none}
 .calc-next p{margin:0;font-size:15.5px;line-height:1.75}
 .calc-read{margin-top:34px}
 .calc-read h2{font-size:21px;color:var(--green);margin:0 0 12px}
-.calc-read p{margin:0 0 13px;line-height:1.85}
+.calc-read p{margin:0 0 13px;line-height:1.7}
 .calc-read .post-more{margin-top:22px}
 @media(max-width:700px){.calc-next{display:block}.calc-next .btn{margin-top:12px;width:100%;text-align:center}}
 
@@ -1407,3 +1407,7 @@ span.nw{width:auto!important;height:auto!important;min-width:0!important;min-hei
 /* 글 목록 제목 줄 정리(2026-10-20): 두 줄이면 길이를 고르게 나누고, '질문? 부제'는 질문·부제를 줄로 나눔 */
 .rel-col li,.h2-lc li{text-wrap:balance;word-break:keep-all}
 .rel-col li .seg,.h2-lc li .seg{display:block;text-wrap:balance}
+
+/* 줄 간격 정리(2026-10-23, 애플식 점검 ①③): 제목 1.3배·본문 1.7배. 제목이 촘촘해진 만큼 바로 아래 문단과 간격을 조금 띄움 */
+h1,h2,h3{line-height:1.32}
+main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
