@@ -1411,3 +1411,6 @@ span.nw{width:auto!important;height:auto!important;min-width:0!important;min-hei
 /* 줄 간격 정리(2026-10-23, 애플식 점검 ①③): 제목 1.3배·본문 1.7배. 제목이 촘촘해진 만큼 바로 아래 문단과 간격을 조금 띄움 */
 h1,h2,h3{line-height:1.32}
 main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
+
+/* 오시는 길(PC 두 장 나란히, 2026-10-23): 설명 칸 높이를 두 줄 기준으로 맞춰 옆 사진과 윗선이 어긋나지 않게 */
+@media(min-width:860px){.rt-view .rt-slide figcaption{min-height:calc(3em + 20px);box-sizing:border-box}}
