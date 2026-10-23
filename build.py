@@ -843,11 +843,10 @@ def build_home_v2(posts, out="index.html"):
 
 
 
-# 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-bus / #go-car 로 바로 열림
+# 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-car 로 바로 열림 (2026-10-23 1호선·버스 합침, #go-bus 는 #go-line1 로)
 ROUTE_SETS = {
-    "line1": ("1호선", "청량리역 4번 출구", ["c-01","c-02","c-04","c-05b","c-06","c-07","c-08","c-09"]),
+    "line1": ("1호선·버스·도보", '<span style="white-space:nowrap">청량리역 4번 출구</span> <span style="white-space:nowrap">(버스환승센터 앞)</span>', ["c-01","c-02","c-04","c-05b","c-06","c-07","c-08","c-09"]),
     "gyeongui": ("기차·경의중앙선", '<span style="white-space:nowrap">1번 출구 →</span> <span style="white-space:nowrap">청량리역 4번 출구</span>', ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05b","g-08","g-09","g-10","g-11"]),
-    "bus": ("버스", "청량리역 버스환승센터", ["c-01","c-02","c-04","c-05b","c-06","c-07","c-08","c-09"]),
     "car": ("자차", '<span style="white-space:nowrap">지하4층만 주차 가능</span> <span style="white-space:nowrap">(2시간 무료)</span>', ["car-note","car-02b","car-03b","car-01","car-04","car-05","car-06b","car-07b"]),
 }
 ROUTE_ICONS = {
@@ -868,8 +867,7 @@ ROUTE_SIDE = set()  # 이쪽 아님 사진: 연속이면 한 장(슬라이드)�
 ROUTE_INTRO = {
     "car": "내비에 <b>‘동대문구 왕산로 200’</b> 검색 후 → <b>지하 4층</b> 주차 (2시간 무료, 차량번호 알려주세요)<br><b style=\"color:#C00000\">꼭 지하 4층에 주차해 주세요.</b>",
     "gyeongui": "1번 출구 → 청량리역 4번 출구 앞 → 이후 1호선과 같은 길",
-    "bus": "청량리역 버스환승센터 하차 → 바로 앞 4번 출구",
-    "line1": "4번 출구에서 도보 1~2분",
+    "line1": "1호선 4번 출구, 또는 버스환승센터 하차 → 4번 출구 앞에서 도보 1~2분",
 }
 ROUTE_CAP = {
     "gy-01": "‘나가는 곳’ 따라 이동",
@@ -924,7 +922,7 @@ def route_html():
                  f'<div class="rt-nav"><button type="button" class="rt-prev">‹ 이전</button><span class="rt-cnt">1 / {n}</span><button type="button" class="rt-next">다음 ›</button></div>'
                  f'<div class="rt-dots">{dots}</div>'
                  f'<div class="rt-view">{sl}</div><div class="rt-help"><a class="rt-map" href="{ROUTE_NMAP}" target="_blank" rel="noopener">네이버 지도에서 보기</a><a class="rt-tel" href="tel:{TEL}">길이 어려우시면 {TEL}로 전화 주세요</a></div><button type="button" class="rt-top">다른 방법 보기 ↑</button></div>')
-    css = ('<style>.rt-intro{margin:18px 0 12px;padding:12px 16px;border-left:4px solid var(--green);background:var(--tint,#EBF1ED);border-radius:6px;color:var(--green)}.rt-intro b{display:block;font-size:18px}.rt-intro span{display:block;font-size:14.5px;margin-top:2px;opacity:.85}.rt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:640px){.rt-grid{grid-template-columns:1fr 1fr}}'
+    css = ('<style>.rt-intro{margin:18px 0 12px;padding:12px 16px;border-left:4px solid var(--green);background:var(--tint,#EBF1ED);border-radius:6px;color:var(--green)}.rt-intro b{display:block;font-size:18px}.rt-intro span{display:block;font-size:14.5px;margin-top:2px;opacity:.85}.rt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:640px){.rt-grid{gap:6px}.rt-btn{padding:12px 4px 10px}.rt-btn svg{width:40px;height:40px}.rt-btn b{font-size:15px}.rt-btn small{font-size:13px}.rt-go{font-size:12px;padding:3px 8px}}'
            '.rt-btn{border:2px solid var(--line);background:var(--surface);color:var(--green);border-radius:14px;padding:16px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font:inherit}.rt-btn svg{width:52px;height:52px}.rt-btn b{font-size:17px}.rt-btn small{font-size:15px;opacity:.8;line-height:1.35;text-align:center}.rt-btn{box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s}.rt-btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.12)}.rt-go{font-style:normal;font-size:13px;font-weight:700;margin-top:4px;padding:4px 10px;border-radius:14px;background:var(--green);color:#fff}.rt-btn.on .rt-go{background:var(--surface);color:var(--green);border:1px solid var(--green)}.rt-btn.on{border-color:var(--green);background:var(--tint,#EBF1ED)}'
            '.rt-set{margin-top:18px;scroll-margin-top:84px;max-width:560px}#route{scroll-margin-top:84px}.rt-set h3{color:var(--green);margin:0 0 6px}.rt-lead{margin:0 0 12px;line-height:1.6}'
            '.rt-view{touch-action:pan-y}.rt-slide{margin:0;display:none}.rt-slide.on{display:block}.rt-imgs{display:flex;gap:8px}.rt-imgs img{display:block;flex:1;min-width:0;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}.rt-slide.side .rt-imgs{flex-direction:column}.rt-slide.pair .rt-imgs{position:relative;display:block}.rt-slide.pair .rt-imgs img+img{position:absolute;right:10px;bottom:10px;width:38%;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.35)}'
@@ -948,7 +946,7 @@ def route_html():
           'function show(k,sc){B.forEach(function(b){b.classList.toggle("on",b.dataset.k===k);b.setAttribute("aria-expanded",b.dataset.k===k)});'
           'S.forEach(function(s){s.hidden=s.id!=="rt-"+k});var t=document.getElementById("rt-"+k);if(t){go(t,1);if(sc)t.scrollIntoView({behavior:"smooth",block:"start"});}}'
           'B.forEach(function(b){b.addEventListener("click",function(){if(b.classList.contains("on")){b.classList.remove("on");b.setAttribute("aria-expanded",false);S.forEach(function(s){s.hidden=true});history.replaceState(null,"",location.pathname+"#route");return;}show(b.dataset.k,true);history.replaceState(null,"","#go-"+b.dataset.k)})});'
-          'var m=location.hash.match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
+          'var m=location.hash.replace("#go-bus","#go-line1").match(/^#go-(\\w+)$/);if(m&&document.getElementById("rt-"+m[1])){show(m[1],false);setTimeout(function(){document.getElementById("rt-"+m[1]).scrollIntoView({block:"start"})},60)}})();</script>')
     return f'<div id="route">{css}<p class="rt-intro"><b>아래에서 오시는 방법을 눌러 주세요.</b><span>누르면 그 길만 사진으로 순서대로 보여 드립니다.</span></p><div class="rt-grid">{btns}</div>{sets}</div>{js}'
 
 AB2 = os.environ.get("AB2_PREVIEW")  # 소개 페이지 정리 시안 — 설정 시 _preview/ 에만 출력
