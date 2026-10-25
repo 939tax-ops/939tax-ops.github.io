@@ -64,7 +64,7 @@
 <div class="wrap" style="padding-top:28px;max-width:980px">
 <p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 신고기한 계산기</p>
 <h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">신고기한 계산기</h1><details class="fb fb-top" data-cfg="{&quot;action&quot;: &quot;https://docs.google.com/forms/d/e/1FAIpQLSe7TndIZ2Qx9rO_1Eumh5uQlBAxGaGvrXLFDneITC5RKjafqw/formResponse&quot;, &quot;calc&quot;: &quot;entry.1631199236&quot;, &quot;body&quot;: &quot;entry.16688267&quot;, &quot;name&quot;: &quot;세금 신고기한 계산기 (양도세·증여세·상속세·취득세)&quot;}"><summary>계산기 <span class="kp">제안·오류</span> 신고</summary><form onsubmit="return false"><textarea maxlength="1000" aria-label="제안 또는 오류 내용" placeholder="바뀌었으면 하는 점이나 계산이 이상한 부분을 적어 주세요."></textarea><div class="fb-row"><button type="submit" class="btn">보내기</button><span class="fb-msg" role="status"></span></div><p class="fb-note">계산기 제안이나 오류를 적어 주시면 확인하고 빠르게 수정 반영하겠습니다.<br>감사합니다.</p></form></details>
-<p class="lead" style="margin:0 0 18px">2026년 10월 20일 확인 법령 기준 · 양도세⁠·증여세⁠·상속세⁠·취득세⁠·해외주식⁠·사업자등록 기한을 <b><span class="kp">주말·공휴일까지</span> 반영</b>해 계산합니다</p>
+<p class="lead" style="margin:0 0 18px">2026년 10월 20일 확인한 법령을 기준으로 양도세⁠·증여세⁠·상속세⁠·취득세⁠·해외주식⁠·사업자등록 기한을 <b><span class="kp">주말·공휴일까지</span> 반영</b>해 계산합니다</p>
 
 <div class="ref-box" style="border:2px solid var(--green);background:var(--tint-2);padding:14px 18px;margin:0 0 18px;font-family:var(--sans);border-radius:2px">
 <p style="margin:0 0 2px;font-weight:800;color:var(--green);font-size:17px">참고용 계산기입니다</p>
@@ -95,12 +95,12 @@
 <div id="cgWrap">
 <p class="hint" style="margin:14px 0 6px">어떻게 넘겼나요?</p>
 <div class="chips two">
-<label><input type="radio" name="cgk" value="s" checked><span>매매 등<small>2개월</small></span></label>
-<label><input type="radio" name="cgk" value="b"><span>부담부증여<small>넘긴 채무 부분 · 3개월</small></span></label>
+<label><input type="radio" name="cgk" value="s" checked><span>매매 등<small>양도한 달 말일부터 2개월</small></span></label>
+<label><input type="radio" name="cgk" value="b"><span>부담부증여<small>채무를 함께 넘긴 경우 3개월</small></span></label>
 </div>
 </div>
 <div id="giftWrap" hidden>
-<p class="hint" style="margin:14px 0 6px">무엇을 받았나요? <small>(⁠선택 · 준비 서류가 맞춰집니다)</small></p>
+<p class="hint" style="margin:14px 0 6px">무엇을 받았나요? <small>(⁠고르시면 준비 서류가 맞춰집니다)</small></p>
 <div class="chips four">
 <label><input type="radio" name="gk" value="현금·예금"><span><span class="kp">현금·예금</span></span></label>
 <label><input type="radio" name="gk" value="부동산"><span>부동산</span></label>
@@ -109,17 +109,17 @@
 </div>
 </div>
 <div id="inhWrap" hidden>
-<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:14px"><input type="checkbox" id="inhF" style="margin-top:5px;width:18px;height:18px"><span><b>돌아가신 분이나 상속인이 외국에 주소를 둠</b> <small style="color:var(--sub)">(⁠9개월 · 해당 여부는 상담을 권장드립니다)</small></span></label>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:14px"><input type="checkbox" id="inhF" style="margin-top:5px;width:18px;height:18px"><span><b>돌아가신 분이나 상속인이 외국에 주소를 둠</b> <small style="color:var(--sub)">(⁠이 경우 9개월입니다. 해당 여부는 상담을 권장드립니다)</small></span></label>
 </div>
 <div id="acqWrap" hidden>
 <p class="hint" style="margin:14px 0 6px">어떻게 취득했나요?</p>
 <div class="chips">
-<label><input type="radio" name="acqk" value="s" checked><span>매매 등<small>60일</small></span></label>
-<label><input type="radio" name="acqk" value="g"><span>증여<small>부담부증여 포함 · 3개월</small></span></label>
-<label><input type="radio" name="acqk" value="i"><span>상속<small>6개월</small></span></label>
+<label><input type="radio" name="acqk" value="s" checked><span>매매 등<small>취득일부터 60일</small></span></label>
+<label><input type="radio" name="acqk" value="g"><span>증여<small>받은 달 말일부터 3개월</small></span></label>
+<label><input type="radio" name="acqk" value="i"><span>상속<small>상속개시 달 말일부터 6개월</small></span></label>
 </div>
 <div id="acqFWrap" hidden>
-<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input type="checkbox" id="acqF" style="margin-top:5px;width:18px;height:18px"><span><b>외국에 주소를 둔 상속인이 있음</b> <small style="color:var(--sub)">(⁠9개월 · 해당 여부는 상담을 권장드립니다)</small></span></label>
+<label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:12px"><input type="checkbox" id="acqF" style="margin-top:5px;width:18px;height:18px"><span><b>외국에 주소를 둔 상속인이 있음</b> <small style="color:var(--sub)">(⁠이 경우 9개월입니다. 해당 여부는 상담을 권장드립니다)</small></span></label>
 </div>
 </div>
 
