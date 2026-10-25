@@ -1415,4 +1415,4 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 /* 오시는 길(PC 두 장 나란히, 2026-10-23): 설명 칸 높이를 두 줄 기준으로 맞춰 옆 사진과 윗선이 어긋나지 않게 */
 @media(min-width:860px){.rt-view .rt-slide figcaption{min-height:calc(3em + 20px);box-sizing:border-box}}
 /* 영상 카드 제목 2줄 고정(2026-10-25): Q&A 카드처럼 날짜 줄 높이를 맞춤 — 긴 제목은 영상 json의 card 키로 짧게 */
-.vcard b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:2.9em;word-break:keep-all;text-wrap:balance}
+.vcard b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;height:2.9em;word-break:keep-all;text-wrap:balance}
