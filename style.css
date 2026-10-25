@@ -1416,3 +1416,6 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 @media(min-width:860px){.rt-view .rt-slide figcaption{min-height:calc(3em + 20px);box-sizing:border-box}}
 /* 영상 카드 제목 2줄 고정(2026-10-25): Q&A 카드처럼 날짜 줄 높이를 맞춤 — 긴 제목은 영상 json의 card 키로 짧게 */
 .vcard b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;height:2.9em;word-break:keep-all;text-wrap:balance}
+/* 영상 카드 칸 너비 균등(2026-10-25): 1fr이 긴 글자에 밀려 썸네일 높이가 달라지던 것 수정 */
+.vgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:760px){.vgrid,.vgrid.vall{grid-template-columns:repeat(2,minmax(0,1fr))}}
