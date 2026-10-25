@@ -1,5 +1,5 @@
 ---
-title: 개인사업자 부가가치세는 1년에 몇 번 내나요? 4월·10월 예정고지까지
+title: 부가세는 1년에 몇 번 내나요? 4월·10월 예정고지
 slug: vat-preliminary-notice
 category: life
 topic: vat
