@@ -488,7 +488,7 @@ def qa_item(p):
 # ---------- 유튜브 영상 연결 (세친구 채널 중 김태형 세무사 단독 촬영분만 — 공동 출연분은 넣지 않음) ----------
 # 순서 = 목록·Q&A 상단 노출 순서(앞 4개). 조회수 기준 정렬은 월 1회 확인해 이 순서를 바꿈. slug가 있는 영상만 요약 페이지를 만들고, 없으면 유튜브로 바로 연결
 # 영상 데이터: content/video/<번호>-<slug>.json 한 편에 파일 하나 (2026.10.11 build.py에서 분리 — 예약 작업이 새 영상 초안을 파일로만 추가하도록)
-#   필수 키: k(편 번호 2자리), yt(유튜브 ID), title(유튜브 제목 그대로), date(업로드일 YYYY-MM-DD), topic(세무 Q&A 분류 키 — TOPICS 중 하나: biz·worker·vat·capital-gains·gift·audit·etc), slug, shot, lead, points[[소제목, 설명]...], cta, more[주소, 버튼글자](선택)
+#   필수 키: k(편 번호 2자리), yt(유튜브 ID), title(유튜브 제목 그대로), card(목록 카드용 짧은 제목 — 2줄에 맞게 25자 이내, 2026-10-25), date(업로드일 YYYY-MM-DD), topic(세무 Q&A 분류 키 — TOPICS 중 하나: biz·worker·vat·capital-gains·gift·audit·etc), slug, shot, lead, points[[소제목, 설명]...], cta, more[주소, 버튼글자](선택)
 #   썸네일: assets/yt/v<k>.jpg (640x360)
 def load_videos():
     out = []
@@ -500,6 +500,8 @@ def load_videos():
         if v.get("topic") not in TOPIC_NAME:
             print(f'  [영상 분류 확인 필요] {v.get("k")} {v.get("title","")[:30]} — topic {v.get("topic")!r} → etc')
             v["topic"] = "etc"
+        if len(v.get("card") or v["title"]) > 25:  # 카드 제목은 2줄 고정(2026-10-25) — 넘치면 뒤가 잘리므로 card 키로 짧게
+            print(f'  [영상 카드 제목 김 — card 키로 25자 이내로 줄이기] {v.get("k")} {(v.get("card") or v["title"])[:30]}')
     return out
 
 VIDEOS = load_videos()
@@ -515,7 +517,7 @@ def v_href(v):
 def vcard(v):
     h, t = v_href(v)
     return (f'<a class="vcard" href="{h}"{t} data-t="{v.get("topic", "etc")}"><span class="vth"><img src="/assets/yt/v{v["k"]}.jpg" alt="" loading="lazy" width="640" height="360"><i></i></span>'
-            f'<b>{esc(v["title"])}</b><span class="vd"><span class="vt">{TOPIC_NAME[v["topic"]]}</span> · {v["date"].replace("-", ".")}</span></a>')
+            f'<b>{esc(v.get("card") or v["title"])}</b><span class="vd"><span class="vt">{TOPIC_NAME[v["topic"]]}</span> · {v["date"].replace("-", ".")}</span></a>')
 
 def vstrip():
     return ('<section class="vstrip" aria-label="영상으로 보는 Q&amp;A"><div class="vhead"><h2>영상으로 보는 Q&amp;A</h2><a href="/video/">전체 보기 →</a></div>'
@@ -958,7 +960,7 @@ def build_about():
     CH_HTML = f'''<section class="block ch-sec"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
 <div class="ch-grid">
 <a class="ch lite" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><span class="d">세금 소식과 업무 사례</span><span class="ar" aria-hidden="true">→</span></a>
-<a class="ch lite" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 · 세친구</span><span class="d">영상으로 보는 세금 이야기</span><span class="ar" aria-hidden="true">→</span></a>
+<a class="ch lite" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세친구</span><span class="d">영상으로 보는 세금 이야기</span><span class="ar" aria-hidden="true">→</span></a>
 </div></div></section>'''
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><i>{i:02d}</i><b>{t}</b><span>{d}</span></a>' for i, (k, t, d) in enumerate(SERVICES, 1))
     body = f'''<div class="wrap about-page{" v2" if AB2 else ""}" style="padding-top:36px">
