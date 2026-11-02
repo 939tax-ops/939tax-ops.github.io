@@ -1420,4 +1420,4 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 .vgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:760px){.vgrid,.vgrid.vall{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* Q&A 글 작성자 줄(2026-11-03): 가운데 점 대신 간격 */
-.meta .mlink{margin-left:14px}
+.meta .mlink{margin-left:14px;display:inline-block;white-space:nowrap}
