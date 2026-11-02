@@ -100,7 +100,7 @@
     var lb=/^(.*?) \((.*)\)$/.exec(LBL[lk][0]); $('evLabel').innerHTML=lb?lb[1]+' <small style="font-weight:400;color:var(--sub);font-size:14px">('+lb[2]+')</small>':LBL[lk][0]; $('evHint').textContent=LBL[lk][1]; $('evHint').hidden=!LBL[lk][1];
     var ev=parse($('ev').value), now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
     var R=RULES[key()];
-    $('rLabel').textContent=(R.tax?'신고기한':'신청기한')+' · '+R.name;
+    $('rLabel').textContent=R.name+' '+(R.tax?'신고기한':'신청기한');
     if(!ev||ev.getFullYear()<2020||ev.getFullYear()>2030){ $('docs').hidden=true; LAST=null; }
     if(!ev){ $('due').textContent='날짜를 넣어 주세요'; $('sub').textContent=LBL[lk][0].replace(/ \(.*\)$/,'')+'을 넣으면 바로 계산됩니다.'; $('alert').hidden=true; $('tbl').innerHTML=''; $('msg').innerHTML=''; $('mini').hidden=true; return; }
     if(ev.getFullYear()<2020||ev.getFullYear()>2030){ $('due').textContent='날짜를 확인해 주세요'; $('sub').textContent='2020년~2030년 사이 날짜만 계산합니다.'; $('alert').hidden=true; $('tbl').innerHTML=''; $('msg').innerHTML=''; $('mini').hidden=true; return; }
@@ -158,12 +158,12 @@
     if(R.cr) m.push(r.left>=0?'기한 안에 신고하면 신고세액공제 3%':'기한이 지나 신고세액공제 3%는 받을 수 없습니다');
     if(R.local) m.push('기한 전에 등기·등록을 하려면 등기 신청서 접수일까지 취득세를 신고·납부해야 합니다');
     if(key()==='cg'||key()==='cgb') m.push('신고기한까지 세금도 함께 내야 합니다');
-    if(R.cr) m.push('신고기한까지 세금도 함께 내야 합니다. 낼 세금이 1천만원을 넘으면 일부를 기한 후 2개월 안에 나눠 낼 수 있고, 2천만원을 넘으면 연부연납을 신청할 수 있습니다 · 상담을 권장드립니다');
+    if(R.cr) m.push('신고기한까지 세금도 함께 내야 합니다. 낼 세금이 1천만원을 넘으면 일부를 기한 후 2개월 안에 나눠 낼 수 있고, 2천만원을 넘으면 연부연납을 신청할 수 있습니다. 상담을 권장드립니다');
     if(key()==='stk') m.push('이익이 250만원 이하라 낼 세금이 0원이어도 확정신고 대상에서 당연히 빠지는 것은 아닙니다');
     if(key()==='stk') m.push('국내 상장주식(대주주)·비상장주식은 반기 기준 예정신고라 이 계산기로 계산하지 않습니다');
     if(key()==='cg'||key()==='cgb') m.push('손해를 봤거나 차익이 없어도 예정신고 대상입니다');
-    if(key()==='cg') m.push('1세대 1주택 비과세(양도가액 12억원 이하)로 낼 세금이 없다면 신고 대상이 아닐 수도 있습니다 · 상담을 권장드립니다');
-    if(key()==='cg') m.push('토지거래허가구역 토지를 허가 전에 대금 청산했다면 기준일이 달라집니다 · 상담을 권장드립니다');
+    if(key()==='cg') m.push('1세대 1주택 비과세(양도가액 12억원 이하)로 낼 세금이 없다면 신고 대상이 아닐 수도 있습니다. 상담을 권장드립니다');
+    if(key()==='cg') m.push('토지거래허가구역 토지를 허가 전에 대금 청산했다면 기준일이 달라집니다. 상담을 권장드립니다');
     m.push('정부가 임시공휴일을 새로 지정하면 기한이 달라질 수 있습니다');
     $('msg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
   }

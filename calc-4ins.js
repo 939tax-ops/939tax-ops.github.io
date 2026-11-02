@@ -86,8 +86,8 @@
     var head=back?g:net;
     $('mini').hidden=false; $('sum').textContent=comma(head)+'원'; $('miniPay').textContent=comma(head)+'원';
     $('sub').textContent=back
-      ? '실수령액 '+comma(net)+'원 · 공제 '+comma(cut)+'원'
-      : '4대보험 '+comma(r.worker)+'원 · 세금 '+comma(taxSum)+'원 공제';
+      ? '실수령액 '+comma(net)+'원, 공제 '+comma(cut)+'원'
+      : '4대보험 '+comma(r.worker)+'원, 세금 '+comma(taxSum)+'원 공제';
     var t='';
     t+=row(back?'필요한 세전 급여':'월 급여',comma(g)+'원',back?'key':'');
     if(nt) t+=row('비과세 금액','− '+comma(nt)+'원');

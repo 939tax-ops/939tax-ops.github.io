@@ -36,7 +36,7 @@
     var pay=back?payFor(input,rate):input, r=calc(pay,rate), head=back?pay:r.net;
     $('fmini').hidden=false; $('fsum').textContent=comma(head)+'원'; $('fminiPay').textContent=comma(head)+'원';
     $('fsub').textContent=back
-      ? '실수령액 '+comma(r.net)+'원 · 세금 '+comma(r.tax)+'원'
+      ? '실수령액 '+comma(r.net)+'원, 세금 '+comma(r.tax)+'원'
       : '세금 '+comma(r.tax)+'원 공제 ('+label+' 기준)';
     var t='';
     t+=row(back?'계약해야 할 지급액':'지급액', comma(pay)+'원', 'key');
@@ -49,7 +49,7 @@
     if(back && r.net>input) m.push('목표보다 '+comma(r.net-input)+'원 많은 금액에서 맞춰짐 <small>(1원 단위 계산)</small>');
     m.push('단순히 '+(rate===3?'3.3':'2.2')+'%를 곱한 '+comma(Math.floor(pay*(rate+rate*0.1)/100))+'원과 '+(Math.abs(r.tax-Math.floor(pay*(rate+rate*0.1)/100))?comma(Math.abs(r.tax-Math.floor(pay*(rate+rate*0.1)/100)))+'원 차이':'같음')+' <small>(10원 미만 절사)</small>');
     m.push('1년 세금은 다음 해 5월 종합소득세 신고로 확정');
-    if(rate===2) m.push('<b>국회 통과 전 정부안 기준</b> · 2027년 1월 1일 이후 지급분부터 적용 예정');
+    if(rate===2) m.push('<b>국회 통과 전 정부안 기준</b>이며, 2027년 1월 1일 이후 지급분부터 적용 예정');
     $('fmsg').innerHTML='<span class="mi">'+m.join('</span><span class="mi">')+'</span>';
   }
   $('famt').addEventListener('input',function(){fmt(this);run();});

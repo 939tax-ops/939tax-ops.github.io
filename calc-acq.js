@@ -37,7 +37,7 @@
     var small=val('area')==='s';
     var r=calc({price:p,small:small,fh:val('fh')==='y',cap:Number(val('fhc'))*10000});
     $('mini').hidden=false; $('pay').textContent=comma(r.total)+'원'; $('miniPay').textContent=comma(r.total)+'원';
-    $('sub').textContent='취득세율 '+pct(r.rate)+(r.red?' · 생애최초 감면 반영':'');
+    $('sub').textContent='취득세율 '+pct(r.rate)+(r.red?', 생애최초 감면 반영':'');
     var t='';
     t+=row('취득가액',comma(p)+'원');
     t+=row('취득세 <small>(세율 '+pct(r.rate)+')</small>',comma(r.acq)+'원');
