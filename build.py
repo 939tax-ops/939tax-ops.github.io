@@ -556,7 +556,7 @@ bs.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.f);his
         art = f'''<div class="narrow"><article>
 <p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/video/">영상으로 보는 Q&amp;A</a></p>
 <h1>{esc(v["title"])}</h1>
-<p class="meta"><a class="b-t" href="/qa/#{v["topic"]}">{TOPIC_NAME[v["topic"]]}</a> {PERSON} 직접 설명, {v["date"].replace("-", ".")} 유튜브 업로드{(" (" + v["shot"] + ")") if v.get("shot") else ""}<a class="mlink" href="https://youtu.be/{v["yt"]}" target="_blank" rel="noopener">유튜브에서 보기</a></p>
+<p class="meta"><a class="b-t" href="/qa/#{v["topic"]}">{TOPIC_NAME[v["topic"]]}</a> {PERSON} 직접 설명, {v["date"].replace("-", ".")} 유튜브 업로드{(' <span class="kp">(' + v["shot"] + ')</span>') if v.get("shot") else ""}<a class="mlink" href="https://youtu.be/{v["yt"]}" target="_blank" rel="noopener">유튜브에서 보기</a></p>
 <div class="vplayer" data-yt="{v["yt"]}" role="button" tabindex="0" aria-label="영상 재생"><img src="/assets/yt/v{v["k"]}.jpg" alt="영상 썸네일" width="640" height="360"><i></i></div>
 <div class="summary"><p class="label">이 영상의 핵심 요약</p><p>{v["lead"]}</p></div>
 <h2>영상 내용 정리</h2>
@@ -1310,11 +1310,11 @@ def build_404():
 # 서비스 페이지 첫 화면 보수 한 줄 — /fees/ 공개 금액과 같게 유지할 것(2026-10-14)
 SVC_PRICE = {
     "bookkeeping": '월 70,000원~ <small>(1인 사업자 할인 적용, 부가세 별도)</small>',
-    "tax-filing": '부가가치세 150,000원~, 종합소득세 200,000원~ <small>(부가세 별도)</small>',
+    "tax-filing": '<span class="kp">부가가치세 150,000원~</span>, <span class="kp">종합소득세 200,000원~</span> <small>(부가세 별도)</small>',
     "capital-gains": '양도가액의 0.1% <small>(최저 200,000원, 부가세 별도)</small>',
-    "inheritance-gift": '증여세 증여가액의 0.1%(최저 200,000원), 상속세 500,000원 + 상속재산의 0.4% <small>(부가세 별도)</small>',
+    "inheritance-gift": '증여세 증여가액의 0.1%<span class="kp">(최저 200,000원)</span>, 상속세 500,000원 + 상속재산의 0.4% <small>(부가세 별도)</small>',
     "refund-claim": '환급 가능 여부 확인은 최대한 무료로 진행합니다',
-    "tax-audit": '세무조사 대응 1,500,000원~, 불복 감액세액의 20%~ <small>(부가세 별도)</small>',
+    "tax-audit": '<span class="kp">세무조사 대응 1,500,000원~</span>, <span class="kp">불복 감액세액의 20%~</span> <small>(부가세 별도)</small>',
     "tax-planning": '상담 30분 100,000원~ <small>(사전 서류 검토 200,000원~, 부가세 별도)</small>',
 }
 
@@ -1476,7 +1476,7 @@ def build_fees():
 <section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
 <div class="pair"><div class="it"><p>1인 사업자 <small>(4대보험 가입 직원 없음)</small></p><b>기장료 20% 할인</b></div>
 <div class="it"><p>기장 거래처</p><b>양도·상속·증여 등 20% 할인</b></div></div>
-<p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. 기장료 기준 금액: 개인 간이과세 월 87,500원, 개인 일반과세 월 100,000원, 법인 월 150,000원</p></section>
+<p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. 기장료 기준 금액은 <span class="kp">개인 간이과세 월 87,500원</span>, <span class="kp">개인 일반과세 월 100,000원</span>, <span class="kp">법인 월 150,000원</span>입니다.</p></section>
 <p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 {lead_form(None, "lfe")}
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a><span class="lk-sep"> · </span><a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
