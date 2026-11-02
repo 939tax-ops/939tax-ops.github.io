@@ -202,7 +202,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/assets/logo-h-dark.png" alt="세무회계 택 로고" width="154" height="40"></a>
 <button class="menu-btn" onclick="document.querySelector('.nav').classList.toggle('open')">메뉴</button>
-<nav class="nav">{navh}<a class="cta" href="/contact/">문의하기</a></nav>
+<nav class="nav">{navh}<a class="cta" href="/contact/">상담 신청</a></nav>
 </div></header>
 <main>
 {body}
@@ -426,8 +426,8 @@ def build_post(p, posts=()):
         _cu, _, _ct = p["calc"].partition("|")
         _cu, _ct = _cu.strip(), _ct.strip() or "증여세 계산기로 본인의 상황에 맞추어 계산해 보세요"
         calc = f'<div class="box"><p class="label">바로 계산해 보기</p><p><a href="{esc(_cu)}">{esc(_ct)} →</a></p></div>' 
-    blog = f' · <a href="{esc(p["blog"])}" target="_blank" rel="noopener">블로그에서 보기</a>' if p.get("blog") else ""
-    upd = f' · 수정 {p["updated"]}' if p.get("updated") and p["updated"] != p["date"] else ""
+    blog = f'<a class="mlink" href="{esc(p["blog"])}" target="_blank" rel="noopener">블로그 원문 보기</a>' if p.get("blog") else ""  # 2026-11-03 가운데 점 대신 간격
+    upd = f' (수정 {p["updated"].replace("-", ".")})' if p.get("updated") and p["updated"] != p["date"] else ""
     tp = topic_of(p)
     same = [q for q in posts if q["slug"] != p["slug"] and topic_of(q) == tp][:3]
     if len(same) < 3:
@@ -452,7 +452,7 @@ def build_post(p, posts=()):
     art = f'''<div class="narrow"><article>
 <p class="crumb"><a href="/">홈</a> › <a href="/qa/">세무 Q&amp;A</a> › <a href="/qa/#{topic_of(p)}">{TOPIC_NAME[topic_of(p)]}</a></p>
 {f'<p class="post-type"><span class="b-case">{type_name(p)}</span></p>' if type_name(p) else ""}<h1>{esc(p["title"])}</h1>
-<p class="meta">{PERSON} 작성 · {p["date"]}{upd}{blog}</p>
+<p class="meta">{PERSON} 작성, {p["date"].replace("-", ".")}{upd}{blog}</p>
 <div class="summary"><p class="label">핵심 요약</p>{md(p["summary"])}</div>
 {vbox(VBY[VIDEO_OF_POST[p["slug"]]]) if p["slug"] in VIDEO_OF_POST else ""}{toc_html}{body_html}
 {deadline_box(p)}
@@ -767,7 +767,7 @@ def build_home(posts):
     latest = "".join(qa_item(p) for p in posts[:5]) or '<li><p class="lead">준비 중입니다.</p></li>'
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
-<p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
+<p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리, {NAME} {PERSON}</p>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
 <div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a><a class="btn ghost" href="/location/">오시는 길</a></div>
@@ -800,7 +800,7 @@ def build_home_v2(posts, out="index.html"):
     kk_ic = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>'
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
-<p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리 · {NAME} {PERSON}</p>
+<p class="eyebrow"><span class="rule"></span>서울 동대문구 청량리, {NAME} {PERSON}</p>
 <h1>근거는 정확하게,<br>마음은 편안하게</h1>
 <p>개인·법인사업자 기장, 종합소득세, 양도소득세, <span style="white-space:nowrap">상속·증여세</span>, 경정청구 등의 세무업무를 수행합니다.</p>
 <div class="btns"><a class="btn kakao" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="/location/">오시는 길</a></div>
@@ -812,7 +812,7 @@ def build_home_v2(posts, out="index.html"):
 <div class="h2-rep-tx">
 <h2>김태형 <span>세무사</span></h2>
 <p class="h2-rep-q">상담부터 신고서 최종 검토까지 세무사가 직접 맡습니다.<br>법령과 자료를 근거로 먼저 검토하고, 결과를 명확하게 설명드립니다.</p>
-<dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스 · 前 포스코건설</dd><dt>활동</dt><dd class="h2-act"><a class="act" href="{BLOG}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그 <span>세금 소식·업무 사례</span></a><a class="act" href="{YOUTUBE}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세무사 세친구 <span>영상으로 보는 세금</span></a></dd></dl>
+<dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스<br>前 포스코건설</dd><dt>활동</dt><dd class="h2-act"><a class="act" href="{BLOG}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그 <span>세금 소식·업무 사례</span></a><a class="act" href="{YOUTUBE}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세무사 세친구 <span>영상으로 보는 세금</span></a></dd></dl>
 <a class="h2-more" href="/about/">소개 자세히 보기 →</a>
 </div></div></section>
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid h2-svc">{svc}</div>
@@ -848,7 +848,7 @@ def build_home_v2(posts, out="index.html"):
 # 오시는 길 — 출발점 아이콘을 누르면 그 경로 사진만 표시 (2026-10-14). 주소 #go-line1 / #go-gyeongui / #go-car 로 바로 열림 (2026-10-23 1호선·버스 합침, #go-bus 는 #go-line1 로)
 ROUTE_SETS = {
     "line1": ("1호선·버스·도보", '<span style="white-space:nowrap">청량리역 4번 출구</span> <span style="white-space:nowrap">(버스환승센터 앞)</span>', ["c-01","c-02","c-04","c-05b","c-06","c-07","c-08","c-09"]),
-    "gyeongui": ("기차·경의중앙선", '<span style="white-space:nowrap">1번 출구 →</span> <span style="white-space:nowrap">청량리역 4번 출구</span>', ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05b","g-08","g-09","g-10","g-11"]),
+    "gyeongui": ("기차·경의중앙선", '<span style="white-space:nowrap">1번 출구로 나와</span> <span style="white-space:nowrap">청량리역 4번 출구</span>', ["gy-01","gy-02","gy-03","g-04","g-05","g-07","c-05b","g-08","g-09","g-10","g-11"]),
     "car": ("자차", '<span style="white-space:nowrap">지하4층만 주차 가능</span> <span style="white-space:nowrap">(2시간 무료)</span>', ["car-note","car-02b","car-03b","car-01","car-04","car-05","car-06b","car-07b"]),
 }
 ROUTE_ICONS = {
@@ -1309,7 +1309,7 @@ def build_404():
 
 # 서비스 페이지 첫 화면 보수 한 줄 — /fees/ 공개 금액과 같게 유지할 것(2026-10-14)
 SVC_PRICE = {
-    "bookkeeping": '월 70,000원~ <small>(1인 사업자 할인 적용 · 부가세 별도)</small>',
+    "bookkeeping": '월 70,000원~ <small>(1인 사업자 할인 적용, 부가세 별도)</small>',
     "tax-filing": '부가가치세 150,000원~ · 종합소득세 200,000원~ <small>(부가세 별도)</small>',
     "capital-gains": '양도가액의 0.1% <small>(최저 200,000원 · 부가세 별도)</small>',
     "inheritance-gift": '증여세 증여가액의 0.1%(최저 200,000원) · 상속세 500,000원 + 상속재산의 0.4% <small>(부가세 별도)</small>',
@@ -1371,11 +1371,11 @@ FEES = [
     ("세무기장", [("개인사업자", "간이과세", "월 70,000원 ~"), ("개인사업자", "일반과세", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
      ["1인 사업자 특별 할인을 적용한 최저 금액입니다.", "매출·자산 규모에 따라 달라지며, 세무조정료는 별도입니다."]),
     ("세금 신고대리", [("부가가치세", "", "150,000원 ~"), ("종합소득세", "", "200,000원 ~"), ("사업장현황신고", "면세사업자", "200,000원 ~")], []),
-    ("양도 · 상속 · 증여", [("양도소득세", "", "양도가액의 0.1% <small>(최저 200,000원)</small>"),
+    ("양도·상속·증여", [("양도소득세", "", "양도가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("증여세", "", "증여가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("상속세", "", "500,000원 + 상속재산의 0.4%"), ("신고 전 세액 계산", "", "100,000원 ~")],
      ["계산 후 신고까지 맡기시면 계산 보수는 신고 보수에서 전액 차감합니다."]),
-    ("세무상담 · 기타", [("세무 상담", "사전 검토 없음", "30분 100,000원 ~"), ("세무 상담", "사전 서류 검토", "200,000원 ~"), ("세무조사 대응", "", "1,500,000원 ~"),
+    ("세무상담·기타", [("세무 상담", "사전 검토 없음", "30분 100,000원 ~"), ("세무 상담", "사전 서류 검토", "200,000원 ~"), ("세무조사 대응", "", "1,500,000원 ~"),
                      
                       ("불복", "이의신청·심사·심판", "감액세액의 20% ~")], ["상담은 전화·대면·이메일·메신저 채팅 모두 가능합니다."]),
 ]
@@ -1470,7 +1470,7 @@ def build_fees():
     body = f'''<div class="wrap fee-page" style="padding-top:36px">
 <p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 보수 안내</p>
 <h1>세무 보수 안내</h1>
-<p class="fee-sub">기본 보수 기준 · 부가가치세 별도</p>
+<p class="fee-sub">기본 보수 기준이며, 부가가치세는 별도입니다</p>
 <a class="ccard fee-calc" href="/calculators/bookkeeping-fee/"><span class="t">기장료 계산기</span><b>매출액 넣고 월 기장료 계산하기 →</b></a>
 <div class="fee-grid">{grid}</div>
 <section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
