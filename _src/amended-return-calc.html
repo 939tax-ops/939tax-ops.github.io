@@ -73,7 +73,7 @@ details.box.fold table{table-layout:fixed;width:100%}details.box.fold td{word-br
 <h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">경정청구 확인 계산기</h1>
 <p class="lead" style="margin:0 0 18px">2021~2025년분 · 놓친 <b>창업감면·중소기업 특별세액감면·고용증대·통합고용세액공제</b>, 근로자의 <b>부양가족·월세 공제·중소기업 취업자 감면</b>을 돌려받을 수 있는지 <b>범위</b>로 확인합니다</p>
 
-<div class="cr-quick-lead"><p>계산이 어렵거나 무엇을 넣어야 할지 잘 모르시겠다면, 계산하지 않고 <b>바로 1차 무료 검토를 신청</b>하셔도 됩니다.</p><button type="button" class="btn ghost" id="crQuickBtn" aria-controls="crQuick" aria-expanded="false">계산 없이 바로 신청하기</button></div>
+<div class="cr-quick-lead"><p>계산이 어렵거나 무엇을 넣어야 할지 잘 모르시겠다면, 계산하지 않고 <b>바로 1차 무료 검토를 신청</b>하셔도 됩니다.</p><button type="button" class="btn ghost" id="crQuickBtn" aria-controls="crQuick" aria-expanded="false">계산 없이 바로 신청하기 <span class="qa-ar" aria-hidden="true" style="font-size:.8em;margin-left:4px">▼</span></button></div>
 <div class="cr-quick" id="crQuick" hidden>
 <p class="cr-quick-note">성함·연락처만 남겨 주시면 대표 세무사가 직접 연락드려 경정청구 가능 여부부터 확인해 드립니다. 계산기를 쓰시려면 이 칸 아래에서 그대로 진행하시면 됩니다.</p>
 __QUICK__
@@ -208,5 +208,5 @@ __QUICK__
 </details>
 </div>
 
-<script>(function(){var b=document.getElementById('crQuickBtn'),q=document.getElementById('crQuick');if(!b||!q)return;b.addEventListener('click',function(){q.hidden=false;b.setAttribute('aria-expanded','true');q.scrollIntoView({behavior:'smooth',block:'start'});var n=q.querySelector('input[name="name"]');if(n)setTimeout(function(){n.focus({preventScroll:true});},400);});})();</script>
+<script>(function(){var b=document.getElementById('crQuickBtn'),q=document.getElementById('crQuick');if(!b||!q)return;var ar=b.querySelector('.qa-ar');b.addEventListener('click',function(){if(!q.hidden){q.hidden=true;b.setAttribute('aria-expanded','false');if(ar)ar.textContent='▼';return;}q.hidden=false;b.setAttribute('aria-expanded','true');if(ar)ar.textContent='▲';q.scrollIntoView({behavior:'smooth',block:'start'});var n=q.querySelector('input[name="name"]');if(n)setTimeout(function(){n.focus({preventScroll:true});},400);});})();</script>
 <script src="/calc-claim.js" defer></script>
