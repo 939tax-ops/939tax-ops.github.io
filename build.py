@@ -711,6 +711,9 @@ SEARCH_TOOLS = [
  ("기장료 계산기", "/calculators/bookkeeping-fee/", "계산기",
   "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다. 1인 사업자 20% 할인도 반영됩니다.",
   "기장료 기장 수수료 보수 세무대리 비용 얼마 간이과세 일반과세 법인"),
+ ("경정청구 확인 계산기", "/calculators/amended-return/", "계산기",
+  "2021~2025년분 놓친 창업감면·중소기업 특별세액감면·통합고용세액공제, 근로자 부양가족·월세 공제를 돌려받을 수 있는지 범위로 확인하고 1차 무료 검토를 접수합니다.",
+  "경정청구 환급 돌려받기 놓친 세금 창업감면 창업중소기업 세액감면 생계형 청년 군복무 중소기업 특별세액감면 통합고용세액공제 고용증대 부양가족 월세 세액공제 5년"),
  ("증여세 계산기", "/calculators/gift-tax/", "계산기",
   "관계별 공제, 10년 합산, 혼인·출산 공제를 반영한 예상 증여세를 계산합니다.",
   "증여세 증여 계산 공제 한도 부모 부모님 조부모 할머니 할아버지 배우자 자녀 아들 딸 손주 혼인 출산 결혼자금 전세자금 용돈 돈 받으면"),
@@ -796,7 +799,7 @@ def build_home_v2(posts, out="index.html"):
     """홈 구조 개편 시안(2026-10-14): 첫 화면 → 대표 세무사 → 업무 분야 → 보수 → 진행 → 더 알아보기 → 연락."""
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in SERVICES)
     qa3 = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in posts[:3])
-    calcs = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/calculators/gift-tax/","증여세"),("/calculators/capital-gains/","양도소득세"),("/calculators/acquisition-tax/","취득세"),("/calculators/filing-deadline/","신고기한"),("/calculators/four-insurance/","4대보험·실수령액"),("/calculators/freelancer-withholding/","프리랜서 3.3%"),("/calculators/bookkeeping-fee/","기장료")])
+    calcs = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/calculators/amended-return/","경정청구"),("/calculators/gift-tax/","증여세"),("/calculators/capital-gains/","양도소득세"),("/calculators/acquisition-tax/","취득세"),("/calculators/filing-deadline/","신고기한"),("/calculators/four-insurance/","4대보험·실수령액"),("/calculators/freelancer-withholding/","프리랜서 3.3%"),("/calculators/bookkeeping-fee/","기장료")])
     kk_ic = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>'
     body = f'''<div class="hero hero-c1"><div class="hero-img d" role="img" aria-label="조세법전과 연잎이 담긴 그릇이 놓인 책상"></div><div class="wrap">
 <div class="copy">
@@ -1033,6 +1036,7 @@ def build_location():
 YANGDO_ENABLED = False
 
 CALCS = [
+    ("경정청구", "경정청구 확인 계산기", "2021~2025년분 놓친 창업감면·고용공제·부양가족·월세, 돌려받을 세금 범위 + 1차 무료 검토", "/calculators/amended-return/"),
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
     ("양도소득세", "양도소득세 계산기", "주택·상가·토지를 나눠 <span class=\"nw\">보유·거주 기간별로</span> 계산한 예상 양도세", "/calculators/capital-gains/"),
     ("취득세", "1주택 취득세 계산기", "1주택 취득세·지방교육세·농어촌특별세, 생애최초 감면 반영", "/calculators/acquisition-tax/"),
@@ -1136,6 +1140,20 @@ def build_free_calc():
                "지급액을 넣으면 소득세 3%와 지방소득세 0.3%를 뗀 실제 지급액이, 세후 금액을 넣으면 계약해야 할 지급액이 산출됩니다. 2027년 정부안 2.2%도 함께 비교합니다.",
                "/calculators/freelancer-withholding/", tpl, "calc", ld))
 
+def build_claim_calc():   # 2026.10.22 09편 경정청구 확인 계산기(1차 무료 검토 신청)
+    tpl = open(os.path.join(ROOT, "_src", "amended-return-calc.html"), encoding="utf-8").read()
+    tpl = tpl.replace("__LEAD__", esc(json.dumps(dict(LEAD, tag="[계산기 무료검토] "), ensure_ascii=False))).replace("__KEEP__", PRIVACY_KEEP)
+    # 2026.11.01 '잘 모르겠으면 계산 없이 바로 신청' — 무료 확인 폼(경정청구 미리 선택)을 계산기 맨 위에 펼침식으로
+    quick = lead_form("refund-claim", "lq", "check").replace("[무료 확인] ", "[경정청구 계산기 · 바로 신청] ")
+    tpl = tpl.replace("__QUICK__", quick)
+    ld = [{"@type": "WebApplication", "name": "경정청구 확인 계산기", "url": SITE + "/calculators/amended-return/",
+           "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "ko",
+           "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
+    write("calculators/amended-return/index.html",
+          page(f"경정청구 확인 계산기 (창업감면·고용공제·부양가족·월세) | {NAME}",
+               "2021~2025년분 놓친 창업감면, 중소기업 특별세액감면, 통합고용세액공제와 근로자 부양가족·월세 공제를 연도별로 넣으면 돌려받을 수 있는 세금 범위를 보여 주고, 1차 무료 검토를 접수합니다.",
+               "/calculators/amended-return/", tpl, "calc", ld))
+
 def build_yangdo_calc():
     if not YANGDO_ENABLED:
         return
@@ -1233,8 +1251,8 @@ def build_privacy():
     body = f'''<div class="narrow privacy" style="padding-top:36px">
 <h1 style="color:var(--green);margin:0 0 6px">개인정보 처리방침</h1>
 <p class="lead">{NAME}(이하 "사무소")⁠은 상담 신청 과정에서 받는 개인정보를 아래와 같이 처리합니다.</p>
-<h2>1. 처리 목적</h2><p>상담 신청 확인 및 연락. 이 목적 외의 용도로 쓰지 않습니다.</p>
-<h2>2. 처리 항목</h2><p>성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택). 주민등록번호 등 고유식별정보는 받지 않습니다.</p>
+<h2>1. 처리 목적</h2><p>상담 신청 확인 및 연락, 경정청구 확인 계산기를 통한 경정청구 1차 무료 검토 및 연락. 이 목적 외의 용도로 쓰지 않습니다.</p>
+<h2>2. 처리 항목</h2><p>상담 신청: 성함, 연락처(전화번호 또는 이메일), 상담 분야, 연락 가능한 시간, 문의 내용(선택).</p><p>경정청구 확인 계산기: 성함, 연락처(전화번호 또는 이메일), 계산기에 입력한 내용(개업 연월, 업종, 사업장 위치, 창업 당시 나이, 군 복무 기간, 신고 방식·기한, 연도별 매출·낸 세금·직원 수, 근로자의 총급여 구간·결정세액·빠뜨린 부모님 수·월세)과 계산 결과.</p><p>주민등록번호 등 고유식별정보는 받지 않습니다.</p>
 <h2>3. 보유 기간과 파기</h2><p>{PRIVACY_KEEP} 보관한 뒤 파기합니다. 상담으로 이어지지 않은 신청은 신청일부터 1년이 지나면 파기합니다. 세무대리 계약을 맺은 경우 그 계약에 따른 자료는 계약과 관련 법령에서 정한 기간 동안 따로 보관합니다. 전자 파일은 복구할 수 없는 방법으로 삭제합니다.</p>
 <h2>4. 제3자 제공</h2><p>정보주체의 동의나 법령에 따른 경우가 아니면 제3자에게 제공하지 않습니다.</p>
 <h2>5. 국외 이전(보관)</h2>
@@ -1243,7 +1261,7 @@ def build_privacy():
 <h2>6. 정보주체의 권리</h2><p>언제든지 본인 정보의 열람, 정정, 삭제, 처리 정지를 요청할 수 있습니다. 아래 연락처로 요청하시면 지체 없이 처리합니다.</p>
 <h2>7. 안전성 확보 조치</h2><p>신청 내용은 접근 권한을 대표 세무사로 한정한 계정에 보관하고, 2단계 인증을 사용합니다.</p>
 <h2>8. 개인정보 보호책임자</h2><table class="info"><tr><th>책임자</th><td>{PERSON} (대표 세무사)</td></tr><tr><th>연락처</th><td><a href="tel:{TEL}">{TEL}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></td></tr></table>
-<p class="note" style="margin-top:24px">시행일: 2026년 9월 20일</p>
+<p class="note" style="margin-top:24px">시행일: 2026년 9월 20일 · 개정: 2026년 10월 23일(경정청구 확인 계산기 항목 추가)</p>
 </div>'''
     write("privacy/index.html", page(f"개인정보 처리방침 | {NAME}", "세무회계택 상담 신청 개인정보 처리방침입니다.", "/privacy/", body, "privacy"))
 
@@ -1512,6 +1530,6 @@ if __name__ == "__main__":
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
     for p in posts: build_post(p, posts)
     build_qa_index(posts); build_home_v2(posts)  # 홈 개편 적용(2026-10-14) — 이전 홈은 build_home()에 보관
-    build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_yangdo_calc(); build_cg_calc(); build_deadline_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
+    build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_claim_calc(); build_yangdo_calc(); build_cg_calc(); build_deadline_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
     build_sitemap(posts); build_feed(posts)
     print("built", len(posts), "posts")

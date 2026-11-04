@@ -1,0 +1,212 @@
+<style>
+.cr{font-family:var(--sans)}
+.cr-step{border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:0 0 16px;min-width:0}
+.cr-step[disabled]{background:var(--soft-bg)}
+.cr-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+.cr-grid2 label{display:block;font-weight:700;font-size:14.5px;line-height:1.4}
+.cr-grid2 label>input,.cr-grid2 label>select,.cr-grid2 .cr-ym{display:flex;width:100%;margin-top:6px;box-sizing:border-box}
+.cr input,.cr select{font:inherit;font-size:16px;padding:9px 10px;border:1.5px solid var(--field);border-radius:8px;background:var(--surface);min-width:0}
+.cr-ym{display:flex;gap:6px}.cr-ym select{flex:1}
+.cr .bad{border-color:#c62828!important;box-shadow:0 0 0 2px #fbe3e3}
+.cr-agree{margin-top:14px;font-size:14px}
+.cr-chk{display:flex;gap:8px;align-items:flex-start;margin:8px 0 2px;cursor:pointer}
+.cr-chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:#13391E}
+.cr-agree details{margin:0 0 6px 26px;font-size:13px}.cr-agree table{border-collapse:collapse;width:100%;margin-top:6px}
+.cr-agree th,.cr-agree td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.cr-agree th{white-space:nowrap;background:var(--soft-bg)}
+.cr-pp{margin:6px 0 0;font-size:13px}
+.cr-msg{margin:10px 0 0;font-size:14.5px;font-weight:800;color:#c62828}
+.cr-types{grid-template-columns:repeat(3,1fr)}
+.cr-tblwrap{overflow-x:auto}
+.cr-tbl{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+.cr-tbl th{background:var(--soft-bg);padding:8px 6px;border:1px solid var(--line);font-weight:700;text-align:center;line-height:1.3}
+.cr-tbl td{border:1px solid var(--line);padding:5px;text-align:center}
+.cr-tbl input,.cr-tbl select{width:100%;font-size:15px;padding:7px 6px;text-align:right}
+.cr-tbl select{text-align:left}.cr-tbl tr.base td{background:var(--soft-bg)}
+.cr-go{text-align:center;margin:8px 0 0}.cr-go .btn{font-size:17px;padding:14px 26px}
+.cr-go .btn.off{opacity:.45}
+.cr-out{margin:24px 0 0;font-family:var(--sans);scroll-margin-top:96px}
+.cr-top{background:var(--green-bg);color:#fff;border-radius:10px;padding:22px 24px;margin-bottom:16px}
+.cr-top .big{font-size:34px;font-weight:800;color:var(--yellow);margin:4px 0;line-height:1.25}
+.cr-ok{margin:0 0 10px;font-weight:800;background:rgba(255,255,255,.12);padding:8px 12px;border-radius:6px}
+.cr-ok.err{background:#fbe3e3;color:#c62828}
+.cr-out h3{color:var(--green);margin:22px 0 10px;font-size:20px}
+.cr-card{border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:0 0 10px;background:var(--surface)}
+.cr-card.hi{border-color:var(--green)}.cr-card.no{opacity:.75}
+.cr-h{display:flex;justify-content:space-between;align-items:center;margin:0 0 6px;font-size:16.5px}
+.cr-h em{font-style:normal;font-size:13px;font-weight:800;padding:3px 10px;border-radius:12px;background:var(--soft-bg);color:var(--sub)}
+.cr-card.hi .cr-h em{background:var(--tint);color:var(--green)}.cr-card.chk .cr-h em{background:#fff4dc;color:#8a5a00}
+.cr-amt{margin:0 0 4px;font-size:22px;font-weight:800;color:var(--green)}
+.cr-why{margin:0;font-size:13.5px;color:var(--sub);line-height:1.6}
+.cr-det{margin:6px 0 10px}.cr-yt{width:100%;border-collapse:collapse;font-size:13.5px}
+.cr-yt th,.cr-yt td{border-bottom:1px solid var(--line);padding:7px 4px;text-align:center}.cr-yt th{font-weight:700;color:var(--sub)}
+.cr-det{overflow-x:auto}
+.cr-warn{color:#3d2f0b;background:#fff8e6;border:1px solid #f0d9a8;border-radius:8px;padding:10px 14px;font-size:13.5px;line-height:1.6;margin:8px 0 0}.cr-warn ul{margin:4px 0 6px;padding-left:18px}.cr-warn p{margin:0}
+.cr-note{font-size:13.5px;color:#8a5a00;background:#fff8e6;padding:8px 12px;border-radius:6px}
+.cr-key{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--ink-2);line-height:1.6}.cr-key li{margin:4px 0}.cr-key b{color:var(--ink-1)}.cr-more{margin:8px 0 0;font-size:13.5px;color:var(--sub)}.cr-more summary{cursor:pointer;color:var(--green);font-weight:700}.cr-more p{margin:6px 0 0;line-height:1.6}
+.cr-go .btn+.btn{margin-left:8px}.cr-go .btn.ghost{background:var(--surface);color:var(--green);border:1.5px solid var(--green)}
+.cr-sticky{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;justify-content:center;align-items:center;gap:14px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -6px 18px rgba(0,0,0,.08);font-family:var(--sans)}
+.cr-sticky[hidden]{display:none}.cr-sticky span{font-size:14px;color:var(--sub)}.cr-sticky .btn{padding:11px 22px;font-size:15.5px}
+@media (max-width:760px){.cr-sticky{bottom:calc(64px + env(safe-area-inset-bottom));padding:8px 12px}.cr-sticky span{display:none}.cr-sticky .btn{width:100%;text-align:center}.cr-go .btn{display:block;width:100%}.cr-go .btn+.btn{margin:8px 0 0}}
+.cr-submit{margin:14px 0 0;text-align:center}.cr-submit .btn{font-size:16px;padding:13px 26px}.cr-submit .cr-ok{margin-top:10px}
+.cr-cnt{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0 0;font-size:14px;cursor:pointer}.cr-cnt small{color:var(--sub);font-size:12.5px}.cr-cnt[hidden]{display:none}
+.cr-foot{border-top:2px solid var(--green);margin-top:18px;padding-top:12px;font-size:14.5px}
+details.box.fold table{table-layout:fixed;width:100%}details.box.fold td{word-break:keep-all;overflow-wrap:anywhere}details.box.fold td:first-child{width:28%}
+.cr [hidden],#crItems [hidden]{display:none!important}
+.cr-itbl{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.cr-irow{display:grid;grid-template-columns:1fr repeat(3,auto);gap:6px 10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.cr-irow:first-child{border-top:0}.cr-irow.hd{background:var(--soft-bg);font-size:13px;font-weight:700;color:var(--sub)}
+.cr-irow b{font-size:15px}.cr-irow small{display:block;color:var(--sub);font-size:12.5px;font-weight:400}
+.cr-irow label{display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;white-space:nowrap}
+.cr-irow input{width:18px;height:18px;accent-color:#13391E}
+.cr-got{border-color:#f0d9a8}.cr-got ul{margin:6px 0 4px;padding-left:18px;font-size:14px;line-height:1.7}
+@media (max-width:760px){.cr-irow{grid-template-columns:1fr 1fr 1fr}.cr-irow>div:first-child{grid-column:1/-1}.cr-irow.hd{display:none}}
+@media (max-width:760px){.cr-grid2{grid-template-columns:1fr}.cr-types{grid-template-columns:1fr 1fr 1fr}.cr-top .big{font-size:26px}}
+.cr-quick-lead{margin:0 0 14px;padding:12px 14px;background:#fff;border:1px dashed var(--green);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cr-quick-lead p{margin:0;font-size:14.5px;line-height:1.6;color:var(--ink-2);flex:1 1 300px}
+.cr-quick-lead .btn{padding:10px 18px;font-size:15px;background:var(--surface);color:var(--green);border:1.5px solid var(--green);white-space:nowrap}
+.cr-quick{margin:0 0 22px;scroll-margin-top:84px}.cr-quick[hidden]{display:none}.cr-quick-note{margin:0 0 10px;font-size:14.5px;color:var(--ink-2);line-height:1.6}
+.cr-quick form.lead{max-width:none}
+@media (max-width:760px){.cr-quick-lead .btn{width:100%;text-align:center}}
+</style>
+<div class="wrap" style="padding-top:28px;max-width:980px">
+<p class="crumb"><a href="/">홈</a> › <a href="/calculators/">세금 계산기</a> › 경정청구 확인 계산기</p>
+<h1 style="color:var(--green);margin:6px 0 8px;font-size:30px">경정청구 확인 계산기</h1>
+<p class="lead" style="margin:0 0 18px">2021~2025년분 · 놓친 <b>창업감면·중소기업 특별세액감면·고용증대·통합고용세액공제</b>, 근로자의 <b>부양가족·월세 공제·중소기업 취업자 감면</b>을 돌려받을 수 있는지 <b>범위</b>로 확인합니다</p>
+
+<div class="cr-quick-lead"><p>계산이 어렵거나 무엇을 넣어야 할지 잘 모르시겠다면, 계산하지 않고 <b>바로 1차 무료 검토를 신청</b>하셔도 됩니다.</p><button type="button" class="btn ghost" id="crQuickBtn" aria-controls="crQuick" aria-expanded="false">계산 없이 바로 신청하기</button></div>
+<div class="cr-quick" id="crQuick" hidden>
+<p class="cr-quick-note">성함·연락처만 남겨 주시면 대표 세무사가 직접 연락드려 경정청구 가능 여부부터 확인해 드립니다. 계산기를 쓰시려면 이 칸 아래에서 그대로 진행하시면 됩니다.</p>
+__QUICK__
+</div>
+<div class="ref-box" style="border:2px solid var(--green);background:var(--tint-2);padding:14px 18px;margin:0 0 18px;font-family:var(--sans);border-radius:2px">
+<p style="margin:0 0 2px;font-weight:800;color:var(--green);font-size:17px">1차 무료 검토 신청 계산기입니다</p>
+<p style="margin:0 0 8px;font-weight:700;font-size:15px;color:var(--ink-2)">결과를 확인하신 뒤 원하시면 1차 무료 검토를 접수하실 수 있습니다.</p>
+<ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.75;color:var(--ink-2)">
+<li>각 연도는 <b>2021~2025년 각 해에 시행되던 법</b> 기준으로 계산합니다. 2026년부터 바뀐 제도는 반영하지 않습니다.</li>
+<li>1차 검토는 무료입니다. 계산기로 나온 예상 금액을 재검토하며, 경정청구 가능성을 검토해드립니다.</li>
+<li>정확한 세액 계산은 경정청구를 접수하신 뒤 진행합니다. 이 결과만으로 신고하지 마세요.</li>
+<li>검토에 필요하면 지난 신고서(최소 5년~최대 7년 치)를 요청드릴 수 있습니다.</li>
+</ul>
+<label style="display:flex;gap:10px;align-items:center;margin-top:12px;padding:10px 12px;background:#fff;border:1px solid var(--green);cursor:pointer;font-weight:700;font-size:15px;color:var(--green)"><input type="checkbox" id="agree" style="width:20px;height:20px;flex:none;accent-color:#13391E">위 내용을 확인했고, 결과는 참고용으로만 보겠습니다</label>
+<p id="lockMsg" style="margin:10px 0 0;font-size:15px;font-weight:800;color:#c62828">위 칸에 체크하시면 시작할 수 있습니다.</p>
+</div>
+
+<ol class="steps">
+<li><b>성함·연락처</b> 입력하기</li>
+<li><b>확인할 항목</b> 고르기</li>
+<li><b>세금환급</b> 확인하기</li>
+<li><b>무료검토</b> 접수하기</li>
+</ol>
+
+<form class="cr" id="cr" data-lead="__LEAD__" onsubmit="return false" novalidate>
+<fieldset id="crInfo" disabled class="cr-step">
+<p class="c-q"><span>1</span>연락처 정보 <small class="hint">결과 안내와 검토 연락에만 사용합니다</small></p>
+<div class="cr-grid2">
+<label>성함<input id="crName" autocomplete="name" maxlength="20" placeholder="예: 홍길동 (호칭도 가능)"></label>
+<label>연락처 <small class="hint">(전화 또는 이메일)</small><input id="crPhone" autocomplete="tel" maxlength="60" placeholder="전화번호 또는 이메일"></label>
+</div>
+<div class="cr-agree lf-agree">
+<label class="lf-all"><input type="checkbox" id="crAll"><span><b>[필수]</b> 개인정보 수집·이용·보관 동의</span></label>
+<p class="lf-note">1차 무료 검토와 연락에만 쓰며, 다른 곳에 제공하거나 판매하지 않습니다. 입력하신 내용은 <b>1차 무료 검토 접수하기</b>를 누를 때만 전송되며, 그 전에는 어디에도 저장되지 않습니다.</p>
+<details class="lf-more"><summary>동의 항목 자세히 보기 (2개)</summary>
+<div class="lf-items">
+<label><input type="checkbox" id="crA1"><span><b>[필수]</b> 개인정보 수집·이용 동의</span></label>
+<details><summary>내용 보기</summary><table>
+<tr><th>수집 항목</th><td>성함, 연락처(전화번호 또는 이메일), 계산기에 입력한 내용(개업 연월, 업종, 사업장 소재지, 창업 당시 만 나이, 병역 이행 기간, 신고 방식·기한, 연도별 매출·납부세액·직원 수, 근로자의 총급여 구간·결정세액·누락한 부모님 수·월세, 중소기업 취업자 감면 대상·회사 업종·취업 연월·감면 신청 여부·재직 여부)과 계산 결과</td></tr>
+<tr><th>이용 목적</th><td>경정청구 1차 무료 검토 및 연락</td></tr>
+<tr><th>보유 기간</th><td>__KEEP__이 지나면 파기<br>상담으로 이어지지 않으면 <span class="nw">신청일부터 1년</span> 후 파기</td></tr>
+<tr><th>거부 권리</th><td>동의를 거부할 수 있으며, 거부하시면 이 계산기는 쓸 수 없습니다. 전화·카카오톡으로는 문의하실 수 있습니다.</td></tr>
+</table></details>
+<label><input type="checkbox" id="crA2"><span><b>[필수]</b> 개인정보 국외 보관 동의 <small>(신청 내용을 Google 서버에 저장)</small></span></label>
+<details><summary>내용 보기</summary><table>
+<tr><th>저장 항목</th><td>위 수집 항목 전부</td></tr>
+<tr><th>저장 국가·시기·방법</th><td>미국 등 Google 데이터센터 소재 국가 / ‘1차 무료 검토 접수하기’를 누를 때 / 암호화 통신으로 전송</td></tr>
+<tr><th>저장 서비스 제공업체</th><td>Google LLC (설문지·스프레드시트)<br>문의 googlekrsupport<wbr>@google.com</td></tr>
+<tr><th>목적·기간</th><td>1차 무료 검토 신청 내용 보관<br>__KEEP__<br>상담으로 이어지지 않으면 <span class="nw">신청일부터 1년</span></td></tr>
+<tr><th>거부 방법·효과</th><td>체크하지 않으시면 됩니다. 이 경우 이 계산기는 쓸 수 없으며, 전화·카카오톡으로 문의하실 수 있습니다.</td></tr>
+</table></details>
+</div>
+</details>
+<p class="cr-pp"><a href="/privacy/">개인정보 처리방침 전문 보기</a></p>
+</div>
+<p class="cr-msg" id="crInfoMsg">성함·연락처를 넣고 동의해 주시면 다음으로 넘어갑니다.</p>
+</fieldset>
+
+<fieldset id="crType" disabled class="cr-step">
+<p class="c-q"><span>2</span>신청 유형 선택 <small class="hint">복수 선택 가능합니다</small></p>
+<div class="chips cr-types">
+<label><input type="checkbox" name="crt" value="p"><span>개인사업자<small>종합소득세</small></span></label>
+<label><input type="checkbox" name="crt" value="c"><span>법인사업자<small>법인세</small></span></label>
+<label><input type="checkbox" name="crt" value="w"><span>근로자<small>연말정산</small></span></label>
+</div>
+<p class="cr-msg" id="crTypeMsg">하나 이상 고르시면 다음으로 넘어갑니다.</p>
+</fieldset>
+
+<fieldset id="crBase" class="cr-step" hidden>
+<p class="c-q"><span>3</span>사업자 기본정보 <small class="hint" id="crBizKind"></small></p>
+<div class="cr-grid2">
+<label>개업 연월<span class="cr-ym"><select id="crOpenY"></select><select id="crOpenM"></select></span></label>
+<label>업종<select id="crInd"><option value="">눌러서 선택</option><option value="online">온라인 판매(통신판매)</option><option value="retail">일반 도소매(매장 판매)</option><option value="food">음식점</option><option value="beauty">미용실·네일 등</option><option value="mfg">제조업</option><option value="build">건설업</option><option value="it">IT·소프트웨어·정보서비스</option><option value="etc">그 밖의 업종</option></select></label>
+<label>사업장 소재지 <small class="hint">(법인은 본점)</small><select id="crReg"><option value="">눌러서 선택</option><option value="over">서울·인천 대부분·경기 일부(과밀억제권역)</option><option value="metro">그 밖의 수도권(인천·경기 나머지)</option><option value="local">수도권 밖(지방)</option><option value="unk">잘 모르겠음</option></select></label>
+<label>최초 소득 발생 연도 <small class="hint">(개업 초기 결손이 있었던 경우)</small><select id="crFirstInc"></select></label>
+</div>
+<p class="cr-msg" id="crBaseMsg">개업 연월·업종·사업장 소재지를 고르시면 확인할 항목이 나옵니다.</p>
+</fieldset>
+
+<fieldset id="crItems" class="cr-step" hidden>
+<p class="c-q"><span>4</span>확인할 항목 선택 <small class="hint">적용받은 적이 있는지 선택하시면 필요한 입력 칸만 표시됩니다</small></p>
+<p style="margin:0 0 10px"><button type="button" id="crAllUnk" style="font:inherit;font-size:14.5px;font-weight:700;padding:9px 16px;border:1.5px solid var(--green);border-radius:8px;background:var(--surface);color:var(--green);cursor:pointer">잘 모르는 경우 — 전부 확인합니다</button></p>
+<div class="cr-itbl" id="crItemRows"></div>
+<p class="hint" style="margin-top:8px"><b>안 받음·모름</b>을 선택하시면 환급 가능 금액을 계산합니다. <b>받음</b>을 선택하시면 누락 여부를 확인할 사항을 안내하고, 세무사가 별도로 검토합니다. 해당 없는 항목은 비워 두셔도 됩니다(선택한 항목을 다시 누르면 해제됩니다).</p>
+</fieldset>
+
+<fieldset id="crBiz" class="cr-step" hidden>
+<p class="c-q"><span>5</span>계산에 필요한 정보 <small class="hint">선택한 항목에 필요한 칸만 표시됩니다</small></p>
+<p class="hint" id="crBizNone" hidden>모두 '받음'이라 더 넣으실 건 없습니다. 아래 결과 보기를 누르시면 확인할 점을 보여 드립니다.</p>
+<div class="cr-grid2">
+<label data-need="st jb">최초 창업 여부<select id="crFirst"><option value="">눌러서 선택</option><option value="y">처음 창업함</option><option value="n">처음이 아님(같은 업종 경영·사업 승계·법인 전환)</option><option value="u">잘 모르겠음</option></select></label>
+<label data-need="st">창업 당시 만 나이 <small class="hint">(법인은 최대주주인 대표자 기준)</small><input id="crAge" inputmode="numeric" maxlength="2" placeholder="예: 36"></label>
+<label data-need="st">병역 이행 기간 <small class="hint">(개월, 없으면 0)</small><input id="crMil" inputmode="numeric" maxlength="3" placeholder="예: 21"></label>
+<label data-need="jb">신고 방식<select id="crBook"><option value="">눌러서 선택</option><option value="book">장부로 신고함(기장)</option><option value="est">장부 없이 신고함(추계·단순경비율 등)</option><option value="u">잘 모르겠음</option></select></label>
+<label data-need="st sp">신고기한 준수 여부<select id="crLate"><option value="">눌러서 선택</option><option value="ok">모두 기한 안에 신고함</option><option value="part">기한 후 신고한 해가 있음</option><option value="late">모두 기한 후 신고함</option><option value="u">잘 모르겠음</option></select></label>
+<label hidden>감면·공제 적용 여부<select id="crGot"><option value="">눌러서 선택</option><option value="n">안 받음</option><option value="y">일부 받음</option><option value="u">잘 모르겠음</option></select></label>
+</div>
+<p class="c-q" style="margin-top:22px" data-need="any">사업연도별 필요한 정보를 대략적으로 입력해 주세요 <small class="hint">금액은 원 단위(7천만 원 → 70,000,000), 직원 수는 12월 말 기준입니다</small></p>
+<div class="cr-tblwrap" data-need="any"><table class="cr-tbl" id="crBizTbl"></table></div>
+<p class="hint" id="crAmtHint" aria-live="polite" style="font-weight:700"></p>
+<p class="hint" id="crBizHint"></p>
+<div class="cr-warn" style="margin-top:10px" data-need="jb"><b>직원 수에 넣지 마세요</b><ul><li>대표자 본인·배우자와 그 친족, 임원</li><li>근로계약기간 1년 미만인 근로자(계약 갱신으로 1년 이상이면 포함합니다)</li><li>월 소정근로시간 60시간 미만인 단시간근로자(60시간 이상은 0.5명, 요건 충족 시 0.75명으로 계산합니다)</li><li>근로소득 원천징수·국민연금·건강보험 납부 내역이 확인되지 않는 사람</li></ul><p>'청년 등'은 만 34세 이하(2022년까지는 29세 이하) 정규직(병역 이행 기간 최대 6년 빼고, 기간제·단시간·파견 제외), 60세 이상, 장애인, 경력단절자(2023년부터)입니다. 정확하지 않으면 대략적으로 입력하셔도 됩니다. 상담 시 급여대장으로 다시 확인합니다.</p></div>
+</fieldset>
+
+<fieldset id="crWork" class="cr-step" hidden>
+<p class="c-q"><span>4</span>근로자 연말정산 정보 <small class="hint">연말정산한 연도만 입력하시면 됩니다</small></p>
+<p class="hint" id="crWorkNone" hidden>모두 '받음'이라 더 넣으실 건 없습니다. 아래 결과 보기를 누르시면 확인할 점을 보여 드립니다.</p>
+<div class="cr-tblwrap"><table class="cr-tbl" id="crWorkTbl"></table></div>
+<p class="hint" id="crAmtHint2" aria-live="polite" style="font-weight:700"></p>
+<p class="hint">금액은 원 단위로 입력합니다. 납부세액 = 원천징수영수증의 '결정세액'(모르시면 비워 두세요). 누락한 부모님 수 = 연말정산 때 부양가족으로 공제받지 않은 부모님 수(형제가 이미 공제받았으면 제외합니다).</p>
+</fieldset>
+
+<div class="cr-go" id="crGoBox" hidden>
+<button type="button" class="btn ghost" id="crGo">결과 보기</button>
+<p class="cr-msg" id="crGoMsg" aria-live="polite"></p>
+</div>
+</form>
+
+<section class="cr-out" id="crOut" hidden></section>
+
+<details class="box fold" style="margin-top:28px"><summary class="label">어떤 기준으로 계산하나요?</summary>
+<table>
+<tr><td>창업감면</td><td>최초 소득 발생 연도부터 5년간 적용합니다. 청년(병역 이행 기간 최대 6년을 빼고 만 34세 이하)과 생계형(매출 2021년분 4,800만 원, 2022~2025년분 8천만 원 이하)은 과밀억제권역 50%, 그 밖의 지역 100%이고, 그 외 창업은 과밀억제권역 밖에서만 50%입니다. 생계형 매출은 개업 첫해를 1년으로 환산한 경우와 환산하지 않은 경우를 함께 계산해 범위로 보여 드립니다. 2018년 5월 29일 전 창업은 당시 법에 따라 과밀억제권역 밖에서만 50%이며, 통신판매업·미용업은 대상 업종이 아닙니다.</td></tr>
+<tr><td>중소기업 특별세액감면</td><td>소기업 기준으로 도소매업 10%, 제조·건설업 등은 수도권 20%·지방 30%입니다. 창업감면과 같은 해에는 둘 중 큰 쪽 하나만 적용합니다.</td></tr>
+<tr><td>고용증대·통합고용세액공제</td><td>2021~2022년에 늘어난 직원은 고용증대세액공제(중소기업 청년 등 수도권 1,100만 원·지방 1,200만 원(2022년 증가분은 1,300만 원), 그 외 700만 원·770만 원), 2023~2025년에 늘어난 직원은 통합고용세액공제(청년 등 수도권 1,450만 원·지방 1,550만 원, 그 외 850만 원·950만 원) 기준으로 계산합니다. 늘어난 해와 그 뒤 2년간 공제하며, 그 사이 전체 인원이 줄면 그 해부터 공제를 빼고 이미 받은 공제 중 다시 내야 하는 금액(추징)도 뺍니다. 청년 등만 줄면 그 해부터 그 외 단가를 적용하고 차액을 추징합니다. 2023~2024년에 늘어난 직원은 두 제도 중 하나를 고를 수 있어, 공제액이 큰 통합고용세액공제로 계산합니다. 고용증대세액공제의 청년은 29세 이하, 통합고용세액공제의 청년은 34세 이하로 기준이 달라, 나눌 수 없는 부분은 범위로 보여 드립니다. 2021년 전에 개업한 경우 2019·2020년 말 직원 수를 넣으면 2020년에 늘어난 직원의 2021~2022년 공제(2·3년 차)도 계산합니다. 2020년 공제를 경정청구 기간이 지나 받지 못했어도 2·3년 차 공제는 받을 수 있습니다. 2019년 이전에 늘어난 직원 몫과 사회보험료 세액공제는 계산하지 않습니다.</td></tr>
+<tr><td>근로자</td><td>부모님 1명당 기본공제 150만 원(70세 이상은 경로우대 100만 원 추가)에 총급여 구간별 세율을 곱해 대략 계산합니다. 월세는 그 해 법에 따른 공제율·한도·총급여 기준을 적용합니다(월세 세액공제를 받으면 표준세액공제 13만 원은 적용되지 않습니다). 중소기업 취업자 소득세 감면은 결정세액에 감면율(청년 5년간 90%, 60세 이상·장애인·경력단절 여성 3년간 70%)을 곱하고, 연 한도(2022년분까지 150만 원, 2023년분부터 200만 원) 안에서 아직 받지 않은 기간만 낮게(보수적으로) 계산합니다. 한도에 걸리는 해는 근로소득세액공제가 같이 줄어드는 몫을 빼고, 감면을 받는 해의 부양가족 공제 효과도 그만큼 줄여 계산합니다.</td></tr>
+<tr><td>적용 제외</td><td>기한 후 신고한 해는 창업감면·중소기업 특별세액감면이 적용되지 않습니다(제128조②). 장부 없이(추계) 신고한 해는 고용 공제가 적용되지 않습니다(제128조①). 사업용계좌 미신고·현금영수증 가맹 의무 위반이 있으면 감면이 적용되지 않을 수도 있습니다(제128조④).</td></tr>
+<tr><td>농어촌특별세</td><td>고용증대·통합고용세액공제로 감면·공제받은 세액의 20%는 농어촌특별세로 내야 해서, 맨 위 합계와 연도별 환급 예상액에서는 뺐습니다. 창업감면·중소기업 특별세액감면·월세 세액공제·중소기업 취업자 소득세 감면은 농어촌특별세가 없고, 부양가족 공제는 대상이 아닙니다.</td></tr>
+<tr><td>한도</td><td>그 해 납부세액보다 많이 돌려받을 수는 없습니다. 최저한세(개인 사업소득 산출세액의 35~45%, 법인 과세표준의 7%, 창업감면 100%인 해는 제외)도 대략 반영해 계산했습니다.</td></tr>
+</table>
+<p class="src">조세특례제한법 제6조·제7조·제29조의7·제29조의8·제95조의2·제127조·제128조·제132조(각 연도 시행분)·부칙(법률 제15623호) 제4조, 같은 법 시행령 제26조의7·제26조의8, 소득세법 제50조·제51조·제55조·제59조의4, 국세기본법 제45조의2, 농어촌특별세법 제4조·제5조, 같은 법 시행령 제4조</p>
+</details>
+</div>
+
+<script>(function(){var b=document.getElementById('crQuickBtn'),q=document.getElementById('crQuick');if(!b||!q)return;b.addEventListener('click',function(){q.hidden=false;b.setAttribute('aria-expanded','true');q.scrollIntoView({behavior:'smooth',block:'start'});var n=q.querySelector('input[name="name"]');if(n)setTimeout(function(){n.focus({preventScroll:true});},400);});})();</script>
+<script src="/calc-claim.js" defer></script>
