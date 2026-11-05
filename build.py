@@ -1036,15 +1036,15 @@ def build_location():
 YANGDO_ENABLED = False
 
 CALCS = [
-    ("경정청구", "경정청구 확인 계산기", "2021~2025년분 놓친 창업감면·고용공제·부양가족·월세, 돌려받을 세금 범위 + 1차 무료 검토", "/calculators/amended-return/"),
+    ("경정청구", "경정청구 확인 계산기", "2021~2025년분 놓친 감면·공제 확인, <span class=\"nw\">1차 무료 검토</span>", "/calculators/amended-return/"),
     ("증여세", "증여세 계산기", "관계별 공제·10년 합산·혼인출산 공제를 반영한 예상 증여세", "/calculators/gift-tax/"),
     ("양도소득세", "양도소득세 계산기", "주택·상가·토지를 나눠 <span class=\"nw\">보유·거주 기간별로</span> 계산한 예상 양도세", "/calculators/capital-gains/"),
     ("취득세", "1주택 취득세 계산기", "1주택 취득세·지방교육세·농어촌특별세, 생애최초 감면 반영", "/calculators/acquisition-tax/"),
-    ("신고기한", "신고기한 계산기", "양도세·증여세·상속세·취득세·해외주식·사업자등록 기한, <span class=\"nw\">주말·공휴일까지</span> 반영", "/calculators/filing-deadline/"),
+    ("신고기한", "신고기한 계산기", "양도·증여·상속·취득세 등 신고기한, <span class=\"nw\">주말·공휴일까지</span> 반영", "/calculators/filing-deadline/"),
     # ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),  # 2026-10-20 숨김(준비 중 카드)
     ("원천세·인건비", "급여 실수령액·4대보험 계산기", "4대보험·소득세를 뺀 실수령액, <span class=\"nw\">세후 금액으로</span> 세전 급여 역산", "/calculators/four-insurance/"),
     ("원천세·인건비", "프리랜서 3.3% 계산기", "3.3%를 뗀 실제 지급액, <span class=\"nw\">세후 금액으로</span> 계약 금액 역산", "/calculators/freelancer-withholding/"),
-    ("기장료", "기장료 계산기", "매출액별 보수 기준표에 따른 월 기장료", "/calculators/bookkeeping-fee/"),
+    ("기장료", "기장료 계산기", "매출액별 보수 기준표에 따른 월 기장료, <span class=\"nw\">1인 사업자 할인</span> 반영", "/calculators/bookkeeping-fee/"),
 ]
 
 def calc_cards(hide_soon=False):
