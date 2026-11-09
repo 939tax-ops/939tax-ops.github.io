@@ -567,7 +567,8 @@ bs.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.f);his
 </article></div>
 {VPLAYER_JS}'''
         ld = [{"@type": "VideoObject", "name": v["title"], "description": re.sub("<[^>]+>", "", v["lead"]),
-               "thumbnailUrl": f'{SITE}/assets/yt/v{v["k"]}.jpg', "uploadDate": v["date"],
+               "thumbnailUrl": f'{SITE}/assets/yt/v{v["k"]}.jpg', "uploadDate": (v["date"] if "T" in v["date"] else v["date"] + "T00:00:00+09:00"),  # 시간대 포함(서치콘솔 동영상 경고, 2026-11-09)
+              
                "embedUrl": f'https://www.youtube.com/embed/{v["yt"]}', "contentUrl": f'https://www.youtube.com/watch?v={v["yt"]}'}]
         write(f"video/{v['slug']}/index.html", page(f'{v["title"]} | {NAME}', re.sub("<[^>]+>", "", v["lead"]), url, art, "qa", ld))
 
