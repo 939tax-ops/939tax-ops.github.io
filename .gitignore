@@ -5,3 +5,10 @@ _backup/
 _draft/
 01. 관련자료/
 _tools/
+
+# 자동 푸시 도구 (2026.11.21) — 사이트에 올리지 않는다
+_autopush.bat
+_autopush_install.bat
+_autopush.log
+.push-ok
+.push-failed
