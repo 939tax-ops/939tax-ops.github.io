@@ -84,6 +84,14 @@ FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 �
         ("접수 확인", "상담 신청은 영업일 기준 1~2일 이내에\u00a0연락드립니다."),
         ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저\u00a0여쭤봅니다."),
         ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린\u00a0뒤 진행합니다.")]
+# 홈 전용 상담 흐름(2026-11-23): 번호를 선으로 잇는 4단계. 설명은 두 줄로 끊어 둠(ln 한 칸 = 한 줄)
+HOME_FLOW = [("상담 신청", "전화, 카카오톡, 이메일이나", "상담 신청 양식으로 남겨 주세요."),
+             ("접수 확인", "영업일 기준 1~2일 안에", "대표 세무사가 직접 연락드립니다."),
+             ("상황·자료 확인", "필요한 자료와 확인할 사항을", "먼저 여쭤봅니다."),
+             ("상담·업무 진행", "보수는 보수표 기준으로", "미리 안내드린 뒤 진행합니다.")]
+HOME_FLOW_HTML = ('<section class="flow3"><h2>상담은 이렇게 진행됩니다</h2><p class="sub">처음 연락부터 업무 진행까지 네 단계입니다.</p><ol>'
+                  + "".join(f'<li><span class="dot">{i}</span><b>{a}</b><p><span class="ln">{b}</span><span class="ln">{c}</span></p></li>' for i, (a, b, c) in enumerate(HOME_FLOW, 1))
+                  + '</ol></section>')
 def flow_html(title="상담은 이렇게 진행됩니다"):
     li = "".join(f'<li><b>{esc(a)}</b><span>{esc(b)}</span></li>' for a, b in FLOW)
     return f'<section class="flow-sec"><h2>{title}</h2><ol class="flow">{li}</ol></section>'
@@ -828,7 +836,7 @@ def build_home_v2(posts, out="index.html"):
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 보수도 할인됩니다.</p>
 <p class="ab-more" style="margin-top:14px"><a href="/fees/">보수 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
 </section>
-{flow_html()}
+{HOME_FLOW_HTML}
 </div>
 <section class="block alt"><div class="wrap"><h2 class="sec">상담 전에 미리 확인해 보세요</h2>
 <div class="h2-search">{SEARCH_BOX.replace("세금 궁금한 점, 단어나 문장으로 편하게 검색해 보세요","단어나 문장으로 검색하면<br>세무 Q&amp;A와 세금 계산기를 함께 찾아 드립니다").replace("예: 증여세 한도 / 부모님께 1억 받으면 세금 내나요?","예: 부가세 신고 기한 / 증여세 계산기 / 부모님께 1억 받으면?")}</div>
@@ -836,7 +844,7 @@ def build_home_v2(posts, out="index.html"):
 <div class="h2-lc"><p class="h2-k">세무 Q&amp;A</p><b>자주 묻는 세금 질문을 조문 근거와 함께 정리했습니다</b><ul>{qa3}</ul><a class="h2-more" href="/qa/">Q&amp;A 전체 보기 →</a></div>
 <div class="h2-lc"><p class="h2-k">세금 계산기</p><b>조문 기준으로 만든 간편 계산기입니다</b><div class="h2-chips">{calcs}</div><a class="h2-more" href="/calculators/">계산기 전체 보기 →</a></div>
 </div></div></section>
-<div class="wrap"><section class="block h2-cta">
+<div class="wrap"><section class="block h2-cta cta-photo">
 <h2>세금 고민, 먼저 편하게 남겨 주세요</h2>
 <p>대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내드립니다.</p>
 <div class="btns"><a class="btn primary" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
