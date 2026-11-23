@@ -87,8 +87,8 @@ FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 �
 # 홈 전용 상담 흐름(2026-11-23): 번호를 선으로 잇는 4단계. 설명은 두 줄로 끊어 둠(ln 한 칸 = 한 줄)
 HOME_FLOW = [("상담 신청", "전화, 카카오톡, 이메일이나", "상담 신청 양식으로 남겨 주세요."),
              ("접수 확인", "영업일 기준 1~2일 안에", "대표 세무사가 직접 연락드립니다."),
-             ("상황·자료 확인", "상황을 먼저 여쭤보고,", "필요한 자료를 안내드립니다."),
-             ("상담·업무 진행", "보수는 보수표 기준으로", "미리 안내드린 뒤 진행합니다.")]
+             ("상황·자료 확인", "상황을 먼저 여쭤보고,", "필요한 자료를 안내해 드립니다."),
+             ("상담·업무 진행", "보수는 보수표 기준으로", "미리 안내해 드린 뒤 진행합니다.")]
 HOME_FLOW_HTML = ('<section class="flow3"><h2>상담은 이렇게 진행됩니다</h2><p class="sub">처음 연락부터 업무 진행까지 네 단계입니다.</p><ol>'
                   + "".join(f'<li><span class="dot">{i}</span><b>{a}</b><p><span class="ln">{b}</span><span class="ln">{c}</span></p></li>' for i, (a, b, c) in enumerate(HOME_FLOW, 1))
                   + '</ol></section>')
@@ -846,7 +846,7 @@ def build_home_v2(posts, out="index.html"):
 </div></div></section>
 <div class="wrap"><section class="block h2-cta cta-photo">
 <h2>세금 고민, 먼저 편하게 남겨 주세요</h2>
-<p>대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내드립니다.</p>
+<p>대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내해 드립니다.</p>
 <div class="btns"><a class="btn primary" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
 <p class="h2-sub">이메일 <a href="mailto:{EMAIL}">{EMAIL}</a><br><a href="/location/">오시는 길 (청량리역 4번 출구 도보 1~2분)</a></p>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
@@ -1200,7 +1200,7 @@ def check_card():
 <p>돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다.</p>
 <ul>{items}</ul>
 <a class="btn primary" href="/contact/#f-lk">무료 확인 신청하기 →</a>
-<p class="cc-foot">가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내드립니다.</p></aside>'''
+<p class="cc-foot">가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내해 드립니다.</p></aside>'''
 
 def lead_form(pre=None, uid="lf", kind="consult"):
     if not LEAD_ENABLED:
@@ -1214,7 +1214,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
     ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
     btn = "무료 확인 신청하기 →" if chk else "상담 신청 →"
-    foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내드립니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 비용이 발생할 수도 있는 경우에는 미리 안내드립니다."
+    foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내해 드립니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 비용이 발생할 수도 있는 경우에는 미리 안내해 드립니다."
     return f'''<form id="f-{uid}" class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
 <h2>{title}</h2>
 <p class="lf-sub">{sub}</p>

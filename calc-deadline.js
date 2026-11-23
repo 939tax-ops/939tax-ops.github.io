@@ -143,7 +143,7 @@
     $('alert').className='dl-alert '+cls; $('alert').innerHTML=a+(cls==='bad'?CTA:''); $('alert').hidden=false;
     var dk=key()==='cgb'?'cgb':t, dl=DOCS[dk], gk=t==='gift'?val('gk'):'';
     if(gk&&GIFT_DOCS[gk]) dl=['가족관계증명서','받는 분 신분증 사본'].concat(GIFT_DOCS[gk],[DOCS.gift[DOCS.gift.length-1]]);
-    if(dl){ $('docs').innerHTML='<p class="dd-h">처음 상담 때 준비하시면 좋은 서류</p><ul><li>'+dl.join('</li><li>')+'</li></ul><p class="dd-f">경우에 따라 필요한 서류는 상담하면서 추가로 안내드립니다.</p>'; $('docs').hidden=false; } else { $('docs').hidden=true; }
+    if(dl){ $('docs').innerHTML='<p class="dd-h">처음 상담 때 준비하시면 좋은 서류</p><ul><li>'+dl.join('</li><li>')+'</li></ul><p class="dd-f">경우에 따라 필요한 서류는 상담하면서 추가로 안내해 드립니다.</p>'; $('docs').hidden=false; } else { $('docs').hidden=true; }
     LAST={svc:SVC[t]||'양도·상속·증여세',memo:'[신고기한 계산기] '+R.name+(gk?' · 받은 재산: '+gk:'')+'\n기준일 '+sd(ev)+' · 기한 '+sd(r.due)+' · '+(r.left>0?r.left+'일 남음':r.left===0?'오늘 기한':(-r.left)+'일 지남')+'\n'};
     // 계산 과정
     var tb='';
