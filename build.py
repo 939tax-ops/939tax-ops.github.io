@@ -836,7 +836,6 @@ def build_home_v2(posts, out="index.html"):
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 수수료도 할인됩니다.</p>
 <p class="ab-more m-only" style="margin-top:14px"><a href="/fees/">수수료 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
 </section>
-{HOME_FLOW_HTML}
 </div>
 <section class="block alt"><div class="wrap"><h2 class="sec">상담 전에 미리 확인해 보세요</h2>
 <div class="h2-search">{SEARCH_BOX.replace("세금 궁금한 점, 단어나 문장으로 편하게 검색해 보세요","단어나 문장으로 검색하면<br>세무 Q&amp;A와 세금 계산기를 함께 찾아 드립니다").replace("예: 증여세 한도 / 부모님께 1억 받으면 세금 내나요?","예: 부가세 신고 기한 / 증여세 계산기 / 부모님께 1억 받으면?")}</div>
@@ -844,9 +843,10 @@ def build_home_v2(posts, out="index.html"):
 <div class="h2-lc"><p class="h2-k">세무 Q&amp;A</p><b>자주 묻는 세금 질문을 조문 근거와 함께 정리했습니다</b><ul>{qa3}</ul><a class="h2-more" href="/qa/">Q&amp;A 전체 보기 →</a></div>
 <div class="h2-lc"><p class="h2-k">세금 계산기</p><b>조문 기준으로 만든 간편 계산기입니다</b><div class="h2-chips">{calcs}</div><a class="h2-more" href="/calculators/">계산기 전체 보기 →</a></div>
 </div></div></section>
+<div class="wrap">{HOME_FLOW_HTML}</div>
 <div class="wrap"><section class="block h2-cta cta-photo">
 <h2>세금 고민, 먼저 편하게 남겨 주세요</h2>
-<p>대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내해 드립니다.</p>
+<p>신청 확인과 첫 연락은 무료입니다.<br>사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내해 드립니다.</p>
 <div class="btns"><a class="btn primary" href="/contact/">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener">{kk_ic}카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div>
 <p class="h2-sub">이메일 <a href="mailto:{EMAIL}">{EMAIL}</a><br><a href="/location/">오시는 길 (청량리역 4번 출구 도보 1~2분)</a></p>
 <p class="note">외근·상담 중에는 통화 연결이 어려울 수 있습니다. 카카오톡 채널이나 이메일로 남겨 주시면 확인 후 연락드리겠습니다.</p>
