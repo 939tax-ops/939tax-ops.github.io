@@ -83,12 +83,12 @@ AREA_TEXT = "서울 및 경기도\u00a0일부"
 FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨\u00a0주세요."),
         ("접수 확인", "상담 신청은 영업일 기준 1~2일 이내에\u00a0연락드립니다."),
         ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저\u00a0여쭤봅니다."),
-        ("상담·업무 진행", "보수는 보수표 기준으로 미리 말씀드린\u00a0뒤 진행합니다.")]
+        ("상담·업무 진행", "수수료는 기준표에 따라 미리 말씀드린\u00a0뒤 진행합니다.")]
 # 홈 전용 상담 흐름(2026-11-23): 번호를 선으로 잇는 4단계. 설명은 두 줄로 끊어 둠(ln 한 칸 = 한 줄)
 HOME_FLOW = [("상담 신청", "전화, 카카오톡, 이메일이나", "상담 신청 양식으로 남겨 주세요."),
              ("접수 확인", "영업일 기준 1~2일 안에", "대표 세무사가 직접 연락드립니다."),
              ("상황·자료 확인", "상황을 먼저 여쭤보고,", "필요한 자료를 안내해 드립니다."),
-             ("상담·업무 진행", "보수는 보수표 기준으로", "미리 안내해 드린 뒤 진행합니다.")]
+             ("상담·업무 진행", "수수료는 기준표에 따라", "미리 안내해 드린 뒤 진행합니다.")]
 HOME_FLOW_HTML = ('<section class="flow3"><h2>상담은 이렇게 진행됩니다</h2><p class="sub">처음 연락부터 업무 진행까지 네 단계입니다.</p><ol>'
                   + "".join(f'<li><span class="dot">{i}</span><b>{a}</b><p><span class="ln">{b}</span><span class="ln">{c}</span></p></li>' for i, (a, b, c) in enumerate(HOME_FLOW, 1))
                   + '</ol></section>')
@@ -176,7 +176,7 @@ def page(title, desc, path, body, active="", ld=None, extra_head=""):
         cls = ' on' if key == active else ''
         return (f'<div class="dd{cls}"><a class="dd-t" href="{head}" aria-haspopup="true">{label}<span class="car" aria-hidden="true"></span></a>'
                 f'<div class="dd-m">{sub}</div></div>')
-    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "보수 안내"), ("/area/dongdaemun/", "동대문구 세무사"), ("/location/", "오시는 길")])
+    navh = (dd("사무소 소개", "about", "/about/", [("/about/", "인사말·대표 소개"), ("/fees/", "수수료 안내"), ("/area/dongdaemun/", "동대문구 세무사"), ("/location/", "오시는 길")])
             + dd("주요 서비스", "svc", "/services/", [(f"/services/{k}/", t) for k, t, _ in ALL_SERVICES])
             + "".join(f'<a href="{h}"{on if k == active else ""}>{t}</a>' for h, t, k in [("/qa/", "세무 Q&A", "qa"), ("/calculators/", "세금 계산기", "calc"), ("/location/", "오시는 길", "route")]))
     return f'''<!doctype html>
@@ -626,10 +626,10 @@ def build_qa_index(posts):
 WHY = [
     ("세무사 직접 응대",
      "상담부터 신고서 최종 검토까지 세무사가 직접 수행합니다. 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다."),
-    ("보수 공개",
-     "기장료와 신고 보수를 매출 구간별로 공개하고 있습니다. 4대보험 근로자가 없는 1인 사업자의 월 기장료는 간이과세 70,000원, 일반과세 80,000원부터입니다(부가세 별도)."),
-    ("기장 거래처 보수 할인",
-     "기장 거래처는 양도소득세·상속세·증여세 등 기장 외 업무 보수에 20% 할인이 적용됩니다."),
+    ("수수료 공개",
+     "기장료와 신고 수수료를 매출 구간별로 공개하고 있습니다. 4대보험 근로자가 없는 1인 사업자의 월 기장료는 간이과세 70,000원, 일반과세 80,000원부터입니다(부가세 별도)."),
+    ("기장 거래처 수수료 할인",
+     "기장 거래처는 양도소득세·상속세·증여세 등 기장 외 업무 수수료에 20% 할인이 적용됩니다."),
     ("기장 거래처 보조금 정보 제공",
      "해당 가능성이 있는 지원사업·보조금 정보를 정리해 전달드립니다. 요건 해당 여부는 확인해 드리지 않으며, 공고 기관에서 개별 확인이 필요합니다.", "준비 중"),
 ]
@@ -718,7 +718,7 @@ SVC_KW = {
 # 검색에 함께 걸리게 할 도구·안내 페이지(2026.10.13)
 SEARCH_TOOLS = [
  ("기장료 계산기", "/calculators/bookkeeping-fee/", "계산기",
-  "매출액을 넣으면 보수 기준표에 따른 월 기장료가 바로 산출됩니다. 1인 사업자 20% 할인도 반영됩니다.",
+  "매출액을 넣으면 수수료 기준표에 따른 월 기장료가 바로 산출됩니다. 1인 사업자 20% 할인도 반영됩니다.",
   "기장료 기장 수수료 보수 세무대리 비용 얼마 간이과세 일반과세 법인"),
  ("경정청구 확인 계산기", "/calculators/amended-return/", "계산기",
   "2021~2025년분 놓친 창업감면·중소기업 특별세액감면·통합고용세액공제, 근로자 부양가족·월세 공제를 돌려받을 수 있는지 범위로 확인하고 1차 무료 검토를 접수합니다.",
@@ -750,8 +750,8 @@ SEARCH_TOOLS = [
  ("사무소 소개", "/about/", "안내",
   "세무회계택 김태형 세무사의 이력과 업무 분야, 오시는 길 안내입니다.",
   "소개 세무사 김태형 대표 경력 이력 사무소"),
- ("보수 안내", "/fees/", "안내",
-  "기장료·신고대리·양도·상속·증여·상담 보수를 구간별로 공개하고 있습니다.",
+ ("수수료 안내", "/fees/", "안내",
+  "기장료·신고대리·양도·상속·증여·상담 수수료를 구간별로 공개하고 있습니다.",
   "보수 수수료 기장료 신고 대리 비용 가격 얼마 상담료 견적"),
 ]
 
@@ -770,7 +770,7 @@ def build_search_index(posts):
                       "k": " ".join(b for a, b in v["points"])})
     for k, t, d in ALL_SERVICES:  # 업무 안내 페이지도 검색에 걸리게(2026.10.14)
         items.append({"t": t + " 안내", "u": f"/services/{k}/", "c": "업무 안내", "s": d, "h": [], "k": SVC_KW.get(k, t)})
-    for t, u, c, sm, kw in SEARCH_TOOLS:  # 계산기·보수 안내도 검색에 걸리게(2026.10.13)
+    for t, u, c, sm, kw in SEARCH_TOOLS:  # 계산기·수수료 안내도 검색에 걸리게(2026.10.13)
         items.append({"t": t, "u": u, "c": c, "s": sm, "h": [], "k": kw})
     write("search-index.json", json.dumps(items, ensure_ascii=False))
 
@@ -805,7 +805,7 @@ def build_home(posts):
                              "/", body, "home", [person_ld()]))
 
 def build_home_v2(posts, out="index.html"):
-    """홈 구조 개편 시안(2026-10-14): 첫 화면 → 대표 세무사 → 업무 분야 → 보수 → 진행 → 더 알아보기 → 연락."""
+    """홈 구조 개편 시안(2026-10-14): 첫 화면 → 대표 세무사 → 업무 분야 → 수수료 → 진행 → 더 알아보기 → 연락."""
     svc = "".join(f'<a class="card svc" href="/services/{k}/"><b>{t}</b><span>{d}</span></a>' for k, t, d in SERVICES)
     qa3 = "".join(f'<li><a href="/qa/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in posts[:3])
     calcs = "".join(f'<a href="{u}">{n}</a>' for u, n in [("/calculators/amended-return/","경정청구"),("/calculators/gift-tax/","증여세"),("/calculators/capital-gains/","양도소득세"),("/calculators/acquisition-tax/","취득세"),("/calculators/filing-deadline/","신고기한"),("/calculators/four-insurance/","4대보험·실수령액"),("/calculators/freelancer-withholding/","프리랜서 3.3%"),("/calculators/bookkeeping-fee/","기장료")])
@@ -830,11 +830,11 @@ def build_home_v2(posts, out="index.html"):
 <section class="block alt"><div class="wrap"><h2 class="sec">업무 분야</h2><div class="grid svc-grid h2-svc">{svc}</div>
 <div class="band"><div><b>절세상담</b><span>어느 분야든 신고·거래 전에 먼저 확인해 보면 선택지가 넓어집니다.</span></div><a class="btn primary" href="/services/tax-planning/">자세히 보기</a></div></div></section>
 <div class="wrap"><section class="block">
-<div class="fee-hd"><h2 class="sec">세무 보수, 먼저 확인해 보세요</h2><p class="ab-more"><a href="/fees/">보수 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p></div>
-<p class="ln">아래는 월 기장료(부가세 별도)이며, <span class="kp">신고 대리·양도·상속·증여</span> 보수도 보수 안내에 모두 공개해 두었습니다.</p>
+<div class="fee-hd"><h2 class="sec">세무 수수료, <span class="kp">먼저 확인해 보세요</span></h2><p class="ab-more"><a href="/fees/">수수료 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p></div>
+<p class="ln">아래는 월 기장료(부가세 별도)이며, <span class="kp">신고 대리·양도·상속·증여</span> 수수료도 <span class="kp">수수료 안내에</span> 모두 공개해 두었습니다.</p>
 <div class="area-fee"><div><span>개인사업자 (간이과세자)</span><b>70,000원~</b></div><div><span>개인사업자 (일반과세자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
-<p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 보수도 할인됩니다.</p>
-<p class="ab-more m-only" style="margin-top:14px"><a href="/fees/">보수 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
+<p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다. 기장 거래처는 양도·상속·증여 등 기장 외 업무 수수료도 할인됩니다.</p>
+<p class="ab-more m-only" style="margin-top:14px"><a href="/fees/">수수료 안내 전체 보기 →</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a></p>
 </section>
 {HOME_FLOW_HTML}
 </div>
@@ -998,7 +998,7 @@ def build_about():
 </section>
 </div>
 {"" if AB2 else CH_HTML}
-<div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">보수 안내 →</a></p></section></div>
+<div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">수수료 안내 →</a></p></section></div>
 <div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
@@ -1053,7 +1053,7 @@ CALCS = [
     # ("가산세", "가산세 계산기", "신고·납부가 늦었을 때 붙는 가산세"),  # 2026-10-20 숨김(준비 중 카드)
     ("원천세·인건비", "급여 실수령액·4대보험 계산기", "4대보험·소득세를 뺀 실수령액, <span class=\"nw\">세후 금액으로</span> 세전 급여 역산", "/calculators/four-insurance/"),
     ("원천세·인건비", "프리랜서 3.3% 계산기", "3.3%를 뗀 실제 지급액, <span class=\"nw\">세후 금액으로</span> 계약 금액 역산", "/calculators/freelancer-withholding/"),
-    ("기장료", "기장료 계산기", "매출액별 보수 기준표에 따른 월 기장료, <span class=\"nw\">1인 사업자 할인</span> 반영", "/calculators/bookkeeping-fee/"),
+    ("기장료", "기장료 계산기", "매출액별 수수료 기준표에 따른 월 기장료, <span class=\"nw\">1인 사업자 할인</span> 반영", "/calculators/bookkeeping-fee/"),
 ]
 
 def calc_cards(hide_soon=False):
@@ -1092,7 +1092,7 @@ def build_fee_calc():
            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}, "provider": {"@id": SITE + "/#org"}}]
     write("calculators/bookkeeping-fee/index.html",
           page(f"기장료 계산기 | {NAME}",
-               "개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 보수 기준표에 따른 월 기장료가 산출됩니다. 1인 사업자 기준 금액 반영.",
+               "개인·법인 사업자의 1년 매출액을 넣으면 세무회계택 수수료 기준표에 따른 월 기장료가 산출됩니다. 1인 사업자 기준 금액 반영.",
                "/calculators/bookkeeping-fee/", tpl, "calc", ld))
 
 def build_acq_calc():
@@ -1334,7 +1334,7 @@ def build_404():
     body = '<div class="narrow" style="padding:60px 20px"><h1 style="color:var(--green)">페이지를 찾을 수 없습니다</h1><p>주소가 바뀌었거나 삭제된 페이지입니다.</p><div class="btns"><a class="btn primary" href="/">첫 화면으로</a><a class="btn ghost" href="/qa/">세무 Q&amp;A</a></div></div>'
     write("404.html", page("페이지를 찾을 수 없습니다 | " + NAME, "", "/404.html", body).replace("<head>", '<head>\n<meta name="robots" content="noindex">', 1))
 
-# 서비스 페이지 첫 화면 보수 한 줄 — /fees/ 공개 금액과 같게 유지할 것(2026-10-14)
+# 서비스 페이지 첫 화면 수수료 한 줄 — /fees/ 공개 금액과 같게 유지할 것(2026-10-14)
 SVC_PRICE = {
     "bookkeeping": '월 70,000원~ <small>(1인 사업자 할인 적용, 부가세 별도)</small>',
     "tax-filing": '<span class="kp">부가가치세 150,000원~</span>, <span class="kp">종합소득세 200,000원~</span> <small>(부가세 별도)</small>',
@@ -1360,7 +1360,7 @@ def build_services(posts):
         note = f'<p class="note">{esc(x["note"])}</p>' if x.get("note") else ""
         calc = f'<p style="font-family:var(--sans);margin-top:14px"><a class="more" href="{x["calc"][0]}">{x["calc"][1]} →</a></p>' if x.get("calc") else ""
         others = "".join(f'<a href="/services/{k2}/">{t2}</a>' for k2, t2, _ in ALL_SERVICES if k2 != k)
-        wb = [("보수 할인", WHY[2][1]), ("보조금 정보 제공", WHY[3][1], WHY[3][2])]
+        wb = [("수수료 할인", WHY[2][1]), ("보조금 정보 제공", WHY[3][1], WHY[3][2])]
         tps = SERVICE_TOPICS.get(k, [])
         biz = k in ("bookkeeping", "tax-filing")  # 사업자 업무는 사업자 세금(category: business) 글만
         rq = [p for p in posts if topic_of(p) in tps and (not biz or p.get("category") == "business")][:(3 if SVC2 else 5)]
@@ -1376,13 +1376,13 @@ def build_services(posts):
 <p class="crumb"><a href="/">홈</a> › <a href="/services/">주요 서비스</a> › {t}</p>
 <h1>{t}</h1>
 <p class="lead">{esc(x["intro"])}</p>
-<div class="svc-top"><p class="svc-price"><span class="lb">보수</span><span class="v">{SVC_PRICE.get(k, "")}</span><a href="/fees/">보수 안내 전체 →</a></p><div class="btns"><a class="btn primary" href="/contact/" data-mlead>상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div></div>
+<div class="svc-top"><p class="svc-price"><span class="lb">수수료</span><span class="v">{SVC_PRICE.get(k, "")}</span><a href="/fees/">수수료 안내 전체 →</a></p><div class="btns"><a class="btn primary" href="/contact/" data-mlead>상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a><a class="btn ghost" href="tel:{TEL}">전화 {TEL}</a></div></div>
 <div class="svc-cols">
 <section><h2>수행 업무</h2><ul class="ticks">{do}</ul></section>
 <section><h2>이런 분께 필요합니다</h2><ul class="ticks">{fr}</ul></section>
 </div>{note}{calc}{rel_q}{vid_b}{why_b}
 {flow_html()}
-{"" if SVC2 else '<p class="rel-svc"><a href="/fees/">보수 안내 보기 →</a></p>'}
+{"" if SVC2 else '<p class="rel-svc"><a href="/fees/">수수료 안내 보기 →</a></p>'}
 {lead_form(SVC_TO_LEAD.get(k), "ls")}
 <nav class="svc-others"><span>다른 서비스</span>{others}</nav>
 </div>'''
@@ -1393,7 +1393,7 @@ def build_services(posts):
                   {"@type": "ListItem", "position": 3, "name": t, "item": f"{SITE}/services/{k}/"}]}]
         write(f"services/{k}/index.html", page(f"{t} | {NAME} {PERSON}", f"{x['intro']} 서울 동대문구 청량리 세무회계택 김태형 세무사.", f"/services/{k}/", body, "svc", ld))
 
-# 보수 안내 — 기준: 09. 서식\00. 업무 필수자료(자체제작)\01. 세무대리보수료(세무회계택,2026.09.20,V3).xlsx
+# 수수료 안내 — 기준: 09. 서식\00. 업무 필수자료(자체제작)\01. 세무대리보수료(세무회계택,2026.09.20,V3).xlsx
 FEES = [
     ("세무기장", [("개인사업자", "간이과세", "월 70,000원 ~"), ("개인사업자", "일반과세", "월 80,000원 ~"), ("법인사업자", "", "월 120,000원 ~")],
      ["1인 사업자 특별 할인을 적용한 최저 금액입니다.", "매출·자산 규모에 따라 달라지며, 세무조정료는 별도입니다."]),
@@ -1401,7 +1401,7 @@ FEES = [
     ("양도·상속·증여", [("양도소득세", "", "양도가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("증여세", "", "증여가액의 0.1% <small>(최저 200,000원)</small>"),
                          ("상속세", "", "500,000원 + 상속재산의 0.4%"), ("신고 전 세액 계산", "", "100,000원 ~")],
-     ["계산 후 신고까지 맡기시면 계산 보수는 신고 보수에서 전액 차감합니다."]),
+     ["계산 후 신고까지 맡기시면 계산 수수료는 신고 수수료에서 전액 차감합니다."]),
     ("세무상담·기타", [("세무 상담", "사전 검토 없음", "30분 100,000원 ~"), ("세무 상담", "사전 서류 검토", "200,000원 ~"), ("세무조사 대응", "", "1,500,000원 ~"),
                      
                       ("불복", "이의신청·심사·심판", "감액세액의 20% ~")], ["상담은 전화·대면·이메일·메신저 채팅 모두 가능합니다."]),
@@ -1440,11 +1440,11 @@ def build_area():
 
 <div class="wrap"><section class="block">
 <h2 class="sec">기장료를 공개하고 있습니다</h2>
-<p class="ln">세무회계택은 기장료와 신고 보수를 매출 구간별로 공개합니다.<br>
+<p class="ln">세무회계택은 기장료와 신고 수수료를 매출 구간별로 공개합니다.<br>
 아래는 월 기장료입니다(부가세 별도).</p>
 <div class="area-fee"><div><span>개인사업자 (간이과세자)</span><b>70,000원~</b></div><div><span>개인사업자 (일반과세자)</span><b>80,000원~</b></div><div><span>법인사업자</span><b>120,000원~</b></div></div>
 <p class="note" style="margin-top:10px">* 4대보험 근로자가 없는 1인 사업자에 한해 할인가가 적용된 금액입니다.</p>
-<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a><span class="lk-sep"> · </span><a href="/fees/">보수 안내 전체 보기 →</a></p>
+<p class="ab-more" style="margin-top:14px"><a href="/calculators/bookkeeping-fee/">매출액으로 기장료 계산해 보기 →</a><span class="lk-sep"> · </span><a href="/fees/">수수료 안내 전체 보기 →</a></p>
 </section></div>
 
 <section class="block alt"><div class="wrap">
@@ -1495,24 +1495,24 @@ def build_fees():
         return f'<section class="fee-sec"><h2 class="fh"><b>{t}</b></h2>{r}{n}</section>'
     grid = "".join(sec(*f) for f in FEES)
     body = f'''<div class="wrap fee-page" style="padding-top:36px">
-<p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 보수 안내</p>
-<h1>세무 보수 안내</h1>
-<p class="fee-sub">기본 보수 기준이며, 부가가치세는 별도입니다</p>
+<p class="crumb"><a href="/">홈</a> › <a href="/about/">사무소 소개</a> › 수수료 안내</p>
+<h1>세무 수수료 안내</h1>
+<p class="fee-sub">기본 수수료 기준이며, 부가가치세는 별도입니다</p>
 <a class="ccard fee-calc" href="/calculators/bookkeeping-fee/"><span class="t">기장료 계산기</span><b>매출액 넣고 월 기장료 계산하기 →</b></a>
 <div class="fee-grid">{grid}</div>
 <section class="fee-disc"><h2 class="fh"><b>특별 할인 안내</b></h2>
 <div class="pair"><div class="it"><p>1인 사업자 <small>(4대보험 가입 직원 없음)</small></p><b>기장료 20% 할인</b></div>
 <div class="it"><p>기장 거래처</p><b>양도·상속·증여 등 20% 할인</b></div></div>
-<p class="note c">보수표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. <span class="kp">기장료 기준 금액은</span> <span class="kp">개인 간이과세 월 87,500원</span>, <span class="kp">개인 일반과세 월 100,000원</span>, <span class="kp">법인 월 150,000원</span>입니다.</p></section>
-<p class="fee-foot">위 금액은 기본 보수이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
+<p class="note c">수수료표는 4대보험 가입 직원이 있는 사업자를 기준으로 작성했습니다. <span class="kp">기장료 기준 금액은</span> <span class="kp">개인 간이과세 월 87,500원</span>, <span class="kp">개인 일반과세 월 100,000원</span>, <span class="kp">법인 월 150,000원</span>입니다.</p></section>
+<p class="fee-foot">위 금액은 기본 수수료이며, 업무 난이도와 상황에 따라 협의해 조정될 수 있습니다.<br>업무에 따라 착수 전 착수금이 발생할 수 있습니다.</p>
 {lead_form(None, "lfe")}
 <p class="rel-svc" style="margin:18px 0 48px"><a href="/assets/fee-guide-a4.pdf" target="_blank" rel="noopener">인쇄용 PDF(A4) 내려받기</a><span class="lk-sep"> · </span><a href="/calculators/bookkeeping-fee/">기장료 계산기 →</a><span class="lk-sep"> · </span><a href="/services/bookkeeping/">기장 서비스 안내 →</a></p>
 </div>'''
-    ld = [{"@type": "WebPage", "name": "세무 보수 안내", "url": SITE + "/fees/", "about": {"@id": SITE + "/#org"}},
+    ld = [{"@type": "WebPage", "name": "세무 수수료 안내", "url": SITE + "/fees/", "about": {"@id": SITE + "/#org"}},
           {"@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "홈", "item": SITE + "/"},
-              {"@type": "ListItem", "position": 2, "name": "보수 안내", "item": SITE + "/fees/"}]}]
-    write("fees/index.html", page(f"세무 보수 안내 | {NAME} {PERSON}", "세무회계택 기장료·신고대리·양도세·상속세·증여세·상담 보수 안내. 간이과세 개인사업자 월 70,000원부터(1인 사업자 할인 적용, 부가세 별도).", "/fees/", body, "about", ld))
+              {"@type": "ListItem", "position": 2, "name": "수수료 안내", "item": SITE + "/fees/"}]}]
+    write("fees/index.html", page(f"세무 수수료 안내 | {NAME} {PERSON}", "세무회계택 기장료·신고대리·양도세·상속세·증여세·상담 수수료 안내. 간이과세 개인사업자 월 70,000원부터(1인 사업자 할인 적용, 부가세 별도).", "/fees/", body, "about", ld))
 
 def build_sitemap(posts):
     today = datetime.date.today().isoformat()

@@ -1,4 +1,4 @@
-// 기장료 계산기 — 세무회계택 세무대리 보수 기준표 V3(2026.09.20) 기준
+// 기장료 계산기 — 세무회계택 세무대리 수수료 기준표 V3(2026.09.20) 기준
 (function(){
   // [상한, 월 기장료, 조정료 기본, 조정료 비율(1만분의), 비율 기준 하한]
   var SIMPLE_MAX=104000000; // 부가가치세법 시행령 제109조 제1항 — 간이과세 기준 1억 400만원
@@ -7,7 +7,7 @@
     ind:[[1e8,100000,300000,0,0],[3e8,120000,300000,25,1e8],[5e8,150000,800000,18,3e8],[1e9,200000,1160000,12,5e8],[2e9,250000,1760000,9,1e9],[3e9,300000,2660000,6,2e9]],
     corp:[[1e8,150000,400000,0,0],[3e8,180000,400000,25,1e8],[5e8,200000,900000,18,3e8],[1e9,250000,1260000,12,5e8],[3e9,300000,1860000,9,1e9],[5e9,400000,3660000,6,3e9]]
   };
-  function sincere(sales){ // 성실신고확인 추가보수 (개인)
+  function sincere(sales){ // 성실신고확인 추가수수료 (개인)
     if(sales<=5e8) return 1000000;
     if(sales<=1.5e9) return 1000000+Math.floor((sales-5e8)*2/1000);
     return 3000000;
@@ -54,7 +54,7 @@
     t+=row('1년 기장료 <small>(월 기장료 × 12개월)</small>',comma(r.year)+'원','total');
     t+=row('부가가치세 포함 시',comma(r.yearVat)+'원');
     $('tbl').innerHTML=t;
-    $('msg').innerHTML='<span class="mi">세무조정료(종합소득세·법인세, 연 1회)는 별도 발생</span><span class="mi">4대보험 근로자가 없는 1인 사업자는 할인 적용</span><span class="mi">업무 특성에 따라 보수 변동 가능</span>';
+    $('msg').innerHTML='<span class="mi">세무조정료(종합소득세·법인세, 연 1회)는 별도 발생</span><span class="mi">4대보험 근로자가 없는 1인 사업자는 할인 적용</span><span class="mi">업무 특성에 따라 수수료 변동 가능</span>';
   }
   ['sales','asset','grant'].forEach(function(id){ $(id).addEventListener('input',function(){fmt(this);run();}); });
   Array.prototype.forEach.call(document.querySelectorAll('input[name=ftype],input[name=solo]'),function(el){el.addEventListener('change',run);});
