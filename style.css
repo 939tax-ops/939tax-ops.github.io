@@ -1448,3 +1448,10 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 .h2-cta.cta-photo h2,.h2-cta.cta-photo>p,.h2-cta.cta-photo .h2-sub,.h2-cta.cta-photo .h2-sub a,.h2-cta.cta-photo .note{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3)}
 .h2-cta.cta-photo .btn.ghost{color:#fff;background:rgba(0,0,0,.12);border:1.5px solid rgba(255,255,255,.8)}
 @media(max-width:760px){.h2-cta.cta-photo{background:linear-gradient(rgba(18,63,43,.62),rgba(18,63,43,.62)),url(/assets/route/c-04.webp) 70% 0/auto 470% no-repeat;background-color:#2b5a43;padding:40px 22px}.h2-cta.cta-photo h2,.h2-cta.cta-photo>p,.h2-cta.cta-photo .h2-sub,.h2-cta.cta-photo .h2-sub a,.h2-cta.cta-photo .note{text-shadow:none}}
+/* 홈 보수 영역(2026-11-23): PC는 버튼을 제목 오른쪽에, 휴대폰은 맨 아래 그대로 */
+.fee-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.fee-hd h2.sec{margin-bottom:0}
+.fee-hd .ab-more{margin:0 0 6px}
+.fee-hd + p.ln{margin-top:22px}
+.ab-more.m-only{display:none}
+@media(max-width:760px){.fee-hd{display:block}.fee-hd .ab-more{display:none}.ab-more.m-only{display:block}}
