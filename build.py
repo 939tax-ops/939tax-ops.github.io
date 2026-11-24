@@ -969,7 +969,7 @@ def build_about():
     import urllib.parse as up
     nmap = NPLACE
     kmap = "https://map.kakao.com/?q=" + up.quote(q)
-    CH_HTML = f'''<section class="block ch-sec"><div class="wrap"><h2 class="sec">세무회계택 채널</h2>
+    CH_HTML = f'''<section class="block ch-sec"><div class="wrap"><h2 class="sec">블로그와 유튜브</h2>
 <div class="ch-grid">
 <a class="ch lite" href="{BLOG}" target="_blank" rel="noopener"><span class="k nb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그</span><span class="d">세금 소식과 업무 사례</span><span class="ar" aria-hidden="true">→</span></a>
 <a class="ch lite" href="{YOUTUBE}" target="_blank" rel="noopener"><span class="k yt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세친구</span><span class="d">영상으로 보는 세금 이야기</span><span class="ar" aria-hidden="true">→</span></a>
@@ -998,8 +998,8 @@ def build_about():
 </section>
 </div>
 {"" if AB2 else CH_HTML}
-<div class="wrap"><section class="block"><div class="band"><div><b>업무 분야</b><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">수수료 안내 →</a></p></section></div>
-<div class="wrap"><section class="block"><h2 class="sec">세무회계택의 특징</h2><div class="grid why-grid">{why_cards()}</div></section></div>
+<div class="wrap"><section class="block ab-svc"><h2 class="sec">업무 분야</h2><div class="band"><div><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">수수료 안내 →</a></p></section></div>
+<div class="wrap"><section class="block"><h2 class="sec">이렇게 일합니다</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
 <div class="addr-card"><span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span><div class="ac-t"><b>{NAME} {PERSON}</b><div class="ac-line"><button type="button" class="ac-copy" data-copy="{ADDR1} {ADDR2}">주소 복사</button><span>{ADDR1} {ADDR2}</span></div></div></div>

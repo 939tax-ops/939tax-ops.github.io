@@ -1455,3 +1455,18 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 .fee-hd + p.ln{margin-top:22px}
 .ab-more.m-only{display:none}
 @media(max-width:760px){.fee-hd{display:block}.fee-hd .ab-more{display:none}.ab-more.m-only{display:block}}
+
+/* 소개 페이지 업무 분야: 채널·특징과 같은 제목+막대 형식, 위 여백 축소 (2026-11-24) */
+.p-about section.block.ab-svc{padding-top:8px;border-top:0}
+.ab-svc .band{margin-top:0}
+/* 수수료 안내: 위아래 간격 넓힘 (2026-11-24) */
+.fee-sub{margin-bottom:46px}
+.fh{margin-bottom:14px}
+.fee-sec .row{padding:14px 6px}
+.fee-page .note{margin-top:12px;line-height:1.75}
+.fee-grid{row-gap:58px}
+.fee-disc{margin-top:64px}
+.fee-disc .pair{margin-top:16px}
+.fee-foot{margin-top:36px}
+@media (max-width:760px){.fee-grid{row-gap:44px}}
+.fee-page .note.c{margin-top:18px}
