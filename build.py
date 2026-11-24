@@ -625,13 +625,13 @@ def build_qa_index(posts):
 # 홈·기장 서비스 페이지 공통 — 세무회계택의 기준(특장점)
 WHY = [
     ("세무사 직접 응대",
-     "상담부터 신고서 최종 검토까지 세무사가 직접 수행합니다. 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다."),
+     "상담부터 신고서 마지막 검토까지 대표 세무사가 직접 합니다.\n어떤 경로로 연락하셔도 같은 사람이 확인합니다."),
     ("수수료 공개",
-     "기장료와 신고 수수료를 매출 구간별로 공개하고 있습니다. 4대보험 근로자가 없는 1인 사업자의 월 기장료는 간이과세 70,000원, 일반과세 80,000원부터입니다(부가세 별도)."),
+     "기장료와 신고 수수료를 미리 공개해 두었습니다.\n직원 없는 1인 사업자의 월 기장료는 70,000원부터입니다(간이과세 기준, 부가세 별도)."),
     ("기장 거래처 수수료 할인",
-     "기장 거래처는 양도소득세·상속세·증여세 등 기장 외 업무 수수료에 20% 할인이 적용됩니다."),
+     "기장 거래처는 양도·상속·증여세 같은 다른 업무 수수료를 20% 할인해 드립니다."),
     ("기장 거래처 보조금 정보 제공",
-     "해당 가능성이 있는 지원사업·보조금 정보를 정리해 전달드립니다. 요건 해당 여부는 확인해 드리지 않으며, 공고 기관에서 개별 확인이 필요합니다.", "준비 중"),
+     "해당될 만한 지원사업·보조금 공고를 골라 알려 드립니다.\n신청 요건은 공고 기관에서 직접 확인하셔야 합니다.", "준비 중"),
 ]
 
 def why_cards(items=None):
@@ -641,7 +641,7 @@ def why_cards(items=None):
         soon = it[2] if len(it) > 2 else ""
         cls = "card svc soon" if soon else "card svc"
         em = f"<em>{esc(soon)}</em>" if soon else ""
-        out.append(f'<div class="{cls}"><i>{i:02d}</i><b>{esc(it[0])}</b><span>{esc(it[1])}</span>{em}</div>')
+        out.append(f'<div class="{cls}"><i>{i:02d}</i><b>{esc(it[0])}</b><span>{esc(it[1]).replace(chr(10), "<br>")}</span>{em}</div>')
     return "".join(out)
 
 SERVICES = [
@@ -998,7 +998,7 @@ def build_about():
 </section>
 </div>
 {"" if AB2 else CH_HTML}
-<div class="wrap"><section class="block ab-svc"><h2 class="sec">업무 분야</h2><div class="band"><div><span>세무기장, 세금 신고대리, 양도·상속·증여세, 경정청구, 세무조사 대응, 절세상담</span></div><a class="btn primary" href="/services/">업무 분야 보기</a></div><p class="ab-more"><a href="/fees/">수수료 안내 →</a></p></section></div>
+<div class="wrap"><section class="block ab-svc"><h2 class="sec">업무 분야</h2><div class="band"><div><span>사업자 기장부터 양도·상속·증여, 경정청구까지 맡고 있습니다.</span></div><div class="ab-svc-btns"><a class="btn ghost" href="/fees/">수수료 안내</a><a class="btn primary" href="/services/">업무 분야 보기</a></div></div></section></div>
 <div class="wrap"><section class="block"><h2 class="sec">이렇게 일합니다</h2><div class="grid why-grid">{why_cards()}</div></section></div>
 <div class="wrap">
 <section class="block" id="location"><h2 class="sec">오시는 길</h2>
@@ -1360,7 +1360,7 @@ def build_services(posts):
         note = f'<p class="note">{esc(x["note"])}</p>' if x.get("note") else ""
         calc = f'<p style="font-family:var(--sans);margin-top:14px"><a class="more" href="{x["calc"][0]}">{x["calc"][1]} →</a></p>' if x.get("calc") else ""
         others = "".join(f'<a href="/services/{k2}/">{t2}</a>' for k2, t2, _ in ALL_SERVICES if k2 != k)
-        wb = [("수수료 할인", WHY[2][1]), ("보조금 정보 제공", WHY[3][1], WHY[3][2])]
+        wb = [("수수료 할인", "기장 거래처는 양도소득세·상속세·증여세 등 기장 외 업무 수수료에 20% 할인이 적용됩니다."), ("보조금 정보 제공", "해당 가능성이 있는 지원사업·보조금 정보를 정리해 전달드립니다. 요건 해당 여부는 확인해 드리지 않으며, 공고 기관에서 개별 확인이 필요합니다.", WHY[3][2])]  # 기장 서비스 페이지 문구는 그대로(소개 페이지 문구만 2026-11-24 수정)
         tps = SERVICE_TOPICS.get(k, [])
         biz = k in ("bookkeeping", "tax-filing")  # 사업자 업무는 사업자 세금(category: business) 글만
         rq = [p for p in posts if topic_of(p) in tps and (not biz or p.get("category") == "business")][:(3 if SVC2 else 5)]

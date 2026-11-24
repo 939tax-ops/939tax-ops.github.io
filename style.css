@@ -1470,3 +1470,7 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 .fee-foot{margin-top:36px}
 @media (max-width:760px){.fee-grid{row-gap:44px}}
 .fee-page .note.c{margin-top:18px}
+
+/* 소개 업무 분야: 수수료 안내 버튼을 업무 분야 보기 옆으로 (2026-11-24) */
+.ab-svc-btns{display:flex;gap:8px;flex-shrink:0}
+.ab-svc-btns .btn{white-space:nowrap}
