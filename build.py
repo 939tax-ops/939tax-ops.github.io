@@ -619,7 +619,7 @@ def build_qa_index(posts):
 <div class="blog-band"><div><span class="k">네이버 블로그</span><b>블로그에는 세금 소식을 먼저 올리고 있습니다</b></div><a class="btn ghost" href="{BLOG}" target="_blank" rel="noopener">블로그 전체 글 보기 →</a></div>
 </div>
 <script src="/qa.js" defer></script>'''
-    write("qa/index.html", page("세무 Q&A | " + NAME, "종합소득세·양도소득세·상속세·증여세 등 자주 묻는 세금 질문을 세무사가 조문 근거와 함께 종류별로 정리했습니다.", "/qa/", body, "qa"))
+    write("qa/index.html", page("세무 Q&A | " + NAME, "종합소득세, 양도소득세, 상속세, 증여세, 부가가치세, 원천세 등 자주 묻는 세금 질문을 세무사가 조문 근거와 함께 분류별로 정리했습니다. 서울 동대문구 청량리 세무회계택 김태형 세무사.", "/qa/", body, "qa"))
 
 # ---------- 고정 페이지 ----------
 # 홈·기장 서비스 페이지 공통 — 세무회계택의 기준(특장점)
@@ -1015,7 +1015,7 @@ def build_about():
 
 <script>(function(){{var h=location.hash;if(/^#(go-\\w+|route)$/.test(h))location.replace("/location/"+(h==="#route"?"":h));}})();</script>
 </section></div>'''
-    write(("_preview/" if AB2 else "") + "about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "세무회계택 김태형 세무사의 이력, 업무 분야, 오시는 길 안내입니다.", "/about/", body, "about", [person_ld()]))
+    write(("_preview/" if AB2 else "") + "about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "동대문구 청량리 세무회계택 김태형 세무사입니다. 기장, 양도·상속·증여세, 경정청구를 상담부터 신고서 검토까지 세무사가 직접 합니다. 현재 서울시 마을세무사(중랑구)로 활동하며, 고려대학교 공과대학을 졸업하고 윤택스와 포스코건설에서 일했습니다.", "/about/", body, "about", [person_ld()]))
 
 def build_location():
     q = "동대문구 왕산로 200 롯데캐슬SKY-L65"
@@ -1073,7 +1073,7 @@ def build_calc_index():
 <h1 style="color:var(--green);margin:0 0 6px">세금 계산기</h1>
 <p class="lead" style="margin:0 0 24px">조문을 기준으로 만든 간편 세금 계산기 모음입니다. 결과는 참고용이며 실제 세액은 개별 사정에 따라 달라질 수 있습니다.</p>
 <div class="grid">{calc_cards()}</div></div>'''
-    write("calculators/index.html", page(f"세금 계산기 | {NAME}", "증여세 등 세금을 조문 기준으로 간편하게 계산해 보는 계산기 모음입니다.", "/calculators/", body, "calc"))
+    write("calculators/index.html", page(f"세금 계산기 | {NAME}", "경정청구 확인, 증여세, 양도소득세, 취득세, 신고기한, 급여 실수령액, 프리랜서 3.3%, 기장료까지 8가지 세금 계산기를 모았습니다. 조문을 기준으로 만든 참고용 계산기로, 실제 세액은 개별 사정에 따라 달라질 수 있습니다.", "/calculators/", body, "calc"))
 
 def build_gift_calc():
     tpl = open(os.path.join(ROOT, "_src", "gift-tax-calc.html"), encoding="utf-8").read()
@@ -1308,7 +1308,7 @@ def build_contact():
 <tr><th>방문 상담</th><td>서울 동대문구 청량리 사무소<br>방문 전 미리 연락 부탁드립니다</td></tr>
 </table>
 </div>'''
-    write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사에게 세무 상담·기장 문의를 남기는 페이지입니다.", "/contact/", body, "contact"))
+    write("contact/index.html", page(f"문의하기 | {NAME}", "세무회계택 김태형 세무사 상담 신청 페이지입니다. 경정청구, 양도·상속·증여세, 세무기장과 세금 신고대리, 세무조사 대응 등 분야를 고르고 연락처를 남기시면 영업일 기준 1~2일 이내에 연락드립니다.", "/contact/", body, "contact"))
 
 def build_disclaimer():
     body = f'''<div class="narrow" style="padding-top:36px">
