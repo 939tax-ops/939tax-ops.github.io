@@ -1474,3 +1474,6 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 /* 소개 업무 분야: 수수료 안내 버튼을 업무 분야 보기 옆으로 (2026-11-24) */
 .ab-svc-btns{display:flex;gap:8px;flex-shrink:0}
 .ab-svc-btns .btn{white-space:nowrap}
+
+/* 주요 서비스 페이지: 휴대폰에서 1열 (2026-11-25) */
+@media (max-width:760px){.p-svc .svc-grid{grid-template-columns:1fr}}
