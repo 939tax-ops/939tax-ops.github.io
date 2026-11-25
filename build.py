@@ -80,10 +80,10 @@ def cta_box(p):
 AREA_TEXT = "서울 및 경기도\u00a0일부"
 
 # 상담 진행 절차(문의 페이지·업무 페이지 공통)
-FLOW = [("상담 신청", "전화·카카오톡·이메일이나 상담 신청 양식으로 남겨\u00a0주세요."),
-        ("접수 확인", "상담 신청은 영업일 기준 1~2일 이내에\u00a0연락드립니다."),
-        ("상황·자료 확인", "필요한 자료와 확인할 사항을 먼저\u00a0여쭤봅니다."),
-        ("상담·업무 진행", "수수료는 기준표에 따라 미리 말씀드린\u00a0뒤 진행합니다.")]
+FLOW = [("상담 신청", "전화, 카카오톡, 이메일 또는 상담 신청 양식으로 남겨\u00a0주세요."),
+        ("접수 확인", "영업일 기준 1~2일 안에 대표 세무사가 직접\u00a0연락드립니다."),
+        ("상황·자료 확인", "현재 상황을 먼저 여쭤보고, 필요한 자료를 안내해\u00a0드립니다."),
+        ("상담·업무 진행", "수수료는 기준표에 따라 미리 안내해 드린\u00a0뒤 진행합니다.")]  # 2026-11-25 홈 문구(HOME_FLOW)와 통일
 # 홈 전용 상담 흐름(2026-11-23): 번호를 선으로 잇는 4단계. 설명은 두 줄로 끊어 둠(ln 한 칸 = 한 줄)
 HOME_FLOW = [("상담 신청", "전화, 카카오톡, 이메일 또는", "상담 신청 양식으로 남겨 주세요."),
              ("접수 확인", "영업일 기준 1~2일 안에", "대표 세무사가 직접 연락드립니다."),
@@ -625,7 +625,7 @@ def build_qa_index(posts):
 # 홈·기장 서비스 페이지 공통 — 세무회계택의 기준(특장점)
 WHY = [
     ("세무사 직접 응대",
-     "상담부터 신고서 마지막 검토까지 대표 세무사가 직접 합니다.\n어떤 경로로 연락하셔도 같은 사람이 확인합니다."),
+     "상담부터 신고서 최종 검토까지 대표 세무사가 직접 진행합니다.\n어떤 경로로 연락하셔도 같은 사람이 확인합니다."),
     ("수수료 공개",
      "기장료와 신고 수수료를 미리 공개해 두었습니다.\n직원 없는 1인 사업자의 월 기장료는 70,000원부터입니다(간이과세 기준, 부가세 별도)."),
     ("기장 거래처 수수료 할인",
@@ -823,7 +823,7 @@ def build_home_v2(posts, out="index.html"):
 <div class="h2-rep-ph"><img src="/assets/profile-upper.webp" alt="{PERSON}" width="520" height="525" loading="lazy"></div>
 <div class="h2-rep-tx">
 <h2>김태형 <span>세무사</span></h2>
-<p class="h2-rep-q">상담부터 신고서 최종 검토까지 세무사가 직접 맡습니다.<br>법령과 자료를 근거로 먼저 검토하고, 결과를 명확하게 설명드립니다.</p>
+<p class="h2-rep-q">상담부터 신고서 최종 검토까지 대표 세무사가 직접 진행합니다.<br>법령과 자료를 근거로 먼저 검토하고, 결과를 명확하게 설명드립니다.</p>
 <dl class="h2-cv"><dt>학력</dt><dd>고려대학교 공과대학 졸업</dd><dt>경력</dt><dd>現 서울시 마을세무사 (중랑구)<br>前 윤택스<br>前 포스코건설</dd><dt>활동</dt><dd class="h2-act"><a class="act" href="{BLOG}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#03C75A"/><path fill="#fff" d="M13.6 12.4 10.2 7.5H7.4v9h3v-4.9l3.4 4.9h2.8v-9h-3z"/></svg>네이버 블로그 <span>세금 소식·업무 사례</span></a><a class="act" href="{YOUTUBE}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4.5" width="22" height="15" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M10 8.8v6.4l5.5-3.2z"/></svg>유튜브 세무사 세친구 <span>영상으로 보는 세금</span></a></dd></dl>
 <a class="h2-more" href="/about/">소개 자세히 보기 →</a>
 </div></div></section>
@@ -1015,7 +1015,7 @@ def build_about():
 
 <script>(function(){{var h=location.hash;if(/^#(go-\\w+|route)$/.test(h))location.replace("/location/"+(h==="#route"?"":h));}})();</script>
 </section></div>'''
-    write(("_preview/" if AB2 else "") + "about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "동대문구 청량리 세무회계택 김태형 세무사입니다. 기장, 양도·상속·증여세, 경정청구를 상담부터 신고서 검토까지 세무사가 직접 합니다. 현재 서울시 마을세무사(중랑구)로 활동하며, 고려대학교 공과대학을 졸업하고 윤택스와 포스코건설에서 일했습니다.", "/about/", body, "about", [person_ld()]))
+    write(("_preview/" if AB2 else "") + "about/index.html", page(f"사무소 소개 | {NAME} {PERSON}", "동대문구 청량리 세무회계택 김태형 세무사입니다. 기장, 양도·상속·증여세, 경정청구를 상담부터 신고서 최종 검토까지 대표 세무사가 직접 진행합니다. 현재 서울시 마을세무사(중랑구)로 활동하며, 고려대학교 공과대학을 졸업하고 윤택스와 포스코건설에서 일했습니다.", "/about/", body, "about", [person_ld()]))
 
 def build_location():
     q = "동대문구 왕산로 200 롯데캐슬SKY-L65"
@@ -1214,7 +1214,7 @@ def lead_form(pre=None, uid="lf", kind="consult"):
     sub = "돌려받을 세금이나 줄일 수 있는 세금이 있는지<br>먼저 확인해 연락드립니다." if chk else "본인의 상황에 맞추어 확인해 보고 싶으시면<br>분야를 고르고 연락처를 남겨 주세요."
     ph = "예: 2023년에 직원을 새로 뽑았습니다" if chk else "예: 작년 종합소득세 공제를 빠뜨린 것 같습니다"
     btn = "무료 확인 신청하기 →" if chk else "상담 신청 →"
-    foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내해 드립니다." if chk else "대표 세무사가 직접 확인 후 연락드립니다.<br>신청 확인과 첫 연락은 무료이며, 비용이 발생할 수도 있는 경우에는 미리 안내해 드립니다."
+    foot = "가능 여부 확인은 최대한 무료로 진행합니다.<br>복잡한 사안은 비용이 발생할 수도 있으며, 미리 안내해 드립니다." if chk else "신청 확인과 첫 연락은 무료입니다.<br>사안에 따라 비용이 발생할 수도 있는 경우에는 미리 안내해 드립니다."
     return f'''<form id="f-{uid}" class="lead{" check" if chk else ""}" data-cfg="{data}" novalidate>
 <h2>{title}</h2>
 <p class="lf-sub">{sub}</p>
@@ -1422,7 +1422,7 @@ def build_area():
 <h1 class="area-h1">동대문구·청량리 세무사 — 세무회계택 김태형 세무사</h1>
 <p class="lead">세무회계택은 서울 동대문구 왕산로 200(전농동) 롯데캐슬SKY-L65에 있는 세무사 사무소입니다.<br>
 청량리역 바로 인근이라 지하철·버스 어느 쪽으로도 찾아오시기 편합니다.</p>
-<p class="ln">{PERSON}가 상담부터 신고서 최종 검토까지 직접 수행합니다.<br>
+<p class="ln">{PERSON}가 상담부터 신고서 최종 검토까지 직접 진행합니다.<br>
 전화·카카오톡·이메일 어느 쪽으로 남기셔도 같은 사람이 확인합니다.</p>
 <p class="area-cred">현재 서울시 마을세무사(중랑구)로도 활동하고 있습니다.</p>
 <div class="btns" style="margin:18px 0 6px"><a class="btn primary" href="/contact/#f-lc">상담 신청</a><a class="btn kk" href="{KAKAO}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2c-5.3 0-9.6 3.4-9.6 7.6 0 2.7 1.8 5.1 4.5 6.4l-.9 3.4c-.1.3.3.6.6.4l4-2.6c.5.1.9.1 1.4.1 5.3 0 9.6-3.4 9.6-7.7S17.3 3.2 12 3.2z"/></svg>카카오톡 상담</a></div>
