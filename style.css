@@ -1477,3 +1477,11 @@ main h1+p,main h1+.lead,.svc-page h1+p{margin-top:12px}
 
 /* 주요 서비스 페이지: 휴대폰에서 1열 (2026-11-25) */
 @media (max-width:760px){.p-svc .svc-grid{grid-template-columns:1fr}}
+/* 다크 모드(폰): 찾아오는 길 주소 카드 — 흰 상자 위에 흐린 글씨로 안 보이던 문제 (2026-11-27) */
+@media (prefers-color-scheme: dark) and (max-width:760px){
+  .addr-card{background:var(--surface);border-color:var(--line)}
+  .addr-card .pin{background:var(--tint);border-color:var(--green-line);color:var(--green)}
+  .addr-card .ac-t b{color:var(--ink-1)}
+  .addr-card .ac-t .ac-line span{color:var(--text)}
+  .addr-card .ac-copy{background:transparent;border-color:var(--soft);color:var(--text)}
+}
