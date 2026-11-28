@@ -1,8 +1,11 @@
+/* 웹 글꼴이 늦게 들어올 때 글이 밀리지 않게: 윈도우 맑은 고딕을 본 글꼴(Noto Sans KR) 폭에 맞춰 92%로 (2026-11-28) */
+@font-face{font-family:'Noto KR Fallback';src:local('Malgun Gothic'),local('MalgunGothic');font-weight:100 500;size-adjust:92.2%}
+@font-face{font-family:'Noto KR Fallback';src:local('Malgun Gothic Bold'),local('MalgunGothicBold');font-weight:600 900;size-adjust:92.3%}
 :root{
   --green:#13391E; --green-dark:#1C361F; --green-line:#C5D3C9; --tint:#EBF1ED; --tint-2:#F5F8F6;
   --surface:#FFFFFF; --field:#BFC3C0; --soft:#D5DED7; --soft-bg:#F2F6F3; --ink-1:#1d2a20; --ink-2:#2b2f2c; --ink-3:#3e4541; --ink-4:#454b47; --ink-5:#555c57; --ink-6:#6b736d; --ink-7:#8a948c; --green-bg:#13391E; --text:#383839; --sub:#686B6E; --line:#D9D9D9; --red:#C00000; --hl:#FFEFBF; --yellow:#FFCD4A; --bg:#FFFFFF;
-  --serif:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-  --sans:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --serif:'Noto Sans KR','Noto KR Fallback',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --sans:'Noto Sans KR','Noto KR Fallback',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}

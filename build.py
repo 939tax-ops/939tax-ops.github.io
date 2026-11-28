@@ -387,6 +387,15 @@ def parse(path):
 def md(text):
     text = re.sub(r"==(.+?)==", r"<mark>\1</mark>", text)
     h = markdown.markdown(text, extensions=["tables", "sane_lists"])
+    def _imgwh(m):  # 본문 이미지에 가로·세로 크기를 넣어 불러올 때 글이 밀리지 않게 (2026-11-28)
+        tag, src = m.group(0), m.group(1)
+        if " width=" in tag or not src.startswith("/assets/"): return tag
+        try:
+            from PIL import Image
+            with Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), src.lstrip("/"))) as im: w, hh = im.size
+        except Exception: return tag
+        return tag.replace("<img ", f'<img width="{w}" height="{hh}" loading="lazy" ', 1)
+    h = re.sub(r'<img [^>]*src="([^"]+)"[^>]*>', _imgwh, h)
     return h.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
 
 def inline(text):
@@ -578,7 +587,8 @@ bs.forEach(function(b){b.addEventListener('click',function(){go(b.dataset.f);his
                "thumbnailUrl": f'{SITE}/assets/yt/v{v["k"]}.jpg', "uploadDate": (v["date"] if "T" in v["date"] else v["date"] + "T00:00:00+09:00"),  # 시간대 포함(서치콘솔 동영상 경고, 2026-11-09)
               
                "embedUrl": f'https://www.youtube.com/embed/{v["yt"]}', "contentUrl": f'https://www.youtube.com/watch?v={v["yt"]}'}]
-        write(f"video/{v['slug']}/index.html", page(f'{v["title"]} | {NAME}', re.sub("<[^>]+>", "", v["lead"]), url, art, "qa", ld))
+        write(f"video/{v['slug']}/index.html", page(v["title"] if len(v["title"]) + len(NAME) + 3 > 60 else f'{v["title"]} | {NAME}',  # 검색 결과에서 잘리지 않게 긴 제목은 상호 생략 (2026-11-28)
+           re.sub("<[^>]+>", "", v["lead"]), url, art, "qa", ld))
 
 def date_tag(p):
     return '<span class="d">' + p["date"].replace("-", ".") + '</span>'
@@ -1522,6 +1532,20 @@ def build_sitemap(posts):
     x = "".join(f"  <url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls)
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{x}</urlset>\n')
 
+def build_llms(posts):  # AI 수집기용 사이트 안내 (2026-11-28). 정식 표준은 아님 — 사이트 소개·주요 페이지·Q&A 목록만 담는다
+    strip = lambda t: re.sub(r"<[^>]+>", "", t)
+    L = [f"# {NAME} ({PERSON})", "",
+         f"> 서울 동대문구 청량리에 있는 세무사 사무소입니다. 개인·법인사업자 기장, 종합소득세, 양도소득세, 상속·증여세, 경정청구 등의 세무업무를 수행합니다.", "",
+         f"- 주소: {ADDR1} {ADDR2}", f"- 전화: {TEL}", f"- 이메일: {EMAIL}", f"- 상담 신청: {SITE}/contact/", "",
+         "## 사무소 안내", f"- [사무소 소개]({SITE}/about/)", f"- [세무 수수료 안내]({SITE}/fees/)", f"- [찾아오는 길]({SITE}/location/)", f"- [주요 서비스]({SITE}/services/)"]
+    L += [f"- [{t}]({SITE}/services/{k}/): {d}" for k, t, d in ALL_SERVICES]
+    L += ["", "## 세금 계산기"] + [f"- [{t}]({SITE}{u}): {strip(d)}" for _, t, d, u in CALCS]
+    L += ["", "## 세무 Q&A"] + [f"- [{p['title']}]({SITE}/qa/{p['slug']}/): {p['description']}" for p in posts]
+    vids = [v for v in VIDEOS if v.get("slug")]
+    if vids: L += ["", "## 영상으로 보는 Q&A"] + [f"- [{v['title']}]({SITE}/video/{v['slug']}/)" for v in vids]
+    L += ["", "## 안내", f"- 게시된 내용은 일반적인 세무 정보이며, 개별 사안은 사실관계에 따라 결론이 달라질 수 있습니다. [이용 안내 및 면책]({SITE}/disclaimer/)"]
+    write("llms.txt", "\n".join(L) + "\n")
+
 def build_feed(posts):
     def rfc(d):
         return datetime.datetime.strptime(d, "%Y-%m-%d").strftime("%a, %d %b %Y 09:00:00 +0900")
@@ -1539,5 +1563,5 @@ if __name__ == "__main__":
     for p in posts: build_post(p, posts)
     build_qa_index(posts); build_home_v2(posts)  # 홈 개편 적용(2026-10-14) — 이전 홈은 build_home()에 보관
     build_about(); build_location(); build_calc_index(); build_gift_calc(); build_fee_calc(); build_acq_calc(); build_4ins_calc(); build_free_calc(); build_claim_calc(); build_yangdo_calc(); build_cg_calc(); build_deadline_calc(); build_contact(); build_area(); build_disclaimer(); build_404(); build_videos(); build_search_index(posts); build_services(posts); build_fees(); build_privacy()
-    build_sitemap(posts); build_feed(posts)
+    build_sitemap(posts); build_feed(posts); build_llms(posts)
     print("built", len(posts), "posts")
